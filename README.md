@@ -40,13 +40,13 @@ program that exercise the routine.
    Alternatively, download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
 
-   ```bash
+```bash
         git clone https://github.com/urbanjost/orderpack.git
         cd orderpack
         fpm run "*"
         fpm run --example "*"
         fpm test
-   ```
+```
 
    or just list it as a dependency in your fpm.toml project file.
 
@@ -57,7 +57,7 @@ program that exercise the routine.
 ## DOCUMENTATION   ![docs](docs/images/docs.gif)
 
 ### USER
-   - original documentation of (procedures)(docs/index.html).
+   - original documentation of [procedures](docs/index.html).
 <!--
    - A single page that uses javascript to combine all the HTML
      descriptions of the man-pages is at 
@@ -80,6 +80,7 @@ program that exercise the routine.
    - [ford(1) output](https://urbanjost.github.io/orderpack/fpm-ford/index.html).
    - [doxygen(1) output](https://urbanjost.github.io/orderpack/doxygen_out/html/index.html).
 -->
+
    - [github action status](docs/STATUS.md) 
 ---
 
@@ -87,5 +88,6 @@ program that exercise the routine.
 
    * [ORDERPACK2.0](http://www.fortran-2000.com/rank/)
    * [ORDERPACK2.0](https://forge-dga.jouy.inra.fr/svn/qtlmap/trunk/lib/orderpack-2.0/index.html)
-   * [Wikipedia](https://en.wikipedia.org/wiki/sorting)
+   * [Wikipedia](https://en.m.wikipedia.org/wiki/Sorting_algorithm)
+
 ---
