@@ -43,9 +43,7 @@ program that exercise the routine.
 ```bash
         git clone https://github.com/urbanjost/orderpack.git
         cd orderpack
-        fpm run "*"
-        fpm run --example "*"
-        fpm test
+        fpm build
 ```
 
    or just list it as a dependency in your fpm.toml project file.
@@ -57,7 +55,7 @@ program that exercise the routine.
 ## DOCUMENTATION   ![docs](docs/images/docs.gif)
 
 ### USER
-   - original documentation of [procedures](docs/index.html).
+   - original documentation of [procedures](https://urbanjost.github.io/orderpack/).
 <!--
    - A single page that uses javascript to combine all the HTML
      descriptions of the man-pages is at 
@@ -73,11 +71,13 @@ program that exercise the routine.
    - ![man-pages](docs/images/manpages.gif)
       + [manpages.zip](https://urbanjost.github.io/orderpack/manpages.zip)
       + [manpages.tgz](https://urbanjost.github.io/orderpack/manpages.tgz)
+-->
 
    - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
 ### DEVELOPER
    - [ford(1) output](https://urbanjost.github.io/orderpack/fpm-ford/index.html).
+<!--
    - [doxygen(1) output](https://urbanjost.github.io/orderpack/doxygen_out/html/index.html).
 -->
 
