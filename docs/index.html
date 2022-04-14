@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="A WEB site on the way to more Fortran public domain utilities." />
+  <meta name="keywords" content="fortran 90 95 2000 77 public domain utilities sort rank order sorting ranking ordering routines" />
+  <title>Fortran 90 +</title>
+<style>
+body {xfont-style: italic}
+body {
+background-color:#FFF; color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+a:visited { color:#666; }
+h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+h1 { font-size:200%; }
+h2 { font-size:173%; }
+h3 { font-size:144%; }
+h4 { font-size:120%; }
+h5,h6 { font-size:100% }
+a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+table { border:double #000; border-collapse:collapse; }
+td { border:thin solid #888; }
+li { margin-bottom:0.5em; }
+blockquote { display:block; font-size:90%; font-style:italic; line-height:1.5em; margin:0 0 1.5em; padding:0 2.5em; }
+pre { background-color:#DDD; font-size:90%; overflow:auto; padding:1em; }
+a,li span { color:#000; }
+a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+#Container { margin:0 10px; text-align:center; }
+#Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; }
+span.webName { font-size:.5em; }
+textarea#content { font-size: 1em; line-height: 1.125em; }
+h1#pageName { line-height:1.4em; margin:0.2em 0 0.2em 0; padding:0; }
+h2{ line-height:1.2em; margin:0.2em 0 0.2em 0; padding:0; color:blue;}
+.property { color:#666; font-size:80%; }
+a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+.byline { color:#666; font-size:.8em; font-style:italic; margin-bottom:1em; padding-top:1px; }
+</style>
+
+</head>
+<body>
+<div id="Container">
+<div id="Content">
+  <p align="center"><span class="c2"><a class="c1" name="0.0" id="0.0">Fortran 90 +</a></span></p>
+  <p align="center"><span class="c3">-- Fortran 90, Fortran 95, Fortran 2000 --</span></p>
+  <p align="center"><span class="c3">A WEB site on the way to more public domain utilities.</span></p>
+  <hr />
+  <h2 class="c5"><span class="c4">Contents :</span></h2>
+  <dl>
+    <dd class="c6">
+      <a href="#3.0">ORDERPACK 2.0 - General and Specialized Ranking and Sorting Routines</a>
+    </dd>
+  </dl>
+  <hr />
+  <span class="c2"><a name="1.0" id="1.0">
+  <h2 class="c7"><span class="c2">Rationale</span></h2></a></span>
+  <p><span class="c2">Fortran 90 and later variants (currently Fortran 95) aid scientific and technical programmers working with vectors, matrices, and
+  other higher dimensional arrays containing binary, integer, real, and complex data. Scientific programmers wish to write straightforward code performing
+  computationally challenging tasks. Straightforward means code which closely follows the mathematical underpinnings of the task. It also means code that
+  follows good programming practices. In addition, scientific programmers need excellent file handling capabilities to read and write data. Most scientific
+  programmers rely heavily on numerical libraries, such as IMSL and NAG, in computing their results.</span></p>
+  <p><span class="c2">While Fortran 90 and later variants have made life much easier for scientific programmers than Fortran 77, the language still lacks
+  depth in public domain utilities. The following package, ORDERPACK 2.0, illustrates the type of important but uncommon routines needed to complete the
+  Fortran programming environment. ORDERPACK 2.0 performs both conventional sorting and ranking as well as the rarer specialized ordering tasks such as
+  partial sorting, partial ranking, unique sorting, unique ranking, inverse unique ranking, etcetera. These partial sort and ranking routines can greatly
+  accelerate many computations when users need only the m largest or smallest elements out of a n element vector. As an example of the speed, in 100,000
+  trials of picking the smallest 9 elements out of 500 total elements it took in total only 2.7 seconds for the the 100,000 partial and unique rankings on a
+  600 Mhz PC using CVF 6.1a. A similar experiment involved 100 trials of simulating a random vector of length 1,000,000 and ranking the 20 smallest elements
+  (keeping duplicates). On a 460 Mhz AlphaStation with Compaq Fortran 90 V5.2, taking care to increase stacksize, partial ranking by itself took 2.3
+  seconds, <i>i.e.</i> 23 milliseconds per vector.</span></p><span class="c2"><a name="3.0" id="3.0"></a></span><span class="c3"><a href=
+  "index_src.html">ORDERPACK 2.0</a> <b>Unconditional, Unique, and Partial Ranking, Sorting, and Permutation Fortran 90 source code</b>.<br />
+  <br /></span>
+  <p><span class="c3">Note that ORDERPACK 2.0 is <a href="http://www.fortran.com/F">F</a>-compatible.</span></p>
+  <p><span class="c3">Illustrative Application</span></p>
+  <p><span class="c2">In spatial-temporal applications one often wishes to know the nearby observations (say the <em>m</em> closest) subject to having these
+  nearby observations also prior in time to the observation itself. Many of the ways of forming purely spatial neighbors such as those based upon Delaunay
+  triangles do not function well in a spatial-temporal setting. However, partial ranking always works and can function with many more dimensions. Since the
+  number of neighbors, <em>m</em>, is much smaller than the number of observations, <em>n</em>, the partial ranking algorithm saves a great deal of time
+  relative to full ranking. For 7,000 observations, the partial algorithm saves almost a factor of 200 in terms of time over the full algorithm. Finding all
+  the neighbors for 100,000 observations takes less than 8 minutes on a 600 Mhz PC, thus making spatial-temporal methods feasible for large data sets on
+  desktop machines. <a href="other/tn1.pdf">Documentation</a> <a href="other/time_neighbors_files.zip">Complete Application (source code, pc executable code, data,
+  documentation)</a></span></p>
+  <hr />
+
+
+
+  </ul>
+  <hr />
+  <p>Last updated: 2013/11/06</p>
+  <p><a href="#0.0">Back to top</a></p>
+  <hr />
+  </div>
+ </div>
+</body>
+</html>
