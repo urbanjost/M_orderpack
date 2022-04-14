@@ -53,35 +53,72 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
   <hr />
   <span class="c2"><a name="1.0" id="1.0">
   <h2 class="c7"><span class="c2">Rationale</span></h2></a></span>
-  <p><span class="c2">Fortran 90 and later variants (currently Fortran 95) aid scientific and technical programmers working with vectors, matrices, and
-  other higher dimensional arrays containing binary, integer, real, and complex data. Scientific programmers wish to write straightforward code performing
-  computationally challenging tasks. Straightforward means code which closely follows the mathematical underpinnings of the task. It also means code that
-  follows good programming practices. In addition, scientific programmers need excellent file handling capabilities to read and write data. Most scientific
-  programmers rely heavily on numerical libraries, such as IMSL and NAG, in computing their results.</span></p>
-  <p><span class="c2">While Fortran 90 and later variants have made life much easier for scientific programmers than Fortran 77, the language still lacks
-  depth in public domain utilities. The following package, ORDERPACK 2.0, illustrates the type of important but uncommon routines needed to complete the
-  Fortran programming environment. ORDERPACK 2.0 performs both conventional sorting and ranking as well as the rarer specialized ordering tasks such as
-  partial sorting, partial ranking, unique sorting, unique ranking, inverse unique ranking, etcetera. These partial sort and ranking routines can greatly
-  accelerate many computations when users need only the m largest or smallest elements out of a n element vector. As an example of the speed, in 100,000
-  trials of picking the smallest 9 elements out of 500 total elements it took in total only 2.7 seconds for the the 100,000 partial and unique rankings on a
-  600 Mhz PC using CVF 6.1a. A similar experiment involved 100 trials of simulating a random vector of length 1,000,000 and ranking the 20 smallest elements
-  (keeping duplicates). On a 460 Mhz AlphaStation with Compaq Fortran 90 V5.2, taking care to increase stacksize, partial ranking by itself took 2.3
-  seconds, <i>i.e.</i> 23 milliseconds per vector.</span></p><span class="c2"><a name="3.0" id="3.0"></a></span><span class="c3"><a href=
-  "index_src.html">ORDERPACK 2.0</a> <b>Unconditional, Unique, and Partial Ranking, Sorting, and Permutation Fortran 90 source code</b>.<br />
+  <p><span class="c2">
+     Fortran 90 and later variants (currently Fortran 95) aid scientific
+     and technical programmers working with vectors, matrices, and other
+     higher dimensional arrays containing binary, integer, real, and
+     complex data. Scientific programmers wish to write straightforward code
+     performing computationally challenging tasks. Straightforward means code
+     which closely follows the mathematical underpinnings of the task. It
+     also means code that follows good programming practices. In addition,
+     scientific programmers need excellent file handling capabilities
+     to read and write data. Most scientific programmers rely heavily on
+     numerical libraries, such as IMSL and NAG, in computing their results.
+  </span></p>
+
+  <p><span class="c2">
+     While Fortran 90 and later variants have made life much easier for
+     scientific programmers than Fortran 77, the language still lacks
+     depth in public domain utilities. The following package, ORDERPACK
+     2.0, illustrates the type of important but uncommon routines needed
+     to complete the Fortran programming environment.
+  </span></p>
+
+  <p><span class="c2">
+     ORDERPACK 2.0 performs both conventional sorting and ranking as well
+     as the rarer specialized ordering tasks such as partial sorting,
+     partial ranking, unique sorting, unique ranking, inverse unique
+     ranking, etcetera. These partial sort and ranking routines can
+     greatly accelerate many computations when users need only the m
+     largest or smallest elements out of a n element vector.
+  </span></p>
+
+  <p><span class="c2">
+     As an example of the speed, in 100,000 trials of picking the
+     smallest 9 elements out of 500 total elements it took in total
+     only 2.7 seconds for the the 100,000 partial and unique rankings
+     on a 600 Mhz PC using CVF 6.1a. A similar experiment involved
+     100 trials of simulating a random vector of length 1,000,000 and
+     ranking the 20 smallest elements (keeping duplicates). On a 460 Mhz
+     AlphaStation with Compaq Fortran 90 V5.2, taking care to increase
+     stacksize, partial ranking by itself took 2.3 seconds, <i>i.e.</i>
+     23 milliseconds per vector.
+  </span></p>
+
+  <span class="c2"><a name="3.0" id="3.0"></a></span>
+  <span class="c3"><a href="index_src.html">ORDERPACK 2.0</a>
+	  <b>Unconditional, Unique, and Partial Ranking, Sorting, and Permutation Fortran 90 source code</b>.<br />
   <br /></span>
   <p><span class="c3">Note that ORDERPACK 2.0 is <a href="http://www.fortran.com/F">F</a>-compatible.</span></p>
   <p><span class="c3">Illustrative Application</span></p>
-  <p><span class="c2">In spatial-temporal applications one often wishes to know the nearby observations (say the <em>m</em> closest) subject to having these
-  nearby observations also prior in time to the observation itself. Many of the ways of forming purely spatial neighbors such as those based upon Delaunay
-  triangles do not function well in a spatial-temporal setting. However, partial ranking always works and can function with many more dimensions. Since the
-  number of neighbors, <em>m</em>, is much smaller than the number of observations, <em>n</em>, the partial ranking algorithm saves a great deal of time
-  relative to full ranking. For 7,000 observations, the partial algorithm saves almost a factor of 200 in terms of time over the full algorithm. Finding all
-  the neighbors for 100,000 observations takes less than 8 minutes on a 600 Mhz PC, thus making spatial-temporal methods feasible for large data sets on
-  desktop machines. <a href="other/tn1.pdf">Documentation</a> <a href="other/time_neighbors_files.zip">Complete Application (source code, pc executable code, data,
-  documentation)</a></span></p>
+  <p><span class="c2">
+     In spatial-temporal applications one often wishes to know the nearby
+     observations (say the <em>m</em> closest) subject to having these
+     nearby observations also prior in time to the observation itself. Many
+     of the ways of forming purely spatial neighbors such as those based
+     upon Delaunay triangles do not function well in a spatial-temporal
+     setting. However, partial ranking always works and can function with
+     many more dimensions. Since the number of neighbors, <em>m</em>, is much
+     smaller than the number of observations, <em>n</em>, the partial ranking
+     algorithm saves a great deal of time relative to full ranking. For
+     7,000 observations, the partial algorithm saves almost a factor of 200
+     in terms of time over the full algorithm. Finding all the neighbors
+     for 100,000 observations takes less than 8 minutes on a 600 Mhz PC,
+     thus making spatial-temporal methods feasible for large data sets on
+     desktop machines. <a href="../other/tn1.pdf">Documentation</a> 
+     <a href="../other/time_neighbors_files.zip">Complete Application (source code, pc executable code, data, documentation)</a>
+  </span></p>
   <hr />
-
-
 
   </ul>
   <hr />
