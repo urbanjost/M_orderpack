@@ -1,5 +1,6 @@
 Module m_mulcnt
 Use m_uniinv
+implicit none
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: mulcnt

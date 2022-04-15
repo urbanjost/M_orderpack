@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.5% of total for source files.">66 statements</a>
+    title=" 0.5% of total for source files.">67 statements</a>
      </li> 
      
      
@@ -263,102 +263,103 @@
       <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl"><pre><span></span><a name="ln-1"></a><span class="k">Module </span><span class="n">m_unista</span>
 <a name="ln-2"></a><span class="k">Use </span><span class="n">m_uniinv</span>
-<a name="ln-3"></a><span class="k">Private</span>
-<a name="ln-4"></a><span class="kt">Integer</span><span class="p">,</span> <span class="k">Parameter</span> <span class="kd">::</span> <span class="n">kdp</span> <span class="o">=</span> <span class="nb">selected_real_kind</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
-<a name="ln-5"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">unista</span>
-<a name="ln-6"></a><span class="k">private</span> <span class="kd">::</span> <span class="n">kdp</span>
-<a name="ln-7"></a><span class="k">private</span> <span class="kd">::</span> <span class="n">R_unista</span><span class="p">,</span> <span class="n">I_unista</span><span class="p">,</span> <span class="n">D_unista</span>
-<a name="ln-8"></a><span class="k">interface </span><span class="n">unista</span>
-<a name="ln-9"></a>  <span class="k">module procedure </span><span class="n">d_unista</span><span class="p">,</span> <span class="n">r_unista</span><span class="p">,</span> <span class="n">i_unista</span>
-<a name="ln-10"></a><span class="k">end interface </span><span class="n">unista</span>
-<a name="ln-11"></a><span class="k">contains</span>
-<a name="ln-12"></a>
-<a name="ln-13"></a><span class="k">Subroutine </span><span class="n">D_unista</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">NUNI</span><span class="p">)</span>
-<a name="ln-14"></a><span class="c">!!  UNISTA = (Stable unique) Removes duplicates from an array,</span>
-<a name="ln-15"></a><span class="c">!!           leaving unique entries in the order of their first</span>
-<a name="ln-16"></a><span class="c">!!           appearance in the initial set.</span>
-<a name="ln-17"></a><span class="c">!! Michel Olagnon - Feb. 2000</span>
-<a name="ln-18"></a><span class="c">!!__________________________________________________________</span>
+<a name="ln-3"></a><span class="k">implicit none</span>
+<a name="ln-4"></a><span class="k">Private</span>
+<a name="ln-5"></a><span class="kt">Integer</span><span class="p">,</span> <span class="k">Parameter</span> <span class="kd">::</span> <span class="n">kdp</span> <span class="o">=</span> <span class="nb">selected_real_kind</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<a name="ln-6"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">unista</span>
+<a name="ln-7"></a><span class="k">private</span> <span class="kd">::</span> <span class="n">kdp</span>
+<a name="ln-8"></a><span class="k">private</span> <span class="kd">::</span> <span class="n">R_unista</span><span class="p">,</span> <span class="n">I_unista</span><span class="p">,</span> <span class="n">D_unista</span>
+<a name="ln-9"></a><span class="k">interface </span><span class="n">unista</span>
+<a name="ln-10"></a>  <span class="k">module procedure </span><span class="n">d_unista</span><span class="p">,</span> <span class="n">r_unista</span><span class="p">,</span> <span class="n">i_unista</span>
+<a name="ln-11"></a><span class="k">end interface </span><span class="n">unista</span>
+<a name="ln-12"></a><span class="k">contains</span>
+<a name="ln-13"></a>
+<a name="ln-14"></a><span class="k">Subroutine </span><span class="n">D_unista</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">NUNI</span><span class="p">)</span>
+<a name="ln-15"></a><span class="c">!!  UNISTA = (Stable unique) Removes duplicates from an array,</span>
+<a name="ln-16"></a><span class="c">!!           leaving unique entries in the order of their first</span>
+<a name="ln-17"></a><span class="c">!!           appearance in the initial set.</span>
+<a name="ln-18"></a><span class="c">!! Michel Olagnon - Feb. 2000</span>
 <a name="ln-19"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-20"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">kdp</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-21"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">NUNI</span>
-<a name="ln-22"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-23"></a><span class="c">!</span>
-<a name="ln-24"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
-<a name="ln-25"></a>      <span class="kt">Logical</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IFMPTYT</span>
-<a name="ln-26"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
-<a name="ln-27"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-28"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
-<a name="ln-29"></a>      <span class="n">IFMPTYT</span> <span class="o">=</span> <span class="p">.</span><span class="n">True</span><span class="p">.</span>
-<a name="ln-30"></a>      <span class="n">NUNI</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-31"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-32"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)))</span> <span class="k">Then</span>
-<a name="ln-33"></a><span class="k">            </span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="p">.</span><span class="n">False</span><span class="p">.</span>
-<a name="ln-34"></a>            <span class="n">NUNI</span> <span class="o">=</span> <span class="n">NUNI</span> <span class="o">+</span> <span class="mi">1</span>
-<a name="ln-35"></a>            <span class="n">XDONT</span> <span class="p">(</span><span class="n">NUNI</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
-<a name="ln-36"></a>         <span class="k">End If</span>
-<a name="ln-37"></a><span class="k">      End Do</span>
-<a name="ln-38"></a><span class="k">      Return</span>
-<a name="ln-39"></a><span class="c">!</span>
-<a name="ln-40"></a><span class="k">End Subroutine </span><span class="n">D_unista</span>
-<a name="ln-41"></a>
-<a name="ln-42"></a><span class="k">Subroutine </span><span class="n">R_unista</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">NUNI</span><span class="p">)</span>
-<a name="ln-43"></a><span class="c">!!  UNISTA = (Stable unique) Removes duplicates from an array,</span>
-<a name="ln-44"></a><span class="c">!!           leaving unique entries in the order of their first</span>
-<a name="ln-45"></a><span class="c">!!           appearance in the initial set.</span>
-<a name="ln-46"></a><span class="c">!! Michel Olagnon - Feb. 2000</span>
-<a name="ln-47"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-48"></a><span class="c">!!_________________________________________________________</span>
-<a name="ln-49"></a>      <span class="kt">Real</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-50"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">NUNI</span>
-<a name="ln-51"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-52"></a><span class="c">!</span>
-<a name="ln-53"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
-<a name="ln-54"></a>      <span class="kt">Logical</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IFMPTYT</span>
-<a name="ln-55"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
-<a name="ln-56"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-57"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
-<a name="ln-58"></a>      <span class="n">IFMPTYT</span> <span class="o">=</span> <span class="p">.</span><span class="n">True</span><span class="p">.</span>
-<a name="ln-59"></a>      <span class="n">NUNI</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-60"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-61"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)))</span> <span class="k">Then</span>
-<a name="ln-62"></a><span class="k">            </span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="p">.</span><span class="n">False</span><span class="p">.</span>
-<a name="ln-63"></a>            <span class="n">NUNI</span> <span class="o">=</span> <span class="n">NUNI</span> <span class="o">+</span> <span class="mi">1</span>
-<a name="ln-64"></a>            <span class="n">XDONT</span> <span class="p">(</span><span class="n">NUNI</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
-<a name="ln-65"></a>         <span class="k">End If</span>
-<a name="ln-66"></a><span class="k">      End Do</span>
-<a name="ln-67"></a><span class="k">      Return</span>
-<a name="ln-68"></a><span class="c">!</span>
-<a name="ln-69"></a><span class="k">End Subroutine </span><span class="n">R_unista</span>
-<a name="ln-70"></a><span class="k">Subroutine </span><span class="n">I_unista</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">NUNI</span><span class="p">)</span>
-<a name="ln-71"></a><span class="c">!!  UNISTA = (Stable unique) Removes duplicates from an array,</span>
-<a name="ln-72"></a><span class="c">!!           leaving unique entries in the order of their first</span>
-<a name="ln-73"></a><span class="c">!!           appearance in the initial set.</span>
-<a name="ln-74"></a><span class="c">!! Michel Olagnon - Feb. 2000</span>
-<a name="ln-75"></a><span class="c">!!__________________________________________________________</span>
+<a name="ln-20"></a><span class="c">!!__________________________________________________________</span>
+<a name="ln-21"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">kdp</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
+<a name="ln-22"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">NUNI</span>
+<a name="ln-23"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-24"></a><span class="c">!</span>
+<a name="ln-25"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
+<a name="ln-26"></a>      <span class="kt">Logical</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IFMPTYT</span>
+<a name="ln-27"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
+<a name="ln-28"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-29"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
+<a name="ln-30"></a>      <span class="n">IFMPTYT</span> <span class="o">=</span> <span class="p">.</span><span class="n">True</span><span class="p">.</span>
+<a name="ln-31"></a>      <span class="n">NUNI</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-32"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-33"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)))</span> <span class="k">Then</span>
+<a name="ln-34"></a><span class="k">            </span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="p">.</span><span class="n">False</span><span class="p">.</span>
+<a name="ln-35"></a>            <span class="n">NUNI</span> <span class="o">=</span> <span class="n">NUNI</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="ln-36"></a>            <span class="n">XDONT</span> <span class="p">(</span><span class="n">NUNI</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
+<a name="ln-37"></a>         <span class="k">End If</span>
+<a name="ln-38"></a><span class="k">      End Do</span>
+<a name="ln-39"></a><span class="k">      Return</span>
+<a name="ln-40"></a><span class="c">!</span>
+<a name="ln-41"></a><span class="k">End Subroutine </span><span class="n">D_unista</span>
+<a name="ln-42"></a>
+<a name="ln-43"></a><span class="k">Subroutine </span><span class="n">R_unista</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">NUNI</span><span class="p">)</span>
+<a name="ln-44"></a><span class="c">!!  UNISTA = (Stable unique) Removes duplicates from an array,</span>
+<a name="ln-45"></a><span class="c">!!           leaving unique entries in the order of their first</span>
+<a name="ln-46"></a><span class="c">!!           appearance in the initial set.</span>
+<a name="ln-47"></a><span class="c">!! Michel Olagnon - Feb. 2000</span>
+<a name="ln-48"></a><span class="c">!!__________________________________________________________</span>
+<a name="ln-49"></a><span class="c">!!_________________________________________________________</span>
+<a name="ln-50"></a>      <span class="kt">Real</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
+<a name="ln-51"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">NUNI</span>
+<a name="ln-52"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-53"></a><span class="c">!</span>
+<a name="ln-54"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
+<a name="ln-55"></a>      <span class="kt">Logical</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IFMPTYT</span>
+<a name="ln-56"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
+<a name="ln-57"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-58"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
+<a name="ln-59"></a>      <span class="n">IFMPTYT</span> <span class="o">=</span> <span class="p">.</span><span class="n">True</span><span class="p">.</span>
+<a name="ln-60"></a>      <span class="n">NUNI</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-61"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-62"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)))</span> <span class="k">Then</span>
+<a name="ln-63"></a><span class="k">            </span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="p">.</span><span class="n">False</span><span class="p">.</span>
+<a name="ln-64"></a>            <span class="n">NUNI</span> <span class="o">=</span> <span class="n">NUNI</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="ln-65"></a>            <span class="n">XDONT</span> <span class="p">(</span><span class="n">NUNI</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
+<a name="ln-66"></a>         <span class="k">End If</span>
+<a name="ln-67"></a><span class="k">      End Do</span>
+<a name="ln-68"></a><span class="k">      Return</span>
+<a name="ln-69"></a><span class="c">!</span>
+<a name="ln-70"></a><span class="k">End Subroutine </span><span class="n">R_unista</span>
+<a name="ln-71"></a><span class="k">Subroutine </span><span class="n">I_unista</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">NUNI</span><span class="p">)</span>
+<a name="ln-72"></a><span class="c">!!  UNISTA = (Stable unique) Removes duplicates from an array,</span>
+<a name="ln-73"></a><span class="c">!!           leaving unique entries in the order of their first</span>
+<a name="ln-74"></a><span class="c">!!           appearance in the initial set.</span>
+<a name="ln-75"></a><span class="c">!! Michel Olagnon - Feb. 2000</span>
 <a name="ln-76"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-77"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-78"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">NUNI</span>
-<a name="ln-79"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-80"></a><span class="c">!</span>
-<a name="ln-81"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
-<a name="ln-82"></a>      <span class="kt">Logical</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IFMPTYT</span>
-<a name="ln-83"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
-<a name="ln-84"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-85"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
-<a name="ln-86"></a>      <span class="n">IFMPTYT</span> <span class="o">=</span> <span class="p">.</span><span class="n">True</span><span class="p">.</span>
-<a name="ln-87"></a>      <span class="n">NUNI</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-88"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-89"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)))</span> <span class="k">Then</span>
-<a name="ln-90"></a><span class="k">            </span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="p">.</span><span class="n">False</span><span class="p">.</span>
-<a name="ln-91"></a>            <span class="n">NUNI</span> <span class="o">=</span> <span class="n">NUNI</span> <span class="o">+</span> <span class="mi">1</span>
-<a name="ln-92"></a>            <span class="n">XDONT</span> <span class="p">(</span><span class="n">NUNI</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
-<a name="ln-93"></a>         <span class="k">End If</span>
-<a name="ln-94"></a><span class="k">      End Do</span>
-<a name="ln-95"></a><span class="k">      Return</span>
-<a name="ln-96"></a><span class="c">!</span>
-<a name="ln-97"></a><span class="k">End Subroutine </span><span class="n">I_unista</span>
-<a name="ln-98"></a><span class="k">end module </span><span class="n">m_unista</span>
+<a name="ln-77"></a><span class="c">!!__________________________________________________________</span>
+<a name="ln-78"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">XDONT</span>
+<a name="ln-79"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">NUNI</span>
+<a name="ln-80"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-81"></a><span class="c">!</span>
+<a name="ln-82"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
+<a name="ln-83"></a>      <span class="kt">Logical</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IFMPTYT</span>
+<a name="ln-84"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
+<a name="ln-85"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-86"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
+<a name="ln-87"></a>      <span class="n">IFMPTYT</span> <span class="o">=</span> <span class="p">.</span><span class="n">True</span><span class="p">.</span>
+<a name="ln-88"></a>      <span class="n">NUNI</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-89"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-90"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)))</span> <span class="k">Then</span>
+<a name="ln-91"></a><span class="k">            </span><span class="n">IFMPTYT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="p">.</span><span class="n">False</span><span class="p">.</span>
+<a name="ln-92"></a>            <span class="n">NUNI</span> <span class="o">=</span> <span class="n">NUNI</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="ln-93"></a>            <span class="n">XDONT</span> <span class="p">(</span><span class="n">NUNI</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
+<a name="ln-94"></a>         <span class="k">End If</span>
+<a name="ln-95"></a><span class="k">      End Do</span>
+<a name="ln-96"></a><span class="k">      Return</span>
+<a name="ln-97"></a><span class="c">!</span>
+<a name="ln-98"></a><span class="k">End Subroutine </span><span class="n">I_unista</span>
+<a name="ln-99"></a><span class="k">end module </span><span class="n">m_unista</span>
 </pre></div>
 
     </section>
@@ -377,7 +378,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-15 10:52  
+             on 2022-04-15 11:12  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

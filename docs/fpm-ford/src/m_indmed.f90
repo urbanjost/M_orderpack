@@ -1,4 +1,6 @@
 Module m_indmed
+implicit none
+Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: indmed
 private :: kdp

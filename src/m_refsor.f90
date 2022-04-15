@@ -1,4 +1,6 @@
 Module m_refsor
+implicit none
+Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: refsor
 private :: kdp

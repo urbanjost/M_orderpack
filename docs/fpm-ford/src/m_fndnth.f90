@@ -1,4 +1,6 @@
 Module m_fndnth
+implicit none
+Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: fndnth
 private :: kdp

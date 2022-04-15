@@ -31,38 +31,47 @@ LIBS :=
 CC := cc
 CFLAGS := -O
 FC := gfortran
-FFLAGS := -O -J $(INSTALL)
-F90 := gfortran
-F90FLAGS := -O
-LDFLAGS := -I $(INSTALL)
+FFLAGS := -O -J $(INSTALL)/$(FC)
+LDFLAGS := -I $(INSTALL)/$(FC)
 AR=ar
 ARFLAGS=rU
 RANLIB=ranlib
 
 gfortran: FC=gfortran
-gfortran: FFLAGS := -g -O -Wall -std=f2018 -Wextra -Wno-maybe-uninitialized -Wno-uninitialized
+gfortran: FFLAGS := -g -O -std=f2018  \
+	  -Wall -Wextra -Wno-maybe-uninitialized -Wno-uninitialized \
+          -I $(INSTALL)/$(FC) -J $(INSTALL)/$(FC)
+gfortran: FFLAGS := \
+          -I $(INSTALL)/$(FC) -J $(INSTALL)/$(FC)
+LDFLAGS := -I $(INSTALL)/$(FC)
 gfortran: all
 	@echo built with $(FC)
 
 nvfortran: FC=nvfortran
-nvfortran: FFLAGS := -Minform=inform -Mbackslash -traceback
+nvfortran: FFLAGS := -Minform=inform -Mbackslash -traceback \
+          -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
+nvfortran: LDFLAGS := -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
 nvfortran: all
 	@echo built with $(FC)
 
 ifort: FC=ifort
-ifort: FFLAGS := -warn all -traceback
+ifort: FFLAGS := -warn all -traceback -check all -error-limit 1 -O0 -g -assume byterecl
+ifort: FFLAGS := -warn all -traceback -assume byterecl -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
+ifort: LDFLAGS := -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
+ifort: CC := icc
 ifort: all
 	@echo built with $(FC)
 
 nagfor: FC=nagfor
 nagfor: FFLAGS := -C all
+nagfor: LDFLAGS := -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
 nagfor: all
 	@echo built with $(FC)
 
 # name of library to build of the form lib$NAME.a
 LIBNAME=orderpack
 # directory to place output files in
-LIBRARY=$(INSTALL)/lib$(LIBNAME).a
+LIBRARY=$(INSTALL)/$(FC)/lib$(LIBNAME).a
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 # set the '.RECIPEPREFIX' variable to an alternate character
 #.RECIPEPREFIX = >
@@ -74,32 +83,35 @@ all: directorysetup $(OBJS) $(LIBRARY) $(CPROG) $(PROG) $(TPROG)
 #-------------------------------------------------------------------------------
 # what to do before you start compiling
 directorysetup:
-	@ echo "MAKING LIBRARY:   $(LIBRARY)" 
-	@ [ -d "$(INSTALL)" ] || \
-	(echo "making directory $(INSTALL)"; \
-	mkdir -p $(INSTALL))
+	@ echo "MAKING LIBRARY:   $(LIBRARY)"
+	@[ -d "$(INSTALL)/$(FC)" ] || \
+	(echo "making directory $(INSTALL)/$(FC)"; \
+	mkdir -p $(INSTALL)/$(FC))
 #-------------------------------------------------------------------------------
 $(PROG): $(OBJS) $(LIBRARY)
-	@echo "PROG"
-	-$(F90) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS)||echo "ouch: $@.f90 "
+	@echo '==>PROG'
+	-$(FC) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS)||echo "ouch: $@.f90 "
 #-------------------------------------------------------------------------------
 # what to do after you have built the library
 $(LIBRARY): $(LIBOBJS)
-	@echo "LIBRARY"
+	@echo '==>LIBRARY'
 	@ $(RANLIB) $(LIBRARY)
 	@ echo "TARGETS FOR $(LIBRARY) UP TO DATE"
-	-$(FC) $(FFLAGS) $(LDFLAGS) $@.f90 -o $@ $(LIBS)
+	#-$(FC) $(FFLAGS) $(LDFLAGS) $@.f90 -o $@ $(LIBS)
 #-------------------------------------------------------------------------------
 #$(OBJS): draw.h
 #-------------------------------------------------------------------------------
 $(TPROG): $(LIBRARIES)
-	@echo "TPROG"
-	-$(F90) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS)||echo "ouch: $@.f90 "
+	@echo '==>TPROG'
+	-$(FC) $(FFLAGS) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS)||echo "ouch: $@.f90 "
 #-------------------------------------------------------------------------------
 .phony: clean
 clean:
-	-rm -f $(PROG) $(CPROG) $(TPROG) $(OBJS) *.mod *.o
-	-rm -f $(LIBRARY) $(INSTALL)/*.mod
+	@echo PROG ...... $(PROG)
+	@echo CPROG ..... $(CPROG)
+	@echo TPROG ..... $(TPROG)
+	@echo OBJS ...... $(OBJS)
+	-rm -fv $(PROG) $(CPROG) $(TPROG) $(OBJS) *.mod *.o
 #-------------------------------------------------------------------------------
 .SUFFIXES: $(SUFFIXES) .f90 .F90 .ff .FF .shf
 	# .shf -- assumed to write Fortran code to stdout when executed
@@ -112,12 +124,12 @@ clean:
 #
 #-------------------------------------------------------------------------------
 .f90.o:
-	@echo "f90"
-	$(F90) $(F90FLAGS) -c $<
+	@echo '==>.f90.o'
+	$(FC) $(FFLAGS) -c $<
 #-------------------------------------------------------------------------------
 .F90.o:
-	@echo "F90"
-	$(F90) $(F90FLAGS) -c $<
+	@echo '==>.F90.o'
+	$(FC) $(FFLAGS) -c $<
 #-------------------------------------------------------------------------------
 # Fortran free format file known to have prep(1) preprocessor directives
 # run thru prep(1) preprocessor with system commands allowed, variable F90 defined
@@ -136,13 +148,14 @@ clean:
 	prep -D F90 `uname -o` -verbose -i $(<) -o $(*F).F90
 	@[ -s $(*F).F90 ] || echo "error: $(*F).F90 is empty"
 .f90.a: $(OBJS) $(LIBRARY)
-	@echo "f90.a"
-	echo "LIBRARY is $(LIBRARY)"
-	$(F90) -c $(F90FLAGS) $< -o $%
+	@echo '==>.f90.a'
+	@echo "LIBRARY is $(LIBRARY)"
+	$(FC) -c $(FFLAGS) $< -o $%
 	@ $(AR) $(ARFLAGS) $(LIBRARY) $% 
 	@ $(AR) $(ARFLAGS) $(LIBRARY) $<  # optionally store the source code too
 	#@ /bin/rm -f ${?F:.f90=.o} $%
 .c.a:
+	@echo '==>.c.a'
 	$(CC) -c $(CFLAGS) $< -o $%
 	@ $(AR) $(ARFLAGS) $(LIBRARY) $% 
 	@ $(AR) $(ARFLAGS) $(LIBRARY) $<  # optionally store the source code too

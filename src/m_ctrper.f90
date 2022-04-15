@@ -1,5 +1,6 @@
 Module m_ctrper
 Use m_mrgrnk
+implicit none
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: ctrper

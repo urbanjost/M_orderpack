@@ -1,4 +1,6 @@
 Module m_inssor
+implicit none
+Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: inssor
 private :: kdp

@@ -24,18 +24,18 @@ date: 2000-2012
      
      # for gfortran
      make clean
-     make F90=gfortran gfortran
+     make gfortran
      
      # for ifort
      make clean
-     make F90=ifort ifort
+     make ifort
 
      # for nvfortran
      make clean
-     make F90=nvfortran nvfortran
+     make nvfortran
 
 This will compile the Fortran module and basic example
-program that exercise the routine.
+programs that exercise the routine.
 
 ## BUILD and TEST with FPM ![-](docs/images/fpm_logo.gif)
 

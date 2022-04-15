@@ -1,4 +1,6 @@
 Module m_refpar
+implicit none
+Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: refpar
 private :: kdp
