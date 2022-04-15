@@ -1,18 +1,17 @@
 ![ORDERPACK](docs/images/orderpack.gif)
 ## NAME
-   orderpack(3f) - a clone of orderpack2.0 for sorting and ordering
+   orderpack(3f) - general and specialized ranking and sorting routines
    (LICENSE:PD)
 
 ## DESCRIPTION
 
-This module is a clone of Orderpack 2.0 from Michel Olagnon that has
-been restructured so as to be useable as an fpm(1) package.
+This repository is a clone of ORDERPACK 2.0 from Michel Olagnon that
+has been restructured so as to be useable as an fpm(1) package; placed
+in a git(1) repository; and has a growing set of unit tests.
 
 ORDERPACK 2.0 provides Fortran procedures for General and Specialized
-Ranking and Sorting Routines.
-
-It includes Fortran 90 source code for Unconditional, Unique, and Partial
-Ranking, Sorting, and Permutation.
+Ranking and Sorting Routines.  It includes Fortran 90 source code for
+Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
 
 Authors: Michel Olagnon
 date: 2000-2012
