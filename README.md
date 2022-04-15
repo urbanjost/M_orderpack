@@ -36,7 +36,7 @@ date: 2000-2012
 This will compile the Fortran module and basic example
 programs that exercise the routine.
 
-## Build and test with fpm           ![-](docs/images/fpm_logo.gif)
+## Build and test with ![fpm](docs/images/fpm_logo.gif)
 
    Download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
