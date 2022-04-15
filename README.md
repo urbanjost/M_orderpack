@@ -1,9 +1,9 @@
 ![ORDERPACK](docs/images/orderpack.gif)
-## NAME
+## Name
    orderpack(3f) - general and specialized ranking and sorting routines
    (LICENSE:PD)
 
-## DESCRIPTION
+## Description
 
 This repository is a clone of ORDERPACK 2.0 from Michel Olagnon that
 has been restructured so as to be useable as an fpm(1) package; placed
@@ -16,7 +16,7 @@ Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
 Authors: Michel Olagnon
 date: 2000-2012
 
-## BUILDING THE MODULE USING make(1) ![gmake](docs/images/gnu.gif)
+## Building the module using make(1) ![gmake](docs/images/gnu.gif)
      git clone https://github.com/urbanjost/orderpack.git
      cd orderpack/src
      # change Makefile if not using one of the listed compilers
@@ -36,7 +36,7 @@ date: 2000-2012
 This will compile the Fortran module and basic example
 programs that exercise the routine.
 
-## BUILD and TEST with FPM ![-](docs/images/fpm_logo.gif)
+## Build and test with fpm           ![-](docs/images/fpm_logo.gif)
 
    Download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
@@ -53,9 +53,9 @@ programs that exercise the routine.
         [dependencies]
         orderpack        = { git = "https://github.com/urbanjost/orderpack.git" }
 ```
-## DOCUMENTATION   ![docs](docs/images/docs.gif)
+## Documentation   ![docs](docs/images/docs.gif)
 
-### USER
+### User
    - original documentation of [procedures](https://urbanjost.github.io/orderpack/).
 <!--
    - A single page that uses javascript to combine all the HTML
@@ -76,7 +76,7 @@ programs that exercise the routine.
 
    - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 
-### DEVELOPER
+### Developer
    - [ford(1) output](https://urbanjost.github.io/orderpack/fpm-ford/index.html).
 <!--
    - [doxygen(1) output](https://urbanjost.github.io/orderpack/doxygen_out/html/index.html).
@@ -85,7 +85,7 @@ programs that exercise the routine.
    - [github action status](docs/STATUS.md) 
 ---
 
-## REFERENCES ![-](docs/images/ref.gif)
+## References ![-](docs/images/ref.gif)
 
    * [ORDERPACK2.0](http://www.fortran-2000.com/rank/)
    * [ORDERPACK2.0](https://forge-dga.jouy.inra.fr/svn/qtlmap/trunk/lib/orderpack-2.0/index.html)
