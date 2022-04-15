@@ -16,7 +16,7 @@ integer                            :: i, j, ierr, icol
    call set_args('--col:c 1',help_text,version_text) ! crack command line
    do i=1,size(files)                                ! for each file read and reverse lines
       call read_table(files(i),table,ierr)           ! read file into numeric array
-      if(.not.allocated(table))then
+      if(.not.allocated(table).or.ierr.ne.0)then
          write(stdout,g)'*demo_swallow* failed to load file '//files(i)
       else
          icol=iget('col')
@@ -56,17 +56,18 @@ SYNOPSIS
    tablesort [--col NUM] INPUT_FILE(S)|[ --help][ --version]
 
 DESCRIPTION
-   Sort lines in a file by reading into memory and sorting
-   numerically by the specified column. The default column is
-   the left-most, designated as column "1" (one).
+   Sort lines in a file by reading into memory and sorting numerically by
+   the specified column. The default column is the left-most, designated
+   as column "1" (one).
 
-   This is a simple use of the M_sort(3f) module and reads the files
+   This is a simple use of the orderpack(3f) module and reads the files
    into memory, which could cause a machine to run out of memory if
    input files are large.
 
 OPTIONS
        --col,c        column number to sort by
        INPUT_FILE(s)  input file(s)
+       --verbose      display additional information for each file
        --help         display help text and exit
        --version      display version information and exit
 
@@ -80,7 +81,7 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK variable -varname version_text
 PRODUCT:        GPF (General Purpose Fortran) utilities and examples
 PROGRAM:        tablesort(1f)
-DESCRIPTION:    sort lines in a file
+DESCRIPTION:    sort a file containing a numeric table
 VERSION:        1.0, 2021-01-10
 AUTHOR:         John S. Urban
 HOME PAGE:      http://www.urbanjost.altervista.org/index.html
