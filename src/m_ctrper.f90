@@ -11,19 +11,19 @@ end interface ctrper
 contains
 
 Subroutine D_ctrper (XDONT, PCLS)
-!   Permute array XVALT randomly, but leaving elements close
-!   to their initial locations (nearbyness is controled by PCLS).
-! _________________________________________________________________
-!   The routine takes the 1...size(XVALT) index array as real
-!   values, takes a combination of these values and of random
-!   values as a perturbation of the index array, and sorts the
-!   initial set according to the ranks of these perturbated indices.
-!   The relative proportion of initial order and random order
-!   is 1-PCLS / PCLS, thus when PCLS = 0, there is no change in
-!   the order whereas the new order is fully random when PCLS = 1.
-!   Michel Olagnon - May 2000.
-! _________________________________________________________________
-! __________________________________________________________
+!!  Permute array XVALT randomly, but leaving elements close
+!!  to their initial locations (nearbyness is controled by PCLS).
+!!_________________________________________________________________
+!!  The routine takes the 1...size(XVALT) index array as real
+!!  values, takes a combination of these values and of random
+!!  values as a perturbation of the index array, and sorts the
+!!  initial set according to the ranks of these perturbated indices.
+!!  The relative proportion of initial order and random order
+!!  is 1-PCLS / PCLS, thus when PCLS = 0, there is no change in
+!!  the order whereas the new order is fully random when PCLS = 1.
+!!  Michel Olagnon - May 2000.
+!!_________________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (InOut) :: XDONT
       Real, Intent (In) :: PCLS
 ! __________________________________________________________
@@ -43,19 +43,19 @@ Subroutine D_ctrper (XDONT, PCLS)
 End Subroutine D_ctrper
 
 Subroutine R_ctrper (XDONT, PCLS)
-!   Permute array XVALT randomly, but leaving elements close
-!   to their initial locations (nearbyness is controled by PCLS).
-! _________________________________________________________________
-!   The routine takes the 1...size(XVALT) index array as real
-!   values, takes a combination of these values and of random
-!   values as a perturbation of the index array, and sorts the
-!   initial set according to the ranks of these perturbated indices.
-!   The relative proportion of initial order and random order
-!   is 1-PCLS / PCLS, thus when PCLS = 0, there is no change in
-!   the order whereas the new order is fully random when PCLS = 1.
-!   Michel Olagnon - May 2000.
-! _________________________________________________________________
-! _________________________________________________________
+!!  Permute array XVALT randomly, but leaving elements close
+!!  to their initial locations (nearbyness is controled by PCLS).
+!!_________________________________________________________________
+!!  The routine takes the 1...size(XVALT) index array as real
+!!  values, takes a combination of these values and of random
+!!  values as a perturbation of the index array, and sorts the
+!!  initial set according to the ranks of these perturbated indices.
+!!  The relative proportion of initial order and random order
+!!  is 1-PCLS / PCLS, thus when PCLS = 0, there is no change in
+!!  the order whereas the new order is fully random when PCLS = 1.
+!!  Michel Olagnon - May 2000.
+!!_________________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (InOut) :: XDONT
       Real, Intent (In) :: PCLS
 ! __________________________________________________________
@@ -74,19 +74,19 @@ Subroutine R_ctrper (XDONT, PCLS)
 !
 End Subroutine R_ctrper
 Subroutine I_ctrper (XDONT, PCLS)
-!   Permute array XVALT randomly, but leaving elements close
-!   to their initial locations (nearbyness is controled by PCLS).
-! _________________________________________________________________
-!   The routine takes the 1...size(XVALT) index array as real
-!   values, takes a combination of these values and of random
-!   values as a perturbation of the index array, and sorts the
-!   initial set according to the ranks of these perturbated indices.
-!   The relative proportion of initial order and random order
-!   is 1-PCLS / PCLS, thus when PCLS = 0, there is no change in
-!   the order whereas the new order is fully random when PCLS = 1.
-!   Michel Olagnon - May 2000.
-! _________________________________________________________________
-! __________________________________________________________
+!!  Permute array XVALT randomly, but leaving elements close
+!!  to their initial locations (nearbyness is controled by PCLS).
+!!_________________________________________________________________
+!!  The routine takes the 1...size(XVALT) index array as real
+!!  values, takes a combination of these values and of random
+!!  values as a perturbation of the index array, and sorts the
+!!  initial set according to the ranks of these perturbated indices.
+!!  The relative proportion of initial order and random order
+!!  is 1-PCLS / PCLS, thus when PCLS = 0, there is no change in
+!!  the order whereas the new order is fully random when PCLS = 1.
+!!  Michel Olagnon - May 2000.
+!!_________________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (InOut)  :: XDONT
       Real, Intent (In) :: PCLS
 ! __________________________________________________________

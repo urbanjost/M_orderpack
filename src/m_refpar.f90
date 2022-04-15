@@ -9,17 +9,17 @@ end interface refpar
 contains
 
 Subroutine D_refpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm. It uses
-!  a temporary array, where it stores the partially ranked indices
-!  of the values. It iterates until it can bring the number of
-!  values lower than the pivot to exactly NORD, and then uses an
-!  insertion sort to rank this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm. It uses
+!! a temporary array, where it stores the partially ranked indices
+!! of the values. It iterates until it can bring the number of
+!! values lower than the pivot to exactly NORD, and then uses an
+!! insertion sort to rank this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
@@ -126,17 +126,17 @@ Subroutine D_refpar (XDONT, IRNGT, NORD)
 End Subroutine D_refpar
 
 Subroutine R_refpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm. It uses
-!  a temporary array, where it stores the partially ranked indices
-!  of the values. It iterates until it can bring the number of
-!  values lower than the pivot to exactly NORD, and then uses an
-!  insertion sort to rank this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! _________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm. It uses
+!! a temporary array, where it stores the partially ranked indices
+!! of the values. It iterates until it can bring the number of
+!! values lower than the pivot to exactly NORD, and then uses an
+!! insertion sort to rank this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
@@ -242,17 +242,17 @@ Subroutine R_refpar (XDONT, IRNGT, NORD)
 !
 End Subroutine R_refpar
 Subroutine I_refpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm. It uses
-!  a temporary array, where it stores the partially ranked indices
-!  of the values. It iterates until it can bring the number of
-!  values lower than the pivot to exactly NORD, and then uses an
-!  insertion sort to rank this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm. It uses
+!! a temporary array, where it stores the partially ranked indices
+!! of the values. It iterates until it can bring the number of
+!! values lower than the pivot to exactly NORD, and then uses an
+!! insertion sort to rank this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD

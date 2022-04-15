@@ -9,13 +9,13 @@ end interface mrgref
 contains
 
 Subroutine D_mrgref (XVALT, IRNGT)
-!   Ranks array XVALT into index array IRNGT, using merge-sort
-! __________________________________________________________
-!   This version is not optimized for performance, and is thus
-!   not as difficult to read as some other ones.
-!   Michel Olagnon - April 2000
-! __________________________________________________________
-! __________________________________________________________
+!!  Ranks array XVALT into index array IRNGT, using merge-sort
+!!__________________________________________________________
+!!  This version is not optimized for performance, and is thus
+!!  not as difficult to read as some other ones.
+!!  Michel Olagnon - April 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
@@ -138,13 +138,13 @@ Subroutine D_mrgref (XVALT, IRNGT)
 End Subroutine D_mrgref
 
 Subroutine R_mrgref (XVALT, IRNGT)
-!   Ranks array XVALT into index array IRNGT, using merge-sort
-! __________________________________________________________
-!   This version is not optimized for performance, and is thus
-!   not as difficult to read as some other ones.
-!   Michel Olagnon - April 2000
-! __________________________________________________________
-! _________________________________________________________
+!!  Ranks array XVALT into index array IRNGT, using merge-sort
+!!__________________________________________________________
+!!  This version is not optimized for performance, and is thus
+!!  not as difficult to read as some other ones.
+!!  Michel Olagnon - April 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
@@ -266,13 +266,13 @@ Subroutine R_mrgref (XVALT, IRNGT)
 !
 End Subroutine R_mrgref
 Subroutine I_mrgref (XVALT, IRNGT)
-!   Ranks array XVALT into index array IRNGT, using merge-sort
-! __________________________________________________________
-!   This version is not optimized for performance, and is thus
-!   not as difficult to read as some other ones.
-!   Michel Olagnon - April 2000
-! __________________________________________________________
-! __________________________________________________________
+!!  Ranks array XVALT into index array IRNGT, using merge-sort
+!!__________________________________________________________
+!!  This version is not optimized for performance, and is thus
+!!  not as difficult to read as some other ones.
+!!  Michel Olagnon - April 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________

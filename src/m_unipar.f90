@@ -9,24 +9,24 @@ end interface unipar
 contains
 
 Subroutine D_unipar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD at most,
-!  removing duplicate entries
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  quickly as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small. At all times, the
-!  NORD first values in ILOWT correspond to distinct values
-!  of the input array.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD at most,
+!! removing duplicate entries
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! quickly as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small. At all times, the
+!! NORD first values in ILOWT correspond to distinct values
+!! of the input array.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (InOut) :: NORD
@@ -610,24 +610,24 @@ Subroutine D_unipar (XDONT, IRNGT, NORD)
 End Subroutine D_unipar
 
 Subroutine R_unipar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD at most,
-!  removing duplicate entries
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  quickly as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small. At all times, the
-!  NORD first values in ILOWT correspond to distinct values
-!  of the input array.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! _________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD at most,
+!! removing duplicate entries
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! quickly as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small. At all times, the
+!! NORD first values in ILOWT correspond to distinct values
+!! of the input array.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (InOut) :: NORD
@@ -1210,24 +1210,24 @@ Subroutine R_unipar (XDONT, IRNGT, NORD)
 !
 End Subroutine R_unipar
 Subroutine I_unipar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD at most,
-!  removing duplicate entries
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  quickly as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small. At all times, the
-!  NORD first values in ILOWT correspond to distinct values
-!  of the input array.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD at most,
+!! removing duplicate entries
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! quickly as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small. At all times, the
+!! NORD first values in ILOWT correspond to distinct values
+!! of the input array.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (InOut) :: NORD

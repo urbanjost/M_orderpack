@@ -9,16 +9,16 @@ end interface fndnth
 contains
 
 Function D_fndnth (XDONT, NORD) Result (FNDNTH)
-!  Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-! ______________________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It is faster when NORD is very small (2-5),
-!  and it requires only a workarray of size NORD and type of XDONT,
-!  but worst case behavior can happen fairly probably (initially inverse
-!  sorted). In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Aug. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
+!!______________________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It is faster when NORD is very small (2-5),
+!! and it requires only a workarray of size NORD and type of XDONT,
+!! but worst case behavior can happen fairly probably (initially inverse
+!! sorted). In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Aug. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (Kind=kdp), Dimension (:), Intent (In) :: XDONT
       Real (Kind=kdp) :: FNDNTH
       Integer, Intent (In) :: NORD
@@ -60,16 +60,16 @@ Function D_fndnth (XDONT, NORD) Result (FNDNTH)
 End Function D_fndnth
 
 Function R_fndnth (XDONT, NORD) Result (FNDNTH)
-!  Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-! ______________________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It is faster when NORD is very small (2-5),
-!  and it requires only a workarray of size NORD and type of XDONT,
-!  but worst case behavior can happen fairly probably (initially inverse
-!  sorted). In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Aug. 2000
-! __________________________________________________________
-! _________________________________________________________
+!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
+!!______________________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It is faster when NORD is very small (2-5),
+!! and it requires only a workarray of size NORD and type of XDONT,
+!! but worst case behavior can happen fairly probably (initially inverse
+!! sorted). In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Aug. 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Real :: FNDNTH
       Integer, Intent (In) :: NORD
@@ -110,16 +110,16 @@ Function R_fndnth (XDONT, NORD) Result (FNDNTH)
 !
 End Function R_fndnth
 Function I_fndnth (XDONT, NORD) Result (FNDNTH)
-!  Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-! ______________________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It is faster when NORD is very small (2-5),
-!  and it requires only a workarray of size NORD and type of XDONT,
-!  but worst case behavior can happen fairly probably (initially inverse
-!  sorted). In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Aug. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
+!!______________________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It is faster when NORD is very small (2-5),
+!! and it requires only a workarray of size NORD and type of XDONT,
+!! but worst case behavior can happen fairly probably (initially inverse
+!! sorted). In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Aug. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In) :: XDONT
       Integer :: fndnth
       Integer, Intent (In) :: NORD

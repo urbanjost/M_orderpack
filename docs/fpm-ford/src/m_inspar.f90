@@ -9,17 +9,17 @@ end interface inspar
 contains
 
 Subroutine D_inspar (XDONT, NORD)
-!  Sorts partially XDONT, bringing the NORD lowest values at the
-!  begining of the array
-! __________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It does not use any work array
-!  and is faster when NORD is very small (2-5), but worst case
-!  behavior can happen fairly probably (initially inverse sorted)
-!  In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Sorts partially XDONT, bringing the NORD lowest values at the
+!! begining of the array
+!!__________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It does not use any work array
+!! and is faster when NORD is very small (2-5), but worst case
+!! behavior can happen fairly probably (initially inverse sorted)
+!! In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (InOut) :: XDONT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
@@ -54,17 +54,17 @@ Subroutine D_inspar (XDONT, NORD)
 End Subroutine D_inspar
 
 Subroutine R_inspar (XDONT, NORD)
-!  Sorts partially XDONT, bringing the NORD lowest values at the
-!  begining of the array
-! __________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It does not use any work array
-!  and is faster when NORD is very small (2-5), but worst case
-!  behavior can happen fairly probably (initially inverse sorted)
-!  In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! _________________________________________________________
+!! Sorts partially XDONT, bringing the NORD lowest values at the
+!! begining of the array
+!!__________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It does not use any work array
+!! and is faster when NORD is very small (2-5), but worst case
+!! behavior can happen fairly probably (initially inverse sorted)
+!! In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (InOut) :: XDONT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
@@ -98,17 +98,17 @@ Subroutine R_inspar (XDONT, NORD)
 !
 End Subroutine R_inspar
 Subroutine I_inspar (XDONT, NORD)
-!  Sorts partially XDONT, bringing the NORD lowest values at the
-!  begining of the array
-! __________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It does not use any work array
-!  and is faster when NORD is very small (2-5), but worst case
-!  behavior can happen fairly probably (initially inverse sorted)
-!  In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Sorts partially XDONT, bringing the NORD lowest values at the
+!! begining of the array
+!!__________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It does not use any work array
+!! and is faster when NORD is very small (2-5), but worst case
+!! behavior can happen fairly probably (initially inverse sorted)
+!! In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (InOut)  :: XDONT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________

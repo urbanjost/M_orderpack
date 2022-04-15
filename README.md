@@ -1,3 +1,4 @@
+![ORDERPACK](docs/images/orderpack.gif)
 ## NAME
    orderpack(3f) - a clone of orderpack2.0 for sorting and ordering
    (LICENSE:PD)

@@ -9,12 +9,12 @@ end interface mrgrnk
 contains
 
 Subroutine D_mrgrnk (XDONT, IRNGT)
-! __________________________________________________________
-!   MRGRNK = Merge-sort ranking of an array
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! __________________________________________________________
+!!__________________________________________________________
+!!  MRGRNK = Merge-sort ranking of an array
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
@@ -209,12 +209,12 @@ Subroutine D_mrgrnk (XDONT, IRNGT)
 End Subroutine D_mrgrnk
 
 Subroutine R_mrgrnk (XDONT, IRNGT)
-! __________________________________________________________
-!   MRGRNK = Merge-sort ranking of an array
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! _________________________________________________________
+!!__________________________________________________________
+!!  MRGRNK = Merge-sort ranking of an array
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
@@ -408,12 +408,12 @@ Subroutine R_mrgrnk (XDONT, IRNGT)
 !
 End Subroutine R_mrgrnk
 Subroutine I_mrgrnk (XDONT, IRNGT)
-! __________________________________________________________
-!   MRGRNK = Merge-sort ranking of an array
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! __________________________________________________________
+!!__________________________________________________________
+!!  MRGRNK = Merge-sort ranking of an array
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________

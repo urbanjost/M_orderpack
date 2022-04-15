@@ -11,8 +11,8 @@ end interface indmed
 contains
 
 Subroutine D_indmed (XDONT, INDM)
-!  Returns index of median value of XDONT.
-! __________________________________________________________
+!! Returns index of median value of XDONT.
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Intent (Out) :: INDM
 ! __________________________________________________________
@@ -28,14 +28,14 @@ Subroutine D_indmed (XDONT, INDM)
       Deallocate (IDONT)
 End Subroutine D_indmed
    Recursive Subroutine d_med (XDATT, IDATT, ires_med)
-!  Finds the index of the median of XDONT using the recursive procedure
-!  described in Knuth, The Art of Computer Programming,
-!  vol. 3, 5.3.3 - This procedure is linear in time, and
-!  does not require to be able to interpolate in the
-!  set as the one used in INDNTH. It also has better worst
-!  case behavior than INDNTH, but is about 30% slower in
-!  average for random uniformly distributed values.
-! __________________________________________________________
+!! Finds the index of the median of XDONT using the recursive procedure
+!! described in Knuth, The Art of Computer Programming,
+!! vol. 3, 5.3.3 - This procedure is linear in time, and
+!! does not require to be able to interpolate in the
+!! set as the one used in INDNTH. It also has better worst
+!! case behavior than INDNTH, but is about 30% slower in
+!! average for random uniformly distributed values.
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDATT
       Integer, Dimension (:), Intent (In) :: IDATT
       Integer, Intent (Out):: ires_med
@@ -119,7 +119,7 @@ End Subroutine D_indmed
 !  This is done by a variant of insertion sort where a first
 !  pass is used to bring the smallest element to the first position
 !  decreasing disorder at the same time, so that we may remove
-!  remove the loop test in the insertion loop.
+!  the loop test in the insertion loop.
 !
       IMAX = 1
       IMIN = 1
@@ -425,14 +425,14 @@ Subroutine R_indmed (XDONT, INDM)
       Deallocate (IDONT)
 End Subroutine R_indmed
    Recursive Subroutine r_med (XDATT, IDATT, ires_med)
-!  Finds the index of the median of XDONT using the recursive procedure
-!  described in Knuth, The Art of Computer Programming,
-!  vol. 3, 5.3.3 - This procedure is linear in time, and
-!  does not require to be able to interpolate in the
-!  set as the one used in INDNTH. It also has better worst
-!  case behavior than INDNTH, but is about 30% slower in
-!  average for random uniformly distributed values.
-! __________________________________________________________
+!! Finds the index of the median of XDONT using the recursive procedure
+!! described in Knuth, The Art of Computer Programming,
+!! vol. 3, 5.3.3 - This procedure is linear in time, and
+!! does not require to be able to interpolate in the
+!! set as the one used in INDNTH. It also has better worst
+!! case behavior than INDNTH, but is about 30% slower in
+!! average for random uniformly distributed values.
+!!__________________________________________________________
       Real, Dimension (:), Intent (In) :: XDATT
       Integer, Dimension (:), Intent (In) :: IDATT
       Integer, Intent (Out) :: ires_med
@@ -804,7 +804,7 @@ End Subroutine R_indmed
 !
    END Subroutine r_med
 Subroutine I_indmed (XDONT, INDM)
-!  Returns index of median value of XDONT.
+!! Returns index of median value of XDONT.
 ! __________________________________________________________
       Integer, Dimension (:), Intent (In) :: XDONT
       Integer, Intent (Out) :: INDM
@@ -821,14 +821,14 @@ Subroutine I_indmed (XDONT, INDM)
       Deallocate (IDONT)
 End Subroutine I_indmed
    Recursive Subroutine i_med (XDATT, IDATT, ires_med)
-!  Finds the index of the median of XDONT using the recursive procedure
-!  described in Knuth, The Art of Computer Programming,
-!  vol. 3, 5.3.3 - This procedure is linear in time, and
-!  does not require to be able to interpolate in the
-!  set as the one used in INDNTH. It also has better worst
-!  case behavior than INDNTH, but is about 30% slower in
-!  average for random uniformly distributed values.
-! __________________________________________________________
+!! Finds the index of the median of XDONT using the recursive procedure
+!! described in Knuth, The Art of Computer Programming,
+!! vol. 3, 5.3.3 - This procedure is linear in time, and
+!! does not require to be able to interpolate in the
+!! set as the one used in INDNTH. It also has better worst
+!! case behavior than INDNTH, but is about 30% slower in
+!! average for random uniformly distributed values.
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In) :: XDATT
       Integer, Dimension (:), Intent (In) :: IDATT
       Integer, Intent (Out) :: ires_med

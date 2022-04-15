@@ -9,21 +9,21 @@ end interface rnkpar
 contains
 
 Subroutine D_rnkpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
@@ -529,21 +529,21 @@ Subroutine D_rnkpar (XDONT, IRNGT, NORD)
 End Subroutine D_rnkpar
 
 Subroutine R_rnkpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! _________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
@@ -1048,21 +1048,21 @@ Subroutine R_rnkpar (XDONT, IRNGT, NORD)
 !
 End Subroutine R_rnkpar
 Subroutine I_rnkpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD

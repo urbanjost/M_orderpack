@@ -11,20 +11,20 @@ end interface refsor
 contains
 
 Subroutine D_refsor (XDONT)
-!  Sorts XDONT into ascending order - Quicksort
-! __________________________________________________________
-!  Quicksort chooses a "pivot" in the set, and explores the
-!  array from both ends, looking for a value > pivot with the
-!  increasing index, for a value <= pivot with the decreasing
-!  index, and swapping them when it has found one of each.
-!  The array is then subdivided in 2 ([3]) subsets:
-!  { values <= pivot} {pivot} {values > pivot}
-!  One then call recursively the program to sort each subset.
-!  When the size of the subarray is small enough, one uses an
-!  insertion sort that is faster for very small sets.
-!  Michel Olagnon - Apr. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Sorts XDONT into ascending order - Quicksort
+!!__________________________________________________________
+!! Quicksort chooses a "pivot" in the set, and explores the
+!! array from both ends, looking for a value > pivot with the
+!! increasing index, for a value <= pivot with the decreasing
+!! index, and swapping them when it has found one of each.
+!! The array is then subdivided in 2 ([3]) subsets:
+!! { values <= pivot} {pivot} {values > pivot}
+!! One then call recursively the program to sort each subset.
+!! When the size of the subarray is small enough, one uses an
+!! insertion sort that is faster for very small sets.
+!! Michel Olagnon - Apr. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
 !
@@ -140,20 +140,20 @@ Recursive Subroutine D_subsor (XDONT, IDEB1, IFIN1)
 End Subroutine D_inssor
 !
 Subroutine R_refsor (XDONT)
-!  Sorts XDONT into ascending order - Quicksort
-! __________________________________________________________
-!  Quicksort chooses a "pivot" in the set, and explores the
-!  array from both ends, looking for a value > pivot with the
-!  increasing index, for a value <= pivot with the decreasing
-!  index, and swapping them when it has found one of each.
-!  The array is then subdivided in 2 ([3]) subsets:
-!  { values <= pivot} {pivot} {values > pivot}
-!  One then call recursively the program to sort each subset.
-!  When the size of the subarray is small enough, one uses an
-!  insertion sort that is faster for very small sets.
-!  Michel Olagnon - Apr. 2000
-! __________________________________________________________
-! _________________________________________________________
+!! Sorts XDONT into ascending order - Quicksort
+!!__________________________________________________________
+!! Quicksort chooses a "pivot" in the set, and explores the
+!! array from both ends, looking for a value > pivot with the
+!! increasing index, for a value <= pivot with the decreasing
+!! index, and swapping them when it has found one of each.
+!! The array is then subdivided in 2 ([3]) subsets:
+!! { values <= pivot} {pivot} {values > pivot}
+!! One then call recursively the program to sort each subset.
+!! When the size of the subarray is small enough, one uses an
+!! insertion sort that is faster for very small sets.
+!! Michel Olagnon - Apr. 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
 !
@@ -269,20 +269,20 @@ Recursive Subroutine R_subsor (XDONT, IDEB1, IFIN1)
 End Subroutine R_inssor
 !
 Subroutine I_refsor (XDONT)
-!  Sorts XDONT into ascending order - Quicksort
-! __________________________________________________________
-!  Quicksort chooses a "pivot" in the set, and explores the
-!  array from both ends, looking for a value > pivot with the
-!  increasing index, for a value <= pivot with the decreasing
-!  index, and swapping them when it has found one of each.
-!  The array is then subdivided in 2 ([3]) subsets:
-!  { values <= pivot} {pivot} {values > pivot}
-!  One then call recursively the program to sort each subset.
-!  When the size of the subarray is small enough, one uses an
-!  insertion sort that is faster for very small sets.
-!  Michel Olagnon - Apr. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Sorts XDONT into ascending order - Quicksort
+!!__________________________________________________________
+!! Quicksort chooses a "pivot" in the set, and explores the
+!! array from both ends, looking for a value > pivot with the
+!! increasing index, for a value <= pivot with the decreasing
+!! index, and swapping them when it has found one of each.
+!! The array is then subdivided in 2 ([3]) subsets:
+!! { values <= pivot} {pivot} {values > pivot}
+!! One then call recursively the program to sort each subset.
+!! When the size of the subarray is small enough, one uses an
+!! insertion sort that is faster for very small sets.
+!! Michel Olagnon - Apr. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (InOut)  :: XDONT
 ! __________________________________________________________
 !

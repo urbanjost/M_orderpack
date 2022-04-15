@@ -9,21 +9,21 @@ end interface median
 contains
 
 Function D_median (XDONT) Result (median)
-!  Return median value of XDONT
-!  If even number of data, average of the two "medians".
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then finds the maximum of this set.
-!  Michel Olagnon - Aug. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Return median value of XDONT
+!! If even number of data, average of the two "medians".
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then finds the maximum of this set.
+!! Michel Olagnon - Aug. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (Kind=kdp), Dimension (:), Intent (In) :: XDONT
       Real (Kind=kdp) :: median
 ! __________________________________________________________
@@ -514,20 +514,20 @@ Function D_median (XDONT) Result (median)
 End Function D_median
 
 Function R_median (XDONT) Result (median)
-!  Return median value of XDONT
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then finds the maximum of this set.
-!  Michel Olagnon - Aug. 2000
-! __________________________________________________________
-! _________________________________________________________
+!! Return median value of XDONT
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then finds the maximum of this set.
+!! Michel Olagnon - Aug. 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Real :: median
 ! __________________________________________________________
@@ -1017,20 +1017,20 @@ Function R_median (XDONT) Result (median)
 !
 End Function R_median
 Function I_median (XDONT) Result (median)
-!  Return median value of XDONT
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values smaller than the pivot
-!  (ILOWT), and the indices of values larger than the pivot
-!  that we might still need later on (IHIGT). It iterates
-!  until it can bring the number of values in ILOWT to
-!  exactly NORD, and then finds the maximum of this set.
-!  Michel Olagnon - Aug. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Return median value of XDONT
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values smaller than the pivot
+!! (ILOWT), and the indices of values larger than the pivot
+!! that we might still need later on (IHIGT). It iterates
+!! until it can bring the number of values in ILOWT to
+!! exactly NORD, and then finds the maximum of this set.
+!! Michel Olagnon - Aug. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In) :: XDONT
       Integer :: median
 ! __________________________________________________________

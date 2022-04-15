@@ -13,16 +13,16 @@ end interface nearless
 contains
 
 Subroutine D_uniinv (XDONT, IGOEST)
-! __________________________________________________________
-!   UNIINV = Merge-sort inverse ranking of an array, with removal of
-!   duplicate entries.
-!   The routine is similar to pure merge-sort ranking, but on
-!   the last pass, it sets indices in IGOEST to the rank
-!   of the value in the ordered set with duplicates removed.
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! __________________________________________________________
+!!__________________________________________________________
+!!  UNIINV = Merge-sort inverse ranking of an array, with removal of
+!!  duplicate entries.
+!!  The routine is similar to pure merge-sort ranking, but on
+!!  the last pass, it sets indices in IGOEST to the rank
+!!  of the value in the ordered set with duplicates removed.
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
@@ -260,16 +260,16 @@ Subroutine D_uniinv (XDONT, IGOEST)
 End Subroutine D_uniinv
 
 Subroutine R_uniinv (XDONT, IGOEST)
-! __________________________________________________________
-!   UNIINV = Merge-sort inverse ranking of an array, with removal of
-!   duplicate entries.
-!   The routine is similar to pure merge-sort ranking, but on
-!   the last pass, it sets indices in IGOEST to the rank
-!   of the value in the ordered set with duplicates removed.
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! _________________________________________________________
+!!__________________________________________________________
+!!  UNIINV = Merge-sort inverse ranking of an array, with removal of
+!!  duplicate entries.
+!!  The routine is similar to pure merge-sort ranking, but on
+!!  the last pass, it sets indices in IGOEST to the rank
+!!  of the value in the ordered set with duplicates removed.
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
@@ -506,16 +506,16 @@ Subroutine R_uniinv (XDONT, IGOEST)
 !
 End Subroutine R_uniinv
 Subroutine I_uniinv (XDONT, IGOEST)
-! __________________________________________________________
-!   UNIINV = Merge-sort inverse ranking of an array, with removal of
-!   duplicate entries.
-!   The routine is similar to pure merge-sort ranking, but on
-!   the last pass, it sets indices in IGOEST to the rank
-!   of the value in the ordered set with duplicates removed.
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! __________________________________________________________
+!!__________________________________________________________
+!!  UNIINV = Merge-sort inverse ranking of an array, with removal of
+!!  duplicate entries.
+!!  The routine is similar to pure merge-sort ranking, but on
+!!  the last pass, it sets indices in IGOEST to the rank
+!!  of the value in the ordered set with duplicates removed.
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XDONT
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
@@ -753,7 +753,7 @@ Subroutine I_uniinv (XDONT, IGOEST)
 End Subroutine I_uniinv
 
 Function D_nearless (XVAL) result (D_nl)
-!  Nearest value less than given value
+!! Nearest value less than given value
 ! __________________________________________________________
       Real (kind=kdp), Intent (In) :: XVAL
       Real (kind=kdp) :: D_nl
@@ -763,7 +763,7 @@ Function D_nearless (XVAL) result (D_nl)
 !
 End Function D_nearless
 Function R_nearless (XVAL) result (R_nl)
-!  Nearest value less than given value
+!! Nearest value less than given value
 ! __________________________________________________________
       Real, Intent (In) :: XVAL
       Real :: R_nl
@@ -773,7 +773,7 @@ Function R_nearless (XVAL) result (R_nl)
 !
 End Function R_nearless
 Function I_nearless (XVAL) result (I_nl)
-!  Nearest value less than given value
+!! Nearest value less than given value
 ! __________________________________________________________
       Integer, Intent (In) :: XVAL
       Integer :: I_nl

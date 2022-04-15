@@ -9,16 +9,16 @@ end interface rinpar
 contains
 
 Subroutine D_rinpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD = size (IRNGT)
-! __________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It does not use any work array
-!  and is faster when NORD is very small (2-5), but worst case
-!  behavior can happen fairly probably (initially inverse sorted)
-!  In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD = size (IRNGT)
+!!__________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It does not use any work array
+!! and is faster when NORD is very small (2-5), but worst case
+!! behavior can happen fairly probably (initially inverse sorted)
+!! In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
@@ -54,16 +54,16 @@ Subroutine D_rinpar (XDONT, IRNGT, NORD)
 End Subroutine D_rinpar
 
 Subroutine R_rinpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD = size (IRNGT)
-! __________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It does not use any work array
-!  and is faster when NORD is very small (2-5), but worst case
-!  behavior can happen fairly probably (initially inverse sorted)
-!  In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! _________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD = size (IRNGT)
+!!__________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It does not use any work array
+!! and is faster when NORD is very small (2-5), but worst case
+!! behavior can happen fairly probably (initially inverse sorted)
+!! In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!_________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
@@ -98,16 +98,16 @@ Subroutine R_rinpar (XDONT, IRNGT, NORD)
 !
 End Subroutine R_rinpar
 Subroutine I_rinpar (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD = size (IRNGT)
-! __________________________________________________________
-!  This subroutine uses insertion sort, limiting insertion
-!  to the first NORD values. It does not use any work array
-!  and is faster when NORD is very small (2-5), but worst case
-!  behavior can happen fairly probably (initially inverse sorted)
-!  In many cases, the refined quicksort method is faster.
-!  Michel Olagnon - Feb. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD = size (IRNGT)
+!!__________________________________________________________
+!! This subroutine uses insertion sort, limiting insertion
+!! to the first NORD values. It does not use any work array
+!! and is faster when NORD is very small (2-5), but worst case
+!! behavior can happen fairly probably (initially inverse sorted)
+!! In many cases, the refined quicksort method is faster.
+!! Michel Olagnon - Feb. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD

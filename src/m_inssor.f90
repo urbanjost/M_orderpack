@@ -9,16 +9,16 @@ end interface inssor
 contains
 
 Subroutine D_inssor (XDONT)
-!  Sorts XDONT into increasing order (Insertion sort)
-! __________________________________________________________
-!  This subroutine uses insertion sort. It does not use any
-!  work array and is faster when XDONT is of very small size
-!  (< 20), or already almost sorted, but worst case behavior
-!  can happen fairly probably (initially inverse sorted).
-!  In many cases, the quicksort or merge sort method is faster.
-!  Michel Olagnon - Apr. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Sorts XDONT into increasing order (Insertion sort)
+!!__________________________________________________________
+!! This subroutine uses insertion sort. It does not use any
+!! work array and is faster when XDONT is of very small size
+!! (< 20), or already almost sorted, but worst case behavior
+!! can happen fairly probably (initially inverse sorted).
+!! In many cases, the quicksort or merge sort method is faster.
+!! Michel Olagnon - Apr. 2000
+!!__________________________________________________________
+!!__________________________________________________________
 ! __________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
@@ -73,16 +73,16 @@ Subroutine D_inssor (XDONT)
 End Subroutine D_inssor
 
 Subroutine R_inssor (XDONT)
-!  Sorts XDONT into increasing order (Insertion sort)
-! __________________________________________________________
-!  This subroutine uses insertion sort. It does not use any
-!  work array and is faster when XDONT is of very small size
-!  (< 20), or already almost sorted, but worst case behavior
-!  can happen fairly probably (initially inverse sorted).
-!  In many cases, the quicksort or merge sort method is faster.
-!  Michel Olagnon - Apr. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Sorts XDONT into increasing order (Insertion sort)
+!!__________________________________________________________
+!! This subroutine uses insertion sort. It does not use any
+!! work array and is faster when XDONT is of very small size
+!! (< 20), or already almost sorted, but worst case behavior
+!! can happen fairly probably (initially inverse sorted).
+!! In many cases, the quicksort or merge sort method is faster.
+!! Michel Olagnon - Apr. 2000
+!!__________________________________________________________
+!!__________________________________________________________
 ! _________________________________________________________
       Real, Dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
@@ -136,16 +136,16 @@ Subroutine R_inssor (XDONT)
 !
 End Subroutine R_inssor
 Subroutine I_inssor (XDONT)
-!  Sorts XDONT into increasing order (Insertion sort)
-! __________________________________________________________
-!  This subroutine uses insertion sort. It does not use any
-!  work array and is faster when XDONT is of very small size
-!  (< 20), or already almost sorted, but worst case behavior
-!  can happen fairly probably (initially inverse sorted).
-!  In many cases, the quicksort or merge sort method is faster.
-!  Michel Olagnon - Apr. 2000
-! __________________________________________________________
-! __________________________________________________________
+!! Sorts XDONT into increasing order (Insertion sort)
+!!__________________________________________________________
+!! This subroutine uses insertion sort. It does not use any
+!! work array and is faster when XDONT is of very small size
+!! (< 20), or already almost sorted, but worst case behavior
+!! can happen fairly probably (initially inverse sorted).
+!! In many cases, the quicksort or merge sort method is faster.
+!! Michel Olagnon - Apr. 2000
+!!__________________________________________________________
+!!__________________________________________________________
 ! __________________________________________________________
       Integer, Dimension (:), Intent (InOut)  :: XDONT
 ! __________________________________________________________

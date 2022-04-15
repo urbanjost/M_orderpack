@@ -9,22 +9,22 @@ end interface rapknr
 contains
 
 Subroutine D_rapknr (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD, in decreasing order.
-!  rapknr = (rnkpar backwards)
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values larger than the pivot
-!  (IHIGT), and the indices of values smaller than the pivot
-!  that we might still need later on (ILOWT). It iterates
-!  until it can bring the number of values in IHIGT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2011
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD, in decreasing order.
+!! rapknr = (rnkpar backwards)
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values larger than the pivot
+!! (IHIGT), and the indices of values smaller than the pivot
+!! that we might still need later on (ILOWT). It iterates
+!! until it can bring the number of values in IHIGT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2011
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
@@ -530,23 +530,22 @@ Subroutine D_rapknr (XDONT, IRNGT, NORD)
 End Subroutine D_rapknr
 
 Subroutine R_rapknr (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD, in decreasing order.
-!  rapknr = (rnkpar backwards)
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values larger than the pivot
-!  (IHIGT), and the indices of values smaller than the pivot
-!  that we might still need later on (ILOWT). It iterates
-!  until it can bring the number of values in IHIGT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2011
-! __________________________________________________________
-! __________________________________________________________
-! _________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD, in decreasing order.
+!! rapknr = (rnkpar backwards)
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values larger than the pivot
+!! (IHIGT), and the indices of values smaller than the pivot
+!! that we might still need later on (ILOWT). It iterates
+!! until it can bring the number of values in IHIGT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2011
+!!__________________________________________________________
+!!__________________________________________________________
       Real, Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
@@ -1051,23 +1050,23 @@ Subroutine R_rapknr (XDONT, IRNGT, NORD)
 !
 End Subroutine R_rapknr
 Subroutine I_rapknr (XDONT, IRNGT, NORD)
-!  Ranks partially XDONT by IRNGT, up to order NORD, in decreasing order.
-!  rapknr = (rnkpar backwards)
-! __________________________________________________________
-!  This routine uses a pivoting strategy such as the one of
-!  finding the median based on the quicksort algorithm, but
-!  we skew the pivot choice to try to bring it to NORD as
-!  fast as possible. It uses 2 temporary arrays, where it
-!  stores the indices of the values larger than the pivot
-!  (IHIGT), and the indices of values smaller than the pivot
-!  that we might still need later on (ILOWT). It iterates
-!  until it can bring the number of values in IHIGT to
-!  exactly NORD, and then uses an insertion sort to rank
-!  this set, since it is supposedly small.
-!  Michel Olagnon - Feb. 2011
-! __________________________________________________________
-! __________________________________________________________
-! __________________________________________________________
+!! Ranks partially XDONT by IRNGT, up to order NORD, in decreasing order.
+!! rapknr = (rnkpar backwards)
+!!__________________________________________________________
+!! This routine uses a pivoting strategy such as the one of
+!! finding the median based on the quicksort algorithm, but
+!! we skew the pivot choice to try to bring it to NORD as
+!! fast as possible. It uses 2 temporary arrays, where it
+!! stores the indices of the values larger than the pivot
+!! (IHIGT), and the indices of values smaller than the pivot
+!! that we might still need later on (ILOWT). It iterates
+!! until it can bring the number of values in IHIGT to
+!! exactly NORD, and then uses an insertion sort to rank
+!! this set, since it is supposedly small.
+!! Michel Olagnon - Feb. 2011
+!!__________________________________________________________
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD

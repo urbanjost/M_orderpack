@@ -14,16 +14,16 @@ end interface nearless
 contains
 
 Subroutine D_unirnk (XVALT, IRNGT, NUNI)
-! __________________________________________________________
-!   UNIRNK = Merge-sort ranking of an array, with removal of
-!   duplicate entries.
-!   The routine is similar to pure merge-sort ranking, but on
-!   the last pass, it discards indices that correspond to
-!   duplicate entries.
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! __________________________________________________________
+!!__________________________________________________________
+!!  UNIRNK = Merge-sort ranking of an array, with removal of
+!!  duplicate entries.
+!!  The routine is similar to pure merge-sort ranking, but on
+!!  the last pass, it discards indices that correspond to
+!!  duplicate entries.
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!__________________________________________________________
       Real (Kind=kdp), Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (Out) :: NUNI
@@ -262,16 +262,16 @@ Subroutine D_unirnk (XVALT, IRNGT, NUNI)
 End Subroutine D_unirnk
 
 Subroutine R_unirnk (XVALT, IRNGT, NUNI)
-! __________________________________________________________
-!   UNIRNK = Merge-sort ranking of an array, with removal of
-!   duplicate entries.
-!   The routine is similar to pure merge-sort ranking, but on
-!   the last pass, it discards indices that correspond to
-!   duplicate entries.
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! __________________________________________________________
+!!__________________________________________________________
+!!  UNIRNK = Merge-sort ranking of an array, with removal of
+!!  duplicate entries.
+!!  The routine is similar to pure merge-sort ranking, but on
+!!  the last pass, it discards indices that correspond to
+!!  duplicate entries.
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!__________________________________________________________
       Real, Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (Out) :: NUNI
@@ -509,16 +509,16 @@ Subroutine R_unirnk (XVALT, IRNGT, NUNI)
 !
 End Subroutine R_unirnk
 Subroutine I_unirnk (XVALT, IRNGT, NUNI)
-! __________________________________________________________
-!   UNIRNK = Merge-sort ranking of an array, with removal of
-!   duplicate entries.
-!   The routine is similar to pure merge-sort ranking, but on
-!   the last pass, it discards indices that correspond to
-!   duplicate entries.
-!   For performance reasons, the first 2 passes are taken
-!   out of the standard loop, and use dedicated coding.
-! __________________________________________________________
-! __________________________________________________________
+!!__________________________________________________________
+!!  UNIRNK = Merge-sort ranking of an array, with removal of
+!!  duplicate entries.
+!!  The routine is similar to pure merge-sort ranking, but on
+!!  the last pass, it discards indices that correspond to
+!!  duplicate entries.
+!!  For performance reasons, the first 2 passes are taken
+!!  out of the standard loop, and use dedicated coding.
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (Out) :: NUNI
@@ -757,7 +757,7 @@ Subroutine I_unirnk (XVALT, IRNGT, NUNI)
 End Subroutine I_unirnk
 
 Function D_nearless (XVAL) result (D_nl)
-!  Nearest value less than given value
+!! Nearest value less than given value
 ! __________________________________________________________
       Real (kind=kdp), Intent (In) :: XVAL
       Real (kind=kdp) :: D_nl
@@ -767,7 +767,7 @@ Function D_nearless (XVAL) result (D_nl)
 !
 End Function D_nearless
 Function R_nearless (XVAL) result (R_nl)
-!  Nearest value less than given value
+!! Nearest value less than given value
 ! __________________________________________________________
       Real, Intent (In) :: XVAL
       Real :: R_nl
@@ -777,7 +777,7 @@ Function R_nearless (XVAL) result (R_nl)
 !
 End Function R_nearless
 Function I_nearless (XVAL) result (I_nl)
-!  Nearest value less than given value
+!! Nearest value less than given value
 ! __________________________________________________________
       Integer, Intent (In) :: XVAL
       Integer :: I_nl

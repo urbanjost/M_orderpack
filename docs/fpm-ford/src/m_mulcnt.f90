@@ -11,12 +11,12 @@ end interface mulcnt
 contains
 
 Subroutine D_mulcnt (XDONT, IMULT)
-!   MULCNT = Give for each array value its multiplicity
-!            (number of times that it appears in the array)
-! __________________________________________________________
-!  Michel Olagnon - Mar. 2000
-! __________________________________________________________
-! __________________________________________________________
+!!  MULCNT = Give for each array value its multiplicity
+!!           (number of times that it appears in the array)
+!!__________________________________________________________
+!! Michel Olagnon - Mar. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IMULT
 ! __________________________________________________________
@@ -64,12 +64,12 @@ Subroutine R_mulcnt (XDONT, IMULT)
 !
 End Subroutine R_mulcnt
 Subroutine I_mulcnt (XDONT, IMULT)
-!   MULCNT = Give for each array value its multiplicity
-!            (number of times that it appears in the array)
-! __________________________________________________________
-!  Michel Olagnon - Mar. 2000
-! __________________________________________________________
-! __________________________________________________________
+!!  MULCNT = Give for each array value its multiplicity
+!!           (number of times that it appears in the array)
+!!__________________________________________________________
+!! Michel Olagnon - Mar. 2000
+!!__________________________________________________________
+!!__________________________________________________________
       Integer, Dimension (:), Intent (In)  :: XDONT
       Integer, Dimension (:), Intent (Out) :: IMULT
 ! __________________________________________________________
