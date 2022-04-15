@@ -84,7 +84,10 @@ programs that exercise the routine.
 
    - [github action status](docs/STATUS.md) 
 ---
+## See also ![-](docs/images/demos.gif)
+   * [parallel mrgrnk](https://github.com/cphyc/Fortran-parallel-sort)
 
+---
 ## References ![-](docs/images/ref.gif)
 
    * [ORDERPACK2.0](http://www.fortran-2000.com/rank/)
