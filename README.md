@@ -8,13 +8,15 @@
 This module is a clone of Orderpack 2.0 from Michel Olagnon that has
 been restructured so as to be useable as an fpm(1) package.
 
-It provides order and unconditional, unique, and partial
-ranking, sorting, and permutation.
+ORDERPACK 2.0 provides Fortran procedures for General and Specialized
+Ranking and Sorting Routines.
 
-authors: Michel Olagnon
+It includes Fortran 90 source code for Unconditional, Unique, and Partial
+Ranking, Sorting, and Permutation.
+
+Authors: Michel Olagnon
 date: 2000-2012
 
-<!--
 ## BUILDING THE MODULE USING make(1) ![gmake](docs/images/gnu.gif)
      git clone https://github.com/urbanjost/orderpack.git
      cd orderpack/src
@@ -34,7 +36,6 @@ date: 2000-2012
 
 This will compile the Fortran module and basic example
 program that exercise the routine.
--->
 
 ## BUILD and TEST with FPM ![-](docs/images/fpm_logo.gif)
 
