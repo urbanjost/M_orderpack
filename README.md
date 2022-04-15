@@ -78,9 +78,7 @@ programs that exercise the routine.
 
 ### Developer
    - [ford(1) output](https://urbanjost.github.io/orderpack/fpm-ford/index.html).
-<!--
    - [doxygen(1) output](https://urbanjost.github.io/orderpack/doxygen_out/html/index.html).
--->
 
    - [github action status](docs/STATUS.md) 
 ---
