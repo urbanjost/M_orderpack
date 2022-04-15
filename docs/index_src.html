@@ -2,9 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Linux version 5.6.0" />
-  <title>ORDERPACK 2.0 -- Unconditional, Unique, and Partial Ranking, Sorting, and Permutation Downloadable Fortran 90 source code</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="description" content="A WEB site on the way to more Fortran public domain utilities." />
+  <meta name="keywords" content="fortran 90 95 2000 77 public domain utilities sort rank order sorting ranking ordering routines" />
+  <title>
+     ORDERPACK 2.0 -- Unconditional, Unique, and Partial Ranking, Sorting, and Permutation Downloadable Fortran 90 source code
+  </title>
   <style>
-  <![CDATA[
   body {xfont-style: italic}
   body {
   background-color:#FFF; color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
@@ -32,15 +36,16 @@
   .property { color:#666; font-size:80%; }
   a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
   .byline { color:#666; font-size:.8em; font-style:italic; margin-bottom:1em; padding-top:1px; }
-  ]]>
   </style>
 </head>
 <body>
   <div id="Container">
     <div id="Content">
+	<center><img src="images/orderpack.gif"></center>
       <p align="center"></p>
-      <h2><a name="0.0" id="0.0">ORDERPACK 2.0</a> -- Unconditional, Unique, and Partial Ranking, Sorting, and Permutation Downloadable Fortran 90 source
-      code</h2>
+      <h2><a name="0.0" id="0.0">ORDERPACK 2.0</a> 
+      -- Unconditional, Unique, and Partial Ranking, Sorting, and Permutation Downloadable Fortran 90 source code
+      </h2>
       <hr />
       <p>Author: Michel Olagnon</p>
       <hr />
@@ -102,25 +107,6 @@
         </dd>
       </dl>
       <hr />
-      <h2>NEWS</h2>
-      Bugs were corrected as of fall 2010 in UNIRNK, UNIINV (The routine
-      tried to access the 4th value when there are only 3) and in RNKPAR
-      (The routine fails when the 3 first values are equal). Please
-      download the corrected versions.<br /> RAPKNR was added first of
-      February 2011.
-
-      <p>
-      Similar bugs were corrected as of March 2011 in RNKPAR and RAPKNR
-      (The routines may fail when ranking 3 values out of 4). Please
-      download the corrected versions.
-      </p>
-      <p>
-      MRGREF was slightly modified as of January 2012 to make the sort stable.
-      </p>
-      <p>
-      MEDIAN was added 22nd November 2012, to deal with the case of an even number of samples.
-      </p>
-      <hr />
       <p><a name="1.0" id="1.0">
       <h2>Introduction</h2></a></p>
       <p>
@@ -152,6 +138,7 @@
       routines in ORDERPACK have been designed to take advantage of
       modern machines.
       </p>
+
       <p>
       To show the potential speed gains, we conducted an experiment
       involving 100,000 trials of simulating a random vector of length
@@ -161,6 +148,7 @@
       ranking. In fact, the time was dominated by the simultation of
       the vector, looping, and other overhead.
       </p>
+
       <p>
       A similar experiment involved 100 trials of simulating a random
       vector of length 1,000,000 and ranking the 20 smallest elements
@@ -170,8 +158,12 @@
       per vector. In that case, the total overhead for random vector
       simulation was nearly 1 minute.
       </p>
+
       <p>Users can freely download ORDERPACK 2.0 from this site.</p>
-      <p>As time goes by, we hope to extend ORDERPACK, and welcome your suggestions to this aim.</p>
+      <p>
+      As time goes by, we hope to extend ORDERPACK, and welcome your
+      suggestions to this aim.
+      </p>
 
       <p><a name="1.1" id="1.1">
          <h4>Ranking versus sorting</h4></a>
@@ -185,64 +177,133 @@
          array to order other related sets or to select some elements,
          than a sorting program would.
       </p>
-      <p>Ranking is especially needed when the sizes of the elements are large, and that moving them around is resource-consuming.</p>
+      <p>
+      Ranking is especially needed when the sizes of the elements
+      are large, and that moving them around is resource-consuming.
+      </p>
+
       <p><a name="1.2" id="1.2">
       <h4>Optimization choices</h4></a></p>
-      <p>We tried to take into account the recent trends in computing to make our compromise choices. Of course, no two problems are the same, and for some
-      of them, the following decisions may happen to be wrong. We just hope that for most cases, they will be right.</p>
+
+      <p>
+      We tried to take into account the recent trends in computing to
+      make our compromise choices. Of course, no two problems are the
+      same, and for some of them, the following decisions may happen to
+      be wrong. We just hope that for most cases, they will be right.
+      </p>
       <ul>
-        <li>Make extensive use of work arrays: Memory can be extended, time cannot.</li>
-        <li>Try to reduce the number of operations in the inner loops, even if it increases code size.</li>
-        <li>Assume that cache size is relatively small, and try to maximize cache hits.</li>
+        <li>Make extensive use of work arrays: Memory can be extended,
+            time cannot.
+	</li>
+        <li>Try to reduce the number of operations in the inner loops,
+            even if it increases code size.
+	</li>
+        <li>Assume that cache size is relatively small, and try to
+            maximize cache hits.
+	</li>
       </ul>
       <p><a name="1.3" id="1.3">
       <h4>Programming style</h4></a></p>
-      <p>Programming style is personal, and difficult to modify when one has been programming for several decades. Perhaps the following should have been
-      under the <i>``word of apology''</i> item: my programming style does not stick tightly to commonly established rules.</p>
+      <p>
+      Programming style is personal, and difficult to modify when one
+      has been programming for several decades. Perhaps the following
+      should have been under the <i>``word of apology''</i> item: my
+      programming style does not stick tightly to commonly established
+      rules.
+      </p>
       <p>If you want to modify my programs, it might be useful to know:</p>
       <ul>
-        <li>that I don't state IMPLICIT NONE, I prefer to rely on a good compiler to catch the sort of errors that it catches, and even more of them;</li>
-        <li>that I use some naming conventions that go back to the 6-character variable names limit, and the conventions of implicit typing. Most names are
-        made of a first letter indicating the type of the variable, a 3-letter radix defining its fundamental meaning, and one or two suffix letters for
-        qualifiers. I joyfully mix French and English in these names, for instance, IWRKF is an integer index (I) of temporary nature (WRK) representing an
-        upper limit (F -- <i>Fin</i> is <i>End</i> in French);</li>
-        <li>that I used my pretty-printer f90ppr to indent and lay out the source code.</li>
+
+        <li>that I don't state IMPLICIT NONE, I prefer to rely on a good
+        compiler to catch the sort of errors that it catches, and even
+        more of them;
+	</li>
+
+        <li>
+	that I use some naming conventions that go back to the
+        6-character variable names limit, and the conventions of implicit
+        typing. Most names are made of a first letter indicating the
+        type of the variable, a 3-letter radix defining its fundamental
+        meaning, and one or two suffix letters for qualifiers. I joyfully
+        mix French and English in these names, for instance, IWRKF is
+        an integer index (I) of temporary nature (WRK) representing
+        an upper limit (F -- <i>Fin</i> is <i>End</i> in French);</li>
+        <li>that I used my pretty-printer f90ppr to indent and lay out
+        the source code.
+	</li>
+
       </ul>
       <p><a name="1.4" id="1.4">
       <h4>Examples of use</h4></a></p>
-      <p>In order to make use of Fortran 90 argument passing improvements, it is necessary to make the routine interface known to the calling program. There
-      are three main ways to implement it:</p>
+      <p>
+      In order to make use of Fortran 90 argument passing improvements,
+      it is necessary to make the routine interface known to the calling
+      program. There are three main ways to implement it:
+      </p>
       <ul>
-        <li>Explicit interfaces, either included in the body of the calling routine, or gathered in an ``interface module''. Interfaces for all <i>default
-        real</i> ORDERPACK procedures are provided in file <a href="../other/interfaces.f90">interfaces.f90</a>. An example of including the interface block
-        in the calling program can be found in the sample program <a href="../example/sort7.f90">sort7.f90</a>.
-        </li>
-        <li>Embedding the routine of interest as a "contained routine" into the calling procedure. An example of such way can be found in the <a href=
-        "../example/follow.f90">follow.f90</a> program, that rebuilds a curve from a set of X, Y coordinates.
-        </li>
-        <li>Embedding the routine of interest into a MODULE, and USEing that module in the procedure that calls the routine. This is fine and recommended
-        for small programs, but yet may lead to architecture and <i>Makefile</i> problems for large applications. Since we wanted to provide generic
-        versions of the routines, and to be <a href="http://www.fortran.com/F">F</a>-compatible, this is the way we used here. An example of use is provided
-        as the test program <a href="../example/tstvalnth.f90">tstvalnth.f90</a>.
-        </li>
+
+        <li>Explicit interfaces, either included in the
+        body of the calling routine, or gathered in an
+        ``interface module''. Interfaces for all <i>default
+        real</i> ORDERPACK procedures are provided in file <a
+        href="../other/interfaces.f90">interfaces.f90</a>. An
+        example of including the interface block in the
+        calling program can be found in the sample program <a
+        href="../example/sort7.f90">sort7.f90</a>.  </li>
+
+        <li>Embedding the routine of interest as a "contained routine"
+        into the calling procedure. An example of such way can be found
+        in the <a href= "../example/follow.f90">follow.f90</a> program,
+        that rebuilds a curve from a set of X, Y coordinates.  </li>
+
+        <li>Embedding the routine of interest into a MODULE,
+        and USEing that module in the procedure that calls the
+        routine. This is fine and recommended for small programs,
+        but yet may lead to architecture and <i>Makefile</i>
+        problems for large applications. Since we wanted to
+        provide generic versions of the routines, and to be 
+	<a href="http://www.fortran.com/F">F</a>-compatible, this is the way
+        we used here. An example of use is provided as the test program
+        <a href="../example/tstvalnth.f90">tstvalnth.f90</a>.  </li>
       </ul>
       <hr />
       <p><a name="2.0" id="2.0">
       <h2>A word of apology</h2></a></p>
-      <p>When one looks at the description of a sorting algorithm, the process seems pretty simple, and can usually hold in 10 to 20 lines of pseudo-code.
-      But if one wants an optimized program, one takes this simple implementation, and looks for redundant operations, investigates runs with sample data
-      sets with a profiling tool, and is led to duplicate code with slight modifications rather than use tests in inner loops, to process differently the
-      first and the last iterations, or to take into account some special cases that are only special in that they can be done faster.</p>
-      <p>In the end, the number of lines of source code may be multiplied tenfold, and the readability decreased in a similar proportion. Unfortunately,
-      this is the price to pay for speed of execution. It was that way when I started programming more than 20 years ago, and I have forsaken any hope that
-      it might become otherwise before I return to dust. So please accept my apologies that this code is often complex and difficult to read.</p>
+      <p>When one looks at the description of a sorting algorithm, the
+      process seems pretty simple, and can usually hold in 10 to 20 lines
+      of pseudo-code.  But if one wants an optimized program, one takes
+      this simple implementation, and looks for redundant operations,
+      investigates runs with sample data sets with a profiling tool,
+      and is led to duplicate code with slight modifications rather than
+      use tests in inner loops, to process differently the first and
+      the last iterations, or to take into account some special cases
+      that are only special in that they can be done faster.
+      </p>
+
+
+      <p>
+      In the end, the number of lines of source code may be
+      multiplied tenfold, and the readability decreased in a similar
+      proportion. Unfortunately, this is the price to pay for speed of
+      execution. It was that way when I started programming more than
+      20 years ago, and I have forsaken any hope that it might become
+      otherwise before I return to dust. So please accept my apologies
+      that this code is often complex and difficult to read.
+      </p>
       <hr />
       <p><a name="3.0" id="3.0">
       <h2>Ranking</h2></a></p>
-      <p>In some instances, one is not actually interested in modifying the order of the elements in a set, but only in knowing how to access them in
-      increasing -- or decreasing -- order. Ranking, as it is called, provides the index array I(:) such as the set S(I(:)) is ordered. One of the
-      advantages of carrying out ranking rather than sorting is that the index array can be computed without the performance penalty of moving the elements
-      around when they are of large sizes. A similar point is that the index array can be used to index other data.</p>
+      <p>
+      In some instances, one is not actually interested in modifying
+      the order of the elements in a set, but only in knowing how to
+      access them in increasing -- or decreasing -- order. Ranking, as it
+      is called, provides the index array I(:) such as the set S(I(:))
+      is ordered. One of the advantages of carrying out ranking rather
+      than sorting is that the index array can be computed without the
+      performance penalty of moving the elements around when they are
+      of large sizes. A similar point is that the index array can be
+      used to index other data.
+      </p>
       <ul>
         <li>
           <a name="3.1" id="3.1">
@@ -258,36 +319,64 @@
           <a name="3.3" id="3.3">
           <h4>Partial ranking</h4></a>
           <p><a href="../src/m_rnkpar.f90">Subroutine RNKPAR (XVALT, IRNGT, NORD)</a><br />
-          Ranks partially XVALT by IRNGT, up to order NORD (refined for speed)<br />
-          This routine uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try
-          to bring it to NORD as fast as possible. It uses 2 temporary arrays, one where it stores the indices of the values smaller than the pivot, and the
-          other for the indices of values larger than the pivot that we might still need later on. It iterates until it can bring the number of values in
-          ILOWT to exactly NORD, and then uses an insertion sort to rank this set, since it is supposedly small.</p>
+          Ranks partially XVALT by IRNGT, up to order NORD (refined for
+          speed)<br /> This routine uses a pivoting strategy such as the
+          one of finding the median based on the quicksort algorithm, but
+          we skew the pivot choice to try to bring it to NORD as fast as
+          possible. It uses 2 temporary arrays, one where it stores the
+          indices of the values smaller than the pivot, and the other
+          for the indices of values larger than the pivot that we might
+          still need later on. It iterates until it can bring the number
+          of values in ILOWT to exactly NORD, and then uses an insertion
+          sort to rank this set, since it is supposedly small.
+	  </p>
           <p><a href="../src/m_rapknr.f90">Subroutine RAPKNR (XVALT, IRNGT, NORD)</a><br />
           Same as RNKPAR, but in decreasing order (RAPKNR = RNKPAR spelt backwards).</p>
           <p><a href="../src/m_refpar.f90">Subroutine REFPAR (XVALT, IRNGT, NORD)</a><br />
           Ranks partially XVALT by IRNGT, up to order NORD<br />
-          This version is not optimized for performance, and is thus not as difficult to read as some other ones. It uses a pivoting strategy such as the
-          one of finding the median based on the quicksort algorithm. It uses a temporary array, where it stores the partially ranked indices of the values.
-          It iterates until it can bring the number of values lower than the pivot to exactly NORD, and then uses an insertion sort to rank this set, since
-          it is supposedly small.</p>
+          This version is not optimized for performance, and is
+          thus not as difficult to read as some other ones. It uses
+          a pivoting strategy such as the one of finding the median
+          based on the quicksort algorithm. It uses a temporary array,
+          where it stores the partially ranked indices of the values.
+          It iterates until it can bring the number of values lower than
+          the pivot to exactly NORD, and then uses an insertion sort to
+          rank this set, since it is supposedly small.
+	  </p>
           <p><a href="../src/m_rinpar.f90">Subroutine RINPAR (XVALT, IRNGT, NORD)</a><br />
-          Ranks partially XVALT by IRNGT, up to order NORD<br />
-          This version is not optimized for performance, and is thus not as difficult to read as some other ones. It uses insertion sort, limiting insertion
-          to the first NORD values. It does not use any work array and is faster when NORD is very small (2-5), but worst case behavior (initially inverse
-          sorted) can easily happen. In many cases, the refined quicksort method is faster.</p>
+          Ranks partially XVALT by IRNGT, up to order NORD<br /> This
+          version is not optimized for performance, and is thus not
+          as difficult to read as some other ones. It uses insertion
+          sort, limiting insertion to the first NORD values. It does
+          not use any work array and is faster when NORD is very small
+          (2-5), but worst case behavior (initially inverse sorted)
+          can easily happen. In many cases, the refined quicksort method
+          is faster.</p>
           <p><a href="../src/m_indnth.f90">Integer Function INDNTH (XVALT, NORD)</a><br />
-          Returns the index of the NORD<sup>th</sup> value of XVALT (in increasing order)<br />
-          This routine uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try
-          to bring it to NORD as fast as possible. It uses 2 temporary arrays, one where it stores the indices of the values smaller than the pivot, and the
-          other for the indices of values larger than the pivot that we might still need later on. It iterates until it can bring the number of values in
-          ILOWT to exactly NORD, and then takes out the original index of the maximum value in this set.</p>
+          Returns the index of the NORD<sup>th</sup> value of XVALT (in
+          increasing order)<br /> This routine uses a pivoting strategy
+          such as the one of finding the median based on the quicksort
+          algorithm, but we skew the pivot choice to try to bring it to
+          NORD as fast as possible. It uses 2 temporary arrays, one where
+          it stores the indices of the values smaller than the pivot, and
+          the other for the indices of values larger than the pivot that
+          we might still need later on. It iterates until it can bring
+          the number of values in ILOWT to exactly NORD, and then takes
+          out the original index of the maximum value in this set.</p>
           <p><a href="../src/m_indmed.f90">Subroutine INDMED (XVALT, INDM)</a><br />
-          Returns the index of the median (((Size(XVALT)+1))/2<sup>th</sup> value) of XVALT<br />
-          This routine uses the recursive procedure described in Knuth, The Art of Computer Programming, vol. 3, 5.3.3 - This procedure is linear in time,
-          and does not require to be able to interpolate in the set as the one used in INDNTH. It also has better worst case behavior than INDNTH, but is
-          about 10% slower in average for random uniformly distributed values.</p>
-          <p><b>Note that in Orderpack 1.0, this routine was a Function procedure, and is now changed to a Subroutine.</b></p>
+          Returns the index of the median
+          (((Size(XVALT)+1))/2<sup>th</sup> value) of XVALT<br /> This
+          routine uses the recursive procedure described in Knuth, The
+          Art of Computer Programming, vol. 3, 5.3.3 - This procedure is
+          linear in time, and does not require to be able to interpolate
+          in the set as the one used in INDNTH. It also has better worst
+          case behavior than INDNTH, but is about 10% slower in average
+          for random uniformly distributed values.
+	  </p>
+          <p>
+	  <b>Note that in Orderpack 1.0, this routine was a Function
+	  procedure, and is now changed to a Subroutine.</b>
+	  </p>
         </li>
         <li>
           <a name="3.3" id="3.3">
