@@ -37,7 +37,7 @@ program that exercise the routine.
 
 ## BUILD and TEST with FPM ![-](docs/images/fpm_logo.gif)
 
-   Alternatively, download the github repository and build it with
+   Download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
 
 ```bash
