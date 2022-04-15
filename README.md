@@ -13,11 +13,11 @@ ORDERPACK 2.0 provides Fortran procedures for General and Specialized
 Ranking and Sorting Routines.  It includes Fortran 90 source code for
 Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
 
-Authors: Michel Olagnon
-date: 2000-2012
+    Authors: Michel Olagnon
+    date: 2000-2012
 ---
-![gmake](docs/images/gnu.gif)
-## Building the module using make(1) 
+## Building the module using make(1) ![gmake](docs/images/gnu.gif)
+```bash
      git clone https://github.com/urbanjost/orderpack.git
      cd orderpack/src
      # change Makefile if not using one of the listed compilers
@@ -33,16 +33,14 @@ date: 2000-2012
      # for nvfortran
      make clean
      make nvfortran
-
+```
 This will compile the Fortran module and basic example
 programs that exercise the routine.
 ---
-![fpm](docs/images/fpm_logo.gif)
-## Build and test with fpm
+## Build and test with ![fpm](docs/images/fpm_logo.gif)
 
    Download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
-
 ```bash
         git clone https://github.com/urbanjost/orderpack.git
         cd orderpack
@@ -56,8 +54,7 @@ programs that exercise the routine.
         orderpack        = { git = "https://github.com/urbanjost/orderpack.git" }
 ```
 ---
-![docs](docs/images/docs.gif)
-## Documentation
+## Documentation ![docs](docs/images/docs.gif)
 
 ### User
    - original [procedures] documentation(https://urbanjost.github.io/orderpack/).

@@ -14,7 +14,7 @@ doubleprecision,allocatable        :: table(:,:)
 integer                            :: i, j, ierr, icol
    call setup()
    call set_args('--col:c 1',help_text,version_text) ! crack command line
-   do i=1,size(files)                                ! for each file read and reverse lines
+   do i=1,size(files)                                ! for each file read and sort lines
       call read_table(files(i),table,ierr)           ! read file into numeric array
       if(.not.allocated(table))then
          write(stdout,g)'*demo_swallow* failed to load file '//files(i)
