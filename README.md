@@ -15,8 +15,9 @@ Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
 
 Authors: Michel Olagnon
 date: 2000-2012
-
-## Building the module using make(1) ![gmake](docs/images/gnu.gif)
+---
+![gmake](docs/images/gnu.gif)
+## Building the module using make(1) 
      git clone https://github.com/urbanjost/orderpack.git
      cd orderpack/src
      # change Makefile if not using one of the listed compilers
@@ -35,8 +36,9 @@ date: 2000-2012
 
 This will compile the Fortran module and basic example
 programs that exercise the routine.
-
-## Build and test with ![fpm](docs/images/fpm_logo.gif)
+---
+![fpm](docs/images/fpm_logo.gif)
+## Build and test with fpm
 
    Download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
@@ -53,10 +55,12 @@ programs that exercise the routine.
         [dependencies]
         orderpack        = { git = "https://github.com/urbanjost/orderpack.git" }
 ```
-## Documentation   ![docs](docs/images/docs.gif)
+---
+![docs](docs/images/docs.gif)
+## Documentation
 
 ### User
-   - original documentation of [procedures](https://urbanjost.github.io/orderpack/).
+   - original [procedures] documentation(https://urbanjost.github.io/orderpack/).
 <!--
    - A single page that uses javascript to combine all the HTML
      descriptions of the man-pages is at 
@@ -73,23 +77,21 @@ programs that exercise the routine.
       + [manpages.zip](https://urbanjost.github.io/orderpack/manpages.zip)
       + [manpages.tgz](https://urbanjost.github.io/orderpack/manpages.tgz)
 -->
-
    - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
-
+---
 ### Developer
    - [ford(1) output](https://urbanjost.github.io/orderpack/fpm-ford/index.html).
    - [doxygen(1) output](https://urbanjost.github.io/orderpack/doxygen_out/html/index.html).
-
    - [github action status](docs/STATUS.md) 
 ---
-## See also ![-](docs/images/demos.gif)
+![-](docs/images/demos.gif)
+## See also
    * [parallel mrgrnk](https://github.com/cphyc/Fortran-parallel-sort)
-
 ---
-## References ![-](docs/images/ref.gif)
+![-](docs/images/ref.gif)
+## References
 
    * [ORDERPACK2.0](http://www.fortran-2000.com/rank/)
    * [ORDERPACK2.0](https://forge-dga.jouy.inra.fr/svn/qtlmap/trunk/lib/orderpack-2.0/index.html)
    * [Wikipedia](https://en.m.wikipedia.org/wiki/Sorting_algorithm)
-
 ---
