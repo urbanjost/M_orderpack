@@ -2,7 +2,7 @@ program tablesort
 use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, stdout=>output_unit, stderr=>error_unit
 use M_io,      only : read_table
 use M_CLI2,    only : set_args, lget ,iget, files=>unnamed
-use m_mrgrnk,  only : mrgrnk
+use M_mrgrnk,  only : mrgrnk
 implicit none
 
 ! ident_1="@(#)sort a file containing a numeric table by specified column"
@@ -16,7 +16,7 @@ integer                            :: i, j, ierr, icol
    call set_args('--col:c 1',help_text,version_text) ! crack command line
    do i=1,size(files)                                ! for each file read and sort lines
       call read_table(files(i),table,ierr)           ! read file into numeric array
-      if(.not.allocated(table))then
+      if(.not.allocated(table).or.ierr.ne.0)then
          write(stdout,g)'*demo_swallow* failed to load file '//files(i)
       else
          icol=iget('col')
@@ -48,24 +48,26 @@ contains
 subroutine setup()
 help_text=[ CHARACTER(LEN=128) :: &
 'NAME',&
-'       tablesort(1f) - [FUNIX] sort a file',&
+'       tablesort(1f) - [FUNIX] sort a file containing a numeric table',&
 '       (LICENSE:PD)',&
 '',&
 'SYNOPSIS',&
 '   tablesort [--col NUM] INPUT_FILE(S)|[ --help][ --version]',&
 '',&
 'DESCRIPTION',&
-'   Sort lines in a file by reading into memory and sorting',&
-'   numerically by the specified column. The default column is',&
-'   the left-most, designated as column "1" (one).',&
+'   Read a numeric table from a formatted file into memory and sort',&
+'   it numerically by the specified column. The default column is the',&
+'   left-most, designated as column "1" (one).',&
 '',&
-'   This is a simple use of the M_sort(3f) module and reads the files',&
+'   This is a simple use of the orderpack(3f) module and reads the files',&
 '   into memory, which could cause a machine to run out of memory if',&
 '   input files are large.',&
 '',&
 'OPTIONS',&
-'       --col,c        column number to sort by',&
+'       --col,c        column number to sort by. Columns are numbered',&
+'                      from left to right starting with one.',&
 '       INPUT_FILE(s)  input file(s)',&
+'       --verbose      display additional information for each file',&
 '       --help         display help text and exit',&
 '       --version      display version information and exit',&
 '',&
@@ -76,24 +78,26 @@ help_text=[ CHARACTER(LEN=128) :: &
 '   Public Domain',&
 '']
 ! NAME
-!        tablesort(1f) - [FUNIX] sort a file
+!        tablesort(1f) - [FUNIX] sort a file containing a numeric table
 !        (LICENSE:PD)
 ! 
 ! SYNOPSIS
 !    tablesort [--col NUM] INPUT_FILE(S)|[ --help][ --version]
 ! 
 ! DESCRIPTION
-!    Sort lines in a file by reading into memory and sorting
-!    numerically by the specified column. The default column is
-!    the left-most, designated as column "1" (one).
+!    Read a numeric table from a formatted file into memory and sort
+!    it numerically by the specified column. The default column is the
+!    left-most, designated as column "1" (one).
 ! 
-!    This is a simple use of the M_sort(3f) module and reads the files
+!    This is a simple use of the orderpack(3f) module and reads the files
 !    into memory, which could cause a machine to run out of memory if
 !    input files are large.
 ! 
 ! OPTIONS
-!        --col,c        column number to sort by
+!        --col,c        column number to sort by. Columns are numbered
+!                       from left to right starting with one.
 !        INPUT_FILE(s)  input file(s)
+!        --verbose      display additional information for each file
 !        --help         display help text and exit
 !        --version      display version information and exit
 ! 
@@ -105,7 +109,7 @@ help_text=[ CHARACTER(LEN=128) :: &
 version_text=[ CHARACTER(LEN=128) :: &
 'PRODUCT:        GPF (General Purpose Fortran) utilities and examples',&
 'PROGRAM:        tablesort(1f)',&
-'DESCRIPTION:    sort lines in a file',&
+'DESCRIPTION:    sort a file containing a numeric table',&
 'VERSION:        1.0, 2021-01-10',&
 'AUTHOR:         John S. Urban',&
 'HOME PAGE:      http://www.urbanjost.altervista.org/index.html',&

@@ -7,29 +7,29 @@ use M_verify, only : unit_check_level
 use M_verify,  only : unit_check_start, unit_check, unit_check_done, unit_check_good, unit_check_bad, unit_check_msg
 use M_verify, only : unit_check_stop
 ! full ranking
-use m_mrgref, only : mrgref
-use m_mrgrnk, only : mrgrnk
+use M_mrgref, only : mrgref
+use M_mrgrnk, only : mrgrnk
 ! full sorting
-use m_inssor, only : inssor
-use m_refsor, only : refsor
+use M_inssor, only : inssor
+use M_refsor, only : refsor
 
-use m_ctrper
-use m_fndnth
-use m_indmed
-use m_indnth
-use m_inspar
-use m_median
-use m_mulcnt
-use m_rapknr
-use m_refpar
-use m_rinpar
-use m_rnkpar
-use m_uniinv
-use m_unipar
-use m_unirnk
-use m_unista
-use m_valmed
-use m_valnth
+use M_ctrper
+use M_fndnth
+use M_indmed
+use M_indnth
+use M_inspar
+use M_median
+use M_mulcnt
+use M_rapknr
+use M_refpar
+use M_rinpar
+use M_rnkpar
+use M_uniinv
+use M_unipar
+use M_unirnk
+use M_unista
+use M_valmed
+use M_valnth
 implicit none
 integer,parameter            :: dp=kind(0.0d0)
    unit_check_command=''

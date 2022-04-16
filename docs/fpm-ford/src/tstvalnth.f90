@@ -1,6 +1,6 @@
 program chrono
-use m_valnth
-use m_mrgrnk
+use M_valnth
+use M_mrgrnk
       Integer, Parameter :: nbcl = 10000
       Integer, Parameter :: nth = 31     
       Integer, Parameter :: kdp = selected_real_kind(15)

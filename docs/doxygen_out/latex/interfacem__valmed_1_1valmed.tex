@@ -18,12 +18,686 @@ recursive integer function \mbox{\hyperlink{interfacem__valmed_1_1valmed_ad170b4
 \doxysubsubsection{\texorpdfstring{d\_valmed()}{d\_valmed()}}
 {\footnotesize\ttfamily recursive real (kind=\mbox{\hyperlink{namespacem__valmed_a02151bccbf065f23129c6c7abb6f237a}{kdp}}) function m\+\_\+valmed\+::valmed\+::d\+\_\+valmed (\begin{DoxyParamCaption}\item[{real (kind=\mbox{\hyperlink{namespacem__valmed_a02151bccbf065f23129c6c7abb6f237a}{kdp}}), dimension (\+:), intent(in)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{14 \textcolor{comment}{!! Finds the median of XDONT using the recursive procedure}}
+\DoxyCodeLine{15 \textcolor{comment}{!! described in Knuth, The Art of Computer Programming,}}
+\DoxyCodeLine{16 \textcolor{comment}{!! vol. 3, 5.3.3 -\/ This procedure is linear in time, and}}
+\DoxyCodeLine{17 \textcolor{comment}{!! does not require to be able to interpolate in the}}
+\DoxyCodeLine{18 \textcolor{comment}{!! set as the one used in INDNTH. It also has better worst}}
+\DoxyCodeLine{19 \textcolor{comment}{!! case behavior than INDNTH, but is about 30\% slower in}}
+\DoxyCodeLine{20 \textcolor{comment}{!! average for random uniformly distributed values.}}
+\DoxyCodeLine{21 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{22 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{23 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{24 \textcolor{keywordtype}{      Real} (kind=kdp) :: res\_med}
+\DoxyCodeLine{25 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{26 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Parameter} :: xhuge = huge(xdont)}
+\DoxyCodeLine{27 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (SIZE(XDONT)+6)} :: xwrkt}
+\DoxyCodeLine{28 \textcolor{keywordtype}{      Real} (kind=kdp) :: xwrk, xwrk1, xmed7}
+\DoxyCodeLine{29 \textcolor{comment}{!}}
+\DoxyCodeLine{30       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension ((SIZE(XDONT)+6)/7)} :: ISTRT, IENDT, IMEDT}
+\DoxyCodeLine{31       \textcolor{keywordtype}{Integer} :: NDON, NTRI, NMED, NORD, NEQU, NLEQ, IMED, IDON, IDON1}
+\DoxyCodeLine{32       \textcolor{keywordtype}{Integer} :: IDEB, IWRK, IDCR, ICRS, ICRS1, ICRS2, IMED1}
+\DoxyCodeLine{33 \textcolor{comment}{!}}
+\DoxyCodeLine{34       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{35       nmed = (ndon+1) / 2}
+\DoxyCodeLine{36 \textcolor{comment}{!      write(unit=*,fmt=*) NMED, NDON}}
+\DoxyCodeLine{37 \textcolor{comment}{!}}
+\DoxyCodeLine{38 \textcolor{comment}{!  If the number of values is small, then use insertion sort}}
+\DoxyCodeLine{39 \textcolor{comment}{!}}
+\DoxyCodeLine{40       \textcolor{keywordflow}{If} (ndon < 35) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{41 \textcolor{comment}{!}}
+\DoxyCodeLine{42 \textcolor{comment}{!  Bring minimum to first location to save test in decreasing loop}}
+\DoxyCodeLine{43 \textcolor{comment}{!}}
+\DoxyCodeLine{44          idcr = ndon}
+\DoxyCodeLine{45          \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{46             xwrk = xdont(1)}
+\DoxyCodeLine{47             xwrkt(idcr) = xdont(idcr)}
+\DoxyCodeLine{48          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{49             xwrk = xdont(idcr)}
+\DoxyCodeLine{50             xwrkt(idcr) = xdont(1)}
+\DoxyCodeLine{51 \textcolor{keywordflow}{         Endif}}
+\DoxyCodeLine{52          \textcolor{keywordflow}{Do} iwrk = 1, ndon -\/ 2}
+\DoxyCodeLine{53             idcr = idcr -\/ 1}
+\DoxyCodeLine{54             xwrk1 = xdont(idcr)}
+\DoxyCodeLine{55             \textcolor{keywordflow}{If} (xwrk1 < xwrk) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{56                 xwrkt(idcr) = xwrk}
+\DoxyCodeLine{57                 xwrk = xwrk1}
+\DoxyCodeLine{58             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{59                 xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{60 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{61 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{62          xwrkt(1) = xwrk}
+\DoxyCodeLine{63 \textcolor{comment}{!}}
+\DoxyCodeLine{64 \textcolor{comment}{! Sort the first half, until we have NMED sorted values}}
+\DoxyCodeLine{65 \textcolor{comment}{!}}
+\DoxyCodeLine{66          \textcolor{keywordflow}{Do} icrs = 3, nmed}
+\DoxyCodeLine{67             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{68                idcr = icrs -\/ 1}
+\DoxyCodeLine{69                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{70                   \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{71                   xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{72                   idcr = idcr -\/ 1}
+\DoxyCodeLine{73 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{74             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{75 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{76 \textcolor{comment}{!}}
+\DoxyCodeLine{77 \textcolor{comment}{!  Insert any value less than the current median in the first half}}
+\DoxyCodeLine{78 \textcolor{comment}{!}}
+\DoxyCodeLine{79          \textcolor{keywordflow}{Do} icrs = nmed+1, ndon}
+\DoxyCodeLine{80             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{81             \textcolor{keywordflow}{If} (xwrk < xwrkt(nmed)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{82                idcr = nmed -\/ 1}
+\DoxyCodeLine{83                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{84                   \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{85                   xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{86                   idcr = idcr -\/ 1}
+\DoxyCodeLine{87 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{88                xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{89 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{90 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{91          res\_med = xwrkt(nmed)}
+\DoxyCodeLine{92          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{93 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{94 \textcolor{comment}{!}}
+\DoxyCodeLine{95 \textcolor{comment}{!  Make sorted subsets of 7 elements}}
+\DoxyCodeLine{96 \textcolor{comment}{!  This is done by a variant of insertion sort where a first}}
+\DoxyCodeLine{97 \textcolor{comment}{!  pass is used to bring the smallest element to the first position}}
+\DoxyCodeLine{98 \textcolor{comment}{!  decreasing disorder at the same time, so that we may remove}}
+\DoxyCodeLine{99 \textcolor{comment}{!  remove the loop test in the insertion loop.}}
+\DoxyCodeLine{100 \textcolor{comment}{!}}
+\DoxyCodeLine{101       \textcolor{keywordflow}{DO} ideb = 1, ndon-\/6, 7}
+\DoxyCodeLine{102          idcr = ideb + 6}
+\DoxyCodeLine{103          \textcolor{keywordflow}{If} (xdont(ideb) < xdont(idcr)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{104             xwrk = xdont(ideb)}
+\DoxyCodeLine{105             xwrkt(idcr) = xdont(idcr)}
+\DoxyCodeLine{106          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{107             xwrk = xdont(idcr)}
+\DoxyCodeLine{108             xwrkt(idcr) = xdont(ideb)}
+\DoxyCodeLine{109 \textcolor{keywordflow}{         Endif}}
+\DoxyCodeLine{110          \textcolor{keywordflow}{Do} iwrk = 1, 5}
+\DoxyCodeLine{111             idcr = idcr -\/ 1}
+\DoxyCodeLine{112             xwrk1 = xdont(idcr)}
+\DoxyCodeLine{113             \textcolor{keywordflow}{If} (xwrk1 < xwrk) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{114                 xwrkt(idcr) = xwrk}
+\DoxyCodeLine{115                 xwrk = xwrk1}
+\DoxyCodeLine{116             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{117                 xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{118 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{119 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{120          xwrkt(ideb) = xwrk}
+\DoxyCodeLine{121          \textcolor{keywordflow}{Do} icrs = ideb+2, ideb+6}
+\DoxyCodeLine{122             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{123             \textcolor{keywordflow}{If} (xwrk < xwrkt(icrs-\/1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{124                xwrkt(icrs) = xwrkt(icrs-\/1)}
+\DoxyCodeLine{125                idcr = icrs -\/ 1}
+\DoxyCodeLine{126                xwrk1 = xwrkt(idcr-\/1)}
+\DoxyCodeLine{127                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{128                   \textcolor{keywordflow}{If} (xwrk >= xwrk1) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{129                   xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{130                   idcr = idcr -\/ 1}
+\DoxyCodeLine{131                   xwrk1 = xwrkt(idcr-\/1)}
+\DoxyCodeLine{132 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{133                xwrkt(idcr) = xwrk}
+\DoxyCodeLine{134 \textcolor{keywordflow}{            EndIf}}
+\DoxyCodeLine{135 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{136 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{137 \textcolor{comment}{!}}
+\DoxyCodeLine{138 \textcolor{comment}{!  Add-\/up alternatively + and -\/ HUGE values to make the number of data}}
+\DoxyCodeLine{139 \textcolor{comment}{!  an exact multiple of 7.}}
+\DoxyCodeLine{140 \textcolor{comment}{!}}
+\DoxyCodeLine{141       ideb = 7 * (ndon/7)}
+\DoxyCodeLine{142       ntri = ndon}
+\DoxyCodeLine{143       \textcolor{keywordflow}{If} (ideb < ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{144 \textcolor{comment}{!}}
+\DoxyCodeLine{145          xwrk1 = xhuge}
+\DoxyCodeLine{146          \textcolor{keywordflow}{Do} icrs = ideb+1, ideb+7}
+\DoxyCodeLine{147             \textcolor{keywordflow}{If} (icrs <= ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{148                xwrkt(icrs) = xdont(icrs)}
+\DoxyCodeLine{149             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{150                \textcolor{keywordflow}{If} (xwrk1 /= xhuge) nmed = nmed + 1}
+\DoxyCodeLine{151                xwrkt(icrs) = xwrk1}
+\DoxyCodeLine{152                xwrk1 = -\/ xwrk1}
+\DoxyCodeLine{153 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{154 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{155 \textcolor{comment}{!}}
+\DoxyCodeLine{156          \textcolor{keywordflow}{Do} icrs = ideb+2, ideb+7}
+\DoxyCodeLine{157             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{158             \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, ideb+1, -\/ 1}
+\DoxyCodeLine{159                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{160                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{161 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{162             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{163 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{164 \textcolor{comment}{!}}
+\DoxyCodeLine{165          ntri = ideb+7}
+\DoxyCodeLine{166 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{167 \textcolor{comment}{!}}
+\DoxyCodeLine{168 \textcolor{comment}{!  Make the set of the indices of median values of each sorted subset}}
+\DoxyCodeLine{169 \textcolor{comment}{!}}
+\DoxyCodeLine{170          idon1 = 0}
+\DoxyCodeLine{171          \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{172             idon1 = idon1 + 1}
+\DoxyCodeLine{173             imedt(idon1) = idon + 3}
+\DoxyCodeLine{174 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{175 \textcolor{comment}{!}}
+\DoxyCodeLine{176 \textcolor{comment}{!  Find XMED7, the median of the medians}}
+\DoxyCodeLine{177 \textcolor{comment}{!}}
+\DoxyCodeLine{178          xmed7 = d\_valmed(xwrkt(imedt))}
+\DoxyCodeLine{179 \textcolor{comment}{!}}
+\DoxyCodeLine{180 \textcolor{comment}{!  Count how many values are not higher than (and how many equal to) XMED7}}
+\DoxyCodeLine{181 \textcolor{comment}{!  This number is at least 4 * 1/2 * (N/7) : 4 values in each of the}}
+\DoxyCodeLine{182 \textcolor{comment}{!  subsets where the median is lower than the median of medians. For similar}}
+\DoxyCodeLine{183 \textcolor{comment}{!  reasons, we also have at least 2N/7 values not lower than XMED7. At the}}
+\DoxyCodeLine{184 \textcolor{comment}{!  same time, we find in each subset the index of the last value < XMED7,}}
+\DoxyCodeLine{185 \textcolor{comment}{!  and that of the first > XMED7. These indices will be used to restrict the}}
+\DoxyCodeLine{186 \textcolor{comment}{!  search for the median as the Kth element in the subset (> or <) where}}
+\DoxyCodeLine{187 \textcolor{comment}{!  we know it to be.}}
+\DoxyCodeLine{188 \textcolor{comment}{!}}
+\DoxyCodeLine{189          idon1 = 1}
+\DoxyCodeLine{190          nleq = 0}
+\DoxyCodeLine{191          nequ = 0}
+\DoxyCodeLine{192          \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{193             imed = idon+3}
+\DoxyCodeLine{194             \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{195                   imed = imed -\/ 2}
+\DoxyCodeLine{196                   \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{197                      imed = imed -\/ 1}
+\DoxyCodeLine{198                   \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{199                      imed = imed + 1}
+\DoxyCodeLine{200 \textcolor{keywordflow}{                  Endif}}
+\DoxyCodeLine{201             \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{202                   imed = imed + 2}
+\DoxyCodeLine{203                   \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{204                      imed = imed -\/ 1}
+\DoxyCodeLine{205                   \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{206                      imed = imed + 1}
+\DoxyCodeLine{207 \textcolor{keywordflow}{                  Endif}}
+\DoxyCodeLine{208 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{209             \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{210                nleq = nleq + imed -\/ idon}
+\DoxyCodeLine{211                iendt(idon1) = imed -\/ 1}
+\DoxyCodeLine{212                istrt(idon1) = imed}
+\DoxyCodeLine{213             \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{214                nleq = nleq + imed -\/ idon + 1}
+\DoxyCodeLine{215                iendt(idon1) = imed}
+\DoxyCodeLine{216                istrt(idon1) = imed + 1}
+\DoxyCodeLine{217             \textcolor{keywordflow}{Else}                    \textcolor{comment}{!       If (XWRKT (IMED) == XMED7)}}
+\DoxyCodeLine{218                nleq = nleq + imed -\/ idon + 1}
+\DoxyCodeLine{219                nequ = nequ + 1}
+\DoxyCodeLine{220                iendt(idon1) = imed -\/ 1}
+\DoxyCodeLine{221                \textcolor{keywordflow}{Do} imed1 = imed -\/ 1, idon, -\/1}
+\DoxyCodeLine{222                   \textcolor{keywordflow}{If} (xwrkt(imed1) == xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{223                      nequ = nequ + 1}
+\DoxyCodeLine{224                      iendt(idon1) = imed1 -\/ 1}
+\DoxyCodeLine{225                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{226                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{227 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{228 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{229                istrt(idon1) = imed + 1}
+\DoxyCodeLine{230                \textcolor{keywordflow}{Do} imed1 = imed + 1, idon + 6}
+\DoxyCodeLine{231                   \textcolor{keywordflow}{If} (xwrkt(imed1) == xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{232                      nequ = nequ + 1}
+\DoxyCodeLine{233                      nleq = nleq + 1}
+\DoxyCodeLine{234                      istrt(idon1) = imed1 + 1}
+\DoxyCodeLine{235                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{236                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{237 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{238 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{239 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{240             idon1 = idon1 + 1}
+\DoxyCodeLine{241 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{242 \textcolor{comment}{!}}
+\DoxyCodeLine{243 \textcolor{comment}{!  Carry out a partial insertion sort to find the Kth smallest of the}}
+\DoxyCodeLine{244 \textcolor{comment}{!  large values, or the Kth largest of the small values, according to}}
+\DoxyCodeLine{245 \textcolor{comment}{!  what is needed.}}
+\DoxyCodeLine{246 \textcolor{comment}{!}}
+\DoxyCodeLine{247         \textcolor{keywordflow}{If} (nleq -\/ nequ + 1 <= nmed) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{248             \textcolor{keywordflow}{If} (nleq < nmed) \textcolor{keywordflow}{Then}   \textcolor{comment}{!      Not enough low values}}
+\DoxyCodeLine{249                 xwrk1 = xhuge}
+\DoxyCodeLine{250                 nord = nmed -\/ nleq}
+\DoxyCodeLine{251                 idon1 = 0}
+\DoxyCodeLine{252                 icrs1 = 1}
+\DoxyCodeLine{253                 icrs2 = 0}
+\DoxyCodeLine{254                 idcr = 0}
+\DoxyCodeLine{255                \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{256                    idon1 = idon1 + 1}
+\DoxyCodeLine{257                    \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{258                       \textcolor{keywordflow}{Do} icrs = istrt(idon1), idon + 6}
+\DoxyCodeLine{259                          \textcolor{keywordflow}{If} (xwrkt(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{260                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{261                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{262                                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{263                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{264 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{265                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{266                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{267                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{268                            \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{269                               xwrkt(icrs1) = xwrkt(icrs)}
+\DoxyCodeLine{270                               xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{271 \textcolor{keywordflow}{                           Endif}}
+\DoxyCodeLine{272 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{273                          icrs1 = min(nord, icrs1 + 1)}
+\DoxyCodeLine{274                          icrs2 = min(nord, icrs2 + 1)}
+\DoxyCodeLine{275 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{276                    \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{277                       \textcolor{keywordflow}{Do} icrs = istrt(idon1), idon + 6}
+\DoxyCodeLine{278                          \textcolor{keywordflow}{If} (xwrkt(icrs) >= xwrk1) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{279                          xwrk = xwrkt(icrs)}
+\DoxyCodeLine{280                          \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{281                                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{282                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{283 \textcolor{keywordflow}{                         End Do}}
+\DoxyCodeLine{284                          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{285                          xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{286 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{287 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{288 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{289                 res\_med = xwrk1}
+\DoxyCodeLine{290                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{291             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{292                 res\_med = xmed7}
+\DoxyCodeLine{293                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{294 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{295          \textcolor{keywordflow}{Else}                       \textcolor{comment}{!      If (NLEQ > NMED)}}
+\DoxyCodeLine{296 \textcolor{comment}{!                                          Not enough high values}}
+\DoxyCodeLine{297                 xwrk1 = -\/xhuge}
+\DoxyCodeLine{298                 nord = nleq -\/ nequ -\/ nmed + 1}
+\DoxyCodeLine{299                 idon1 = 0}
+\DoxyCodeLine{300                 icrs1 = 1}
+\DoxyCodeLine{301                 icrs2 = 0}
+\DoxyCodeLine{302                 \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{303                    idon1 = idon1 + 1}
+\DoxyCodeLine{304                    \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{305 \textcolor{comment}{!}}
+\DoxyCodeLine{306                       \textcolor{keywordflow}{Do} icrs = idon, iendt(idon1)}
+\DoxyCodeLine{307                          \textcolor{keywordflow}{If} (xwrkt(icrs) > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{308                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{309                             idcr = icrs1 -\/ 1}
+\DoxyCodeLine{310                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{311                                \textcolor{keywordflow}{If} (xwrk <= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{312                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{313 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{314                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{315                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{316                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{317                             \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{318                                xwrkt(icrs1) = xwrkt(icrs)}
+\DoxyCodeLine{319                                xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{320 \textcolor{keywordflow}{                            End If}}
+\DoxyCodeLine{321 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{322                          icrs1 = min(nord, icrs1 + 1)}
+\DoxyCodeLine{323                          icrs2 = min(nord, icrs2 + 1)}
+\DoxyCodeLine{324 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{325                    \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{326                       \textcolor{keywordflow}{Do} icrs = iendt(idon1), idon, -\/1}
+\DoxyCodeLine{327                          \textcolor{keywordflow}{If} (xwrkt(icrs) > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{328                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{329                             idcr = icrs1 -\/ 1}
+\DoxyCodeLine{330                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{331                                \textcolor{keywordflow}{If} (xwrk <= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{332                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{333 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{334                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{335                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{336                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{337                             \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{338 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{339 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{340 \textcolor{keywordflow}{                   Endif}}
+\DoxyCodeLine{341 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{342 \textcolor{comment}{!}}
+\DoxyCodeLine{343                 res\_med = xwrk1}
+\DoxyCodeLine{344                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{345 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{346 \textcolor{comment}{!}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{interfacem__valmed_1_1valmed_ad170b47b9553d0c9b08324f0c7975dce}\label{interfacem__valmed_1_1valmed_ad170b47b9553d0c9b08324f0c7975dce}} 
 \index{m\_valmed::valmed@{m\_valmed::valmed}!i\_valmed@{i\_valmed}}
 \index{i\_valmed@{i\_valmed}!m\_valmed::valmed@{m\_valmed::valmed}}
 \doxysubsubsection{\texorpdfstring{i\_valmed()}{i\_valmed()}}
 {\footnotesize\ttfamily recursive integer function m\+\_\+valmed\+::valmed\+::i\+\_\+valmed (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(in)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{685 \textcolor{comment}{!  Finds the median of XDONT using the recursive procedure}}
+\DoxyCodeLine{686 \textcolor{comment}{!  described in Knuth, The Art of Computer Programming,}}
+\DoxyCodeLine{687 \textcolor{comment}{!  vol. 3, 5.3.3 -\/ This procedure is linear in time, and}}
+\DoxyCodeLine{688 \textcolor{comment}{!  does not require to be able to interpolate in the}}
+\DoxyCodeLine{689 \textcolor{comment}{!  set as the one used in INDNTH. It also has better worst}}
+\DoxyCodeLine{690 \textcolor{comment}{!  case behavior than INDNTH, but is about 30\% slower in}}
+\DoxyCodeLine{691 \textcolor{comment}{!  average for random uniformly distributed values.}}
+\DoxyCodeLine{692 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{693 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{694       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)}  :: XDONT}
+\DoxyCodeLine{695       \textcolor{keywordtype}{Integer} :: res\_med}
+\DoxyCodeLine{696 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{697       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: XHUGE = huge (xdont)}
+\DoxyCodeLine{698       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT)+6)} :: XWRKT}
+\DoxyCodeLine{699       \textcolor{keywordtype}{Integer} :: XWRK, XWRK1, XMED7}
+\DoxyCodeLine{700 \textcolor{comment}{!}}
+\DoxyCodeLine{701       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension ((SIZE(XDONT)+6)/7)} :: ISTRT, IENDT, IMEDT}
+\DoxyCodeLine{702       \textcolor{keywordtype}{Integer} :: NDON, NTRI, NMED, NORD, NEQU, NLEQ, IMED, IDON, IDON1}
+\DoxyCodeLine{703       \textcolor{keywordtype}{Integer} :: IDEB, IWRK, IDCR, ICRS, ICRS1, ICRS2, IMED1}
+\DoxyCodeLine{704 \textcolor{comment}{!}}
+\DoxyCodeLine{705       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{706       nmed = (ndon+1) / 2}
+\DoxyCodeLine{707 \textcolor{comment}{!      write(unit=*,fmt=*) NMED, NDON}}
+\DoxyCodeLine{708 \textcolor{comment}{!}}
+\DoxyCodeLine{709 \textcolor{comment}{!  If the number of values is small, then use insertion sort}}
+\DoxyCodeLine{710 \textcolor{comment}{!}}
+\DoxyCodeLine{711       \textcolor{keywordflow}{If} (ndon < 35) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{712 \textcolor{comment}{!}}
+\DoxyCodeLine{713 \textcolor{comment}{!  Bring minimum to first location to save test in decreasing loop}}
+\DoxyCodeLine{714 \textcolor{comment}{!}}
+\DoxyCodeLine{715          idcr = ndon}
+\DoxyCodeLine{716          \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{717             xwrk = xdont(1)}
+\DoxyCodeLine{718             xwrkt(idcr) = xdont(idcr)}
+\DoxyCodeLine{719          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{720             xwrk = xdont(idcr)}
+\DoxyCodeLine{721             xwrkt(idcr) = xdont(1)}
+\DoxyCodeLine{722 \textcolor{keywordflow}{         Endif}}
+\DoxyCodeLine{723          \textcolor{keywordflow}{Do} iwrk = 1, ndon -\/ 2}
+\DoxyCodeLine{724             idcr = idcr -\/ 1}
+\DoxyCodeLine{725             xwrk1 = xdont(idcr)}
+\DoxyCodeLine{726             \textcolor{keywordflow}{If} (xwrk1 < xwrk) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{727                 xwrkt(idcr) = xwrk}
+\DoxyCodeLine{728                 xwrk = xwrk1}
+\DoxyCodeLine{729             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{730                 xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{731 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{732 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{733          xwrkt(1) = xwrk}
+\DoxyCodeLine{734 \textcolor{comment}{!}}
+\DoxyCodeLine{735 \textcolor{comment}{! Sort the first half, until we have NMED sorted values}}
+\DoxyCodeLine{736 \textcolor{comment}{!}}
+\DoxyCodeLine{737          \textcolor{keywordflow}{Do} icrs = 3, nmed}
+\DoxyCodeLine{738             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{739                idcr = icrs -\/ 1}
+\DoxyCodeLine{740                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{741                   \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{742                   xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{743                   idcr = idcr -\/ 1}
+\DoxyCodeLine{744 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{745             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{746 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{747 \textcolor{comment}{!}}
+\DoxyCodeLine{748 \textcolor{comment}{!  Insert any value less than the current median in the first half}}
+\DoxyCodeLine{749 \textcolor{comment}{!}}
+\DoxyCodeLine{750          \textcolor{keywordflow}{Do} icrs = nmed+1, ndon}
+\DoxyCodeLine{751             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{752             \textcolor{keywordflow}{If} (xwrk < xwrkt(nmed)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{753                idcr = nmed -\/ 1}
+\DoxyCodeLine{754                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{755                   \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{756                   xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{757                   idcr = idcr -\/ 1}
+\DoxyCodeLine{758 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{759                xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{760 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{761 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{762          res\_med = xwrkt(nmed)}
+\DoxyCodeLine{763          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{764 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{765 \textcolor{comment}{!}}
+\DoxyCodeLine{766 \textcolor{comment}{!  Make sorted subsets of 7 elements}}
+\DoxyCodeLine{767 \textcolor{comment}{!  This is done by a variant of insertion sort where a first}}
+\DoxyCodeLine{768 \textcolor{comment}{!  pass is used to bring the smallest element to the first position}}
+\DoxyCodeLine{769 \textcolor{comment}{!  decreasing disorder at the same time, so that we may remove}}
+\DoxyCodeLine{770 \textcolor{comment}{!  remove the loop test in the insertion loop.}}
+\DoxyCodeLine{771 \textcolor{comment}{!}}
+\DoxyCodeLine{772       \textcolor{keywordflow}{DO} ideb = 1, ndon-\/6, 7}
+\DoxyCodeLine{773          idcr = ideb + 6}
+\DoxyCodeLine{774          \textcolor{keywordflow}{If} (xdont(ideb) < xdont(idcr)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{775             xwrk = xdont(ideb)}
+\DoxyCodeLine{776             xwrkt(idcr) = xdont(idcr)}
+\DoxyCodeLine{777          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{778             xwrk = xdont(idcr)}
+\DoxyCodeLine{779             xwrkt(idcr) = xdont(ideb)}
+\DoxyCodeLine{780 \textcolor{keywordflow}{         Endif}}
+\DoxyCodeLine{781          \textcolor{keywordflow}{Do} iwrk = 1, 5}
+\DoxyCodeLine{782             idcr = idcr -\/ 1}
+\DoxyCodeLine{783             xwrk1 = xdont(idcr)}
+\DoxyCodeLine{784             \textcolor{keywordflow}{If} (xwrk1 < xwrk) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{785                 xwrkt(idcr) = xwrk}
+\DoxyCodeLine{786                 xwrk = xwrk1}
+\DoxyCodeLine{787             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{788                 xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{789 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{790 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{791          xwrkt(ideb) = xwrk}
+\DoxyCodeLine{792          \textcolor{keywordflow}{Do} icrs = ideb+2, ideb+6}
+\DoxyCodeLine{793             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{794             \textcolor{keywordflow}{If} (xwrk < xwrkt(icrs-\/1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{795                xwrkt(icrs) = xwrkt(icrs-\/1)}
+\DoxyCodeLine{796                idcr = icrs -\/ 1}
+\DoxyCodeLine{797                xwrk1 = xwrkt(idcr-\/1)}
+\DoxyCodeLine{798                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{799                   \textcolor{keywordflow}{If} (xwrk >= xwrk1) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{800                   xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{801                   idcr = idcr -\/ 1}
+\DoxyCodeLine{802                   xwrk1 = xwrkt(idcr-\/1)}
+\DoxyCodeLine{803 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{804                xwrkt(idcr) = xwrk}
+\DoxyCodeLine{805 \textcolor{keywordflow}{            EndIf}}
+\DoxyCodeLine{806 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{807 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{808 \textcolor{comment}{!}}
+\DoxyCodeLine{809 \textcolor{comment}{!  Add-\/up alternatively + and -\/ HUGE values to make the number of data}}
+\DoxyCodeLine{810 \textcolor{comment}{!  an exact multiple of 7.}}
+\DoxyCodeLine{811 \textcolor{comment}{!}}
+\DoxyCodeLine{812       ideb = 7 * (ndon/7)}
+\DoxyCodeLine{813       ntri = ndon}
+\DoxyCodeLine{814       \textcolor{keywordflow}{If} (ideb < ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{815 \textcolor{comment}{!}}
+\DoxyCodeLine{816          xwrk1 = xhuge}
+\DoxyCodeLine{817          \textcolor{keywordflow}{Do} icrs = ideb+1, ideb+7}
+\DoxyCodeLine{818             \textcolor{keywordflow}{If} (icrs <= ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{819                xwrkt(icrs) = xdont(icrs)}
+\DoxyCodeLine{820             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{821                \textcolor{keywordflow}{If} (xwrk1 /= xhuge) nmed = nmed + 1}
+\DoxyCodeLine{822                xwrkt(icrs) = xwrk1}
+\DoxyCodeLine{823                xwrk1 = -\/ xwrk1}
+\DoxyCodeLine{824 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{825 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{826 \textcolor{comment}{!}}
+\DoxyCodeLine{827          \textcolor{keywordflow}{Do} icrs = ideb+2, ideb+7}
+\DoxyCodeLine{828             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{829             \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, ideb+1, -\/ 1}
+\DoxyCodeLine{830                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{831                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{832 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{833             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{834 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{835 \textcolor{comment}{!}}
+\DoxyCodeLine{836          ntri = ideb+7}
+\DoxyCodeLine{837 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{838 \textcolor{comment}{!}}
+\DoxyCodeLine{839 \textcolor{comment}{!  Make the set of the indices of median values of each sorted subset}}
+\DoxyCodeLine{840 \textcolor{comment}{!}}
+\DoxyCodeLine{841          idon1 = 0}
+\DoxyCodeLine{842          \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{843             idon1 = idon1 + 1}
+\DoxyCodeLine{844             imedt(idon1) = idon + 3}
+\DoxyCodeLine{845 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{846 \textcolor{comment}{!}}
+\DoxyCodeLine{847 \textcolor{comment}{!  Find XMED7, the median of the medians}}
+\DoxyCodeLine{848 \textcolor{comment}{!}}
+\DoxyCodeLine{849          xmed7 = i\_valmed(xwrkt(imedt))}
+\DoxyCodeLine{850 \textcolor{comment}{!}}
+\DoxyCodeLine{851 \textcolor{comment}{!  Count how many values are not higher than (and how many equal to) XMED7}}
+\DoxyCodeLine{852 \textcolor{comment}{!  This number is at least 4 * 1/2 * (N/7) : 4 values in each of the}}
+\DoxyCodeLine{853 \textcolor{comment}{!  subsets where the median is lower than the median of medians. For similar}}
+\DoxyCodeLine{854 \textcolor{comment}{!  reasons, we also have at least 2N/7 values not lower than XMED7. At the}}
+\DoxyCodeLine{855 \textcolor{comment}{!  same time, we find in each subset the index of the last value < XMED7,}}
+\DoxyCodeLine{856 \textcolor{comment}{!  and that of the first > XMED7. These indices will be used to restrict the}}
+\DoxyCodeLine{857 \textcolor{comment}{!  search for the median as the Kth element in the subset (> or <) where}}
+\DoxyCodeLine{858 \textcolor{comment}{!  we know it to be.}}
+\DoxyCodeLine{859 \textcolor{comment}{!}}
+\DoxyCodeLine{860          idon1 = 1}
+\DoxyCodeLine{861          nleq = 0}
+\DoxyCodeLine{862          nequ = 0}
+\DoxyCodeLine{863          \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{864             imed = idon+3}
+\DoxyCodeLine{865             \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{866                   imed = imed -\/ 2}
+\DoxyCodeLine{867                   \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{868                      imed = imed -\/ 1}
+\DoxyCodeLine{869                   \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{870                      imed = imed + 1}
+\DoxyCodeLine{871 \textcolor{keywordflow}{                  Endif}}
+\DoxyCodeLine{872             \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{873                   imed = imed + 2}
+\DoxyCodeLine{874                   \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{875                      imed = imed -\/ 1}
+\DoxyCodeLine{876                   \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{877                      imed = imed + 1}
+\DoxyCodeLine{878 \textcolor{keywordflow}{                  Endif}}
+\DoxyCodeLine{879 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{880             \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{881                nleq = nleq + imed -\/ idon}
+\DoxyCodeLine{882                iendt(idon1) = imed -\/ 1}
+\DoxyCodeLine{883                istrt(idon1) = imed}
+\DoxyCodeLine{884             \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{885                nleq = nleq + imed -\/ idon + 1}
+\DoxyCodeLine{886                iendt(idon1) = imed}
+\DoxyCodeLine{887                istrt(idon1) = imed + 1}
+\DoxyCodeLine{888             \textcolor{keywordflow}{Else}                    \textcolor{comment}{!       If (XWRKT (IMED) == XMED7)}}
+\DoxyCodeLine{889                nleq = nleq + imed -\/ idon + 1}
+\DoxyCodeLine{890                nequ = nequ + 1}
+\DoxyCodeLine{891                iendt(idon1) = imed -\/ 1}
+\DoxyCodeLine{892                \textcolor{keywordflow}{Do} imed1 = imed -\/ 1, idon, -\/1}
+\DoxyCodeLine{893                   \textcolor{keywordflow}{If} (xwrkt(imed1) == xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{894                      nequ = nequ + 1}
+\DoxyCodeLine{895                      iendt(idon1) = imed1 -\/ 1}
+\DoxyCodeLine{896                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{897                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{898 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{899 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{900                istrt(idon1) = imed + 1}
+\DoxyCodeLine{901                \textcolor{keywordflow}{Do} imed1 = imed + 1, idon + 6}
+\DoxyCodeLine{902                   \textcolor{keywordflow}{If} (xwrkt(imed1) == xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{903                      nequ = nequ + 1}
+\DoxyCodeLine{904                      nleq = nleq + 1}
+\DoxyCodeLine{905                      istrt(idon1) = imed1 + 1}
+\DoxyCodeLine{906                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{907                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{908 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{909 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{910 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{911             idon1 = idon1 + 1}
+\DoxyCodeLine{912 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{913 \textcolor{comment}{!}}
+\DoxyCodeLine{914 \textcolor{comment}{!  Carry out a partial insertion sort to find the Kth smallest of the}}
+\DoxyCodeLine{915 \textcolor{comment}{!  large values, or the Kth largest of the small values, according to}}
+\DoxyCodeLine{916 \textcolor{comment}{!  what is needed.}}
+\DoxyCodeLine{917 \textcolor{comment}{!}}
+\DoxyCodeLine{918         \textcolor{keywordflow}{If} (nleq -\/ nequ + 1 <= nmed) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{919             \textcolor{keywordflow}{If} (nleq < nmed) \textcolor{keywordflow}{Then}   \textcolor{comment}{!      Not enough low values}}
+\DoxyCodeLine{920                 xwrk1 = xhuge}
+\DoxyCodeLine{921                 nord = nmed -\/ nleq}
+\DoxyCodeLine{922                 idon1 = 0}
+\DoxyCodeLine{923                 icrs1 = 1}
+\DoxyCodeLine{924                 icrs2 = 0}
+\DoxyCodeLine{925                 idcr = 0}
+\DoxyCodeLine{926                \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{927                    idon1 = idon1 + 1}
+\DoxyCodeLine{928                    \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{929                       \textcolor{keywordflow}{Do} icrs = istrt(idon1), idon + 6}
+\DoxyCodeLine{930                          \textcolor{keywordflow}{If} (xwrkt(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{931                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{932                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{933                                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{934                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{935 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{936                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{937                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{938                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{939                            \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{940                               xwrkt(icrs1) = xwrkt(icrs)}
+\DoxyCodeLine{941                               xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{942 \textcolor{keywordflow}{                           Endif}}
+\DoxyCodeLine{943 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{944                          icrs1 = min(nord, icrs1 + 1)}
+\DoxyCodeLine{945                          icrs2 = min(nord, icrs2 + 1)}
+\DoxyCodeLine{946 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{947                    \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{948                       \textcolor{keywordflow}{Do} icrs = istrt(idon1), idon + 6}
+\DoxyCodeLine{949                          \textcolor{keywordflow}{If} (xwrkt(icrs) >= xwrk1) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{950                          xwrk = xwrkt(icrs)}
+\DoxyCodeLine{951                          \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{952                                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{953                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{954 \textcolor{keywordflow}{                         End Do}}
+\DoxyCodeLine{955                          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{956                          xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{957 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{958 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{959 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{960                 res\_med = xwrk1}
+\DoxyCodeLine{961                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{962             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{963                 res\_med = xmed7}
+\DoxyCodeLine{964                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{965 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{966          \textcolor{keywordflow}{Else}                       \textcolor{comment}{!      If (NLEQ > NMED)}}
+\DoxyCodeLine{967 \textcolor{comment}{!                                          Not enough high values}}
+\DoxyCodeLine{968                 xwrk1 = -\/xhuge}
+\DoxyCodeLine{969                 nord = nleq -\/ nequ -\/ nmed + 1}
+\DoxyCodeLine{970                 idon1 = 0}
+\DoxyCodeLine{971                 icrs1 = 1}
+\DoxyCodeLine{972                 icrs2 = 0}
+\DoxyCodeLine{973                 \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{974                    idon1 = idon1 + 1}
+\DoxyCodeLine{975                    \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{976 \textcolor{comment}{!}}
+\DoxyCodeLine{977                       \textcolor{keywordflow}{Do} icrs = idon, iendt(idon1)}
+\DoxyCodeLine{978                          \textcolor{keywordflow}{If} (xwrkt(icrs) > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{979                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{980                             idcr = icrs1 -\/ 1}
+\DoxyCodeLine{981                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{982                                \textcolor{keywordflow}{If} (xwrk <= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{983                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{984 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{985                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{986                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{987                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{988                             \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{989                                xwrkt(icrs1) = xwrkt(icrs)}
+\DoxyCodeLine{990                                xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{991 \textcolor{keywordflow}{                            End If}}
+\DoxyCodeLine{992 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{993                          icrs1 = min(nord, icrs1 + 1)}
+\DoxyCodeLine{994                          icrs2 = min(nord, icrs2 + 1)}
+\DoxyCodeLine{995 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{996                    \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{997                       \textcolor{keywordflow}{Do} icrs = iendt(idon1), idon, -\/1}
+\DoxyCodeLine{998                          \textcolor{keywordflow}{If} (xwrkt(icrs) > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{999                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{1000                             idcr = icrs1 -\/ 1}
+\DoxyCodeLine{1001                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{1002                                \textcolor{keywordflow}{If} (xwrk <= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1003                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{1004 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{1005                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{1006                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{1007                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1008                             \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1009 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{1010 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{1011 \textcolor{keywordflow}{                   Endif}}
+\DoxyCodeLine{1012 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{1013 \textcolor{comment}{!}}
+\DoxyCodeLine{1014                 res\_med = xwrk1}
+\DoxyCodeLine{1015                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1016 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{1017 \textcolor{comment}{!}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{interfacem__valmed_1_1valmed_a169f9e546a2a3174afdfeec6a75975ac}\label{interfacem__valmed_1_1valmed_a169f9e546a2a3174afdfeec6a75975ac}} 
 \index{m\_valmed::valmed@{m\_valmed::valmed}!r\_valmed@{r\_valmed}}
 \index{r\_valmed@{r\_valmed}!m\_valmed::valmed@{m\_valmed::valmed}}
@@ -31,7 +705,344 @@ recursive integer function \mbox{\hyperlink{interfacem__valmed_1_1valmed_ad170b4
 {\footnotesize\ttfamily recursive real function m\+\_\+valmed\+::valmed\+::r\+\_\+valmed (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(in)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{350 \textcolor{comment}{!  Finds the median of XDONT using the recursive procedure}}
+\DoxyCodeLine{351 \textcolor{comment}{!  described in Knuth, The Art of Computer Programming,}}
+\DoxyCodeLine{352 \textcolor{comment}{!  vol. 3, 5.3.3 -\/ This procedure is linear in time, and}}
+\DoxyCodeLine{353 \textcolor{comment}{!  does not require to be able to interpolate in the}}
+\DoxyCodeLine{354 \textcolor{comment}{!  set as the one used in INDNTH. It also has better worst}}
+\DoxyCodeLine{355 \textcolor{comment}{!  case behavior than INDNTH, but is about 30\% slower in}}
+\DoxyCodeLine{356 \textcolor{comment}{!  average for random uniformly distributed values.}}
+\DoxyCodeLine{357 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{358 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{359 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{360 \textcolor{keywordtype}{      Real} :: res\_med}
+\DoxyCodeLine{361 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{362 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Parameter} :: XHUGE = huge (xdont)}
+\DoxyCodeLine{363 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (SIZE(XDONT)+6)} :: XWRKT}
+\DoxyCodeLine{364 \textcolor{keywordtype}{      Real} :: XWRK, XWRK1, XMED7}
+\DoxyCodeLine{365 \textcolor{comment}{!}}
+\DoxyCodeLine{366       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension ((SIZE(XDONT)+6)/7)} :: ISTRT, IENDT, IMEDT}
+\DoxyCodeLine{367       \textcolor{keywordtype}{Integer} :: NDON, NTRI, NMED, NORD, NEQU, NLEQ, IMED, IDON, IDON1}
+\DoxyCodeLine{368       \textcolor{keywordtype}{Integer} :: IDEB, IWRK, IDCR, ICRS, ICRS1, ICRS2, IMED1}
+\DoxyCodeLine{369 \textcolor{comment}{!}}
+\DoxyCodeLine{370       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{371       nmed = (ndon+1) / 2}
+\DoxyCodeLine{372 \textcolor{comment}{!      write(unit=*,fmt=*) NMED, NDON}}
+\DoxyCodeLine{373 \textcolor{comment}{!}}
+\DoxyCodeLine{374 \textcolor{comment}{!  If the number of values is small, then use insertion sort}}
+\DoxyCodeLine{375 \textcolor{comment}{!}}
+\DoxyCodeLine{376       \textcolor{keywordflow}{If} (ndon < 35) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{377 \textcolor{comment}{!}}
+\DoxyCodeLine{378 \textcolor{comment}{!  Bring minimum to first location to save test in decreasing loop}}
+\DoxyCodeLine{379 \textcolor{comment}{!}}
+\DoxyCodeLine{380          idcr = ndon}
+\DoxyCodeLine{381          \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{382             xwrk = xdont(1)}
+\DoxyCodeLine{383             xwrkt(idcr) = xdont(idcr)}
+\DoxyCodeLine{384          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{385             xwrk = xdont(idcr)}
+\DoxyCodeLine{386             xwrkt(idcr) = xdont(1)}
+\DoxyCodeLine{387 \textcolor{keywordflow}{         Endif}}
+\DoxyCodeLine{388          \textcolor{keywordflow}{Do} iwrk = 1, ndon -\/ 2}
+\DoxyCodeLine{389             idcr = idcr -\/ 1}
+\DoxyCodeLine{390             xwrk1 = xdont(idcr)}
+\DoxyCodeLine{391             \textcolor{keywordflow}{If} (xwrk1 < xwrk) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{392                 xwrkt(idcr) = xwrk}
+\DoxyCodeLine{393                 xwrk = xwrk1}
+\DoxyCodeLine{394             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{395                 xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{396 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{397 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{398          xwrkt(1) = xwrk}
+\DoxyCodeLine{399 \textcolor{comment}{!}}
+\DoxyCodeLine{400 \textcolor{comment}{! Sort the first half, until we have NMED sorted values}}
+\DoxyCodeLine{401 \textcolor{comment}{!}}
+\DoxyCodeLine{402          \textcolor{keywordflow}{Do} icrs = 3, nmed}
+\DoxyCodeLine{403             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{404                idcr = icrs -\/ 1}
+\DoxyCodeLine{405                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{406                   \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{407                   xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{408                   idcr = idcr -\/ 1}
+\DoxyCodeLine{409 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{410             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{411 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{412 \textcolor{comment}{!}}
+\DoxyCodeLine{413 \textcolor{comment}{!  Insert any value less than the current median in the first half}}
+\DoxyCodeLine{414 \textcolor{comment}{!}}
+\DoxyCodeLine{415          \textcolor{keywordflow}{Do} icrs = nmed+1, ndon}
+\DoxyCodeLine{416             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{417             \textcolor{keywordflow}{If} (xwrk < xwrkt(nmed)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{418                idcr = nmed -\/ 1}
+\DoxyCodeLine{419                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{420                   \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{421                   xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{422                   idcr = idcr -\/ 1}
+\DoxyCodeLine{423 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{424                xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{425 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{426 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{427          res\_med = xwrkt(nmed)}
+\DoxyCodeLine{428          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{429 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{430 \textcolor{comment}{!}}
+\DoxyCodeLine{431 \textcolor{comment}{!  Make sorted subsets of 7 elements}}
+\DoxyCodeLine{432 \textcolor{comment}{!  This is done by a variant of insertion sort where a first}}
+\DoxyCodeLine{433 \textcolor{comment}{!  pass is used to bring the smallest element to the first position}}
+\DoxyCodeLine{434 \textcolor{comment}{!  decreasing disorder at the same time, so that we may remove}}
+\DoxyCodeLine{435 \textcolor{comment}{!  remove the loop test in the insertion loop.}}
+\DoxyCodeLine{436 \textcolor{comment}{!}}
+\DoxyCodeLine{437       \textcolor{keywordflow}{DO} ideb = 1, ndon-\/6, 7}
+\DoxyCodeLine{438          idcr = ideb + 6}
+\DoxyCodeLine{439          \textcolor{keywordflow}{If} (xdont(ideb) < xdont(idcr)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{440             xwrk = xdont(ideb)}
+\DoxyCodeLine{441             xwrkt(idcr) = xdont(idcr)}
+\DoxyCodeLine{442          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{443             xwrk = xdont(idcr)}
+\DoxyCodeLine{444             xwrkt(idcr) = xdont(ideb)}
+\DoxyCodeLine{445 \textcolor{keywordflow}{         Endif}}
+\DoxyCodeLine{446          \textcolor{keywordflow}{Do} iwrk = 1, 5}
+\DoxyCodeLine{447             idcr = idcr -\/ 1}
+\DoxyCodeLine{448             xwrk1 = xdont(idcr)}
+\DoxyCodeLine{449             \textcolor{keywordflow}{If} (xwrk1 < xwrk) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{450                 xwrkt(idcr) = xwrk}
+\DoxyCodeLine{451                 xwrk = xwrk1}
+\DoxyCodeLine{452             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{453                 xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{454 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{455 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{456          xwrkt(ideb) = xwrk}
+\DoxyCodeLine{457          \textcolor{keywordflow}{Do} icrs = ideb+2, ideb+6}
+\DoxyCodeLine{458             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{459             \textcolor{keywordflow}{If} (xwrk < xwrkt(icrs-\/1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{460                xwrkt(icrs) = xwrkt(icrs-\/1)}
+\DoxyCodeLine{461                idcr = icrs -\/ 1}
+\DoxyCodeLine{462                xwrk1 = xwrkt(idcr-\/1)}
+\DoxyCodeLine{463                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{464                   \textcolor{keywordflow}{If} (xwrk >= xwrk1) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{465                   xwrkt(idcr) = xwrk1}
+\DoxyCodeLine{466                   idcr = idcr -\/ 1}
+\DoxyCodeLine{467                   xwrk1 = xwrkt(idcr-\/1)}
+\DoxyCodeLine{468 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{469                xwrkt(idcr) = xwrk}
+\DoxyCodeLine{470 \textcolor{keywordflow}{            EndIf}}
+\DoxyCodeLine{471 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{472 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{473 \textcolor{comment}{!}}
+\DoxyCodeLine{474 \textcolor{comment}{!  Add-\/up alternatively + and -\/ HUGE values to make the number of data}}
+\DoxyCodeLine{475 \textcolor{comment}{!  an exact multiple of 7.}}
+\DoxyCodeLine{476 \textcolor{comment}{!}}
+\DoxyCodeLine{477       ideb = 7 * (ndon/7)}
+\DoxyCodeLine{478       ntri = ndon}
+\DoxyCodeLine{479       \textcolor{keywordflow}{If} (ideb < ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{480 \textcolor{comment}{!}}
+\DoxyCodeLine{481          xwrk1 = xhuge}
+\DoxyCodeLine{482          \textcolor{keywordflow}{Do} icrs = ideb+1, ideb+7}
+\DoxyCodeLine{483             \textcolor{keywordflow}{If} (icrs <= ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{484                xwrkt(icrs) = xdont(icrs)}
+\DoxyCodeLine{485             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{486                \textcolor{keywordflow}{If} (xwrk1 /= xhuge) nmed = nmed + 1}
+\DoxyCodeLine{487                xwrkt(icrs) = xwrk1}
+\DoxyCodeLine{488                xwrk1 = -\/ xwrk1}
+\DoxyCodeLine{489 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{490 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{491 \textcolor{comment}{!}}
+\DoxyCodeLine{492          \textcolor{keywordflow}{Do} icrs = ideb+2, ideb+7}
+\DoxyCodeLine{493             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{494             \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, ideb+1, -\/ 1}
+\DoxyCodeLine{495                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{496                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{497 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{498             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{499 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{500 \textcolor{comment}{!}}
+\DoxyCodeLine{501          ntri = ideb+7}
+\DoxyCodeLine{502 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{503 \textcolor{comment}{!}}
+\DoxyCodeLine{504 \textcolor{comment}{!  Make the set of the indices of median values of each sorted subset}}
+\DoxyCodeLine{505 \textcolor{comment}{!}}
+\DoxyCodeLine{506          idon1 = 0}
+\DoxyCodeLine{507          \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{508             idon1 = idon1 + 1}
+\DoxyCodeLine{509             imedt(idon1) = idon + 3}
+\DoxyCodeLine{510 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{511 \textcolor{comment}{!}}
+\DoxyCodeLine{512 \textcolor{comment}{!  Find XMED7, the median of the medians}}
+\DoxyCodeLine{513 \textcolor{comment}{!}}
+\DoxyCodeLine{514          xmed7 = r\_valmed(xwrkt(imedt))}
+\DoxyCodeLine{515 \textcolor{comment}{!}}
+\DoxyCodeLine{516 \textcolor{comment}{!  Count how many values are not higher than (and how many equal to) XMED7}}
+\DoxyCodeLine{517 \textcolor{comment}{!  This number is at least 4 * 1/2 * (N/7) : 4 values in each of the}}
+\DoxyCodeLine{518 \textcolor{comment}{!  subsets where the median is lower than the median of medians. For similar}}
+\DoxyCodeLine{519 \textcolor{comment}{!  reasons, we also have at least 2N/7 values not lower than XMED7. At the}}
+\DoxyCodeLine{520 \textcolor{comment}{!  same time, we find in each subset the index of the last value < XMED7,}}
+\DoxyCodeLine{521 \textcolor{comment}{!  and that of the first > XMED7. These indices will be used to restrict the}}
+\DoxyCodeLine{522 \textcolor{comment}{!  search for the median as the Kth element in the subset (> or <) where}}
+\DoxyCodeLine{523 \textcolor{comment}{!  we know it to be.}}
+\DoxyCodeLine{524 \textcolor{comment}{!}}
+\DoxyCodeLine{525          idon1 = 1}
+\DoxyCodeLine{526          nleq = 0}
+\DoxyCodeLine{527          nequ = 0}
+\DoxyCodeLine{528          \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{529             imed = idon+3}
+\DoxyCodeLine{530             \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{531                   imed = imed -\/ 2}
+\DoxyCodeLine{532                   \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{533                      imed = imed -\/ 1}
+\DoxyCodeLine{534                   \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{535                      imed = imed + 1}
+\DoxyCodeLine{536 \textcolor{keywordflow}{                  Endif}}
+\DoxyCodeLine{537             \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{538                   imed = imed + 2}
+\DoxyCodeLine{539                   \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{540                      imed = imed -\/ 1}
+\DoxyCodeLine{541                   \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{542                      imed = imed + 1}
+\DoxyCodeLine{543 \textcolor{keywordflow}{                  Endif}}
+\DoxyCodeLine{544 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{545             \textcolor{keywordflow}{If} (xwrkt(imed) > xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{546                nleq = nleq + imed -\/ idon}
+\DoxyCodeLine{547                iendt(idon1) = imed -\/ 1}
+\DoxyCodeLine{548                istrt(idon1) = imed}
+\DoxyCodeLine{549             \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (xwrkt(imed) < xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{550                nleq = nleq + imed -\/ idon + 1}
+\DoxyCodeLine{551                iendt(idon1) = imed}
+\DoxyCodeLine{552                istrt(idon1) = imed + 1}
+\DoxyCodeLine{553             \textcolor{keywordflow}{Else}                    \textcolor{comment}{!       If (XWRKT (IMED) == XMED7)}}
+\DoxyCodeLine{554                nleq = nleq + imed -\/ idon + 1}
+\DoxyCodeLine{555                nequ = nequ + 1}
+\DoxyCodeLine{556                iendt(idon1) = imed -\/ 1}
+\DoxyCodeLine{557                \textcolor{keywordflow}{Do} imed1 = imed -\/ 1, idon, -\/1}
+\DoxyCodeLine{558                   \textcolor{keywordflow}{If} (xwrkt(imed1) == xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{559                      nequ = nequ + 1}
+\DoxyCodeLine{560                      iendt(idon1) = imed1 -\/ 1}
+\DoxyCodeLine{561                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{562                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{563 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{564 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{565                istrt(idon1) = imed + 1}
+\DoxyCodeLine{566                \textcolor{keywordflow}{Do} imed1 = imed + 1, idon + 6}
+\DoxyCodeLine{567                   \textcolor{keywordflow}{If} (xwrkt(imed1) == xmed7) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{568                      nequ = nequ + 1}
+\DoxyCodeLine{569                      nleq = nleq + 1}
+\DoxyCodeLine{570                      istrt(idon1) = imed1 + 1}
+\DoxyCodeLine{571                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{572                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{573 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{574 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{575 \textcolor{keywordflow}{            Endif}}
+\DoxyCodeLine{576             idon1 = idon1 + 1}
+\DoxyCodeLine{577 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{578 \textcolor{comment}{!}}
+\DoxyCodeLine{579 \textcolor{comment}{!  Carry out a partial insertion sort to find the Kth smallest of the}}
+\DoxyCodeLine{580 \textcolor{comment}{!  large values, or the Kth largest of the small values, according to}}
+\DoxyCodeLine{581 \textcolor{comment}{!  what is needed.}}
+\DoxyCodeLine{582 \textcolor{comment}{!}}
+\DoxyCodeLine{583         \textcolor{keywordflow}{If} (nleq -\/ nequ + 1 <= nmed) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{584             \textcolor{keywordflow}{If} (nleq < nmed) \textcolor{keywordflow}{Then}   \textcolor{comment}{!      Not enough low values}}
+\DoxyCodeLine{585                 xwrk1 = xhuge}
+\DoxyCodeLine{586                 nord = nmed -\/ nleq}
+\DoxyCodeLine{587                 idon1 = 0}
+\DoxyCodeLine{588                 icrs1 = 1}
+\DoxyCodeLine{589                 icrs2 = 0}
+\DoxyCodeLine{590                 idcr = 0}
+\DoxyCodeLine{591                \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{592                    idon1 = idon1 + 1}
+\DoxyCodeLine{593                    \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{594                       \textcolor{keywordflow}{Do} icrs = istrt(idon1), idon + 6}
+\DoxyCodeLine{595                          \textcolor{keywordflow}{If} (xwrkt(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{596                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{597                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{598                                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{599                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{600 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{601                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{602                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{603                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{604                            \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{605                               xwrkt(icrs1) = xwrkt(icrs)}
+\DoxyCodeLine{606                               xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{607 \textcolor{keywordflow}{                           Endif}}
+\DoxyCodeLine{608 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{609                          icrs1 = min(nord, icrs1 + 1)}
+\DoxyCodeLine{610                          icrs2 = min(nord, icrs2 + 1)}
+\DoxyCodeLine{611 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{612                    \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{613                       \textcolor{keywordflow}{Do} icrs = istrt(idon1), idon + 6}
+\DoxyCodeLine{614                          \textcolor{keywordflow}{If} (xwrkt(icrs) >= xwrk1) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{615                          xwrk = xwrkt(icrs)}
+\DoxyCodeLine{616                          \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{617                                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{618                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{619 \textcolor{keywordflow}{                         End Do}}
+\DoxyCodeLine{620                          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{621                          xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{622 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{623 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{624 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{625                 res\_med = xwrk1}
+\DoxyCodeLine{626                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{627             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{628                 res\_med = xmed7}
+\DoxyCodeLine{629                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{630 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{631          \textcolor{keywordflow}{Else}                       \textcolor{comment}{!      If (NLEQ > NMED)}}
+\DoxyCodeLine{632 \textcolor{comment}{!                                          Not enough high values}}
+\DoxyCodeLine{633                 xwrk1 = -\/xhuge}
+\DoxyCodeLine{634                 nord = nleq -\/ nequ -\/ nmed + 1}
+\DoxyCodeLine{635                 idon1 = 0}
+\DoxyCodeLine{636                 icrs1 = 1}
+\DoxyCodeLine{637                 icrs2 = 0}
+\DoxyCodeLine{638                 \textcolor{keywordflow}{Do} idon = 1, ntri, 7}
+\DoxyCodeLine{639                    idon1 = idon1 + 1}
+\DoxyCodeLine{640                    \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{641 \textcolor{comment}{!}}
+\DoxyCodeLine{642                       \textcolor{keywordflow}{Do} icrs = idon, iendt(idon1)}
+\DoxyCodeLine{643                          \textcolor{keywordflow}{If} (xwrkt(icrs) > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{644                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{645                             idcr = icrs1 -\/ 1}
+\DoxyCodeLine{646                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{647                                \textcolor{keywordflow}{If} (xwrk <= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{648                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{649 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{650                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{651                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{652                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{653                             \textcolor{keywordflow}{If} (icrs2 < nord) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{654                                xwrkt(icrs1) = xwrkt(icrs)}
+\DoxyCodeLine{655                                xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{656 \textcolor{keywordflow}{                            End If}}
+\DoxyCodeLine{657 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{658                          icrs1 = min(nord, icrs1 + 1)}
+\DoxyCodeLine{659                          icrs2 = min(nord, icrs2 + 1)}
+\DoxyCodeLine{660 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{661                    \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{662                       \textcolor{keywordflow}{Do} icrs = iendt(idon1), idon, -\/1}
+\DoxyCodeLine{663                          \textcolor{keywordflow}{If} (xwrkt(icrs) > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{664                             xwrk = xwrkt(icrs)}
+\DoxyCodeLine{665                             idcr = icrs1 -\/ 1}
+\DoxyCodeLine{666                             \textcolor{keywordflow}{Do} idcr = icrs1 -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{667                                \textcolor{keywordflow}{If} (xwrk <= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{668                                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{669 \textcolor{keywordflow}{                            End Do}}
+\DoxyCodeLine{670                             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{671                             xwrk1 = xwrkt(icrs1)}
+\DoxyCodeLine{672                          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{673                             \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{674 \textcolor{keywordflow}{                         End If}}
+\DoxyCodeLine{675 \textcolor{keywordflow}{                      End Do}}
+\DoxyCodeLine{676 \textcolor{keywordflow}{                   Endif}}
+\DoxyCodeLine{677 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{678 \textcolor{comment}{!}}
+\DoxyCodeLine{679                 res\_med = xwrk1}
+\DoxyCodeLine{680                 \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{681 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{682 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+
 
 The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-/home/urbanjs/venus/\+V600/github/orderpack/src/\mbox{\hyperlink{m__valmed_8f90}{m\+\_\+valmed.\+f90}}\end{DoxyCompactItemize}
+/home/urbanjs/venus/\+V600/github/orderpack/src/\mbox{\hyperlink{M__valmed_8f90}{M\+\_\+valmed.\+f90}}\end{DoxyCompactItemize}

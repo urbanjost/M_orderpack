@@ -1,5 +1,5 @@
-Module m_ctrper
-Use m_mrgrnk
+module M_ctrper
+Use M_mrgrnk
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: ctrper
@@ -104,8 +104,8 @@ Subroutine I_ctrper (XDONT, PCLS)
       XDONT = XDONT (JWRKT)
 !
 End Subroutine I_ctrper
-end module m_ctrper
-Module m_fndnth
+end module M_ctrper
+module M_fndnth
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: fndnth
 private :: kdp
@@ -266,7 +266,7 @@ Function I_fndnth (XDONT, NORD) Result (FNDNTH)
 
 !
 End Function I_fndnth
-end module m_fndnth
+end module M_fndnth
 Program follow
 !  Question From Colin Thefleau:
 ! 
@@ -599,8 +599,8 @@ program givcor
 !   Corrected August 2007 (dot_product (xnewt, xpart) line 87,
 !             and negative correlation targets).
 ! _________________________________________________________________
-      use m_ctrper
-      use m_refsor
+      use M_ctrper
+      use M_refsor
 !
       Integer, Parameter :: ndim = 21571   ! Number of pairs  
       Integer, Parameter :: kdp = selected_real_kind(15)
@@ -712,7 +712,7 @@ program givcor
       Close (unit=13)
 !
 end program givcor
-Module m_indmed
+module M_indmed
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: indmed
 private :: kdp
@@ -1913,8 +1913,8 @@ End Subroutine I_indmed
          End If
 !
    END Subroutine i_med
-end module m_indmed
-Module m_indnth
+end module M_indmed
+module M_indnth
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: indnth
 private :: kdp
@@ -3446,8 +3446,8 @@ Function I_indnth (XDONT, NORD) Result (INDNTH)
 !
 !
 End Function I_indnth
-end module m_indnth
-Module m_inspar
+end module M_indnth
+module M_inspar
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: inspar
 private :: kdp
@@ -3590,8 +3590,8 @@ Subroutine I_inspar (XDONT, NORD)
 !
 !
 End Subroutine I_inspar
-end module m_inspar
-Module m_inssor
+end module M_inspar
+module M_inssor
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: inssor
 private :: kdp
@@ -3791,8 +3791,8 @@ Subroutine I_inssor (XDONT)
       Return
 !
 End Subroutine I_inssor
-end module m_inssor
-Module m_median
+end module M_inssor
+module M_median
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: median
 private :: kdp
@@ -5313,8 +5313,8 @@ Function I_median (XDONT) Result (median)
       Return
 !
 End Function I_median
-end module m_median
-Module m_mrgref
+end module M_median
+module M_mrgref
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: mrgref
 private :: kdp
@@ -5709,8 +5709,8 @@ Subroutine I_mrgref (XVALT, IRNGT)
       Return
 !
 End Subroutine I_mrgref
-end module m_mrgref
-Module m_mrgrnk
+end module M_mrgref
+module M_mrgrnk
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: mrgrnk
 private :: kdp
@@ -6318,9 +6318,9 @@ Subroutine I_mrgrnk (XDONT, IRNGT)
       Return
 !
 End Subroutine I_mrgrnk
-end module m_mrgrnk
-Module m_mulcnt
-Use m_uniinv
+end module M_mrgrnk
+module M_mulcnt
+Use M_uniinv
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: mulcnt
@@ -6410,8 +6410,8 @@ Subroutine I_mulcnt (XDONT, IMULT)
 
 !
 End Subroutine I_mulcnt
-end module m_mulcnt
-Module m_rapknr
+end module M_mulcnt
+module M_rapknr
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: rapknr
 private :: kdp
@@ -7984,8 +7984,8 @@ Subroutine I_rapknr (XDONT, IRNGT, NORD)
 !
 !
 End Subroutine I_rapknr
-end module m_rapknr
-Module m_refpar
+end module M_rapknr
+module M_refpar
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: refpar
 private :: kdp
@@ -8343,8 +8343,8 @@ Subroutine I_refpar (XDONT, IRNGT, NORD)
       Return
 !
 End Subroutine I_refpar
-end module m_refpar
-Module m_refsor
+end module M_refpar
+module M_refsor
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: refsor
 private :: kdp
@@ -8743,8 +8743,8 @@ Recursive Subroutine I_subsor (XDONT, IDEB1, IFIN1)
 !
 End Subroutine I_inssor
 !
-end module m_refsor
-Module m_rinpar
+end module M_refsor
+module M_rinpar
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: rinpar
 private :: kdp
@@ -8887,8 +8887,8 @@ Subroutine I_rinpar (XDONT, IRNGT, NORD)
 !
 !
 End Subroutine I_rinpar
-end module m_rinpar
-Module m_rnkpar
+end module M_rinpar
+module M_rnkpar
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: rnkpar
 private :: kdp
@@ -10456,8 +10456,8 @@ Subroutine I_rnkpar (XDONT, IRNGT, NORD)
 !
 !
 End Subroutine I_rnkpar
-end module m_rnkpar
-Module m_uniinv
+end module M_rnkpar
+module M_uniinv
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: uniinv
 private :: kdp
@@ -11242,8 +11242,8 @@ Function I_nearless (XVAL) result (I_nl)
 !
 End Function I_nearless
 
-end module m_uniinv
-Module m_unipar
+end module M_uniinv
+module M_unipar
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: unipar
 private :: kdp
@@ -13054,8 +13054,8 @@ Subroutine I_unipar (XDONT, IRNGT, NORD)
 !
 !
 End Subroutine I_unipar
-end module m_unipar
-Module m_unirnk
+end module M_unipar
+module M_unirnk
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: unirnk
 private :: kdp
@@ -13844,9 +13844,9 @@ Function I_nearless (XVAL) result (I_nl)
 !
 End Function I_nearless
 
-end module m_unirnk
-Module m_unista
-Use m_uniinv
+end module M_unirnk
+module M_unista
+Use M_uniinv
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: unista
@@ -13942,8 +13942,8 @@ Subroutine I_unista (XDONT, NUNI)
       Return
 !
 End Subroutine I_unista
-end module m_unista
-Module m_valmed
+end module M_unista
+module M_valmed
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: valmed
 private :: kdp
@@ -14959,8 +14959,8 @@ Recursive Function I_valmed (XDONT) Result (res_med)
          End If
 !
 End Function I_valmed
-end module m_valmed
-Module m_valnth
+end module M_valmed
+module M_valnth
 Integer, Parameter :: kdp = selected_real_kind(15)
 public :: valnth
 private :: kdp
@@ -16453,4 +16453,4 @@ Function I_valnth (XDONT, NORD) Result (valnth)
 !
 !
 End Function I_valnth
-end module m_valnth
+end module M_valnth

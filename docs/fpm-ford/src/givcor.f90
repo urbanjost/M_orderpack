@@ -25,8 +25,8 @@ program givcor
 !   Corrected August 2007 (dot_product (xnewt, xpart) line 87,
 !             and negative correlation targets).
 ! _________________________________________________________________
-      use m_ctrper
-      use m_refsor
+      use M_ctrper
+      use M_refsor
 !
       Integer, Parameter :: ndim = 21571   ! Number of pairs  
       Integer, Parameter :: kdp = selected_real_kind(15)

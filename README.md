@@ -16,7 +16,11 @@ Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
     Authors: Michel Olagnon
     date: 2000-2012
 ---
-## Building the module using make(1) ![gmake](docs/images/gnu.gif)
+
+## Building the module using make![gmake](docs/images/gnu.gif)
+
+This will compile the Fortran module and basic example programs that exercise the routines:
+
 ```bash
      git clone https://github.com/urbanjost/orderpack.git
      cd orderpack/src
@@ -35,9 +39,8 @@ Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
      make nvfortran
 ```
 
-This will compile the Fortran module and basic example programs that exercise the routine.
 ---
-## Build and test with ![fpm](docs/images/fpm_logo.gif)
+## Build and test with![fpm](docs/images/fpm_logo.gif)
 
    Download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )

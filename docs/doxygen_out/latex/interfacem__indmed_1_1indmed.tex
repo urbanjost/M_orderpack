@@ -18,12 +18,50 @@ subroutine \mbox{\hyperlink{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa8
 \doxysubsubsection{\texorpdfstring{d\_indmed()}{d\_indmed()}}
 {\footnotesize\ttfamily subroutine m\+\_\+indmed\+::indmed\+::d\+\_\+indmed (\begin{DoxyParamCaption}\item[{real (kind=\mbox{\hyperlink{namespacem__indmed_a9a57777f2d73827dcf6eeaaa4c2bb397}{kdp}}), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{I\+N\+DM }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{16 \textcolor{comment}{!! Returns index of median value of XDONT.}}
+\DoxyCodeLine{17 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{18 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{19       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
+\DoxyCodeLine{20 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{21       \textcolor{keywordtype}{Integer} :: IDON}
+\DoxyCodeLine{22 \textcolor{comment}{!}}
+\DoxyCodeLine{23       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
+\DoxyCodeLine{24       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
+\DoxyCodeLine{25          idont(idon) = idon}
+\DoxyCodeLine{26 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{27 \textcolor{comment}{!}}
+\DoxyCodeLine{28       \textcolor{keyword}{Call }d\_med (xdont, idont, indm)}
+\DoxyCodeLine{29 \textcolor{comment}{!}}
+\DoxyCodeLine{30       \textcolor{keyword}{Deallocate} (idont)}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa83473b470d0}\label{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa83473b470d0}} 
 \index{m\_indmed::indmed@{m\_indmed::indmed}!i\_indmed@{i\_indmed}}
 \index{i\_indmed@{i\_indmed}!m\_indmed::indmed@{m\_indmed::indmed}}
 \doxysubsubsection{\texorpdfstring{i\_indmed()}{i\_indmed()}}
 {\footnotesize\ttfamily subroutine m\+\_\+indmed\+::indmed\+::i\+\_\+indmed (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{I\+N\+DM }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{809 \textcolor{comment}{!! Returns index of median value of XDONT.}}
+\DoxyCodeLine{810 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{811       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{812       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
+\DoxyCodeLine{813 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{814       \textcolor{keywordtype}{Integer} :: IDON}
+\DoxyCodeLine{815 \textcolor{comment}{!}}
+\DoxyCodeLine{816       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
+\DoxyCodeLine{817       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
+\DoxyCodeLine{818          idont(idon) = idon}
+\DoxyCodeLine{819 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{820 \textcolor{comment}{!}}
+\DoxyCodeLine{821       \textcolor{keyword}{Call }i\_med (xdont, idont, indm)}
+\DoxyCodeLine{822 \textcolor{comment}{!}}
+\DoxyCodeLine{823       \textcolor{keyword}{Deallocate} (idont)}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{interfacem__indmed_1_1indmed_a6ef59e522a8fc8aec20bc594b9abd3e2}\label{interfacem__indmed_1_1indmed_a6ef59e522a8fc8aec20bc594b9abd3e2}} 
 \index{m\_indmed::indmed@{m\_indmed::indmed}!r\_indmed@{r\_indmed}}
 \index{r\_indmed@{r\_indmed}!m\_indmed::indmed@{m\_indmed::indmed}}
@@ -31,7 +69,26 @@ subroutine \mbox{\hyperlink{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa8
 {\footnotesize\ttfamily subroutine m\+\_\+indmed\+::indmed\+::r\+\_\+indmed (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{I\+N\+DM }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{413 \textcolor{comment}{!  Returns index of median value of XDONT.}}
+\DoxyCodeLine{414 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{415 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{416       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
+\DoxyCodeLine{417 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{418       \textcolor{keywordtype}{Integer} :: IDON}
+\DoxyCodeLine{419 \textcolor{comment}{!}}
+\DoxyCodeLine{420       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
+\DoxyCodeLine{421       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
+\DoxyCodeLine{422          idont(idon) = idon}
+\DoxyCodeLine{423 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{424 \textcolor{comment}{!}}
+\DoxyCodeLine{425       \textcolor{keyword}{Call }r\_med (xdont, idont, indm)}
+\DoxyCodeLine{426 \textcolor{comment}{!}}
+\DoxyCodeLine{427       \textcolor{keyword}{Deallocate} (idont)}
+
+\end{DoxyCode}
+
 
 The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-/home/urbanjs/venus/\+V600/github/orderpack/src/\mbox{\hyperlink{m__indmed_8f90}{m\+\_\+indmed.\+f90}}\end{DoxyCompactItemize}
+/home/urbanjs/venus/\+V600/github/orderpack/src/\mbox{\hyperlink{M__indmed_8f90}{M\+\_\+indmed.\+f90}}\end{DoxyCompactItemize}

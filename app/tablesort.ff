@@ -2,7 +2,7 @@ program tablesort
 use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, stdout=>output_unit, stderr=>error_unit
 use M_io,      only : read_table
 use M_CLI2,    only : set_args, lget ,iget, files=>unnamed
-use m_mrgrnk,  only : mrgrnk
+use M_mrgrnk,  only : mrgrnk
 implicit none
 
 $@(#) sort a file containing a numeric table by specified column 
@@ -49,23 +49,24 @@ subroutine setup()
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK variable -varname help_text -file tablesort.1.man
 NAME
-       tablesort(1f) - [FUNIX] sort a file
+       tablesort(1f) - [FUNIX] sort a file containing a numeric table
        (LICENSE:PD)
 
 SYNOPSIS
    tablesort [--col NUM] INPUT_FILE(S)|[ --help][ --version]
 
 DESCRIPTION
-   Sort lines in a file by reading into memory and sorting numerically by
-   the specified column. The default column is the left-most, designated
-   as column "1" (one).
+   Read a numeric table from a formatted file into memory and sort
+   it numerically by the specified column. The default column is the
+   left-most, designated as column "1" (one).
 
    This is a simple use of the orderpack(3f) module and reads the files
    into memory, which could cause a machine to run out of memory if
    input files are large.
 
 OPTIONS
-       --col,c        column number to sort by
+       --col,c        column number to sort by. Columns are numbered
+                      from left to right starting with one.
        INPUT_FILE(s)  input file(s)
        --verbose      display additional information for each file
        --help         display help text and exit

@@ -194,7 +194,7 @@ man:
 	: SPELLING
 	@env MANPATH=../man MANWIDTH=80  man --regex '.*'|col -b|spell|xargs -n 5|column -t
 #-------------------------------------------------------------------------------
-m_ctrper.o: m_mrgrnk.o 
-m_mulcnt.o: m_uniinv.o 
-m_unista.o: m_uniinv.o 
+M_ctrper.o: M_mrgrnk.o 
+M_mulcnt.o: M_uniinv.o 
+M_unista.o: M_uniinv.o 
 #-------------------------------------------------------------------------------

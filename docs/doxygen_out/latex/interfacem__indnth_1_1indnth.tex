@@ -18,12 +18,1030 @@ integer function \mbox{\hyperlink{interfacem__indnth_1_1indnth_a4a6987a0986eee4d
 \doxysubsubsection{\texorpdfstring{d\_indnth()}{d\_indnth()}}
 {\footnotesize\ttfamily integer function m\+\_\+indnth\+::indnth\+::d\+\_\+indnth (\begin{DoxyParamCaption}\item[{real (kind=\mbox{\hyperlink{namespacem__indnth_af9fa4646e2dadec605fec4b5a076f98d}{kdp}}), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{14 \textcolor{comment}{!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).}}
+\DoxyCodeLine{15 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{16 \textcolor{comment}{!! This routine uses a pivoting strategy such as the one of}}
+\DoxyCodeLine{17 \textcolor{comment}{!! finding the median based on the quicksort algorithm, but}}
+\DoxyCodeLine{18 \textcolor{comment}{!! we skew the pivot choice to try to bring it to NORD as}}
+\DoxyCodeLine{19 \textcolor{comment}{!! fast as possible. It uses 2 temporary arrays, where it}}
+\DoxyCodeLine{20 \textcolor{comment}{!! stores the indices of the values smaller than the pivot}}
+\DoxyCodeLine{21 \textcolor{comment}{!! (ILOWT), and the indices of values larger than the pivot}}
+\DoxyCodeLine{22 \textcolor{comment}{!! that we might still need later on (IHIGT). It iterates}}
+\DoxyCodeLine{23 \textcolor{comment}{!! until it can bring the number of values in ILOWT to}}
+\DoxyCodeLine{24 \textcolor{comment}{!! exactly NORD, and then finds the maximum of this set.}}
+\DoxyCodeLine{25 \textcolor{comment}{!! Michel Olagnon -\/ Aug. 2000}}
+\DoxyCodeLine{26 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{27 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{28 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{29       \textcolor{keywordtype}{Integer} :: INDNTH}
+\DoxyCodeLine{30       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{31 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{32 \textcolor{keywordtype}{      Real} (kind=kdp) :: xpiv, xpiv0, xwrk, xwrk1, xmin, xmax}
+\DoxyCodeLine{33 \textcolor{comment}{!}}
+\DoxyCodeLine{34       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (NORD)} :: IRNGT}
+\DoxyCodeLine{35       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: ILOWT, IHIGT}
+\DoxyCodeLine{36       \textcolor{keywordtype}{Integer} :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3}
+\DoxyCodeLine{37       \textcolor{keywordtype}{Integer} :: IMIL, IFIN, ICRS, IDCR, ILOW}
+\DoxyCodeLine{38       \textcolor{keywordtype}{Integer} :: JLM2, JLM1, JHM2, JHM1, INTH}
+\DoxyCodeLine{39 \textcolor{comment}{!}}
+\DoxyCodeLine{40       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{41       inth = nord}
+\DoxyCodeLine{42 \textcolor{comment}{!}}
+\DoxyCodeLine{43 \textcolor{comment}{!    First loop is used to fill-\/in ILOWT, IHIGT at the same time}}
+\DoxyCodeLine{44 \textcolor{comment}{!}}
+\DoxyCodeLine{45       \textcolor{keywordflow}{If} (ndon < 2) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{46          \textcolor{keywordflow}{If} (inth == 1) indnth = 1}
+\DoxyCodeLine{47          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{48 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{49 \textcolor{comment}{!}}
+\DoxyCodeLine{50 \textcolor{comment}{!  One chooses a pivot, best estimate possible to put fractile near}}
+\DoxyCodeLine{51 \textcolor{comment}{!  mid-\/point of the set of low values.}}
+\DoxyCodeLine{52 \textcolor{comment}{!}}
+\DoxyCodeLine{53       \textcolor{keywordflow}{If} (xdont(2) < xdont(1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{54          ilowt(1) = 2}
+\DoxyCodeLine{55          ihigt(1) = 1}
+\DoxyCodeLine{56       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{57          ilowt(1) = 1}
+\DoxyCodeLine{58          ihigt(1) = 2}
+\DoxyCodeLine{59 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{60 \textcolor{comment}{!}}
+\DoxyCodeLine{61       \textcolor{keywordflow}{If} (ndon < 3) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{62          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{63          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{64          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{65 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{66 \textcolor{comment}{!}}
+\DoxyCodeLine{67       \textcolor{keywordflow}{If} (xdont(3) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{68          ihigt(2) = ihigt(1)}
+\DoxyCodeLine{69          \textcolor{keywordflow}{If} (xdont(3) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{70             ihigt(1) = ilowt(1)}
+\DoxyCodeLine{71             ilowt(1) = 3}
+\DoxyCodeLine{72          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{73             ihigt(1) = 3}
+\DoxyCodeLine{74 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{75       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{76          ihigt(2) = 3}
+\DoxyCodeLine{77 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{78 \textcolor{comment}{!}}
+\DoxyCodeLine{79       \textcolor{keywordflow}{If} (ndon < 4) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{80          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{81          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{82          \textcolor{keywordflow}{If} (inth == 3) indnth = ihigt(2)}
+\DoxyCodeLine{83          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{84 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{85 \textcolor{comment}{!}}
+\DoxyCodeLine{86       \textcolor{keywordflow}{If} (xdont(ndon) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{87          ihigt(3) = ihigt(2)}
+\DoxyCodeLine{88          ihigt(2) = ihigt(1)}
+\DoxyCodeLine{89          \textcolor{keywordflow}{If} (xdont(ndon) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{90             ihigt(1) = ilowt(1)}
+\DoxyCodeLine{91             ilowt(1) = ndon}
+\DoxyCodeLine{92          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{93             ihigt(1) = ndon}
+\DoxyCodeLine{94 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{95       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{96          ihigt(3) = ndon}
+\DoxyCodeLine{97 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{98 \textcolor{comment}{!}}
+\DoxyCodeLine{99       \textcolor{keywordflow}{If} (ndon < 5) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{100          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{101          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{102          \textcolor{keywordflow}{If} (inth == 3) indnth = ihigt(2)}
+\DoxyCodeLine{103          \textcolor{keywordflow}{If} (inth == 4) indnth = ihigt(3)}
+\DoxyCodeLine{104          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{105 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{106 \textcolor{comment}{!}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108       jlow = 1}
+\DoxyCodeLine{109       jhig = 3}
+\DoxyCodeLine{110       xpiv = xdont(ilowt(1)) + real(2*inth)/real(ndon+inth) * \&}
+\DoxyCodeLine{111                                    (xdont(ihigt(3))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{112       \textcolor{keywordflow}{If} (xpiv >= xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{113          xpiv = xdont(ilowt(1)) + real(2*inth)/real(ndon+inth) * \&}
+\DoxyCodeLine{114                                       (xdont(ihigt(2))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{115          \textcolor{keywordflow}{If} (xpiv >= xdont(ihigt(1))) \&}
+\DoxyCodeLine{116              xpiv = xdont(ilowt(1)) + real(2*inth) / real(ndon+inth) * \&}
+\DoxyCodeLine{117                                           (xdont(ihigt(1))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{118 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{119       xpiv0 = xpiv}
+\DoxyCodeLine{120 \textcolor{comment}{!}}
+\DoxyCodeLine{121 \textcolor{comment}{!  One puts values > pivot in the end and those <= pivot}}
+\DoxyCodeLine{122 \textcolor{comment}{!  at the beginning. This is split in 2 cases, so that}}
+\DoxyCodeLine{123 \textcolor{comment}{!  we can skip the loop test a number of times.}}
+\DoxyCodeLine{124 \textcolor{comment}{!  As we are also filling in the work arrays at the same time}}
+\DoxyCodeLine{125 \textcolor{comment}{!  we stop filling in the IHIGT array as soon as we have more}}
+\DoxyCodeLine{126 \textcolor{comment}{!  than enough values in ILOWT.}}
+\DoxyCodeLine{127 \textcolor{comment}{!}}
+\DoxyCodeLine{128 \textcolor{comment}{!}}
+\DoxyCodeLine{129       \textcolor{keywordflow}{If} (xdont(ndon) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{130          icrs = 3}
+\DoxyCodeLine{131          \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{132             icrs = icrs + 1}
+\DoxyCodeLine{133             \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{134                \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{135                jhig = jhig + 1}
+\DoxyCodeLine{136                ihigt(jhig) = icrs}
+\DoxyCodeLine{137             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{138                jlow = jlow + 1}
+\DoxyCodeLine{139                ilowt(jlow) = icrs}
+\DoxyCodeLine{140                \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{141 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{142 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{143 \textcolor{comment}{!}}
+\DoxyCodeLine{144 \textcolor{comment}{!  One restricts further processing because it is no use}}
+\DoxyCodeLine{145 \textcolor{comment}{!  to store more high values}}
+\DoxyCodeLine{146 \textcolor{comment}{!}}
+\DoxyCodeLine{147          \textcolor{keywordflow}{If} (icrs < ndon-\/1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{148             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{149                icrs = icrs + 1}
+\DoxyCodeLine{150                \textcolor{keywordflow}{If} (xdont(icrs) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{151                   jlow = jlow + 1}
+\DoxyCodeLine{152                   ilowt(jlow) = icrs}
+\DoxyCodeLine{153                \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{154                   \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{155 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{156 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{157 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{158 \textcolor{comment}{!}}
+\DoxyCodeLine{159 \textcolor{comment}{!}}
+\DoxyCodeLine{160       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{161 \textcolor{comment}{!}}
+\DoxyCodeLine{162 \textcolor{comment}{!  Same as above, but this is not as easy to optimize, so the}}
+\DoxyCodeLine{163 \textcolor{comment}{!  DO-\/loop is kept}}
+\DoxyCodeLine{164 \textcolor{comment}{!}}
+\DoxyCodeLine{165          \textcolor{keywordflow}{Do} icrs = 4, ndon -\/ 1}
+\DoxyCodeLine{166             \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{167                jhig = jhig + 1}
+\DoxyCodeLine{168                ihigt(jhig) = icrs}
+\DoxyCodeLine{169             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{170                jlow = jlow + 1}
+\DoxyCodeLine{171                ilowt(jlow) = icrs}
+\DoxyCodeLine{172                \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{173 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{174 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{175 \textcolor{comment}{!}}
+\DoxyCodeLine{176          \textcolor{keywordflow}{If} (icrs < ndon-\/1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{177             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{178                icrs = icrs + 1}
+\DoxyCodeLine{179                \textcolor{keywordflow}{If} (xdont(icrs) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{180                   \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{181                   jlow = jlow + 1}
+\DoxyCodeLine{182                   ilowt(jlow) = icrs}
+\DoxyCodeLine{183 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{184 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{185 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{186 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{187 \textcolor{comment}{!}}
+\DoxyCodeLine{188       jlm2 = 0}
+\DoxyCodeLine{189       jlm1 = 0}
+\DoxyCodeLine{190       jhm2 = 0}
+\DoxyCodeLine{191       jhm1 = 0}
+\DoxyCodeLine{192       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{193          \textcolor{keywordflow}{If} (jlm2 == jlow .And. jhm2 == jhig) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{194 \textcolor{comment}{!}}
+\DoxyCodeLine{195 \textcolor{comment}{!   We are oscillating. Perturbate by bringing JLOW closer by one}}
+\DoxyCodeLine{196 \textcolor{comment}{!   to INTH}}
+\DoxyCodeLine{197 \textcolor{comment}{!}}
+\DoxyCodeLine{198              \textcolor{keywordflow}{If} (inth > jlow) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{199                 xmin = xdont(ihigt(1))}
+\DoxyCodeLine{200                 ihig = 1}
+\DoxyCodeLine{201                 \textcolor{keywordflow}{Do} icrs = 2, jhig}
+\DoxyCodeLine{202                    \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{203                       xmin = xdont(ihigt(icrs))}
+\DoxyCodeLine{204                       ihig = icrs}
+\DoxyCodeLine{205 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{206 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{207 \textcolor{comment}{!}}
+\DoxyCodeLine{208                 jlow = jlow + 1}
+\DoxyCodeLine{209                 ilowt(jlow) = ihigt(ihig)}
+\DoxyCodeLine{210                 ihigt(ihig) = ihigt(jhig)}
+\DoxyCodeLine{211                 jhig = jhig -\/ 1}
+\DoxyCodeLine{212              \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214                 ilow = ilowt(1)}
+\DoxyCodeLine{215                 xmax = xdont(ilow)}
+\DoxyCodeLine{216                 \textcolor{keywordflow}{Do} icrs = 2, jlow}
+\DoxyCodeLine{217                    \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xmax) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{218                       iwrk = ilowt(icrs)}
+\DoxyCodeLine{219                       xmax = xdont(iwrk)}
+\DoxyCodeLine{220                       ilowt(icrs) = ilow}
+\DoxyCodeLine{221                       ilow = iwrk}
+\DoxyCodeLine{222 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{223 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{224                 jlow = jlow -\/ 1}
+\DoxyCodeLine{225 \textcolor{keywordflow}{             End If}}
+\DoxyCodeLine{226 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{227          jlm2 = jlm1}
+\DoxyCodeLine{228          jlm1 = jlow}
+\DoxyCodeLine{229          jhm2 = jhm1}
+\DoxyCodeLine{230          jhm1 = jhig}
+\DoxyCodeLine{231 \textcolor{comment}{!}}
+\DoxyCodeLine{232 \textcolor{comment}{!   We try to bring the number of values in the low values set}}
+\DoxyCodeLine{233 \textcolor{comment}{!   closer to INTH.}}
+\DoxyCodeLine{234 \textcolor{comment}{!}}
+\DoxyCodeLine{235          \textcolor{keywordflow}{Select Case} (inth-\/jlow)}
+\DoxyCodeLine{236          \textcolor{keywordflow}{Case} (2:)}
+\DoxyCodeLine{237 \textcolor{comment}{!}}
+\DoxyCodeLine{238 \textcolor{comment}{!   Not enough values in low part, at least 2 are missing}}
+\DoxyCodeLine{239 \textcolor{comment}{!}}
+\DoxyCodeLine{240             inth = inth -\/ jlow}
+\DoxyCodeLine{241             jlow = 0}
+\DoxyCodeLine{242             \textcolor{keywordflow}{Select Case} (jhig)}
+\DoxyCodeLine{243 \textcolor{comment}{!!!!!           CASE DEFAULT}}
+\DoxyCodeLine{244 \textcolor{comment}{!!!!!              write (unit=*,fmt=*) "Assertion failed"}}
+\DoxyCodeLine{245 \textcolor{comment}{!!!!!              STOP}}
+\DoxyCodeLine{246 \textcolor{comment}{!}}
+\DoxyCodeLine{247 \textcolor{comment}{!   We make a special case when we have so few values in}}
+\DoxyCodeLine{248 \textcolor{comment}{!   the high values set that it is bad performance to choose a pivot}}
+\DoxyCodeLine{249 \textcolor{comment}{!   and apply the general algorithm.}}
+\DoxyCodeLine{250 \textcolor{comment}{!}}
+\DoxyCodeLine{251             \textcolor{keywordflow}{Case} (2)}
+\DoxyCodeLine{252                \textcolor{keywordflow}{If} (xdont(ihigt(1)) <= xdont(ihigt(2))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{253                   jlow = jlow + 1}
+\DoxyCodeLine{254                   ilowt(jlow) = ihigt(1)}
+\DoxyCodeLine{255                   jlow = jlow + 1}
+\DoxyCodeLine{256                   ilowt(jlow) = ihigt(2)}
+\DoxyCodeLine{257                \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{258                   jlow = jlow + 1}
+\DoxyCodeLine{259                   ilowt(jlow) = ihigt(2)}
+\DoxyCodeLine{260                   jlow = jlow + 1}
+\DoxyCodeLine{261                   ilowt(jlow) = ihigt(1)}
+\DoxyCodeLine{262 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{263                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{264 \textcolor{comment}{!}}
+\DoxyCodeLine{265             \textcolor{keywordflow}{Case} (3)}
+\DoxyCodeLine{266 \textcolor{comment}{!}}
+\DoxyCodeLine{267 \textcolor{comment}{!}}
+\DoxyCodeLine{268                iwrk1 = ihigt(1)}
+\DoxyCodeLine{269                iwrk2 = ihigt(2)}
+\DoxyCodeLine{270                iwrk3 = ihigt(3)}
+\DoxyCodeLine{271                \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(iwrk1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{272                   ihigt(1) = iwrk2}
+\DoxyCodeLine{273                   ihigt(2) = iwrk1}
+\DoxyCodeLine{274                   iwrk2 = iwrk1}
+\DoxyCodeLine{275 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{276                \textcolor{keywordflow}{If} (xdont(iwrk2) > xdont(iwrk3)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{277                   ihigt(3) = iwrk2}
+\DoxyCodeLine{278                   ihigt(2) = iwrk3}
+\DoxyCodeLine{279                   iwrk2 = iwrk3}
+\DoxyCodeLine{280                   \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{281                      ihigt(2) = ihigt(1)}
+\DoxyCodeLine{282                      ihigt(1) = iwrk2}
+\DoxyCodeLine{283 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{284 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{285                jhig = 0}
+\DoxyCodeLine{286                \textcolor{keywordflow}{Do} icrs = jlow + 1, inth}
+\DoxyCodeLine{287                   jhig = jhig + 1}
+\DoxyCodeLine{288                   ilowt(icrs) = ihigt(jhig)}
+\DoxyCodeLine{289 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{290                jlow = inth}
+\DoxyCodeLine{291                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{292 \textcolor{comment}{!}}
+\DoxyCodeLine{293             \textcolor{keywordflow}{Case} (4:)}
+\DoxyCodeLine{294 \textcolor{comment}{!}}
+\DoxyCodeLine{295 \textcolor{comment}{!}}
+\DoxyCodeLine{296                xpiv0 = xpiv}
+\DoxyCodeLine{297                ifin = jhig}
+\DoxyCodeLine{298 \textcolor{comment}{!}}
+\DoxyCodeLine{299 \textcolor{comment}{!  One chooses a pivot from the 2 first values and the last one.}}
+\DoxyCodeLine{300 \textcolor{comment}{!  This should ensure sufficient renewal between iterations to}}
+\DoxyCodeLine{301 \textcolor{comment}{!  avoid worst case behavior effects.}}
+\DoxyCodeLine{302 \textcolor{comment}{!}}
+\DoxyCodeLine{303                iwrk1 = ihigt(1)}
+\DoxyCodeLine{304                iwrk2 = ihigt(2)}
+\DoxyCodeLine{305                iwrk3 = ihigt(ifin)}
+\DoxyCodeLine{306                \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(iwrk1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{307                   ihigt(1) = iwrk2}
+\DoxyCodeLine{308                   ihigt(2) = iwrk1}
+\DoxyCodeLine{309                   iwrk2 = iwrk1}
+\DoxyCodeLine{310 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{311                \textcolor{keywordflow}{If} (xdont(iwrk2) > xdont(iwrk3)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{312                   ihigt(ifin) = iwrk2}
+\DoxyCodeLine{313                   ihigt(2) = iwrk3}
+\DoxyCodeLine{314                   iwrk2 = iwrk3}
+\DoxyCodeLine{315                   \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{316                      ihigt(2) = ihigt(1)}
+\DoxyCodeLine{317                      ihigt(1) = iwrk2}
+\DoxyCodeLine{318 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{319 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{320 \textcolor{comment}{!}}
+\DoxyCodeLine{321                iwrk1 = ihigt(1)}
+\DoxyCodeLine{322                jlow = jlow + 1}
+\DoxyCodeLine{323                ilowt(jlow) = iwrk1}
+\DoxyCodeLine{324                xpiv = xdont(iwrk1) + 0.5 * (xdont(ihigt(ifin))-\/xdont(iwrk1))}
+\DoxyCodeLine{325 \textcolor{comment}{!}}
+\DoxyCodeLine{326 \textcolor{comment}{!  One takes values <= pivot to ILOWT}}
+\DoxyCodeLine{327 \textcolor{comment}{!  Again, 2 parts, one where we take care of the remaining}}
+\DoxyCodeLine{328 \textcolor{comment}{!  high values because we might still need them, and the}}
+\DoxyCodeLine{329 \textcolor{comment}{!  other when we know that we will have more than enough}}
+\DoxyCodeLine{330 \textcolor{comment}{!  low values in the end.}}
+\DoxyCodeLine{331 \textcolor{comment}{!}}
+\DoxyCodeLine{332                jhig = 0}
+\DoxyCodeLine{333                \textcolor{keywordflow}{Do} icrs = 2, ifin}
+\DoxyCodeLine{334                   \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{335                      jlow = jlow + 1}
+\DoxyCodeLine{336                      ilowt(jlow) = ihigt(icrs)}
+\DoxyCodeLine{337                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{338                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{339                      jhig = jhig + 1}
+\DoxyCodeLine{340                      ihigt(jhig) = ihigt(icrs)}
+\DoxyCodeLine{341 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{342 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{343 \textcolor{comment}{!}}
+\DoxyCodeLine{344                \textcolor{keywordflow}{Do} icrs = icrs + 1, ifin}
+\DoxyCodeLine{345                   \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{346                      jlow = jlow + 1}
+\DoxyCodeLine{347                      ilowt(jlow) = ihigt(icrs)}
+\DoxyCodeLine{348 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{349 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{350 \textcolor{keywordflow}{            End Select}}
+\DoxyCodeLine{351 \textcolor{comment}{!}}
+\DoxyCodeLine{352 \textcolor{comment}{!}}
+\DoxyCodeLine{353          \textcolor{keywordflow}{Case} (1)}
+\DoxyCodeLine{354 \textcolor{comment}{!}}
+\DoxyCodeLine{355 \textcolor{comment}{!  Only 1 value is missing in low part}}
+\DoxyCodeLine{356 \textcolor{comment}{!}}
+\DoxyCodeLine{357             xmin = xdont(ihigt(1))}
+\DoxyCodeLine{358             ihig = 1}
+\DoxyCodeLine{359             \textcolor{keywordflow}{Do} icrs = 2, jhig}
+\DoxyCodeLine{360                \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{361                   xmin = xdont(ihigt(icrs))}
+\DoxyCodeLine{362                   ihig = icrs}
+\DoxyCodeLine{363 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{364 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{365 \textcolor{comment}{!}}
+\DoxyCodeLine{366             indnth = ihigt(ihig)}
+\DoxyCodeLine{367             \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{368 \textcolor{comment}{!}}
+\DoxyCodeLine{369 \textcolor{comment}{!}}
+\DoxyCodeLine{370          \textcolor{keywordflow}{Case} (0)}
+\DoxyCodeLine{371 \textcolor{comment}{!}}
+\DoxyCodeLine{372 \textcolor{comment}{!  Low part is exactly what we want}}
+\DoxyCodeLine{373 \textcolor{comment}{!}}
+\DoxyCodeLine{374             \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{375 \textcolor{comment}{!}}
+\DoxyCodeLine{376 \textcolor{comment}{!}}
+\DoxyCodeLine{377          \textcolor{keywordflow}{Case} (-\/5:-\/1)}
+\DoxyCodeLine{378 \textcolor{comment}{!}}
+\DoxyCodeLine{379 \textcolor{comment}{!  Only few values too many in low part}}
+\DoxyCodeLine{380 \textcolor{comment}{!}}
+\DoxyCodeLine{381             irngt(1) = ilowt(1)}
+\DoxyCodeLine{382             ilow = 1 + inth -\/ jlow}
+\DoxyCodeLine{383             \textcolor{keywordflow}{Do} icrs = 2, inth}
+\DoxyCodeLine{384                iwrk = ilowt(icrs)}
+\DoxyCodeLine{385                xwrk = xdont(iwrk)}
+\DoxyCodeLine{386                \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, max(1, ilow), -\/ 1}
+\DoxyCodeLine{387                   \textcolor{keywordflow}{If} (xwrk < xdont(irngt(idcr))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{388                      irngt(idcr+1) = irngt(idcr)}
+\DoxyCodeLine{389                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{390                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{391 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{392 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{393                irngt(idcr+1) = iwrk}
+\DoxyCodeLine{394                ilow = ilow + 1}
+\DoxyCodeLine{395 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{396 \textcolor{comment}{!}}
+\DoxyCodeLine{397             xwrk1 = xdont(irngt(inth))}
+\DoxyCodeLine{398             ilow = 2*inth -\/ jlow}
+\DoxyCodeLine{399             \textcolor{keywordflow}{Do} icrs = inth + 1, jlow}
+\DoxyCodeLine{400                \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{401                   xwrk = xdont(ilowt(icrs))}
+\DoxyCodeLine{402                   \textcolor{keywordflow}{Do} idcr = inth -\/ 1, max(1, ilow), -\/ 1}
+\DoxyCodeLine{403                      \textcolor{keywordflow}{If} (xwrk >= xdont(irngt(idcr))) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{404                      irngt(idcr+1) = irngt(idcr)}
+\DoxyCodeLine{405 \textcolor{keywordflow}{                  End Do}}
+\DoxyCodeLine{406                   irngt(idcr+1) = ilowt(icrs)}
+\DoxyCodeLine{407                   xwrk1 = xdont(irngt(inth))}
+\DoxyCodeLine{408 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{409                ilow = ilow + 1}
+\DoxyCodeLine{410 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{411 \textcolor{comment}{!}}
+\DoxyCodeLine{412             indnth = irngt(inth)}
+\DoxyCodeLine{413             \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{414 \textcolor{comment}{!}}
+\DoxyCodeLine{415 \textcolor{comment}{!}}
+\DoxyCodeLine{416          \textcolor{keywordflow}{Case} (:-\/6)}
+\DoxyCodeLine{417 \textcolor{comment}{!}}
+\DoxyCodeLine{418 \textcolor{comment}{! last case: too many values in low part}}
+\DoxyCodeLine{419 \textcolor{comment}{!}}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421             imil = (jlow+1) / 2}
+\DoxyCodeLine{422             ifin = jlow}
+\DoxyCodeLine{423 \textcolor{comment}{!}}
+\DoxyCodeLine{424 \textcolor{comment}{!  One chooses a pivot from 1st, last, and middle values}}
+\DoxyCodeLine{425 \textcolor{comment}{!}}
+\DoxyCodeLine{426             \textcolor{keywordflow}{If} (xdont(ilowt(imil)) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{427                iwrk = ilowt(1)}
+\DoxyCodeLine{428                ilowt(1) = ilowt(imil)}
+\DoxyCodeLine{429                ilowt(imil) = iwrk}
+\DoxyCodeLine{430 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{431             \textcolor{keywordflow}{If} (xdont(ilowt(imil)) > xdont(ilowt(ifin))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{432                iwrk = ilowt(ifin)}
+\DoxyCodeLine{433                ilowt(ifin) = ilowt(imil)}
+\DoxyCodeLine{434                ilowt(imil) = iwrk}
+\DoxyCodeLine{435                \textcolor{keywordflow}{If} (xdont(ilowt(imil)) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{436                   iwrk = ilowt(1)}
+\DoxyCodeLine{437                   ilowt(1) = ilowt(imil)}
+\DoxyCodeLine{438                   ilowt(imil) = iwrk}
+\DoxyCodeLine{439 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{440 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{441             \textcolor{keywordflow}{If} (ifin <= 3) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{442 \textcolor{comment}{!}}
+\DoxyCodeLine{443             xpiv = xdont(ilowt(1)) + real(inth)/real(jlow+inth) * \&}
+\DoxyCodeLine{444                                       (xdont(ilowt(ifin))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{445 }
+\DoxyCodeLine{446 \textcolor{comment}{!}}
+\DoxyCodeLine{447 \textcolor{comment}{!  One takes values > XPIV to IHIGT}}
+\DoxyCodeLine{448 \textcolor{comment}{!}}
+\DoxyCodeLine{449             jhig = 0}
+\DoxyCodeLine{450             jlow = 0}
+\DoxyCodeLine{451 \textcolor{comment}{!}}
+\DoxyCodeLine{452             \textcolor{keywordflow}{If} (xdont(ilowt(ifin)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{453                icrs = 0}
+\DoxyCodeLine{454                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{455                   icrs = icrs + 1}
+\DoxyCodeLine{456                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{457                      jhig = jhig + 1}
+\DoxyCodeLine{458                      ihigt(jhig) = ilowt(icrs)}
+\DoxyCodeLine{459                      \textcolor{keywordflow}{If} (icrs >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{460                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{461                      jlow = jlow + 1}
+\DoxyCodeLine{462                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{463                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{464 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{465 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{466 \textcolor{comment}{!}}
+\DoxyCodeLine{467                \textcolor{keywordflow}{If} (icrs < ifin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{468                   \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{469                      icrs = icrs + 1}
+\DoxyCodeLine{470                      \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{471                         jlow = jlow + 1}
+\DoxyCodeLine{472                         ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{473                      \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{474                         \textcolor{keywordflow}{If} (icrs >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{475 \textcolor{keywordflow}{                     End If}}
+\DoxyCodeLine{476 \textcolor{keywordflow}{                  End Do}}
+\DoxyCodeLine{477 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{478             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{479                \textcolor{keywordflow}{Do} icrs = 1, ifin}
+\DoxyCodeLine{480                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{481                      jhig = jhig + 1}
+\DoxyCodeLine{482                      ihigt(jhig) = ilowt(icrs)}
+\DoxyCodeLine{483                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{484                      jlow = jlow + 1}
+\DoxyCodeLine{485                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{486                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{487 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{488 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{489 \textcolor{comment}{!}}
+\DoxyCodeLine{490                \textcolor{keywordflow}{Do} icrs = icrs + 1, ifin}
+\DoxyCodeLine{491                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{492                      jlow = jlow + 1}
+\DoxyCodeLine{493                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{494 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{495 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{496 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{497 \textcolor{comment}{!}}
+\DoxyCodeLine{498 \textcolor{keywordflow}{         End Select}}
+\DoxyCodeLine{499 \textcolor{comment}{!}}
+\DoxyCodeLine{500 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{501 \textcolor{comment}{!}}
+\DoxyCodeLine{502 \textcolor{comment}{!  Now, we only need to find maximum of the 1:INTH set}}
+\DoxyCodeLine{503 \textcolor{comment}{!}}
+\DoxyCodeLine{504 }
+\DoxyCodeLine{505       iwrk1 = ilowt(1)}
+\DoxyCodeLine{506       xwrk1 =  xdont(iwrk1)}
+\DoxyCodeLine{507       \textcolor{keywordflow}{Do} icrs = 1+1, inth}
+\DoxyCodeLine{508          iwrk = ilowt(icrs)}
+\DoxyCodeLine{509          xwrk = xdont(iwrk)}
+\DoxyCodeLine{510          \textcolor{keywordflow}{If} (xwrk > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{511             xwrk1 = xwrk}
+\DoxyCodeLine{512             iwrk1 = iwrk}
+\DoxyCodeLine{513 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{514 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{515       indnth = iwrk1}
+\DoxyCodeLine{516       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{517 \textcolor{comment}{!}}
+\DoxyCodeLine{518 \textcolor{comment}{!}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{interfacem__indnth_1_1indnth_a4a6987a0986eee4d0e48f8f8d5511204}\label{interfacem__indnth_1_1indnth_a4a6987a0986eee4d0e48f8f8d5511204}} 
 \index{m\_indnth::indnth@{m\_indnth::indnth}!i\_indnth@{i\_indnth}}
 \index{i\_indnth@{i\_indnth}!m\_indnth::indnth@{m\_indnth::indnth}}
 \doxysubsubsection{\texorpdfstring{i\_indnth()}{i\_indnth()}}
 {\footnotesize\ttfamily integer function m\+\_\+indnth\+::indnth\+::i\+\_\+indnth (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1029 \textcolor{comment}{!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).}}
+\DoxyCodeLine{1030 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{1031 \textcolor{comment}{!! This routine uses a pivoting strategy such as the one of}}
+\DoxyCodeLine{1032 \textcolor{comment}{!! finding the median based on the quicksort algorithm, but}}
+\DoxyCodeLine{1033 \textcolor{comment}{!! we skew the pivot choice to try to bring it to NORD as}}
+\DoxyCodeLine{1034 \textcolor{comment}{!! fast as possible. It uses 2 temporary arrays, where it}}
+\DoxyCodeLine{1035 \textcolor{comment}{!! stores the indices of the values smaller than the pivot}}
+\DoxyCodeLine{1036 \textcolor{comment}{!! (ILOWT), and the indices of values larger than the pivot}}
+\DoxyCodeLine{1037 \textcolor{comment}{!! that we might still need later on (IHIGT). It iterates}}
+\DoxyCodeLine{1038 \textcolor{comment}{!! until it can bring the number of values in ILOWT to}}
+\DoxyCodeLine{1039 \textcolor{comment}{!! exactly NORD, and then finds the maximum of this set.}}
+\DoxyCodeLine{1040 \textcolor{comment}{!! Michel Olagnon -\/ Aug. 2000}}
+\DoxyCodeLine{1041 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{1042 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{1043       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)}  :: XDONT}
+\DoxyCodeLine{1044       \textcolor{keywordtype}{Integer} :: INDNTH}
+\DoxyCodeLine{1045       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{1046 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{1047       \textcolor{keywordtype}{Integer} :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX}
+\DoxyCodeLine{1048 \textcolor{comment}{!}}
+\DoxyCodeLine{1049       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (NORD)} :: IRNGT}
+\DoxyCodeLine{1050       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: ILOWT, IHIGT}
+\DoxyCodeLine{1051       \textcolor{keywordtype}{Integer} :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3}
+\DoxyCodeLine{1052       \textcolor{keywordtype}{Integer} :: IMIL, IFIN, ICRS, IDCR, ILOW}
+\DoxyCodeLine{1053       \textcolor{keywordtype}{Integer} :: JLM2, JLM1, JHM2, JHM1, INTH}
+\DoxyCodeLine{1054 \textcolor{comment}{!}}
+\DoxyCodeLine{1055       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{1056       inth = nord}
+\DoxyCodeLine{1057 \textcolor{comment}{!}}
+\DoxyCodeLine{1058 \textcolor{comment}{!    First loop is used to fill-\/in ILOWT, IHIGT at the same time}}
+\DoxyCodeLine{1059 \textcolor{comment}{!}}
+\DoxyCodeLine{1060       \textcolor{keywordflow}{If} (ndon < 2) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1061          \textcolor{keywordflow}{If} (inth == 1) indnth = 1}
+\DoxyCodeLine{1062          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1063 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1064 \textcolor{comment}{!}}
+\DoxyCodeLine{1065 \textcolor{comment}{!  One chooses a pivot, best estimate possible to put fractile near}}
+\DoxyCodeLine{1066 \textcolor{comment}{!  mid-\/point of the set of low values.}}
+\DoxyCodeLine{1067 \textcolor{comment}{!}}
+\DoxyCodeLine{1068       \textcolor{keywordflow}{If} (xdont(2) < xdont(1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1069          ilowt(1) = 2}
+\DoxyCodeLine{1070          ihigt(1) = 1}
+\DoxyCodeLine{1071       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1072          ilowt(1) = 1}
+\DoxyCodeLine{1073          ihigt(1) = 2}
+\DoxyCodeLine{1074 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1075 \textcolor{comment}{!}}
+\DoxyCodeLine{1076       \textcolor{keywordflow}{If} (ndon < 3) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1077          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{1078          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{1079          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1080 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1081 \textcolor{comment}{!}}
+\DoxyCodeLine{1082       \textcolor{keywordflow}{If} (xdont(3) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1083          ihigt(2) = ihigt(1)}
+\DoxyCodeLine{1084          \textcolor{keywordflow}{If} (xdont(3) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1085             ihigt(1) = ilowt(1)}
+\DoxyCodeLine{1086             ilowt(1) = 3}
+\DoxyCodeLine{1087          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1088             ihigt(1) = 3}
+\DoxyCodeLine{1089 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{1090       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1091          ihigt(2) = 3}
+\DoxyCodeLine{1092 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1093 \textcolor{comment}{!}}
+\DoxyCodeLine{1094       \textcolor{keywordflow}{If} (ndon < 4) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1095          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{1096          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{1097          \textcolor{keywordflow}{If} (inth == 3) indnth = ihigt(2)}
+\DoxyCodeLine{1098          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1099 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1100 \textcolor{comment}{!}}
+\DoxyCodeLine{1101       \textcolor{keywordflow}{If} (xdont(ndon) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1102          ihigt(3) = ihigt(2)}
+\DoxyCodeLine{1103          ihigt(2) = ihigt(1)}
+\DoxyCodeLine{1104          \textcolor{keywordflow}{If} (xdont(ndon) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1105             ihigt(1) = ilowt(1)}
+\DoxyCodeLine{1106             ilowt(1) = ndon}
+\DoxyCodeLine{1107          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1108             ihigt(1) = ndon}
+\DoxyCodeLine{1109 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{1110       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1111          ihigt(3) = ndon}
+\DoxyCodeLine{1112 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1113 \textcolor{comment}{!}}
+\DoxyCodeLine{1114       \textcolor{keywordflow}{If} (ndon < 5) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1115          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{1116          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{1117          \textcolor{keywordflow}{If} (inth == 3) indnth = ihigt(2)}
+\DoxyCodeLine{1118          \textcolor{keywordflow}{If} (inth == 4) indnth = ihigt(3)}
+\DoxyCodeLine{1119          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1120 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1121 \textcolor{comment}{!}}
+\DoxyCodeLine{1122 }
+\DoxyCodeLine{1123       jlow = 1}
+\DoxyCodeLine{1124       jhig = 3}
+\DoxyCodeLine{1125       xpiv = xdont(ilowt(1)) + real(2*inth)/real(ndon+inth) * \&}
+\DoxyCodeLine{1126                                    (xdont(ihigt(3))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{1127       \textcolor{keywordflow}{If} (xpiv >= xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1128          xpiv = xdont(ilowt(1)) + real(2*inth)/real(ndon+inth) * \&}
+\DoxyCodeLine{1129                                       (xdont(ihigt(2))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{1130          \textcolor{keywordflow}{If} (xpiv >= xdont(ihigt(1))) \&}
+\DoxyCodeLine{1131              xpiv = xdont(ilowt(1)) + real(2*inth) / real(ndon+inth) * \&}
+\DoxyCodeLine{1132                                           (xdont(ihigt(1))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{1133 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1134       xpiv0 = xpiv}
+\DoxyCodeLine{1135 \textcolor{comment}{!}}
+\DoxyCodeLine{1136 \textcolor{comment}{!  One puts values > pivot in the end and those <= pivot}}
+\DoxyCodeLine{1137 \textcolor{comment}{!  at the beginning. This is split in 2 cases, so that}}
+\DoxyCodeLine{1138 \textcolor{comment}{!  we can skip the loop test a number of times.}}
+\DoxyCodeLine{1139 \textcolor{comment}{!  As we are also filling in the work arrays at the same time}}
+\DoxyCodeLine{1140 \textcolor{comment}{!  we stop filling in the IHIGT array as soon as we have more}}
+\DoxyCodeLine{1141 \textcolor{comment}{!  than enough values in ILOWT.}}
+\DoxyCodeLine{1142 \textcolor{comment}{!}}
+\DoxyCodeLine{1143 \textcolor{comment}{!}}
+\DoxyCodeLine{1144       \textcolor{keywordflow}{If} (xdont(ndon) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1145          icrs = 3}
+\DoxyCodeLine{1146          \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{1147             icrs = icrs + 1}
+\DoxyCodeLine{1148             \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1149                \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1150                jhig = jhig + 1}
+\DoxyCodeLine{1151                ihigt(jhig) = icrs}
+\DoxyCodeLine{1152             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1153                jlow = jlow + 1}
+\DoxyCodeLine{1154                ilowt(jlow) = icrs}
+\DoxyCodeLine{1155                \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1156 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{1157 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{1158 \textcolor{comment}{!}}
+\DoxyCodeLine{1159 \textcolor{comment}{!  One restricts further processing because it is no use}}
+\DoxyCodeLine{1160 \textcolor{comment}{!  to store more high values}}
+\DoxyCodeLine{1161 \textcolor{comment}{!}}
+\DoxyCodeLine{1162          \textcolor{keywordflow}{If} (icrs < ndon-\/1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1163             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{1164                icrs = icrs + 1}
+\DoxyCodeLine{1165                \textcolor{keywordflow}{If} (xdont(icrs) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1166                   jlow = jlow + 1}
+\DoxyCodeLine{1167                   ilowt(jlow) = icrs}
+\DoxyCodeLine{1168                \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1169                   \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1170 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1171 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{1172 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{1173 \textcolor{comment}{!}}
+\DoxyCodeLine{1174 \textcolor{comment}{!}}
+\DoxyCodeLine{1175       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1176 \textcolor{comment}{!}}
+\DoxyCodeLine{1177 \textcolor{comment}{!  Same as above, but this is not as easy to optimize, so the}}
+\DoxyCodeLine{1178 \textcolor{comment}{!  DO-\/loop is kept}}
+\DoxyCodeLine{1179 \textcolor{comment}{!}}
+\DoxyCodeLine{1180          \textcolor{keywordflow}{Do} icrs = 4, ndon -\/ 1}
+\DoxyCodeLine{1181             \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1182                jhig = jhig + 1}
+\DoxyCodeLine{1183                ihigt(jhig) = icrs}
+\DoxyCodeLine{1184             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1185                jlow = jlow + 1}
+\DoxyCodeLine{1186                ilowt(jlow) = icrs}
+\DoxyCodeLine{1187                \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1188 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{1189 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{1190 \textcolor{comment}{!}}
+\DoxyCodeLine{1191          \textcolor{keywordflow}{If} (icrs < ndon-\/1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1192             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{1193                icrs = icrs + 1}
+\DoxyCodeLine{1194                \textcolor{keywordflow}{If} (xdont(icrs) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1195                   \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1196                   jlow = jlow + 1}
+\DoxyCodeLine{1197                   ilowt(jlow) = icrs}
+\DoxyCodeLine{1198 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1199 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{1200 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{1201 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{1202 \textcolor{comment}{!}}
+\DoxyCodeLine{1203       jlm2 = 0}
+\DoxyCodeLine{1204       jlm1 = 0}
+\DoxyCodeLine{1205       jhm2 = 0}
+\DoxyCodeLine{1206       jhm1 = 0}
+\DoxyCodeLine{1207       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{1208          \textcolor{keywordflow}{If} (jlm2 == jlow .And. jhm2 == jhig) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1209 \textcolor{comment}{!}}
+\DoxyCodeLine{1210 \textcolor{comment}{!   We are oscillating. Perturbate by bringing JLOW closer by one}}
+\DoxyCodeLine{1211 \textcolor{comment}{!   to INTH}}
+\DoxyCodeLine{1212 \textcolor{comment}{!}}
+\DoxyCodeLine{1213              \textcolor{keywordflow}{If} (inth > jlow) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1214                 xmin = xdont(ihigt(1))}
+\DoxyCodeLine{1215                 ihig = 1}
+\DoxyCodeLine{1216                 \textcolor{keywordflow}{Do} icrs = 2, jhig}
+\DoxyCodeLine{1217                    \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1218                       xmin = xdont(ihigt(icrs))}
+\DoxyCodeLine{1219                       ihig = icrs}
+\DoxyCodeLine{1220 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{1221 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{1222 \textcolor{comment}{!}}
+\DoxyCodeLine{1223                 jlow = jlow + 1}
+\DoxyCodeLine{1224                 ilowt(jlow) = ihigt(ihig)}
+\DoxyCodeLine{1225                 ihigt(ihig) = ihigt(jhig)}
+\DoxyCodeLine{1226                 jhig = jhig -\/ 1}
+\DoxyCodeLine{1227              \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1228 }
+\DoxyCodeLine{1229                 ilow = ilowt(1)}
+\DoxyCodeLine{1230                 xmax = xdont(ilow)}
+\DoxyCodeLine{1231                 \textcolor{keywordflow}{Do} icrs = 2, jlow}
+\DoxyCodeLine{1232                    \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xmax) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1233                       iwrk = ilowt(icrs)}
+\DoxyCodeLine{1234                       xmax = xdont(iwrk)}
+\DoxyCodeLine{1235                       ilowt(icrs) = ilow}
+\DoxyCodeLine{1236                       ilow = iwrk}
+\DoxyCodeLine{1237 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{1238 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{1239                 jlow = jlow -\/ 1}
+\DoxyCodeLine{1240 \textcolor{keywordflow}{             End If}}
+\DoxyCodeLine{1241 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{1242          jlm2 = jlm1}
+\DoxyCodeLine{1243          jlm1 = jlow}
+\DoxyCodeLine{1244          jhm2 = jhm1}
+\DoxyCodeLine{1245          jhm1 = jhig}
+\DoxyCodeLine{1246 \textcolor{comment}{!}}
+\DoxyCodeLine{1247 \textcolor{comment}{!   We try to bring the number of values in the low values set}}
+\DoxyCodeLine{1248 \textcolor{comment}{!   closer to INTH.}}
+\DoxyCodeLine{1249 \textcolor{comment}{!}}
+\DoxyCodeLine{1250          \textcolor{keywordflow}{Select Case} (inth-\/jlow)}
+\DoxyCodeLine{1251          \textcolor{keywordflow}{Case} (2:)}
+\DoxyCodeLine{1252 \textcolor{comment}{!}}
+\DoxyCodeLine{1253 \textcolor{comment}{!   Not enough values in low part, at least 2 are missing}}
+\DoxyCodeLine{1254 \textcolor{comment}{!}}
+\DoxyCodeLine{1255             inth = inth -\/ jlow}
+\DoxyCodeLine{1256             jlow = 0}
+\DoxyCodeLine{1257             \textcolor{keywordflow}{Select Case} (jhig)}
+\DoxyCodeLine{1258 \textcolor{comment}{!!!!!           CASE DEFAULT}}
+\DoxyCodeLine{1259 \textcolor{comment}{!!!!!              write (unit=*,fmt=*) "Assertion failed"}}
+\DoxyCodeLine{1260 \textcolor{comment}{!!!!!              STOP}}
+\DoxyCodeLine{1261 \textcolor{comment}{!}}
+\DoxyCodeLine{1262 \textcolor{comment}{!   We make a special case when we have so few values in}}
+\DoxyCodeLine{1263 \textcolor{comment}{!   the high values set that it is bad performance to choose a pivot}}
+\DoxyCodeLine{1264 \textcolor{comment}{!   and apply the general algorithm.}}
+\DoxyCodeLine{1265 \textcolor{comment}{!}}
+\DoxyCodeLine{1266             \textcolor{keywordflow}{Case} (2)}
+\DoxyCodeLine{1267                \textcolor{keywordflow}{If} (xdont(ihigt(1)) <= xdont(ihigt(2))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1268                   jlow = jlow + 1}
+\DoxyCodeLine{1269                   ilowt(jlow) = ihigt(1)}
+\DoxyCodeLine{1270                   jlow = jlow + 1}
+\DoxyCodeLine{1271                   ilowt(jlow) = ihigt(2)}
+\DoxyCodeLine{1272                \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1273                   jlow = jlow + 1}
+\DoxyCodeLine{1274                   ilowt(jlow) = ihigt(2)}
+\DoxyCodeLine{1275                   jlow = jlow + 1}
+\DoxyCodeLine{1276                   ilowt(jlow) = ihigt(1)}
+\DoxyCodeLine{1277 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1278                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1279 \textcolor{comment}{!}}
+\DoxyCodeLine{1280             \textcolor{keywordflow}{Case} (3)}
+\DoxyCodeLine{1281 \textcolor{comment}{!}}
+\DoxyCodeLine{1282 \textcolor{comment}{!}}
+\DoxyCodeLine{1283                iwrk1 = ihigt(1)}
+\DoxyCodeLine{1284                iwrk2 = ihigt(2)}
+\DoxyCodeLine{1285                iwrk3 = ihigt(3)}
+\DoxyCodeLine{1286                \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(iwrk1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1287                   ihigt(1) = iwrk2}
+\DoxyCodeLine{1288                   ihigt(2) = iwrk1}
+\DoxyCodeLine{1289                   iwrk2 = iwrk1}
+\DoxyCodeLine{1290 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1291                \textcolor{keywordflow}{If} (xdont(iwrk2) > xdont(iwrk3)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1292                   ihigt(3) = iwrk2}
+\DoxyCodeLine{1293                   ihigt(2) = iwrk3}
+\DoxyCodeLine{1294                   iwrk2 = iwrk3}
+\DoxyCodeLine{1295                   \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1296                      ihigt(2) = ihigt(1)}
+\DoxyCodeLine{1297                      ihigt(1) = iwrk2}
+\DoxyCodeLine{1298 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1299 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1300                jhig = 0}
+\DoxyCodeLine{1301                \textcolor{keywordflow}{Do} icrs = jlow + 1, inth}
+\DoxyCodeLine{1302                   jhig = jhig + 1}
+\DoxyCodeLine{1303                   ilowt(icrs) = ihigt(jhig)}
+\DoxyCodeLine{1304 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{1305                jlow = inth}
+\DoxyCodeLine{1306                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1307 \textcolor{comment}{!}}
+\DoxyCodeLine{1308             \textcolor{keywordflow}{Case} (4:)}
+\DoxyCodeLine{1309 \textcolor{comment}{!}}
+\DoxyCodeLine{1310 \textcolor{comment}{!}}
+\DoxyCodeLine{1311                xpiv0 = xpiv}
+\DoxyCodeLine{1312                ifin = jhig}
+\DoxyCodeLine{1313 \textcolor{comment}{!}}
+\DoxyCodeLine{1314 \textcolor{comment}{!  One chooses a pivot from the 2 first values and the last one.}}
+\DoxyCodeLine{1315 \textcolor{comment}{!  This should ensure sufficient renewal between iterations to}}
+\DoxyCodeLine{1316 \textcolor{comment}{!  avoid worst case behavior effects.}}
+\DoxyCodeLine{1317 \textcolor{comment}{!}}
+\DoxyCodeLine{1318                iwrk1 = ihigt(1)}
+\DoxyCodeLine{1319                iwrk2 = ihigt(2)}
+\DoxyCodeLine{1320                iwrk3 = ihigt(ifin)}
+\DoxyCodeLine{1321                \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(iwrk1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1322                   ihigt(1) = iwrk2}
+\DoxyCodeLine{1323                   ihigt(2) = iwrk1}
+\DoxyCodeLine{1324                   iwrk2 = iwrk1}
+\DoxyCodeLine{1325 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1326                \textcolor{keywordflow}{If} (xdont(iwrk2) > xdont(iwrk3)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1327                   ihigt(ifin) = iwrk2}
+\DoxyCodeLine{1328                   ihigt(2) = iwrk3}
+\DoxyCodeLine{1329                   iwrk2 = iwrk3}
+\DoxyCodeLine{1330                   \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1331                      ihigt(2) = ihigt(1)}
+\DoxyCodeLine{1332                      ihigt(1) = iwrk2}
+\DoxyCodeLine{1333 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1334 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1335 \textcolor{comment}{!}}
+\DoxyCodeLine{1336                iwrk1 = ihigt(1)}
+\DoxyCodeLine{1337                jlow = jlow + 1}
+\DoxyCodeLine{1338                ilowt(jlow) = iwrk1}
+\DoxyCodeLine{1339                xpiv = xdont(iwrk1) + 0.5 * (xdont(ihigt(ifin))-\/xdont(iwrk1))}
+\DoxyCodeLine{1340 \textcolor{comment}{!}}
+\DoxyCodeLine{1341 \textcolor{comment}{!  One takes values <= pivot to ILOWT}}
+\DoxyCodeLine{1342 \textcolor{comment}{!  Again, 2 parts, one where we take care of the remaining}}
+\DoxyCodeLine{1343 \textcolor{comment}{!  high values because we might still need them, and the}}
+\DoxyCodeLine{1344 \textcolor{comment}{!  other when we know that we will have more than enough}}
+\DoxyCodeLine{1345 \textcolor{comment}{!  low values in the end.}}
+\DoxyCodeLine{1346 \textcolor{comment}{!}}
+\DoxyCodeLine{1347                jhig = 0}
+\DoxyCodeLine{1348                \textcolor{keywordflow}{Do} icrs = 2, ifin}
+\DoxyCodeLine{1349                   \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1350                      jlow = jlow + 1}
+\DoxyCodeLine{1351                      ilowt(jlow) = ihigt(icrs)}
+\DoxyCodeLine{1352                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1353                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1354                      jhig = jhig + 1}
+\DoxyCodeLine{1355                      ihigt(jhig) = ihigt(icrs)}
+\DoxyCodeLine{1356 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1357 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{1358 \textcolor{comment}{!}}
+\DoxyCodeLine{1359                \textcolor{keywordflow}{Do} icrs = icrs + 1, ifin}
+\DoxyCodeLine{1360                   \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1361                      jlow = jlow + 1}
+\DoxyCodeLine{1362                      ilowt(jlow) = ihigt(icrs)}
+\DoxyCodeLine{1363 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1364 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{1365 \textcolor{keywordflow}{            End Select}}
+\DoxyCodeLine{1366 \textcolor{comment}{!}}
+\DoxyCodeLine{1367 \textcolor{comment}{!}}
+\DoxyCodeLine{1368          \textcolor{keywordflow}{Case} (1)}
+\DoxyCodeLine{1369 \textcolor{comment}{!}}
+\DoxyCodeLine{1370 \textcolor{comment}{!  Only 1 value is missing in low part}}
+\DoxyCodeLine{1371 \textcolor{comment}{!}}
+\DoxyCodeLine{1372             xmin = xdont(ihigt(1))}
+\DoxyCodeLine{1373             ihig = 1}
+\DoxyCodeLine{1374             \textcolor{keywordflow}{Do} icrs = 2, jhig}
+\DoxyCodeLine{1375                \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1376                   xmin = xdont(ihigt(icrs))}
+\DoxyCodeLine{1377                   ihig = icrs}
+\DoxyCodeLine{1378 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1379 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{1380 \textcolor{comment}{!}}
+\DoxyCodeLine{1381             indnth = ihigt(ihig)}
+\DoxyCodeLine{1382             \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1383 \textcolor{comment}{!}}
+\DoxyCodeLine{1384 \textcolor{comment}{!}}
+\DoxyCodeLine{1385          \textcolor{keywordflow}{Case} (0)}
+\DoxyCodeLine{1386 \textcolor{comment}{!}}
+\DoxyCodeLine{1387 \textcolor{comment}{!  Low part is exactly what we want}}
+\DoxyCodeLine{1388 \textcolor{comment}{!}}
+\DoxyCodeLine{1389             \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1390 \textcolor{comment}{!}}
+\DoxyCodeLine{1391 \textcolor{comment}{!}}
+\DoxyCodeLine{1392          \textcolor{keywordflow}{Case} (-\/5:-\/1)}
+\DoxyCodeLine{1393 \textcolor{comment}{!}}
+\DoxyCodeLine{1394 \textcolor{comment}{!  Only few values too many in low part}}
+\DoxyCodeLine{1395 \textcolor{comment}{!}}
+\DoxyCodeLine{1396             irngt(1) = ilowt(1)}
+\DoxyCodeLine{1397             ilow = 1 + inth -\/ jlow}
+\DoxyCodeLine{1398             \textcolor{keywordflow}{Do} icrs = 2, inth}
+\DoxyCodeLine{1399                iwrk = ilowt(icrs)}
+\DoxyCodeLine{1400                xwrk = xdont(iwrk)}
+\DoxyCodeLine{1401                \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, max(1, ilow), -\/ 1}
+\DoxyCodeLine{1402                   \textcolor{keywordflow}{If} (xwrk < xdont(irngt(idcr))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1403                      irngt(idcr+1) = irngt(idcr)}
+\DoxyCodeLine{1404                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1405                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1406 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1407 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{1408                irngt(idcr+1) = iwrk}
+\DoxyCodeLine{1409                ilow = ilow + 1}
+\DoxyCodeLine{1410 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{1411 \textcolor{comment}{!}}
+\DoxyCodeLine{1412             xwrk1 = xdont(irngt(inth))}
+\DoxyCodeLine{1413             ilow = 2*inth -\/ jlow}
+\DoxyCodeLine{1414             \textcolor{keywordflow}{Do} icrs = inth + 1, jlow}
+\DoxyCodeLine{1415                \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1416                   xwrk = xdont(ilowt(icrs))}
+\DoxyCodeLine{1417                   \textcolor{keywordflow}{Do} idcr = inth -\/ 1, max(1, ilow), -\/ 1}
+\DoxyCodeLine{1418                      \textcolor{keywordflow}{If} (xwrk >= xdont(irngt(idcr))) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1419                      irngt(idcr+1) = irngt(idcr)}
+\DoxyCodeLine{1420 \textcolor{keywordflow}{                  End Do}}
+\DoxyCodeLine{1421                   irngt(idcr+1) = ilowt(icrs)}
+\DoxyCodeLine{1422                   xwrk1 = xdont(irngt(inth))}
+\DoxyCodeLine{1423 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1424                ilow = ilow + 1}
+\DoxyCodeLine{1425 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{1426 \textcolor{comment}{!}}
+\DoxyCodeLine{1427             indnth = irngt(inth)}
+\DoxyCodeLine{1428             \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1429 \textcolor{comment}{!}}
+\DoxyCodeLine{1430 \textcolor{comment}{!}}
+\DoxyCodeLine{1431          \textcolor{keywordflow}{Case} (:-\/6)}
+\DoxyCodeLine{1432 \textcolor{comment}{!}}
+\DoxyCodeLine{1433 \textcolor{comment}{! last case: too many values in low part}}
+\DoxyCodeLine{1434 \textcolor{comment}{!}}
+\DoxyCodeLine{1435 }
+\DoxyCodeLine{1436             imil = (jlow+1) / 2}
+\DoxyCodeLine{1437             ifin = jlow}
+\DoxyCodeLine{1438 \textcolor{comment}{!}}
+\DoxyCodeLine{1439 \textcolor{comment}{!  One chooses a pivot from 1st, last, and middle values}}
+\DoxyCodeLine{1440 \textcolor{comment}{!}}
+\DoxyCodeLine{1441             \textcolor{keywordflow}{If} (xdont(ilowt(imil)) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1442                iwrk = ilowt(1)}
+\DoxyCodeLine{1443                ilowt(1) = ilowt(imil)}
+\DoxyCodeLine{1444                ilowt(imil) = iwrk}
+\DoxyCodeLine{1445 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{1446             \textcolor{keywordflow}{If} (xdont(ilowt(imil)) > xdont(ilowt(ifin))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1447                iwrk = ilowt(ifin)}
+\DoxyCodeLine{1448                ilowt(ifin) = ilowt(imil)}
+\DoxyCodeLine{1449                ilowt(imil) = iwrk}
+\DoxyCodeLine{1450                \textcolor{keywordflow}{If} (xdont(ilowt(imil)) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1451                   iwrk = ilowt(1)}
+\DoxyCodeLine{1452                   ilowt(1) = ilowt(imil)}
+\DoxyCodeLine{1453                   ilowt(imil) = iwrk}
+\DoxyCodeLine{1454 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1455 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{1456             \textcolor{keywordflow}{If} (ifin <= 3) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1457 \textcolor{comment}{!}}
+\DoxyCodeLine{1458             xpiv = xdont(ilowt(1)) + real(inth)/real(jlow+inth) * \&}
+\DoxyCodeLine{1459                                       (xdont(ilowt(ifin))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{1460 }
+\DoxyCodeLine{1461 \textcolor{comment}{!}}
+\DoxyCodeLine{1462 \textcolor{comment}{!  One takes values > XPIV to IHIGT}}
+\DoxyCodeLine{1463 \textcolor{comment}{!}}
+\DoxyCodeLine{1464             jhig = 0}
+\DoxyCodeLine{1465             jlow = 0}
+\DoxyCodeLine{1466 \textcolor{comment}{!}}
+\DoxyCodeLine{1467             \textcolor{keywordflow}{If} (xdont(ilowt(ifin)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1468                icrs = 0}
+\DoxyCodeLine{1469                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{1470                   icrs = icrs + 1}
+\DoxyCodeLine{1471                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1472                      jhig = jhig + 1}
+\DoxyCodeLine{1473                      ihigt(jhig) = ilowt(icrs)}
+\DoxyCodeLine{1474                      \textcolor{keywordflow}{If} (icrs >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1475                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1476                      jlow = jlow + 1}
+\DoxyCodeLine{1477                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{1478                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1479 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1480 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{1481 \textcolor{comment}{!}}
+\DoxyCodeLine{1482                \textcolor{keywordflow}{If} (icrs < ifin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1483                   \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{1484                      icrs = icrs + 1}
+\DoxyCodeLine{1485                      \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1486                         jlow = jlow + 1}
+\DoxyCodeLine{1487                         ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{1488                      \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1489                         \textcolor{keywordflow}{If} (icrs >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1490 \textcolor{keywordflow}{                     End If}}
+\DoxyCodeLine{1491 \textcolor{keywordflow}{                  End Do}}
+\DoxyCodeLine{1492 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{1493             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1494                \textcolor{keywordflow}{Do} icrs = 1, ifin}
+\DoxyCodeLine{1495                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1496                      jhig = jhig + 1}
+\DoxyCodeLine{1497                      ihigt(jhig) = ilowt(icrs)}
+\DoxyCodeLine{1498                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{1499                      jlow = jlow + 1}
+\DoxyCodeLine{1500                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{1501                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{1502 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1503 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{1504 \textcolor{comment}{!}}
+\DoxyCodeLine{1505                \textcolor{keywordflow}{Do} icrs = icrs + 1, ifin}
+\DoxyCodeLine{1506                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1507                      jlow = jlow + 1}
+\DoxyCodeLine{1508                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{1509 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1510 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{1511 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{1512 \textcolor{comment}{!}}
+\DoxyCodeLine{1513 \textcolor{keywordflow}{         End Select}}
+\DoxyCodeLine{1514 \textcolor{comment}{!}}
+\DoxyCodeLine{1515 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{1516 \textcolor{comment}{!}}
+\DoxyCodeLine{1517 \textcolor{comment}{!  Now, we only need to find maximum of the 1:INTH set}}
+\DoxyCodeLine{1518 \textcolor{comment}{!}}
+\DoxyCodeLine{1519 }
+\DoxyCodeLine{1520       iwrk1 = ilowt(1)}
+\DoxyCodeLine{1521       xwrk1 =  xdont(iwrk1)}
+\DoxyCodeLine{1522       \textcolor{keywordflow}{Do} icrs = 1+1, inth}
+\DoxyCodeLine{1523          iwrk = ilowt(icrs)}
+\DoxyCodeLine{1524          xwrk = xdont(iwrk)}
+\DoxyCodeLine{1525          \textcolor{keywordflow}{If} (xwrk > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1526             xwrk1 = xwrk}
+\DoxyCodeLine{1527             iwrk1 = iwrk}
+\DoxyCodeLine{1528 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{1529 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{1530       indnth = iwrk1}
+\DoxyCodeLine{1531       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1532 \textcolor{comment}{!}}
+\DoxyCodeLine{1533 \textcolor{comment}{!}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{interfacem__indnth_1_1indnth_a2a10d5fb55e5ef9185cfac6f7589d9c1}\label{interfacem__indnth_1_1indnth_a2a10d5fb55e5ef9185cfac6f7589d9c1}} 
 \index{m\_indnth::indnth@{m\_indnth::indnth}!r\_indnth@{r\_indnth}}
 \index{r\_indnth@{r\_indnth}!m\_indnth::indnth@{m\_indnth::indnth}}
@@ -31,7 +1049,516 @@ integer function \mbox{\hyperlink{interfacem__indnth_1_1indnth_a4a6987a0986eee4d
 {\footnotesize\ttfamily integer function m\+\_\+indnth\+::indnth\+::r\+\_\+indnth (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{522 \textcolor{comment}{!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).}}
+\DoxyCodeLine{523 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{524 \textcolor{comment}{!! This routine uses a pivoting strategy such as the one of}}
+\DoxyCodeLine{525 \textcolor{comment}{!! finding the median based on the quicksort algorithm, but}}
+\DoxyCodeLine{526 \textcolor{comment}{!! we skew the pivot choice to try to bring it to NORD as}}
+\DoxyCodeLine{527 \textcolor{comment}{!! fast as possible. It uses 2 temporary arrays, where it}}
+\DoxyCodeLine{528 \textcolor{comment}{!! stores the indices of the values smaller than the pivot}}
+\DoxyCodeLine{529 \textcolor{comment}{!! (ILOWT), and the indices of values larger than the pivot}}
+\DoxyCodeLine{530 \textcolor{comment}{!! that we might still need later on (IHIGT). It iterates}}
+\DoxyCodeLine{531 \textcolor{comment}{!! until it can bring the number of values in ILOWT to}}
+\DoxyCodeLine{532 \textcolor{comment}{!! exactly NORD, and then finds the maximum of this set.}}
+\DoxyCodeLine{533 \textcolor{comment}{!! Michel Olagnon -\/ Aug. 2000}}
+\DoxyCodeLine{534 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{535 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{536 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{537       \textcolor{keywordtype}{Integer} :: INDNTH}
+\DoxyCodeLine{538       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{539 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{540 \textcolor{keywordtype}{      Real} :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX}
+\DoxyCodeLine{541 \textcolor{comment}{!}}
+\DoxyCodeLine{542       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (NORD)} :: IRNGT}
+\DoxyCodeLine{543       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: ILOWT, IHIGT}
+\DoxyCodeLine{544       \textcolor{keywordtype}{Integer} :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3}
+\DoxyCodeLine{545       \textcolor{keywordtype}{Integer} :: IMIL, IFIN, ICRS, IDCR, ILOW}
+\DoxyCodeLine{546       \textcolor{keywordtype}{Integer} :: JLM2, JLM1, JHM2, JHM1, INTH}
+\DoxyCodeLine{547 \textcolor{comment}{!}}
+\DoxyCodeLine{548       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{549       inth = nord}
+\DoxyCodeLine{550 \textcolor{comment}{!}}
+\DoxyCodeLine{551 \textcolor{comment}{!    First loop is used to fill-\/in ILOWT, IHIGT at the same time}}
+\DoxyCodeLine{552 \textcolor{comment}{!}}
+\DoxyCodeLine{553       \textcolor{keywordflow}{If} (ndon < 2) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{554          \textcolor{keywordflow}{If} (inth == 1) indnth = 1}
+\DoxyCodeLine{555          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{556 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{557 \textcolor{comment}{!}}
+\DoxyCodeLine{558 \textcolor{comment}{!  One chooses a pivot, best estimate possible to put fractile near}}
+\DoxyCodeLine{559 \textcolor{comment}{!  mid-\/point of the set of low values.}}
+\DoxyCodeLine{560 \textcolor{comment}{!}}
+\DoxyCodeLine{561       \textcolor{keywordflow}{If} (xdont(2) < xdont(1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{562          ilowt(1) = 2}
+\DoxyCodeLine{563          ihigt(1) = 1}
+\DoxyCodeLine{564       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{565          ilowt(1) = 1}
+\DoxyCodeLine{566          ihigt(1) = 2}
+\DoxyCodeLine{567 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{568 \textcolor{comment}{!}}
+\DoxyCodeLine{569       \textcolor{keywordflow}{If} (ndon < 3) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{570          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{571          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{572          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{573 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{574 \textcolor{comment}{!}}
+\DoxyCodeLine{575       \textcolor{keywordflow}{If} (xdont(3) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{576          ihigt(2) = ihigt(1)}
+\DoxyCodeLine{577          \textcolor{keywordflow}{If} (xdont(3) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{578             ihigt(1) = ilowt(1)}
+\DoxyCodeLine{579             ilowt(1) = 3}
+\DoxyCodeLine{580          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{581             ihigt(1) = 3}
+\DoxyCodeLine{582 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{583       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{584          ihigt(2) = 3}
+\DoxyCodeLine{585 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{586 \textcolor{comment}{!}}
+\DoxyCodeLine{587       \textcolor{keywordflow}{If} (ndon < 4) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{588          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{589          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{590          \textcolor{keywordflow}{If} (inth == 3) indnth = ihigt(2)}
+\DoxyCodeLine{591          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{592 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{593 \textcolor{comment}{!}}
+\DoxyCodeLine{594       \textcolor{keywordflow}{If} (xdont(ndon) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{595          ihigt(3) = ihigt(2)}
+\DoxyCodeLine{596          ihigt(2) = ihigt(1)}
+\DoxyCodeLine{597          \textcolor{keywordflow}{If} (xdont(ndon) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{598             ihigt(1) = ilowt(1)}
+\DoxyCodeLine{599             ilowt(1) = ndon}
+\DoxyCodeLine{600          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{601             ihigt(1) = ndon}
+\DoxyCodeLine{602 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{603       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{604          ihigt(3) = ndon}
+\DoxyCodeLine{605 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{606 \textcolor{comment}{!}}
+\DoxyCodeLine{607       \textcolor{keywordflow}{If} (ndon < 5) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{608          \textcolor{keywordflow}{If} (inth == 1) indnth = ilowt(1)}
+\DoxyCodeLine{609          \textcolor{keywordflow}{If} (inth == 2) indnth = ihigt(1)}
+\DoxyCodeLine{610          \textcolor{keywordflow}{If} (inth == 3) indnth = ihigt(2)}
+\DoxyCodeLine{611          \textcolor{keywordflow}{If} (inth == 4) indnth = ihigt(3)}
+\DoxyCodeLine{612          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{613 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{614 \textcolor{comment}{!}}
+\DoxyCodeLine{615 }
+\DoxyCodeLine{616       jlow = 1}
+\DoxyCodeLine{617       jhig = 3}
+\DoxyCodeLine{618       xpiv = xdont(ilowt(1)) + real(2*inth)/real(ndon+inth) * \&}
+\DoxyCodeLine{619                                    (xdont(ihigt(3))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{620       \textcolor{keywordflow}{If} (xpiv >= xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{621          xpiv = xdont(ilowt(1)) + real(2*inth)/real(ndon+inth) * \&}
+\DoxyCodeLine{622                                       (xdont(ihigt(2))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{623          \textcolor{keywordflow}{If} (xpiv >= xdont(ihigt(1))) \&}
+\DoxyCodeLine{624              xpiv = xdont(ilowt(1)) + real(2*inth) / real(ndon+inth) * \&}
+\DoxyCodeLine{625                                           (xdont(ihigt(1))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{626 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{627       xpiv0 = xpiv}
+\DoxyCodeLine{628 \textcolor{comment}{!}}
+\DoxyCodeLine{629 \textcolor{comment}{!  One puts values > pivot in the end and those <= pivot}}
+\DoxyCodeLine{630 \textcolor{comment}{!  at the beginning. This is split in 2 cases, so that}}
+\DoxyCodeLine{631 \textcolor{comment}{!  we can skip the loop test a number of times.}}
+\DoxyCodeLine{632 \textcolor{comment}{!  As we are also filling in the work arrays at the same time}}
+\DoxyCodeLine{633 \textcolor{comment}{!  we stop filling in the IHIGT array as soon as we have more}}
+\DoxyCodeLine{634 \textcolor{comment}{!  than enough values in ILOWT.}}
+\DoxyCodeLine{635 \textcolor{comment}{!}}
+\DoxyCodeLine{636 \textcolor{comment}{!}}
+\DoxyCodeLine{637       \textcolor{keywordflow}{If} (xdont(ndon) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{638          icrs = 3}
+\DoxyCodeLine{639          \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{640             icrs = icrs + 1}
+\DoxyCodeLine{641             \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{642                \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{643                jhig = jhig + 1}
+\DoxyCodeLine{644                ihigt(jhig) = icrs}
+\DoxyCodeLine{645             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{646                jlow = jlow + 1}
+\DoxyCodeLine{647                ilowt(jlow) = icrs}
+\DoxyCodeLine{648                \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{649 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{650 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{651 \textcolor{comment}{!}}
+\DoxyCodeLine{652 \textcolor{comment}{!  One restricts further processing because it is no use}}
+\DoxyCodeLine{653 \textcolor{comment}{!  to store more high values}}
+\DoxyCodeLine{654 \textcolor{comment}{!}}
+\DoxyCodeLine{655          \textcolor{keywordflow}{If} (icrs < ndon-\/1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{656             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{657                icrs = icrs + 1}
+\DoxyCodeLine{658                \textcolor{keywordflow}{If} (xdont(icrs) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{659                   jlow = jlow + 1}
+\DoxyCodeLine{660                   ilowt(jlow) = icrs}
+\DoxyCodeLine{661                \textcolor{keywordflow}{Else} \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{662                   \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{663 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{664 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{665 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{666 \textcolor{comment}{!}}
+\DoxyCodeLine{667 \textcolor{comment}{!}}
+\DoxyCodeLine{668       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{669 \textcolor{comment}{!}}
+\DoxyCodeLine{670 \textcolor{comment}{!  Same as above, but this is not as easy to optimize, so the}}
+\DoxyCodeLine{671 \textcolor{comment}{!  DO-\/loop is kept}}
+\DoxyCodeLine{672 \textcolor{comment}{!}}
+\DoxyCodeLine{673          \textcolor{keywordflow}{Do} icrs = 4, ndon -\/ 1}
+\DoxyCodeLine{674             \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{675                jhig = jhig + 1}
+\DoxyCodeLine{676                ihigt(jhig) = icrs}
+\DoxyCodeLine{677             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{678                jlow = jlow + 1}
+\DoxyCodeLine{679                ilowt(jlow) = icrs}
+\DoxyCodeLine{680                \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{681 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{682 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{683 \textcolor{comment}{!}}
+\DoxyCodeLine{684          \textcolor{keywordflow}{If} (icrs < ndon-\/1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{685             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{686                icrs = icrs + 1}
+\DoxyCodeLine{687                \textcolor{keywordflow}{If} (xdont(icrs) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{688                   \textcolor{keywordflow}{If} (icrs >= ndon) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{689                   jlow = jlow + 1}
+\DoxyCodeLine{690                   ilowt(jlow) = icrs}
+\DoxyCodeLine{691 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{692 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{693 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{694 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{695 \textcolor{comment}{!}}
+\DoxyCodeLine{696       jlm2 = 0}
+\DoxyCodeLine{697       jlm1 = 0}
+\DoxyCodeLine{698       jhm2 = 0}
+\DoxyCodeLine{699       jhm1 = 0}
+\DoxyCodeLine{700       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{701          \textcolor{keywordflow}{If} (jlm2 == jlow .And. jhm2 == jhig) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{702 \textcolor{comment}{!}}
+\DoxyCodeLine{703 \textcolor{comment}{!   We are oscillating. Perturbate by bringing JLOW closer by one}}
+\DoxyCodeLine{704 \textcolor{comment}{!   to INTH}}
+\DoxyCodeLine{705 \textcolor{comment}{!}}
+\DoxyCodeLine{706              \textcolor{keywordflow}{If} (inth > jlow) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{707                 xmin = xdont(ihigt(1))}
+\DoxyCodeLine{708                 ihig = 1}
+\DoxyCodeLine{709                 \textcolor{keywordflow}{Do} icrs = 2, jhig}
+\DoxyCodeLine{710                    \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{711                       xmin = xdont(ihigt(icrs))}
+\DoxyCodeLine{712                       ihig = icrs}
+\DoxyCodeLine{713 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{714 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{715 \textcolor{comment}{!}}
+\DoxyCodeLine{716                 jlow = jlow + 1}
+\DoxyCodeLine{717                 ilowt(jlow) = ihigt(ihig)}
+\DoxyCodeLine{718                 ihigt(ihig) = ihigt(jhig)}
+\DoxyCodeLine{719                 jhig = jhig -\/ 1}
+\DoxyCodeLine{720              \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{721 }
+\DoxyCodeLine{722                 ilow = ilowt(1)}
+\DoxyCodeLine{723                 xmax = xdont(ilow)}
+\DoxyCodeLine{724                 \textcolor{keywordflow}{Do} icrs = 2, jlow}
+\DoxyCodeLine{725                    \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xmax) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{726                       iwrk = ilowt(icrs)}
+\DoxyCodeLine{727                       xmax = xdont(iwrk)}
+\DoxyCodeLine{728                       ilowt(icrs) = ilow}
+\DoxyCodeLine{729                       ilow = iwrk}
+\DoxyCodeLine{730 \textcolor{keywordflow}{                   End If}}
+\DoxyCodeLine{731 \textcolor{keywordflow}{                End Do}}
+\DoxyCodeLine{732                 jlow = jlow -\/ 1}
+\DoxyCodeLine{733 \textcolor{keywordflow}{             End If}}
+\DoxyCodeLine{734 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{735          jlm2 = jlm1}
+\DoxyCodeLine{736          jlm1 = jlow}
+\DoxyCodeLine{737          jhm2 = jhm1}
+\DoxyCodeLine{738          jhm1 = jhig}
+\DoxyCodeLine{739 \textcolor{comment}{!}}
+\DoxyCodeLine{740 \textcolor{comment}{!   We try to bring the number of values in the low values set}}
+\DoxyCodeLine{741 \textcolor{comment}{!   closer to INTH.}}
+\DoxyCodeLine{742 \textcolor{comment}{!}}
+\DoxyCodeLine{743          \textcolor{keywordflow}{Select Case} (inth-\/jlow)}
+\DoxyCodeLine{744          \textcolor{keywordflow}{Case} (2:)}
+\DoxyCodeLine{745 \textcolor{comment}{!}}
+\DoxyCodeLine{746 \textcolor{comment}{!   Not enough values in low part, at least 2 are missing}}
+\DoxyCodeLine{747 \textcolor{comment}{!}}
+\DoxyCodeLine{748             inth = inth -\/ jlow}
+\DoxyCodeLine{749             jlow = 0}
+\DoxyCodeLine{750             \textcolor{keywordflow}{Select Case} (jhig)}
+\DoxyCodeLine{751 \textcolor{comment}{!!!!!           CASE DEFAULT}}
+\DoxyCodeLine{752 \textcolor{comment}{!!!!!              write (unit=*,fmt=*) "Assertion failed"}}
+\DoxyCodeLine{753 \textcolor{comment}{!!!!!              STOP}}
+\DoxyCodeLine{754 \textcolor{comment}{!}}
+\DoxyCodeLine{755 \textcolor{comment}{!   We make a special case when we have so few values in}}
+\DoxyCodeLine{756 \textcolor{comment}{!   the high values set that it is bad performance to choose a pivot}}
+\DoxyCodeLine{757 \textcolor{comment}{!   and apply the general algorithm.}}
+\DoxyCodeLine{758 \textcolor{comment}{!}}
+\DoxyCodeLine{759             \textcolor{keywordflow}{Case} (2)}
+\DoxyCodeLine{760                \textcolor{keywordflow}{If} (xdont(ihigt(1)) <= xdont(ihigt(2))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{761                   jlow = jlow + 1}
+\DoxyCodeLine{762                   ilowt(jlow) = ihigt(1)}
+\DoxyCodeLine{763                   jlow = jlow + 1}
+\DoxyCodeLine{764                   ilowt(jlow) = ihigt(2)}
+\DoxyCodeLine{765                \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{766                   jlow = jlow + 1}
+\DoxyCodeLine{767                   ilowt(jlow) = ihigt(2)}
+\DoxyCodeLine{768                   jlow = jlow + 1}
+\DoxyCodeLine{769                   ilowt(jlow) = ihigt(1)}
+\DoxyCodeLine{770 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{771                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{772 \textcolor{comment}{!}}
+\DoxyCodeLine{773             \textcolor{keywordflow}{Case} (3)}
+\DoxyCodeLine{774 \textcolor{comment}{!}}
+\DoxyCodeLine{775 \textcolor{comment}{!}}
+\DoxyCodeLine{776                iwrk1 = ihigt(1)}
+\DoxyCodeLine{777                iwrk2 = ihigt(2)}
+\DoxyCodeLine{778                iwrk3 = ihigt(3)}
+\DoxyCodeLine{779                \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(iwrk1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{780                   ihigt(1) = iwrk2}
+\DoxyCodeLine{781                   ihigt(2) = iwrk1}
+\DoxyCodeLine{782                   iwrk2 = iwrk1}
+\DoxyCodeLine{783 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{784                \textcolor{keywordflow}{If} (xdont(iwrk2) > xdont(iwrk3)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{785                   ihigt(3) = iwrk2}
+\DoxyCodeLine{786                   ihigt(2) = iwrk3}
+\DoxyCodeLine{787                   iwrk2 = iwrk3}
+\DoxyCodeLine{788                   \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{789                      ihigt(2) = ihigt(1)}
+\DoxyCodeLine{790                      ihigt(1) = iwrk2}
+\DoxyCodeLine{791 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{792 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{793                jhig = 0}
+\DoxyCodeLine{794                \textcolor{keywordflow}{Do} icrs = jlow + 1, inth}
+\DoxyCodeLine{795                   jhig = jhig + 1}
+\DoxyCodeLine{796                   ilowt(icrs) = ihigt(jhig)}
+\DoxyCodeLine{797 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{798                jlow = inth}
+\DoxyCodeLine{799                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{800 \textcolor{comment}{!}}
+\DoxyCodeLine{801             \textcolor{keywordflow}{Case} (4:)}
+\DoxyCodeLine{802 \textcolor{comment}{!}}
+\DoxyCodeLine{803 \textcolor{comment}{!}}
+\DoxyCodeLine{804                xpiv0 = xpiv}
+\DoxyCodeLine{805                ifin = jhig}
+\DoxyCodeLine{806 \textcolor{comment}{!}}
+\DoxyCodeLine{807 \textcolor{comment}{!  One chooses a pivot from the 2 first values and the last one.}}
+\DoxyCodeLine{808 \textcolor{comment}{!  This should ensure sufficient renewal between iterations to}}
+\DoxyCodeLine{809 \textcolor{comment}{!  avoid worst case behavior effects.}}
+\DoxyCodeLine{810 \textcolor{comment}{!}}
+\DoxyCodeLine{811                iwrk1 = ihigt(1)}
+\DoxyCodeLine{812                iwrk2 = ihigt(2)}
+\DoxyCodeLine{813                iwrk3 = ihigt(ifin)}
+\DoxyCodeLine{814                \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(iwrk1)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{815                   ihigt(1) = iwrk2}
+\DoxyCodeLine{816                   ihigt(2) = iwrk1}
+\DoxyCodeLine{817                   iwrk2 = iwrk1}
+\DoxyCodeLine{818 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{819                \textcolor{keywordflow}{If} (xdont(iwrk2) > xdont(iwrk3)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{820                   ihigt(ifin) = iwrk2}
+\DoxyCodeLine{821                   ihigt(2) = iwrk3}
+\DoxyCodeLine{822                   iwrk2 = iwrk3}
+\DoxyCodeLine{823                   \textcolor{keywordflow}{If} (xdont(iwrk2) < xdont(ihigt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{824                      ihigt(2) = ihigt(1)}
+\DoxyCodeLine{825                      ihigt(1) = iwrk2}
+\DoxyCodeLine{826 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{827 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{828 \textcolor{comment}{!}}
+\DoxyCodeLine{829                iwrk1 = ihigt(1)}
+\DoxyCodeLine{830                jlow = jlow + 1}
+\DoxyCodeLine{831                ilowt(jlow) = iwrk1}
+\DoxyCodeLine{832                xpiv = xdont(iwrk1) + 0.5 * (xdont(ihigt(ifin))-\/xdont(iwrk1))}
+\DoxyCodeLine{833 \textcolor{comment}{!}}
+\DoxyCodeLine{834 \textcolor{comment}{!  One takes values <= pivot to ILOWT}}
+\DoxyCodeLine{835 \textcolor{comment}{!  Again, 2 parts, one where we take care of the remaining}}
+\DoxyCodeLine{836 \textcolor{comment}{!  high values because we might still need them, and the}}
+\DoxyCodeLine{837 \textcolor{comment}{!  other when we know that we will have more than enough}}
+\DoxyCodeLine{838 \textcolor{comment}{!  low values in the end.}}
+\DoxyCodeLine{839 \textcolor{comment}{!}}
+\DoxyCodeLine{840                jhig = 0}
+\DoxyCodeLine{841                \textcolor{keywordflow}{Do} icrs = 2, ifin}
+\DoxyCodeLine{842                   \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{843                      jlow = jlow + 1}
+\DoxyCodeLine{844                      ilowt(jlow) = ihigt(icrs)}
+\DoxyCodeLine{845                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{846                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{847                      jhig = jhig + 1}
+\DoxyCodeLine{848                      ihigt(jhig) = ihigt(icrs)}
+\DoxyCodeLine{849 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{850 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{851 \textcolor{comment}{!}}
+\DoxyCodeLine{852                \textcolor{keywordflow}{Do} icrs = icrs + 1, ifin}
+\DoxyCodeLine{853                   \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{854                      jlow = jlow + 1}
+\DoxyCodeLine{855                      ilowt(jlow) = ihigt(icrs)}
+\DoxyCodeLine{856 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{857 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{858 \textcolor{keywordflow}{            End Select}}
+\DoxyCodeLine{859 \textcolor{comment}{!}}
+\DoxyCodeLine{860 \textcolor{comment}{!}}
+\DoxyCodeLine{861          \textcolor{keywordflow}{Case} (1)}
+\DoxyCodeLine{862 \textcolor{comment}{!}}
+\DoxyCodeLine{863 \textcolor{comment}{!  Only 1 value is missing in low part}}
+\DoxyCodeLine{864 \textcolor{comment}{!}}
+\DoxyCodeLine{865             xmin = xdont(ihigt(1))}
+\DoxyCodeLine{866             ihig = 1}
+\DoxyCodeLine{867             \textcolor{keywordflow}{Do} icrs = 2, jhig}
+\DoxyCodeLine{868                \textcolor{keywordflow}{If} (xdont(ihigt(icrs)) < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{869                   xmin = xdont(ihigt(icrs))}
+\DoxyCodeLine{870                   ihig = icrs}
+\DoxyCodeLine{871 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{872 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{873 \textcolor{comment}{!}}
+\DoxyCodeLine{874             indnth = ihigt(ihig)}
+\DoxyCodeLine{875             \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{876 \textcolor{comment}{!}}
+\DoxyCodeLine{877 \textcolor{comment}{!}}
+\DoxyCodeLine{878          \textcolor{keywordflow}{Case} (0)}
+\DoxyCodeLine{879 \textcolor{comment}{!}}
+\DoxyCodeLine{880 \textcolor{comment}{!  Low part is exactly what we want}}
+\DoxyCodeLine{881 \textcolor{comment}{!}}
+\DoxyCodeLine{882             \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{883 \textcolor{comment}{!}}
+\DoxyCodeLine{884 \textcolor{comment}{!}}
+\DoxyCodeLine{885          \textcolor{keywordflow}{Case} (-\/5:-\/1)}
+\DoxyCodeLine{886 \textcolor{comment}{!}}
+\DoxyCodeLine{887 \textcolor{comment}{!  Only few values too many in low part}}
+\DoxyCodeLine{888 \textcolor{comment}{!}}
+\DoxyCodeLine{889             irngt(1) = ilowt(1)}
+\DoxyCodeLine{890             ilow = 1 + inth -\/ jlow}
+\DoxyCodeLine{891             \textcolor{keywordflow}{Do} icrs = 2, inth}
+\DoxyCodeLine{892                iwrk = ilowt(icrs)}
+\DoxyCodeLine{893                xwrk = xdont(iwrk)}
+\DoxyCodeLine{894                \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, max(1, ilow), -\/ 1}
+\DoxyCodeLine{895                   \textcolor{keywordflow}{If} (xwrk < xdont(irngt(idcr))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{896                      irngt(idcr+1) = irngt(idcr)}
+\DoxyCodeLine{897                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{898                      \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{899 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{900 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{901                irngt(idcr+1) = iwrk}
+\DoxyCodeLine{902                ilow = ilow + 1}
+\DoxyCodeLine{903 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{904 \textcolor{comment}{!}}
+\DoxyCodeLine{905             xwrk1 = xdont(irngt(inth))}
+\DoxyCodeLine{906             ilow = 2*inth -\/ jlow}
+\DoxyCodeLine{907             \textcolor{keywordflow}{Do} icrs = inth + 1, jlow}
+\DoxyCodeLine{908                \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{909                   xwrk = xdont(ilowt(icrs))}
+\DoxyCodeLine{910                   \textcolor{keywordflow}{Do} idcr = inth -\/ 1, max(1, ilow), -\/ 1}
+\DoxyCodeLine{911                      \textcolor{keywordflow}{If} (xwrk >= xdont(irngt(idcr))) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{912                      irngt(idcr+1) = irngt(idcr)}
+\DoxyCodeLine{913 \textcolor{keywordflow}{                  End Do}}
+\DoxyCodeLine{914                   irngt(idcr+1) = ilowt(icrs)}
+\DoxyCodeLine{915                   xwrk1 = xdont(irngt(inth))}
+\DoxyCodeLine{916 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{917                ilow = ilow + 1}
+\DoxyCodeLine{918 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{919 \textcolor{comment}{!}}
+\DoxyCodeLine{920             indnth = irngt(inth)}
+\DoxyCodeLine{921             \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{922 \textcolor{comment}{!}}
+\DoxyCodeLine{923 \textcolor{comment}{!}}
+\DoxyCodeLine{924          \textcolor{keywordflow}{Case} (:-\/6)}
+\DoxyCodeLine{925 \textcolor{comment}{!}}
+\DoxyCodeLine{926 \textcolor{comment}{! last case: too many values in low part}}
+\DoxyCodeLine{927 \textcolor{comment}{!}}
+\DoxyCodeLine{928 }
+\DoxyCodeLine{929             imil = (jlow+1) / 2}
+\DoxyCodeLine{930             ifin = jlow}
+\DoxyCodeLine{931 \textcolor{comment}{!}}
+\DoxyCodeLine{932 \textcolor{comment}{!  One chooses a pivot from 1st, last, and middle values}}
+\DoxyCodeLine{933 \textcolor{comment}{!}}
+\DoxyCodeLine{934             \textcolor{keywordflow}{If} (xdont(ilowt(imil)) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{935                iwrk = ilowt(1)}
+\DoxyCodeLine{936                ilowt(1) = ilowt(imil)}
+\DoxyCodeLine{937                ilowt(imil) = iwrk}
+\DoxyCodeLine{938 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{939             \textcolor{keywordflow}{If} (xdont(ilowt(imil)) > xdont(ilowt(ifin))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{940                iwrk = ilowt(ifin)}
+\DoxyCodeLine{941                ilowt(ifin) = ilowt(imil)}
+\DoxyCodeLine{942                ilowt(imil) = iwrk}
+\DoxyCodeLine{943                \textcolor{keywordflow}{If} (xdont(ilowt(imil)) < xdont(ilowt(1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{944                   iwrk = ilowt(1)}
+\DoxyCodeLine{945                   ilowt(1) = ilowt(imil)}
+\DoxyCodeLine{946                   ilowt(imil) = iwrk}
+\DoxyCodeLine{947 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{948 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{949             \textcolor{keywordflow}{If} (ifin <= 3) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{950 \textcolor{comment}{!}}
+\DoxyCodeLine{951             xpiv = xdont(ilowt(1)) + real(inth)/real(jlow+inth) * \&}
+\DoxyCodeLine{952                                       (xdont(ilowt(ifin))-\/xdont(ilowt(1)))}
+\DoxyCodeLine{953 }
+\DoxyCodeLine{954 \textcolor{comment}{!}}
+\DoxyCodeLine{955 \textcolor{comment}{!  One takes values > XPIV to IHIGT}}
+\DoxyCodeLine{956 \textcolor{comment}{!}}
+\DoxyCodeLine{957             jhig = 0}
+\DoxyCodeLine{958             jlow = 0}
+\DoxyCodeLine{959 \textcolor{comment}{!}}
+\DoxyCodeLine{960             \textcolor{keywordflow}{If} (xdont(ilowt(ifin)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{961                icrs = 0}
+\DoxyCodeLine{962                \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{963                   icrs = icrs + 1}
+\DoxyCodeLine{964                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{965                      jhig = jhig + 1}
+\DoxyCodeLine{966                      ihigt(jhig) = ilowt(icrs)}
+\DoxyCodeLine{967                      \textcolor{keywordflow}{If} (icrs >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{968                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{969                      jlow = jlow + 1}
+\DoxyCodeLine{970                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{971                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{972 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{973 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{974 \textcolor{comment}{!}}
+\DoxyCodeLine{975                \textcolor{keywordflow}{If} (icrs < ifin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{976                   \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{977                      icrs = icrs + 1}
+\DoxyCodeLine{978                      \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{979                         jlow = jlow + 1}
+\DoxyCodeLine{980                         ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{981                      \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{982                         \textcolor{keywordflow}{If} (icrs >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{983 \textcolor{keywordflow}{                     End If}}
+\DoxyCodeLine{984 \textcolor{keywordflow}{                  End Do}}
+\DoxyCodeLine{985 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{986             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{987                \textcolor{keywordflow}{Do} icrs = 1, ifin}
+\DoxyCodeLine{988                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) > xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{989                      jhig = jhig + 1}
+\DoxyCodeLine{990                      ihigt(jhig) = ilowt(icrs)}
+\DoxyCodeLine{991                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{992                      jlow = jlow + 1}
+\DoxyCodeLine{993                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{994                      \textcolor{keywordflow}{If} (jlow >= inth) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{995 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{996 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{997 \textcolor{comment}{!}}
+\DoxyCodeLine{998                \textcolor{keywordflow}{Do} icrs = icrs + 1, ifin}
+\DoxyCodeLine{999                   \textcolor{keywordflow}{If} (xdont(ilowt(icrs)) <= xpiv) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1000                      jlow = jlow + 1}
+\DoxyCodeLine{1001                      ilowt(jlow) = ilowt(icrs)}
+\DoxyCodeLine{1002 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{1003 \textcolor{keywordflow}{               End Do}}
+\DoxyCodeLine{1004 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{1005 \textcolor{comment}{!}}
+\DoxyCodeLine{1006 \textcolor{keywordflow}{         End Select}}
+\DoxyCodeLine{1007 \textcolor{comment}{!}}
+\DoxyCodeLine{1008 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{1009 \textcolor{comment}{!}}
+\DoxyCodeLine{1010 \textcolor{comment}{!  Now, we only need to find maximum of the 1:INTH set}}
+\DoxyCodeLine{1011 \textcolor{comment}{!}}
+\DoxyCodeLine{1012 }
+\DoxyCodeLine{1013       iwrk1 = ilowt(1)}
+\DoxyCodeLine{1014       xwrk1 =  xdont(iwrk1)}
+\DoxyCodeLine{1015       \textcolor{keywordflow}{Do} icrs = 1+1, inth}
+\DoxyCodeLine{1016          iwrk = ilowt(icrs)}
+\DoxyCodeLine{1017          xwrk = xdont(iwrk)}
+\DoxyCodeLine{1018          \textcolor{keywordflow}{If} (xwrk > xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{1019             xwrk1 = xwrk}
+\DoxyCodeLine{1020             iwrk1 = iwrk}
+\DoxyCodeLine{1021 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{1022 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{1023       indnth = iwrk1}
+\DoxyCodeLine{1024       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{1025 \textcolor{comment}{!}}
+\DoxyCodeLine{1026 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+
 
 The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-/home/urbanjs/venus/\+V600/github/orderpack/src/\mbox{\hyperlink{m__indnth_8f90}{m\+\_\+indnth.\+f90}}\end{DoxyCompactItemize}
+/home/urbanjs/venus/\+V600/github/orderpack/src/\mbox{\hyperlink{M__indnth_8f90}{M\+\_\+indnth.\+f90}}\end{DoxyCompactItemize}

@@ -308,17 +308,17 @@
         <li>
           <a name="3.1" id="3.1">
           <h4>Unconditional ranking</h4></a>
-          <p><a href="../src/m_mrgrnk.f90">Subroutine MRGRNK (XVALT, IMULT)</a><br />
+          <p><a href="../src/M_mrgrnk.f90">Subroutine MRGRNK (XVALT, IMULT)</a><br />
           Ranks array XVALT into index array IRNGT, using merge-sort<br />
           For performance reasons, the first 2 passes are taken out of the standard loop, and use dedicated coding.</p>
-          <p><a href="../src/m_mrgref.f90">Subroutine MRGREF (XVALT, IRNGT)</a><br />
+          <p><a href="../src/M_mrgref.f90">Subroutine MRGREF (XVALT, IRNGT)</a><br />
           Ranks array XVALT into index array IRNGT, using merge-sort<br />
           This version is not optimized for performance, and is thus not as difficult to read as the previous one.</p>
         </li>
         <li>
           <a name="3.3" id="3.3">
           <h4>Partial ranking</h4></a>
-          <p><a href="../src/m_rnkpar.f90">Subroutine RNKPAR (XVALT, IRNGT, NORD)</a><br />
+          <p><a href="../src/M_rnkpar.f90">Subroutine RNKPAR (XVALT, IRNGT, NORD)</a><br />
           Ranks partially XVALT by IRNGT, up to order NORD (refined for
           speed)<br /> This routine uses a pivoting strategy such as the
           one of finding the median based on the quicksort algorithm, but
@@ -330,9 +330,9 @@
           of values in ILOWT to exactly NORD, and then uses an insertion
           sort to rank this set, since it is supposedly small.
 	  </p>
-          <p><a href="../src/m_rapknr.f90">Subroutine RAPKNR (XVALT, IRNGT, NORD)</a><br />
+          <p><a href="../src/M_rapknr.f90">Subroutine RAPKNR (XVALT, IRNGT, NORD)</a><br />
           Same as RNKPAR, but in decreasing order (RAPKNR = RNKPAR spelt backwards).</p>
-          <p><a href="../src/m_refpar.f90">Subroutine REFPAR (XVALT, IRNGT, NORD)</a><br />
+          <p><a href="../src/M_refpar.f90">Subroutine REFPAR (XVALT, IRNGT, NORD)</a><br />
           Ranks partially XVALT by IRNGT, up to order NORD<br />
           This version is not optimized for performance, and is
           thus not as difficult to read as some other ones. It uses
@@ -343,7 +343,7 @@
           the pivot to exactly NORD, and then uses an insertion sort to
           rank this set, since it is supposedly small.
 	  </p>
-          <p><a href="../src/m_rinpar.f90">Subroutine RINPAR (XVALT, IRNGT, NORD)</a><br />
+          <p><a href="../src/M_rinpar.f90">Subroutine RINPAR (XVALT, IRNGT, NORD)</a><br />
           Ranks partially XVALT by IRNGT, up to order NORD<br /> This
           version is not optimized for performance, and is thus not
           as difficult to read as some other ones. It uses insertion
@@ -352,7 +352,7 @@
           (2-5), but worst case behavior (initially inverse sorted)
           can easily happen. In many cases, the refined quicksort method
           is faster.</p>
-          <p><a href="../src/m_indnth.f90">Integer Function INDNTH (XVALT, NORD)</a><br />
+          <p><a href="../src/M_indnth.f90">Integer Function INDNTH (XVALT, NORD)</a><br />
           Returns the index of the NORD<sup>th</sup> value of XVALT (in
           increasing order)<br /> This routine uses a pivoting strategy
           such as the one of finding the median based on the quicksort
@@ -363,7 +363,7 @@
           we might still need later on. It iterates until it can bring
           the number of values in ILOWT to exactly NORD, and then takes
           out the original index of the maximum value in this set.</p>
-          <p><a href="../src/m_indmed.f90">Subroutine INDMED (XVALT, INDM)</a><br />
+          <p><a href="../src/M_indmed.f90">Subroutine INDMED (XVALT, INDM)</a><br />
           Returns the index of the median
           (((Size(XVALT)+1))/2<sup>th</sup> value) of XVALT<br /> This
           routine uses the recursive procedure described in Knuth, The
@@ -382,7 +382,7 @@
           <a name="3.3" id="3.3">
           <h4>Unique ranking</h4></a>
           <p>
-	  <a href="../src/m_unirnk.f90">Subroutine UNIRNK (XVALT, IRNGT, NUNI)</a><br />
+	  <a href="../src/M_unirnk.f90">Subroutine UNIRNK (XVALT, IRNGT, NUNI)</a><br />
           Ranks an array, removing duplicate entries (uses merge sort).<br
           /> The routine is similar to pure merge-sort ranking, but on
           the last pass, it discards indices that correspond to duplicate
@@ -390,7 +390,7 @@
           out of the standard loop, and use dedicated coding.
 	  </p>
           <p>
-	  <a href="../src/m_unipar.f90">Subroutine UNIPAR (XVALT, IRNGT, NORD)</a><br />
+	  <a href="../src/M_unipar.f90">Subroutine UNIPAR (XVALT, IRNGT, NORD)</a><br />
           Ranks partially XVALT by IRNGT, up to order NORD at most,
           removing duplicate entries<br /> This routine uses a pivoting
           strategy such as the one of finding the median based on the
@@ -405,7 +405,7 @@
           in ILOWT correspond to distinct values of the input array.
 	  </p>
           <p>
-   	  <a href="../src/m_uniinv.f90">Subroutine UNIINV (XVALT, IGOEST)</a><br />
+   	  <a href="../src/M_uniinv.f90">Subroutine UNIINV (XVALT, IGOEST)</a><br />
              Inverse ranking of an array, with removal of duplicate
              entries<br /> The routine is similar to pure merge-sort
              ranking, but on the last pass, it sets indices in IGOEST to the
@@ -414,13 +414,13 @@
              out of the standard loop, and use dedicated coding.
 	  </p>
           <p>
-   	  <a href="../src/m_mulcnt.f90">Subroutine MULCNT (XVALT, IMULT)</a><br />
+   	  <a href="../src/M_mulcnt.f90">Subroutine MULCNT (XVALT, IMULT)</a><br />
              Gives, for each array value, its multiplicity<br /> The number
              of times that a value appears in the array is computed by
              using inverse ranking, counting for each rank the number of
              values that ``collide'' to this rank, and returning this sum
              to the locations in the original set. Uses subroutine 
-   	  <a href="../src/m_uniinv.f90">UNIINV</a>.
+   	  <a href="../src/M_uniinv.f90">UNIINV</a>.
 	  </p>
         </li>
         <li>
@@ -438,7 +438,7 @@
              location, and 1 such that the permutation is fully random.</i>
 	  </p>
           <p>
-   	  <a href="../src/m_ctrper.f90">Subroutine CTRPER (XVALT, PCLS)</a><br />
+   	  <a href="../src/M_ctrper.f90">Subroutine CTRPER (XVALT, PCLS)</a><br />
              Permute array XVALT randomly, but leaving elements close
              to their initial locations<br /> The routine takes the
              1...size(XVALT) index array as real values, takes a combination
@@ -447,7 +447,7 @@
              these perturbated indices. The relative proportion of initial
              order and random order is 1-PCLS / PCLS, thus when PCLS = 0,
              there is no change in the order whereas the new order is fully
-             random when PCLS = 1. Uses subroutine <a href="../src/m_mrgrnk.f90">MRGRNK</a>.
+             random when PCLS = 1. Uses subroutine <a href="../src/M_mrgrnk.f90">MRGRNK</a>.
 	  </p>
           <p>
 	  The above solution found another application when I was
@@ -499,7 +499,7 @@
           <a name="4.1" id="4.1">
           <h4>Full sorting</h4></a>
           <p>
-	  <a href="../src/m_inssor.f90">Subroutine INSSOR (XVALT)</a><br />
+	  <a href="../src/M_inssor.f90">Subroutine INSSOR (XVALT)</a><br />
              Sorts XVALT into increasing order (Insertion sort)<br />
              This subroutine uses insertion sort. It does not use any
              work array and is faster when XVALT is of very small size
@@ -508,7 +508,7 @@
              the quicksort or merge sort method is faster.
 	  </p>
           <p>
-   	  <a href="../src/m_refsor.f90">Subroutine REFSOR (XVALT)</a><br />
+   	  <a href="../src/M_refsor.f90">Subroutine REFSOR (XVALT)</a><br />
              Sorts XVALT into increasing order (Quick sort)<br /> This
              version is not optimized for performance, and is thus not as
              difficult to read as some other ones. This subroutine uses
@@ -521,7 +521,7 @@
           <a name="4.2" id="4.2">
           <h4>Partial sorting</h4></a>
           <p>
-	  <a href="../src/m_inspar.f90">Subroutine INSPAR (XVALT, NORD)</a><br />
+	  <a href="../src/M_inspar.f90">Subroutine INSPAR (XVALT, NORD)</a><br />
              Sorts partially XVALT, bringing the NORD lowest values at the
              beginning of the array.<br /> This subroutine uses insertion
              sort, limiting insertion to the first NORD values. It does not
@@ -531,7 +531,7 @@
              is faster.
 	  </p>
           <p>
-	  <a href="../src/m_fndnth.f90">Function FNDNTH (XVALT, NORD)</a><br />
+	  <a href="../src/M_fndnth.f90">Function FNDNTH (XVALT, NORD)</a><br />
           Finds out and returns the NORD<sup>th</sup> value in XVALT
           (ascending order)<br /> This subroutine uses insertion sort,
           limiting insertion to the first NORD values, and even less
@@ -543,11 +543,11 @@
           by VALNTH / INDNTH is faster, though much more difficult to
           read and understand.
 	  </p>
-          <p><a href="../src/m_valnth.f90">Function VALNTH (XVALT, NORD)</a><br />
+          <p><a href="../src/M_valnth.f90">Function VALNTH (XVALT, NORD)</a><br />
           Finds out and returns the NORD<sup>th</sup> value in XVALT (ascending order)<br />
-          This subroutine simply calls <a href="../src/m_indnth.f90">INDNTH</a>.</p>
+          This subroutine simply calls <a href="../src/M_indnth.f90">INDNTH</a>.</p>
           <p>
-	  <a href="../src/m_valmed.f90">Function VALMED (XVALT)</a><br />
+	  <a href="../src/M_valmed.f90">Function VALMED (XVALT)</a><br />
              Finds out and returns the median
              (((Size(XVALT)+1))/2<sup>th</sup> value) of XVALT<br /> This
              routine uses the recursive procedure described in Knuth, The
@@ -558,9 +558,9 @@
              faster in average for random uniformly distributed values.
 	  </p>
           <p>
-   	     <a href="../src/m_median.f90">Function MEDIAN (XVALT)</a><br />
+   	     <a href="../src/M_median.f90">Function MEDIAN (XVALT)</a><br />
              It is a modified version of <a
-             href="../src/m_valmed.f90">VALMED</a> that provides the average
+             href="../src/M_valmed.f90">VALMED</a> that provides the average
              between the two middle values in the case
              Size(XVALT) is even.
 	  </p>
@@ -568,7 +568,7 @@
         <li>
           <a name="4.3" id="4.3">
           <h4>Unique sorting</h4></a>
-          <p><a href="../src/m_unista.f90">Subroutine UNISTA (XVALT, NUNI)</a><br />
+          <p><a href="../src/M_unista.f90">Subroutine UNISTA (XVALT, NUNI)</a><br />
           Removes duplicates from an array<br /> This subroutine uses
           merge sort unique inverse ranking. It leaves in the initial
           set only those entries that are unique, packing the array,

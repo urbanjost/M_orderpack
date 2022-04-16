@@ -40,7 +40,32 @@ integer, parameter, private \mbox{\hyperlink{namespacem__refsor_a6888f4d11b44263
 \doxysubsubsection{\texorpdfstring{d\_inssor()}{d\_inssor()}}
 {\footnotesize\ttfamily subroutine, private m\+\_\+refsor\+::d\+\_\+inssor (\begin{DoxyParamCaption}\item[{real(kind=\mbox{\hyperlink{namespacem__refsor_a6888f4d11b442634fcf6acd3059ca5de}{kdp}}), dimension (\+:), intent(inout)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-Here is the caller graph for this function\+:\nopagebreak
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{122 \textcolor{comment}{!  Sorts XDONT into increasing order (Insertion sort)}}
+\DoxyCodeLine{123 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{124 \textcolor{keywordtype}{      Real}(kind=kdp), \textcolor{keywordtype}{dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{125 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{126       \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
+\DoxyCodeLine{127 \textcolor{keywordtype}{      Real}(kind=kdp) :: xwrk}
+\DoxyCodeLine{128 \textcolor{comment}{!}}
+\DoxyCodeLine{129       \textcolor{keywordflow}{Do} icrs = 2, \textcolor{keyword}{Size} (xdont)}
+\DoxyCodeLine{130          xwrk = xdont(icrs)}
+\DoxyCodeLine{131          \textcolor{keywordflow}{If} (xwrk >= xdont(icrs-\/1)) cycle}
+\DoxyCodeLine{132          xdont(icrs) = xdont(icrs-\/1)}
+\DoxyCodeLine{133          \textcolor{keywordflow}{Do} idcr = icrs -\/ 2, 1, -\/ 1}
+\DoxyCodeLine{134             \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{135             xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{136 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{137          xdont(idcr+1) = xwrk}
+\DoxyCodeLine{138 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{139 \textcolor{comment}{!}}
+\DoxyCodeLine{140       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{141 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -54,10 +79,36 @@ Here is the caller graph for this function\+:\nopagebreak
 {\footnotesize\ttfamily subroutine, private m\+\_\+refsor\+::d\+\_\+refsor (\begin{DoxyParamCaption}\item[{real (kind=\mbox{\hyperlink{namespacem__refsor_a6888f4d11b442634fcf6acd3059ca5de}{kdp}}), dimension (\+:), intent(inout)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{16 \textcolor{comment}{!! Sorts XDONT into ascending order -\/ Quicksort}}
+\DoxyCodeLine{17 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{18 \textcolor{comment}{!! Quicksort chooses a "pivot" in the set, and explores the}}
+\DoxyCodeLine{19 \textcolor{comment}{!! array from both ends, looking for a value > pivot with the}}
+\DoxyCodeLine{20 \textcolor{comment}{!! increasing index, for a value <= pivot with the decreasing}}
+\DoxyCodeLine{21 \textcolor{comment}{!! index, and swapping them when it has found one of each.}}
+\DoxyCodeLine{22 \textcolor{comment}{!! The array is then subdivided in 2 ([3]) subsets:}}
+\DoxyCodeLine{23 \textcolor{comment}{!! \{ values <= pivot\} \{pivot\} \{values > pivot\}}}
+\DoxyCodeLine{24 \textcolor{comment}{!! One then call recursively the program to sort each subset.}}
+\DoxyCodeLine{25 \textcolor{comment}{!! When the size of the subarray is small enough, one uses an}}
+\DoxyCodeLine{26 \textcolor{comment}{!! insertion sort that is faster for very small sets.}}
+\DoxyCodeLine{27 \textcolor{comment}{!! Michel Olagnon -\/ Apr. 2000}}
+\DoxyCodeLine{28 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{29 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{30 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{31 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{32 \textcolor{comment}{!}}
+\DoxyCodeLine{33 \textcolor{comment}{!}}
+\DoxyCodeLine{34       \textcolor{keyword}{Call }d\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
+\DoxyCodeLine{35       \textcolor{keyword}{Call }d\_inssor (xdont)}
+\DoxyCodeLine{36       \textcolor{keywordflow}{Return}}
+
+\end{DoxyCode}
+
 
 References d\+\_\+inssor(), and d\+\_\+subsor().
 
-Here is the call graph for this function\+:\nopagebreak
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -70,7 +121,93 @@ Here is the call graph for this function\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{d\_subsor()}{d\_subsor()}}
 {\footnotesize\ttfamily recursive subroutine, private m\+\_\+refsor\+::d\+\_\+subsor (\begin{DoxyParamCaption}\item[{real(kind=\mbox{\hyperlink{namespacem__refsor_a6888f4d11b442634fcf6acd3059ca5de}{kdp}}), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{I\+D\+E\+B1,  }\item[{integer, intent(in)}]{I\+F\+I\+N1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-Here is the caller graph for this function\+:\nopagebreak
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{39 \textcolor{comment}{!  Sorts XDONT from IDEB1 to IFIN1}}
+\DoxyCodeLine{40 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{41 \textcolor{keywordtype}{      Real}(kind=kdp), \textcolor{keywordtype}{dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{42       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: IDEB1, IFIN1}
+\DoxyCodeLine{43 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{44       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: NINS = 16 \textcolor{comment}{! Max for insertion sort}}
+\DoxyCodeLine{45       \textcolor{keywordtype}{Integer} :: ICRS, IDEB, IDCR, IFIN, IMIL}
+\DoxyCodeLine{46 \textcolor{keywordtype}{      Real}(kind=kdp) :: xpiv, xwrk}
+\DoxyCodeLine{47 \textcolor{comment}{!}}
+\DoxyCodeLine{48       ideb = ideb1}
+\DoxyCodeLine{49       ifin = ifin1}
+\DoxyCodeLine{50 \textcolor{comment}{!}}
+\DoxyCodeLine{51 \textcolor{comment}{!  If we don't have enough values to make it worth while, we leave}}
+\DoxyCodeLine{52 \textcolor{comment}{!  them unsorted, and the final insertion sort will take care of them}}
+\DoxyCodeLine{53 \textcolor{comment}{!}}
+\DoxyCodeLine{54       \textcolor{keywordflow}{If} ((ifin -\/ ideb) > nins) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{55          imil = (ideb+ifin) / 2}
+\DoxyCodeLine{56 \textcolor{comment}{!}}
+\DoxyCodeLine{57 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
+\DoxyCodeLine{58 \textcolor{comment}{!}}
+\DoxyCodeLine{59          \textcolor{keywordflow}{If} (xdont(imil) < xdont(ideb)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{60             xwrk = xdont(ideb)}
+\DoxyCodeLine{61             xdont(ideb) = xdont(imil)}
+\DoxyCodeLine{62             xdont(imil) = xwrk}
+\DoxyCodeLine{63 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{64          \textcolor{keywordflow}{If} (xdont(imil) > xdont(ifin)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{65             xwrk = xdont(ifin)}
+\DoxyCodeLine{66             xdont(ifin) = xdont(imil)}
+\DoxyCodeLine{67             xdont(imil) = xwrk}
+\DoxyCodeLine{68             \textcolor{keywordflow}{If} (xdont(imil) < xdont(ideb)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{69                xwrk = xdont(ideb)}
+\DoxyCodeLine{70                xdont(ideb) = xdont(imil)}
+\DoxyCodeLine{71                xdont(imil) = xwrk}
+\DoxyCodeLine{72 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{73 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{74          xpiv = xdont(imil)}
+\DoxyCodeLine{75 \textcolor{comment}{!}}
+\DoxyCodeLine{76 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
+\DoxyCodeLine{77 \textcolor{comment}{!  those <= pivot at the beginning}}
+\DoxyCodeLine{78 \textcolor{comment}{!}}
+\DoxyCodeLine{79          icrs = ideb}
+\DoxyCodeLine{80          idcr = ifin}
+\DoxyCodeLine{81          ech2: \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{82             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{83                icrs = icrs + 1}
+\DoxyCodeLine{84                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{85 \textcolor{comment}{!}}
+\DoxyCodeLine{86 \textcolor{comment}{!  the first  >  pivot is IDCR}}
+\DoxyCodeLine{87 \textcolor{comment}{!  the last   <= pivot is ICRS-\/1}}
+\DoxyCodeLine{88 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
+\DoxyCodeLine{89 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
+\DoxyCodeLine{90 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
+\DoxyCodeLine{91 \textcolor{comment}{!        as if XDONT (IFIN) > XPIV}}
+\DoxyCodeLine{92 \textcolor{comment}{!}}
+\DoxyCodeLine{93                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{94 \textcolor{comment}{!}}
+\DoxyCodeLine{95 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{96                \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{97 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{98             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{99                \textcolor{keywordflow}{If} (xdont(idcr) <= xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{100                idcr = idcr -\/ 1}
+\DoxyCodeLine{101                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{102 \textcolor{comment}{!}}
+\DoxyCodeLine{103 \textcolor{comment}{!  The last value < pivot is always ICRS-\/1}}
+\DoxyCodeLine{104 \textcolor{comment}{!}}
+\DoxyCodeLine{105                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{106 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{107 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{108 \textcolor{comment}{!}}
+\DoxyCodeLine{109             xwrk = xdont(idcr)}
+\DoxyCodeLine{110             xdont(idcr) = xdont(icrs)}
+\DoxyCodeLine{111             xdont(icrs) = xwrk}
+\DoxyCodeLine{112 \textcolor{keywordflow}{         End Do} ech2}
+\DoxyCodeLine{113 \textcolor{comment}{!}}
+\DoxyCodeLine{114 \textcolor{comment}{!  One now sorts each of the two sub-\/intervals}}
+\DoxyCodeLine{115 \textcolor{comment}{!}}
+\DoxyCodeLine{116          \textcolor{keyword}{Call }d\_subsor (xdont, ideb1, icrs-\/1)}
+\DoxyCodeLine{117          \textcolor{keyword}{Call }d\_subsor (xdont, idcr, ifin1)}
+\DoxyCodeLine{118 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{119       \textcolor{keywordflow}{Return}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -83,7 +220,32 @@ Here is the caller graph for this function\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{i\_inssor()}{i\_inssor()}}
 {\footnotesize\ttfamily subroutine, private m\+\_\+refsor\+::i\+\_\+inssor (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(inout)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-Here is the caller graph for this function\+:\nopagebreak
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{380 \textcolor{comment}{!  Sorts XDONT into increasing order (Insertion sort)}}
+\DoxyCodeLine{381 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{382       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{383 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{384       \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
+\DoxyCodeLine{385       \textcolor{keywordtype}{Integer} :: XWRK}
+\DoxyCodeLine{386 \textcolor{comment}{!}}
+\DoxyCodeLine{387       \textcolor{keywordflow}{Do} icrs = 2, \textcolor{keyword}{Size} (xdont)}
+\DoxyCodeLine{388          xwrk = xdont(icrs)}
+\DoxyCodeLine{389          \textcolor{keywordflow}{If} (xwrk >= xdont(icrs-\/1)) cycle}
+\DoxyCodeLine{390          xdont(icrs) = xdont(icrs-\/1)}
+\DoxyCodeLine{391          \textcolor{keywordflow}{Do} idcr = icrs -\/ 2, 1, -\/ 1}
+\DoxyCodeLine{392             \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{393             xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{394 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{395          xdont(idcr+1) = xwrk}
+\DoxyCodeLine{396 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{397 \textcolor{comment}{!}}
+\DoxyCodeLine{398       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{399 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -97,10 +259,36 @@ Here is the caller graph for this function\+:\nopagebreak
 {\footnotesize\ttfamily subroutine, private m\+\_\+refsor\+::i\+\_\+refsor (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(inout)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{274 \textcolor{comment}{!! Sorts XDONT into ascending order -\/ Quicksort}}
+\DoxyCodeLine{275 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{276 \textcolor{comment}{!! Quicksort chooses a "pivot" in the set, and explores the}}
+\DoxyCodeLine{277 \textcolor{comment}{!! array from both ends, looking for a value > pivot with the}}
+\DoxyCodeLine{278 \textcolor{comment}{!! increasing index, for a value <= pivot with the decreasing}}
+\DoxyCodeLine{279 \textcolor{comment}{!! index, and swapping them when it has found one of each.}}
+\DoxyCodeLine{280 \textcolor{comment}{!! The array is then subdivided in 2 ([3]) subsets:}}
+\DoxyCodeLine{281 \textcolor{comment}{!! \{ values <= pivot\} \{pivot\} \{values > pivot\}}}
+\DoxyCodeLine{282 \textcolor{comment}{!! One then call recursively the program to sort each subset.}}
+\DoxyCodeLine{283 \textcolor{comment}{!! When the size of the subarray is small enough, one uses an}}
+\DoxyCodeLine{284 \textcolor{comment}{!! insertion sort that is faster for very small sets.}}
+\DoxyCodeLine{285 \textcolor{comment}{!! Michel Olagnon -\/ Apr. 2000}}
+\DoxyCodeLine{286 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{287 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{288       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)}  :: XDONT}
+\DoxyCodeLine{289 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{290 \textcolor{comment}{!}}
+\DoxyCodeLine{291 \textcolor{comment}{!}}
+\DoxyCodeLine{292       \textcolor{keyword}{Call }i\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
+\DoxyCodeLine{293       \textcolor{keyword}{Call }i\_inssor (xdont)}
+\DoxyCodeLine{294       \textcolor{keywordflow}{Return}}
+
+\end{DoxyCode}
+
 
 References i\+\_\+inssor(), and i\+\_\+subsor().
 
-Here is the call graph for this function\+:\nopagebreak
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -113,7 +301,93 @@ Here is the call graph for this function\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{i\_subsor()}{i\_subsor()}}
 {\footnotesize\ttfamily recursive subroutine, private m\+\_\+refsor\+::i\+\_\+subsor (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{I\+D\+E\+B1,  }\item[{integer, intent(in)}]{I\+F\+I\+N1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-Here is the caller graph for this function\+:\nopagebreak
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{297 \textcolor{comment}{!  Sorts XDONT from IDEB1 to IFIN1}}
+\DoxyCodeLine{298 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{299       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{300       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: IDEB1, IFIN1}
+\DoxyCodeLine{301 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{302       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: NINS = 16 \textcolor{comment}{! Max for insertion sort}}
+\DoxyCodeLine{303       \textcolor{keywordtype}{Integer} :: ICRS, IDEB, IDCR, IFIN, IMIL}
+\DoxyCodeLine{304       \textcolor{keywordtype}{Integer} :: XPIV, XWRK}
+\DoxyCodeLine{305 \textcolor{comment}{!}}
+\DoxyCodeLine{306       ideb = ideb1}
+\DoxyCodeLine{307       ifin = ifin1}
+\DoxyCodeLine{308 \textcolor{comment}{!}}
+\DoxyCodeLine{309 \textcolor{comment}{!  If we don't have enough values to make it worth while, we leave}}
+\DoxyCodeLine{310 \textcolor{comment}{!  them unsorted, and the final insertion sort will take care of them}}
+\DoxyCodeLine{311 \textcolor{comment}{!}}
+\DoxyCodeLine{312       \textcolor{keywordflow}{If} ((ifin -\/ ideb) > nins) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{313          imil = (ideb+ifin) / 2}
+\DoxyCodeLine{314 \textcolor{comment}{!}}
+\DoxyCodeLine{315 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
+\DoxyCodeLine{316 \textcolor{comment}{!}}
+\DoxyCodeLine{317          \textcolor{keywordflow}{If} (xdont(imil) < xdont(ideb)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{318             xwrk = xdont(ideb)}
+\DoxyCodeLine{319             xdont(ideb) = xdont(imil)}
+\DoxyCodeLine{320             xdont(imil) = xwrk}
+\DoxyCodeLine{321 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{322          \textcolor{keywordflow}{If} (xdont(imil) > xdont(ifin)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{323             xwrk = xdont(ifin)}
+\DoxyCodeLine{324             xdont(ifin) = xdont(imil)}
+\DoxyCodeLine{325             xdont(imil) = xwrk}
+\DoxyCodeLine{326             \textcolor{keywordflow}{If} (xdont(imil) < xdont(ideb)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{327                xwrk = xdont(ideb)}
+\DoxyCodeLine{328                xdont(ideb) = xdont(imil)}
+\DoxyCodeLine{329                xdont(imil) = xwrk}
+\DoxyCodeLine{330 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{331 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{332          xpiv = xdont(imil)}
+\DoxyCodeLine{333 \textcolor{comment}{!}}
+\DoxyCodeLine{334 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
+\DoxyCodeLine{335 \textcolor{comment}{!  those <= pivot at the beginning}}
+\DoxyCodeLine{336 \textcolor{comment}{!}}
+\DoxyCodeLine{337          icrs = ideb}
+\DoxyCodeLine{338          idcr = ifin}
+\DoxyCodeLine{339          ech2: \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{340             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{341                icrs = icrs + 1}
+\DoxyCodeLine{342                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{343 \textcolor{comment}{!}}
+\DoxyCodeLine{344 \textcolor{comment}{!  the first  >  pivot is IDCR}}
+\DoxyCodeLine{345 \textcolor{comment}{!  the last   <= pivot is ICRS-\/1}}
+\DoxyCodeLine{346 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
+\DoxyCodeLine{347 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
+\DoxyCodeLine{348 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
+\DoxyCodeLine{349 \textcolor{comment}{!        as if XDONT (IFIN) > XPIV}}
+\DoxyCodeLine{350 \textcolor{comment}{!}}
+\DoxyCodeLine{351                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{352 \textcolor{comment}{!}}
+\DoxyCodeLine{353 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{354                \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{355 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{356             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{357                \textcolor{keywordflow}{If} (xdont(idcr) <= xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{358                idcr = idcr -\/ 1}
+\DoxyCodeLine{359                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{360 \textcolor{comment}{!}}
+\DoxyCodeLine{361 \textcolor{comment}{!  The last value < pivot is always ICRS-\/1}}
+\DoxyCodeLine{362 \textcolor{comment}{!}}
+\DoxyCodeLine{363                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{364 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{365 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{366 \textcolor{comment}{!}}
+\DoxyCodeLine{367             xwrk = xdont(idcr)}
+\DoxyCodeLine{368             xdont(idcr) = xdont(icrs)}
+\DoxyCodeLine{369             xdont(icrs) = xwrk}
+\DoxyCodeLine{370 \textcolor{keywordflow}{         End Do} ech2}
+\DoxyCodeLine{371 \textcolor{comment}{!}}
+\DoxyCodeLine{372 \textcolor{comment}{!  One now sorts each of the two sub-\/intervals}}
+\DoxyCodeLine{373 \textcolor{comment}{!}}
+\DoxyCodeLine{374          \textcolor{keyword}{Call }i\_subsor (xdont, ideb1, icrs-\/1)}
+\DoxyCodeLine{375          \textcolor{keyword}{Call }i\_subsor (xdont, idcr, ifin1)}
+\DoxyCodeLine{376 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{377       \textcolor{keywordflow}{Return}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -126,7 +400,32 @@ Here is the caller graph for this function\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{r\_inssor()}{r\_inssor()}}
 {\footnotesize\ttfamily subroutine, private m\+\_\+refsor\+::r\+\_\+inssor (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(inout)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-Here is the caller graph for this function\+:\nopagebreak
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{251 \textcolor{comment}{!  Sorts XDONT into increasing order (Insertion sort)}}
+\DoxyCodeLine{252 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{253 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{254 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{255       \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
+\DoxyCodeLine{256 \textcolor{keywordtype}{      Real} :: XWRK}
+\DoxyCodeLine{257 \textcolor{comment}{!}}
+\DoxyCodeLine{258       \textcolor{keywordflow}{Do} icrs = 2, \textcolor{keyword}{Size} (xdont)}
+\DoxyCodeLine{259          xwrk = xdont(icrs)}
+\DoxyCodeLine{260          \textcolor{keywordflow}{If} (xwrk >= xdont(icrs-\/1)) cycle}
+\DoxyCodeLine{261          xdont(icrs) = xdont(icrs-\/1)}
+\DoxyCodeLine{262          \textcolor{keywordflow}{Do} idcr = icrs -\/ 2, 1, -\/ 1}
+\DoxyCodeLine{263             \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{264             xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{265 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{266          xdont(idcr+1) = xwrk}
+\DoxyCodeLine{267 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{268 \textcolor{comment}{!}}
+\DoxyCodeLine{269       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{270 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -140,10 +439,36 @@ Here is the caller graph for this function\+:\nopagebreak
 {\footnotesize\ttfamily subroutine, private m\+\_\+refsor\+::r\+\_\+refsor (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(inout)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{145 \textcolor{comment}{!! Sorts XDONT into ascending order -\/ Quicksort}}
+\DoxyCodeLine{146 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{147 \textcolor{comment}{!! Quicksort chooses a "pivot" in the set, and explores the}}
+\DoxyCodeLine{148 \textcolor{comment}{!! array from both ends, looking for a value > pivot with the}}
+\DoxyCodeLine{149 \textcolor{comment}{!! increasing index, for a value <= pivot with the decreasing}}
+\DoxyCodeLine{150 \textcolor{comment}{!! index, and swapping them when it has found one of each.}}
+\DoxyCodeLine{151 \textcolor{comment}{!! The array is then subdivided in 2 ([3]) subsets:}}
+\DoxyCodeLine{152 \textcolor{comment}{!! \{ values <= pivot\} \{pivot\} \{values > pivot\}}}
+\DoxyCodeLine{153 \textcolor{comment}{!! One then call recursively the program to sort each subset.}}
+\DoxyCodeLine{154 \textcolor{comment}{!! When the size of the subarray is small enough, one uses an}}
+\DoxyCodeLine{155 \textcolor{comment}{!! insertion sort that is faster for very small sets.}}
+\DoxyCodeLine{156 \textcolor{comment}{!! Michel Olagnon -\/ Apr. 2000}}
+\DoxyCodeLine{157 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{158 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{159 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{160 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{161 \textcolor{comment}{!}}
+\DoxyCodeLine{162 \textcolor{comment}{!}}
+\DoxyCodeLine{163       \textcolor{keyword}{Call }r\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
+\DoxyCodeLine{164       \textcolor{keyword}{Call }r\_inssor (xdont)}
+\DoxyCodeLine{165       \textcolor{keywordflow}{Return}}
+
+\end{DoxyCode}
+
 
 References r\+\_\+inssor(), and r\+\_\+subsor().
 
-Here is the call graph for this function\+:\nopagebreak
+Here is the call graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -156,7 +481,93 @@ Here is the call graph for this function\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{r\_subsor()}{r\_subsor()}}
 {\footnotesize\ttfamily recursive subroutine, private m\+\_\+refsor\+::r\+\_\+subsor (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{I\+D\+E\+B1,  }\item[{integer, intent(in)}]{I\+F\+I\+N1 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-Here is the caller graph for this function\+:\nopagebreak
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{168 \textcolor{comment}{!  Sorts XDONT from IDEB1 to IFIN1}}
+\DoxyCodeLine{169 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{170 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{171       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: IDEB1, IFIN1}
+\DoxyCodeLine{172 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{173       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: NINS = 16 \textcolor{comment}{! Max for insertion sort}}
+\DoxyCodeLine{174       \textcolor{keywordtype}{Integer} :: ICRS, IDEB, IDCR, IFIN, IMIL}
+\DoxyCodeLine{175 \textcolor{keywordtype}{      Real} :: XPIV, XWRK}
+\DoxyCodeLine{176 \textcolor{comment}{!}}
+\DoxyCodeLine{177       ideb = ideb1}
+\DoxyCodeLine{178       ifin = ifin1}
+\DoxyCodeLine{179 \textcolor{comment}{!}}
+\DoxyCodeLine{180 \textcolor{comment}{!  If we don't have enough values to make it worth while, we leave}}
+\DoxyCodeLine{181 \textcolor{comment}{!  them unsorted, and the final insertion sort will take care of them}}
+\DoxyCodeLine{182 \textcolor{comment}{!}}
+\DoxyCodeLine{183       \textcolor{keywordflow}{If} ((ifin -\/ ideb) > nins) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{184          imil = (ideb+ifin) / 2}
+\DoxyCodeLine{185 \textcolor{comment}{!}}
+\DoxyCodeLine{186 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
+\DoxyCodeLine{187 \textcolor{comment}{!}}
+\DoxyCodeLine{188          \textcolor{keywordflow}{If} (xdont(imil) < xdont(ideb)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{189             xwrk = xdont(ideb)}
+\DoxyCodeLine{190             xdont(ideb) = xdont(imil)}
+\DoxyCodeLine{191             xdont(imil) = xwrk}
+\DoxyCodeLine{192 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{193          \textcolor{keywordflow}{If} (xdont(imil) > xdont(ifin)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{194             xwrk = xdont(ifin)}
+\DoxyCodeLine{195             xdont(ifin) = xdont(imil)}
+\DoxyCodeLine{196             xdont(imil) = xwrk}
+\DoxyCodeLine{197             \textcolor{keywordflow}{If} (xdont(imil) < xdont(ideb)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{198                xwrk = xdont(ideb)}
+\DoxyCodeLine{199                xdont(ideb) = xdont(imil)}
+\DoxyCodeLine{200                xdont(imil) = xwrk}
+\DoxyCodeLine{201 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{202 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{203          xpiv = xdont(imil)}
+\DoxyCodeLine{204 \textcolor{comment}{!}}
+\DoxyCodeLine{205 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
+\DoxyCodeLine{206 \textcolor{comment}{!  those <= pivot at the beginning}}
+\DoxyCodeLine{207 \textcolor{comment}{!}}
+\DoxyCodeLine{208          icrs = ideb}
+\DoxyCodeLine{209          idcr = ifin}
+\DoxyCodeLine{210          ech2: \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{211             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{212                icrs = icrs + 1}
+\DoxyCodeLine{213                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{214 \textcolor{comment}{!}}
+\DoxyCodeLine{215 \textcolor{comment}{!  the first  >  pivot is IDCR}}
+\DoxyCodeLine{216 \textcolor{comment}{!  the last   <= pivot is ICRS-\/1}}
+\DoxyCodeLine{217 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
+\DoxyCodeLine{218 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
+\DoxyCodeLine{219 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
+\DoxyCodeLine{220 \textcolor{comment}{!        as if XDONT (IFIN) > XPIV}}
+\DoxyCodeLine{221 \textcolor{comment}{!}}
+\DoxyCodeLine{222                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{223 \textcolor{comment}{!}}
+\DoxyCodeLine{224 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{225                \textcolor{keywordflow}{If} (xdont(icrs) > xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{226 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{227             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{228                \textcolor{keywordflow}{If} (xdont(idcr) <= xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{229                idcr = idcr -\/ 1}
+\DoxyCodeLine{230                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{231 \textcolor{comment}{!}}
+\DoxyCodeLine{232 \textcolor{comment}{!  The last value < pivot is always ICRS-\/1}}
+\DoxyCodeLine{233 \textcolor{comment}{!}}
+\DoxyCodeLine{234                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{235 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{236 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{237 \textcolor{comment}{!}}
+\DoxyCodeLine{238             xwrk = xdont(idcr)}
+\DoxyCodeLine{239             xdont(idcr) = xdont(icrs)}
+\DoxyCodeLine{240             xdont(icrs) = xwrk}
+\DoxyCodeLine{241 \textcolor{keywordflow}{         End Do} ech2}
+\DoxyCodeLine{242 \textcolor{comment}{!}}
+\DoxyCodeLine{243 \textcolor{comment}{!  One now sorts each of the two sub-\/intervals}}
+\DoxyCodeLine{244 \textcolor{comment}{!}}
+\DoxyCodeLine{245          \textcolor{keyword}{Call }r\_subsor (xdont, ideb1, icrs-\/1)}
+\DoxyCodeLine{246          \textcolor{keyword}{Call }r\_subsor (xdont, idcr, ifin1)}
+\DoxyCodeLine{247 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{248       \textcolor{keywordflow}{Return}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -172,3 +583,8 @@ Here is the caller graph for this function\+:\nopagebreak
 \doxysubsubsection{\texorpdfstring{kdp}{kdp}}
 {\footnotesize\ttfamily integer, parameter, private m\+\_\+refsor\+::kdp = selected\+\_\+real\+\_\+kind(15)\hspace{0.3cm}{\ttfamily [private]}}
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{4 \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: kdp = selected\_real\_kind(15)}
+
+\end{DoxyCode}
