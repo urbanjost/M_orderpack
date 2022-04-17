@@ -40,7 +40,7 @@ contains
 !!    program demo_inssor
 !!    use M_inssor, only : inssor
 !!    implicit none
-!!       call inssor(yyyyyy)
+!!       !x!call inssor(yyyyyy)
 !!    end program demo_inssor
 !!
 !!   Results:

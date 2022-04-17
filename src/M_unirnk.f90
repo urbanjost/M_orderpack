@@ -45,7 +45,7 @@ contains
 !!    program demo_unirnk
 !!    use M_unirnk, only : unirnk
 !!    implicit none
-!!       call unirnk(yyyyyy)
+!!       !x!call unirnk(yyyyyy)
 !!    end program demo_unirnk
 !!
 !!   Results:

@@ -40,7 +40,7 @@ contains
 !!    program demo_valmed
 !!    use M_valmed, only : valmed
 !!    implicit none
-!!       call valmed(yyyyyy)
+!!       !x!call valmed(yyyyyy)
 !!    end program demo_valmed
 !!
 !!   Results:

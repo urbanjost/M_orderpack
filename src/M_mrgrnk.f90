@@ -40,7 +40,7 @@ contains
 !!    program demo_mrgrnk
 !!    use M_mrgrnk, only : mrgrnk
 !!    implicit none
-!!       call mrgrnk(yyyyyy)
+!!       !x!call mrgrnk(yyyyyy)
 !!    end program demo_mrgrnk
 !!
 !!   Results:

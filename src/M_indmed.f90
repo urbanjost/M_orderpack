@@ -42,7 +42,7 @@ contains
 !!    program demo_indmed
 !!    use M_indmed, only : indmed
 !!    implicit none
-!!       call indmed(yyyyyy)
+!!       !x!call indmed(yyyyyy)
 !!    end program demo_indmed
 !!
 !!   Results:

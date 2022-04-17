@@ -40,7 +40,7 @@ contains
 !!    program demo_unipar
 !!    use M_unipar, only : unipar
 !!    implicit none
-!!       call unipar(yyyyyy)
+!!       !x!call unipar(yyyyyy)
 !!    end program demo_unipar
 !!
 !!   Results:

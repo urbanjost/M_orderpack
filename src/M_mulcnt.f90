@@ -18,6 +18,7 @@ contains
 !!##SYNOPSIS
 !!
 !!     Subroutine mulcnt (XDONT, IMULT)
+!!
 !!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
 !!       Integer, Dimension (:), Intent (Out) :: IMULT
 !!
@@ -44,7 +45,7 @@ contains
 !!    use M_mulcnt, only : mulcnt
 !!    implicit none
 !!    real,parameter :: xdont(*)=[1,2,3,4,5,6,7,4,5,6,6,2]
-!!    integer, dimension(size(xdont) :: imult
+!!    integer, dimension(size(xdont)) :: imult
 !!       call mulcnt(xdont,imult)
 !!       write(*,*)xdont
 !!       write(*,*)imult

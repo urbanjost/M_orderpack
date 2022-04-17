@@ -44,7 +44,7 @@ contains
 !!    program demo_uniinv
 !!    use M_uniinv, only : uniinv
 !!    implicit none
-!!       call uniinv(yyyyyy)
+!!       !x!call uniinv(yyyyyy)
 !!    end program demo_uniinv
 !!
 !!   Results:

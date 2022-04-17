@@ -40,7 +40,7 @@ contains
 !!    program demo_valnth
 !!    use M_valnth, only : valnth
 !!    implicit none
-!!       call valnth(yyyyyy)
+!!       !x!call valnth(yyyyyy)
 !!    end program demo_valnth
 !!
 !!   Results:

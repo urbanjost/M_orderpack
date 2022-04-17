@@ -40,7 +40,7 @@ contains
 !!    program demo_refpar
 !!    use M_refpar, only : refpar
 !!    implicit none
-!!       call refpar(yyyyyy)
+!!       !x!call refpar(yyyyyy)
 !!    end program demo_refpar
 !!
 !!   Results:

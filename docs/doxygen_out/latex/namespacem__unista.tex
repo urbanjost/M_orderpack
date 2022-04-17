@@ -8,31 +8,85 @@ interface \mbox{\hyperlink{interfacem__unista_1_1unista}{unista}}
 \doxysubsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__unista_a606487e6f6ad88e5a8cfd4bae4c268bf}{d\+\_\+unista}} (X\+D\+O\+NT, N\+U\+NI)
+subroutine, private \mbox{\hyperlink{namespacem__unista_a0bb57366e54b31cf17fa2942cad7a716}{real64\+\_\+unista}} (X\+D\+O\+NT, N\+U\+NI)
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__unista_a9130bd0c764e10472a6044d2d72ba2b8}{r\+\_\+unista}} (X\+D\+O\+NT, N\+U\+NI)
+subroutine, private \mbox{\hyperlink{namespacem__unista_a0fdee63296c148eba6ed8306c6c5da2e}{real32\+\_\+unista}} (X\+D\+O\+NT, N\+U\+NI)
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__unista_ab68cb11f074baf77eae3f82fb39f7c39}{i\+\_\+unista}} (X\+D\+O\+NT, N\+U\+NI)
-\end{DoxyCompactItemize}
-\doxysubsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-integer, parameter, private \mbox{\hyperlink{namespacem__unista_a1d50e38fcbb348e48ffa4f18b6f22bc1}{kdp}} = selected\+\_\+real\+\_\+kind(15)
+subroutine, private \mbox{\hyperlink{namespacem__unista_a01273b817b12590398e33a1ac004c085}{int32\+\_\+unista}} (X\+D\+O\+NT, N\+U\+NI)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function/\+Subroutine Documentation}
-\mbox{\Hypertarget{namespacem__unista_a606487e6f6ad88e5a8cfd4bae4c268bf}\label{namespacem__unista_a606487e6f6ad88e5a8cfd4bae4c268bf}} 
-\index{m\_unista@{m\_unista}!d\_unista@{d\_unista}}
-\index{d\_unista@{d\_unista}!m\_unista@{m\_unista}}
-\doxysubsubsection{\texorpdfstring{d\_unista()}{d\_unista()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+unista\+::d\+\_\+unista (\begin{DoxyParamCaption}\item[{real (kind=\mbox{\hyperlink{namespacem__unista_a1d50e38fcbb348e48ffa4f18b6f22bc1}{kdp}}), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+\mbox{\Hypertarget{namespacem__unista_a01273b817b12590398e33a1ac004c085}\label{namespacem__unista_a01273b817b12590398e33a1ac004c085}} 
+\index{m\_unista@{m\_unista}!int32\_unista@{int32\_unista}}
+\index{int32\_unista@{int32\_unista}!m\_unista@{m\_unista}}
+\doxysubsubsection{\texorpdfstring{int32\_unista()}{int32\_unista()}}
+{\footnotesize\ttfamily subroutine, private m\+\_\+unista\+::int32\+\_\+unista (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__unista_autotoc_md127}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__unista_autotoc_md127}
-unista(3f) -\/ \mbox{[}orderpack\mbox{]} do stuff (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__unista_autotoc_md128}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__unista_autotoc_md128}
-\begin{DoxyVerb} Subroutine unista (yyyyyy)
 
-  ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+\begin{DoxyCode}{0}
+\DoxyCodeLine{117 }
+\DoxyCodeLine{118 \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{119 \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{120 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{121       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
+\DoxyCodeLine{122       \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IFMPTYT}
+\DoxyCodeLine{123       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{124 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{125    \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
+\DoxyCodeLine{126    ifmptyt = .true.}
+\DoxyCodeLine{127    nuni = 0}
+\DoxyCodeLine{128    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{129       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{130          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{131          nuni = nuni + 1}
+\DoxyCodeLine{132          xdont(nuni) = xdont(icrs)}
+\DoxyCodeLine{133 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{134 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{135 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacem__unista_a0fdee63296c148eba6ed8306c6c5da2e}\label{namespacem__unista_a0fdee63296c148eba6ed8306c6c5da2e}} 
+\index{m\_unista@{m\_unista}!real32\_unista@{real32\_unista}}
+\index{real32\_unista@{real32\_unista}!m\_unista@{m\_unista}}
+\doxysubsubsection{\texorpdfstring{real32\_unista()}{real32\_unista()}}
+{\footnotesize\ttfamily subroutine, private m\+\_\+unista\+::real32\+\_\+unista (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 real(kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{98 \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{99 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{100       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
+\DoxyCodeLine{101       \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IFMPTYT}
+\DoxyCodeLine{102       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{103 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{104    \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
+\DoxyCodeLine{105    ifmptyt = .true.}
+\DoxyCodeLine{106    nuni = 0}
+\DoxyCodeLine{107    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{108       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{109          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{110          nuni = nuni + 1}
+\DoxyCodeLine{111          xdont(nuni) = xdont(icrs)}
+\DoxyCodeLine{112 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{113 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{114 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacem__unista_a0bb57366e54b31cf17fa2942cad7a716}\label{namespacem__unista_a0bb57366e54b31cf17fa2942cad7a716}} 
+\index{m\_unista@{m\_unista}!real64\_unista@{real64\_unista}}
+\index{real64\_unista@{real64\_unista}!m\_unista@{m\_unista}}
+\doxysubsubsection{\texorpdfstring{real64\_unista()}{real64\_unista()}}
+{\footnotesize\ttfamily subroutine, private m\+\_\+unista\+::real64\+\_\+unista (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\hypertarget{namespacem__unista_autotoc_md128}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__unista_autotoc_md128}
+unista(3f) -\/ \mbox{[}orderpack\mbox{]} (Stable unique) Removes duplicates from an array in original order (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__unista_autotoc_md129}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__unista_autotoc_md129}
+\begin{DoxyVerb} Subroutine unista (XDONT, NUNI)
+
+  ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
+  Integer, Intent (Out) :: NUNI
 
 Where ${TYPE}(kind=${KIND}) may be
 
@@ -40,130 +94,39 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
 \end{DoxyVerb}
-\hypertarget{namespacem__unista_autotoc_md129}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__unista_autotoc_md129}
-\hypertarget{namespacem__unista_autotoc_md130}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__unista_autotoc_md130}
-X\+X\+X\+XX description Y\+Y\+Y\+YY description\hypertarget{namespacem__unista_autotoc_md131}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__unista_autotoc_md131}
+\hypertarget{namespacem__unista_autotoc_md130}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__unista_autotoc_md130}
+U\+N\+I\+S\+TA (\char`\"{}\+Stable Unique\char`\"{}) removes duplicates from an array, leaving unique entries in the order of their first appearance in the initial set.\hypertarget{namespacem__unista_autotoc_md131}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__unista_autotoc_md131}
+X\+D\+O\+NT input array to reduce to unique values N\+U\+NI number of values comprising the returned set of unique values\hypertarget{namespacem__unista_autotoc_md132}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__unista_autotoc_md132}
 Sample program\+:
 
-program demo\+\_\+unista use M\+\_\+unista, only \+: unista implicit none call unista(yyyyyy) end program demo\+\_\+unista
+program demo\+\_\+unista use M\+\_\+unista, only \+: unista implicit none character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{},\char`\"{}))\textquotesingle{} real,allocatable \+:: xdont(\+:) integer \+:: nuni xdont=\mbox{[}4.\+4,3.\+3,3.\+3,3.\+3,2.\+2,1.\+1,3.\+3,4.\+4,5.\+5,3.\+3\mbox{]} print list,\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},xdont print call unista(xdont,nuni) xdont=xdont(\+:nuni) print list,\textquotesingle{}U\+N\+I\+Q\+UE\+:\textquotesingle{},xdont end program demo\+\_\+unista
 
-Results\+:\hypertarget{namespacem__unista_autotoc_md132}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__unista_autotoc_md132}
-Michel Olagnon, 2000-\/2012
+Results\+: O\+R\+I\+G\+I\+N\+AL\+:,4.\+400000,3.\+300000,3.\+300000,3.\+300000,2.\+200000, 1.\+100000,3.\+300000,4.\+400000,5.\+500000,3.\+300000
 
-John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__unista_autotoc_md133}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__unista_autotoc_md133}
+U\+N\+I\+Q\+UE\+:,4.\+400000,3.\+300000,2.\+200000,1.\+100000,5.\+500000\hypertarget{namespacem__unista_autotoc_md133}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__unista_autotoc_md133}
+Michel Olagnon -\/ Feb. 2000
+
+John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__unista_autotoc_md134}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__unista_autotoc_md134}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{60 \textcolor{comment}{!!  UNISTA = (Stable unique) Removes duplicates from an array,}}
-\DoxyCodeLine{61 \textcolor{comment}{!!           leaving unique entries in the order of their first}}
-\DoxyCodeLine{62 \textcolor{comment}{!!           appearance in the initial set.}}
-\DoxyCodeLine{63 \textcolor{comment}{!! Michel Olagnon -\/ Feb. 2000}}
-\DoxyCodeLine{64 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{65 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{66 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
-\DoxyCodeLine{67       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
-\DoxyCodeLine{68 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{69 \textcolor{comment}{!}}
-\DoxyCodeLine{70       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
-\DoxyCodeLine{71       \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IFMPTYT}
-\DoxyCodeLine{72       \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{73 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{74       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
-\DoxyCodeLine{75       ifmptyt = .true.}
-\DoxyCodeLine{76       nuni = 0}
-\DoxyCodeLine{77       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{78          \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{79             ifmptyt(iwrkt(icrs)) = .false.}
-\DoxyCodeLine{80             nuni = nuni + 1}
-\DoxyCodeLine{81             xdont(nuni) = xdont(icrs)}
-\DoxyCodeLine{82 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{83 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{84       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{85 \textcolor{comment}{!}}
-
-\end{DoxyCode}
-\mbox{\Hypertarget{namespacem__unista_ab68cb11f074baf77eae3f82fb39f7c39}\label{namespacem__unista_ab68cb11f074baf77eae3f82fb39f7c39}} 
-\index{m\_unista@{m\_unista}!i\_unista@{i\_unista}}
-\index{i\_unista@{i\_unista}!m\_unista@{m\_unista}}
-\doxysubsubsection{\texorpdfstring{i\_unista()}{i\_unista()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+unista\+::i\+\_\+unista (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{117 \textcolor{comment}{!!  UNISTA = (Stable unique) Removes duplicates from an array,}}
-\DoxyCodeLine{118 \textcolor{comment}{!!           leaving unique entries in the order of their first}}
-\DoxyCodeLine{119 \textcolor{comment}{!!           appearance in the initial set.}}
-\DoxyCodeLine{120 \textcolor{comment}{!! Michel Olagnon -\/ Feb. 2000}}
-\DoxyCodeLine{121 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{122 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{123       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)}  :: XDONT}
-\DoxyCodeLine{124       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
-\DoxyCodeLine{125 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{126 \textcolor{comment}{!}}
-\DoxyCodeLine{127       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
-\DoxyCodeLine{128       \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IFMPTYT}
-\DoxyCodeLine{129       \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{130 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{131       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
-\DoxyCodeLine{132       ifmptyt = .true.}
-\DoxyCodeLine{133       nuni = 0}
-\DoxyCodeLine{134       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{135          \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{136             ifmptyt(iwrkt(icrs)) = .false.}
-\DoxyCodeLine{137             nuni = nuni + 1}
-\DoxyCodeLine{138             xdont(nuni) = xdont(icrs)}
-\DoxyCodeLine{139 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{140 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{141       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{142 \textcolor{comment}{!}}
-
-\end{DoxyCode}
-\mbox{\Hypertarget{namespacem__unista_a9130bd0c764e10472a6044d2d72ba2b8}\label{namespacem__unista_a9130bd0c764e10472a6044d2d72ba2b8}} 
-\index{m\_unista@{m\_unista}!r\_unista@{r\_unista}}
-\index{r\_unista@{r\_unista}!m\_unista@{m\_unista}}
-\doxysubsubsection{\texorpdfstring{r\_unista()}{r\_unista()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+unista\+::r\+\_\+unista (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{89 \textcolor{comment}{!!  UNISTA = (Stable unique) Removes duplicates from an array,}}
-\DoxyCodeLine{90 \textcolor{comment}{!!           leaving unique entries in the order of their first}}
-\DoxyCodeLine{91 \textcolor{comment}{!!           appearance in the initial set.}}
-\DoxyCodeLine{92 \textcolor{comment}{!! Michel Olagnon -\/ Feb. 2000}}
-\DoxyCodeLine{93 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{94 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{95 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
-\DoxyCodeLine{96       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
-\DoxyCodeLine{97 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{98 \textcolor{comment}{!}}
-\DoxyCodeLine{99       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
-\DoxyCodeLine{100       \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IFMPTYT}
-\DoxyCodeLine{101       \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{102 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{103       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
-\DoxyCodeLine{104       ifmptyt = .true.}
-\DoxyCodeLine{105       nuni = 0}
-\DoxyCodeLine{106       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{107          \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{108             ifmptyt(iwrkt(icrs)) = .false.}
-\DoxyCodeLine{109             nuni = nuni + 1}
-\DoxyCodeLine{110             xdont(nuni) = xdont(icrs)}
-\DoxyCodeLine{111 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{112 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{113       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{114 \textcolor{comment}{!}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Variable Documentation}
-\mbox{\Hypertarget{namespacem__unista_a1d50e38fcbb348e48ffa4f18b6f22bc1}\label{namespacem__unista_a1d50e38fcbb348e48ffa4f18b6f22bc1}} 
-\index{m\_unista@{m\_unista}!kdp@{kdp}}
-\index{kdp@{kdp}!m\_unista@{m\_unista}}
-\doxysubsubsection{\texorpdfstring{kdp}{kdp}}
-{\footnotesize\ttfamily integer, parameter, private m\+\_\+unista\+::kdp = selected\+\_\+real\+\_\+kind(15)\hspace{0.3cm}{\ttfamily [private]}}
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{6 \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: kdp = selected\_real\_kind(15)}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 real(kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{77 \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{78 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{79       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
+\DoxyCodeLine{80       \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IFMPTYT}
+\DoxyCodeLine{81       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{82 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{83    \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
+\DoxyCodeLine{84    ifmptyt = .true.}
+\DoxyCodeLine{85    nuni = 0}
+\DoxyCodeLine{86    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{87       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{88          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{89          nuni = nuni + 1}
+\DoxyCodeLine{90          xdont(nuni) = xdont(icrs)}
+\DoxyCodeLine{91 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{92 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{93 \textcolor{comment}{!}}
 
 \end{DoxyCode}

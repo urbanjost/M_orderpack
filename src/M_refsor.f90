@@ -42,7 +42,7 @@ contains
 !!    program demo_refsor
 !!    use M_refsor, only : refsor
 !!    implicit none
-!!       call refsor(yyyyyy)
+!!       !x!call refsor(yyyyyy)
 !!    end program demo_refsor
 !!
 !!   Results:

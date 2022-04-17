@@ -40,7 +40,7 @@ contains
 !!    program demo_rnkpar
 !!    use M_rnkpar, only : rnkpar
 !!    implicit none
-!!       call rnkpar(yyyyyy)
+!!       !x!call rnkpar(yyyyyy)
 !!    end program demo_rnkpar
 !!
 !!   Results:

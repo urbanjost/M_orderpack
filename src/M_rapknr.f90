@@ -40,7 +40,7 @@ contains
 !!    program demo_rapknr
 !!    use M_rapknr, only : rapknr
 !!    implicit none
-!!       call rapknr(yyyyyy)
+!!       !x!call rapknr(yyyyyy)
 !!    end program demo_rapknr
 !!
 !!   Results:
