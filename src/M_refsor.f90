@@ -14,7 +14,7 @@ end interface refsor
 contains
 !>
 !!##NAME
-!!    refsor(3f) - [orderpack] do stuff
+!!    refsor(3f) - [orderpack:SORT] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

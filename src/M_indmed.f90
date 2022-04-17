@@ -14,7 +14,7 @@ end interface indmed
 contains
 !>
 !!##NAME
-!!    indmed(3f) - [orderpack] do stuff
+!!    indmed(3f) - [orderpack:MEDIAN] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

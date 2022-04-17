@@ -12,7 +12,7 @@ end interface mrgref
 contains
 !>
 !!##NAME
-!!    mrgref(3f) - [orderpack] do stuff
+!!    mrgref(3f) - [orderpack:RANK] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

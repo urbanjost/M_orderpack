@@ -11,8 +11,8 @@ end interface unista
 contains
 !>
 !!##NAME
-!!    unista(3f) - [orderpack] (Stable unique) Removes duplicates from an
-!!                 array in original order
+!!    unista(3f) - [orderpack:UNIQUE] (Stable unique) Removes duplicates from an
+!!                 array otherwise retaining original order
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
@@ -50,13 +50,14 @@ contains
 !!    integer :: nuni
 !!       xdont=[4.4,3.3,3.3,3.3,2.2,1.1,3.3,4.4,5.5,3.3]
 !!       print list,'ORIGINAL:',xdont
-!!       print
+!!       print *
 !!       call unista(xdont,nuni)
 !!       xdont=xdont(:nuni)
 !!       print list,'UNIQUE:',xdont
 !!    end program demo_unista
 !!
 !!   Results:
+!!
 !!     ORIGINAL:,4.400000,3.300000,3.300000,3.300000,2.200000,
 !!     1.100000,3.300000,4.400000,5.500000,3.300000
 !!

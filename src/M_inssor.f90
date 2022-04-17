@@ -12,7 +12,7 @@ end interface inssor
 contains
 !>
 !!##NAME
-!!    inssor(3f) - [orderpack] do stuff
+!!    inssor(3f) - [orderpack:SORT] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

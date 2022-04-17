@@ -12,7 +12,7 @@ end interface median
 contains
 !>
 !!##NAME
-!!    median(3f) - [orderpack] do stuff
+!!    median(3f) - [orderpack:MEDIAN] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

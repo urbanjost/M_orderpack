@@ -12,7 +12,7 @@ end interface rnkpar
 contains
 !>
 !!##NAME
-!!    rnkpar(3f) - [orderpack] do stuff
+!!    rnkpar(3f) - [orderpack:PARTIAL_RANK] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

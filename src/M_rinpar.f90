@@ -9,7 +9,7 @@ end interface rinpar
 contains
 !>
 !!##NAME
-!!    rinpar(3f) - [orderpack] finds first N low values in array XDONT
+!!    rinpar(3f) - [orderpack:PARTIAL_RANK] creates partial rank index of N lowest values in an array
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

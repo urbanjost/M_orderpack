@@ -12,7 +12,7 @@ end interface mrgrnk
 contains
 !>
 !!##NAME
-!!    mrgrnk(3f) - [orderpack] do stuff
+!!    mrgrnk(3f) - [orderpack:RANK] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

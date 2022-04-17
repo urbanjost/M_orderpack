@@ -12,7 +12,7 @@ end interface indnth
 contains
 !>
 !!##NAME
-!!    indnth(3f) - [orderpack] do stuff
+!!    indnth(3f) - [orderpack:FRACTILE] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

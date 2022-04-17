@@ -10,7 +10,7 @@ end interface fndnth
 contains
 !>
 !!##NAME
-!!    fndnth(3f) - [orderpack] Return NORDth value of XDONT, i.e fractile
+!!    fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array, i.e. return fractile
 !!                 of order NORD/SIZE(XDONT).
 !!                 (LICENSE:CC0-1.0)
 !!
@@ -24,14 +24,14 @@ contains
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
+!!    o Real(kind=real32)
+!!    o Real(kind=real64)
+!!    o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    Return NORDth value of XDONT, ie. fractile of order NORD/SIZE(XDONT).
+!!    Return NORDth value of XDONT, i.e. fractile of order NORD/SIZE(XDONT).
 !!
-!!    This subroutine uses insertion sort, limiting insertion to the
+!!    This subroutine uses an insertion sort, limiting insertion to the
 !!    first NORD values. It is faster when NORD is very small (2-5), and
 !!    it requires only a work array of size NORD and type of XDONT, but
 !!    worst case behavior can happen fairly probably (initially inverse
@@ -39,7 +39,7 @@ contains
 !!
 !!##OPTIONS
 !!     XDONT     input array of values
-!!     NORD      specify nth value of sorted XDONT array to return, from
+!!     NORD      specify Nth value of sorted XDONT array to return, from
 !!               1 to size(XDONT).
 !!##RETURNS
 !!     FNDNTH    returned value0

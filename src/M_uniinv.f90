@@ -16,7 +16,7 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    uniinv(3f) - [orderpack] do stuff
+!!    uniinv(3f) - [orderpack:RANK_UNIQUE] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

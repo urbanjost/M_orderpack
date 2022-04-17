@@ -12,7 +12,7 @@ end interface rapknr
 contains
 !>
 !!##NAME
-!!    rapknr(3f) - [orderpack] do stuff
+!!    rapknr(3f) - [orderpack:PARTIAL_RANK] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

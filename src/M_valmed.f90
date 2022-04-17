@@ -12,7 +12,7 @@ end interface valmed
 contains
 !>
 !!##NAME
-!!    valmed(3f) - [orderpack] do stuff
+!!    valmed(3f) - [orderpack:MEDIAN] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

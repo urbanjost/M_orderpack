@@ -17,7 +17,7 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    unirnk(3f) - [orderpack] do stuff
+!!    unirnk(3f) - [orderpack:RANK_UNIQUE] do stuff
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
@@ -54,8 +54,8 @@ contains
 !!     Michel Olagnon, 2000-2012
 !!
 !!     John Urban, 2022.04.16
-!!         o added man-page and reduced to a template using the
-!!           prep(1) preprocessor.
+!!     o added man-page and reduced to a template using the
+!!       prep(1) preprocessor.
 !!
 !!##LICENSE
 !!    CC0-1.0

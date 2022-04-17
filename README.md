@@ -16,6 +16,10 @@ Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
     Authors: Michel Olagnon
     date: 2000-2012
 ---
+## Issues
+- UNIVAR returns non-unique values when less unique values in input than requested in output with gfortran,nvfortran; OK with ifort
+
+---
 
 ## Building the module using make![gmake](docs/images/gnu.gif)
 
@@ -60,15 +64,15 @@ This will compile the Fortran module and basic example programs that exercise th
 ## Documentation ![docs](docs/images/docs.gif)
 
 ### User
-   - original [procedure documentation](https://urbanjost.github.io/orderpack/).
+   - documentation derived from the original [procedure documentation](https://urbanjost.github.io/orderpack/).
+   - **UNDER CONSTRUCTION** a simple index to the man-pages in HTML form for the
+   [routines](https://urbanjost.github.io/orderpack/man3.html)
 <!--
+   and [programs](https://urbanjost.github.io/orderpack/man1.html)
+
    - A single page that uses javascript to combine all the HTML
      descriptions of the man-pages is at
      [BOOK_orderpack](https://urbanjost.github.io/orderpack/BOOK_orderpack.html).
-
-   - a simple index to the man-pages in HTML form for the
-   [routines](https://urbanjost.github.io/orderpack/man3.html)
-   and [programs](https://urbanjost.github.io/orderpack/man1.html)
 
    - There are man-pages in the repository download in the docs/ directory
      that may be installed on ULS (Unix-Like Systems).
