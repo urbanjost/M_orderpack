@@ -2,24 +2,21 @@ Module M_inssor
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: inssor
-private :: kdp
-private :: R_inssor, I_inssor, D_inssor
 interface inssor
-  module procedure d_inssor, r_inssor, i_inssor
+  module procedure real64_inssor, real32_inssor, int32_inssor
 end interface inssor
 contains
 !>
 !!##NAME
-!!    inssor(3f) - [orderpack:SORT] do stuff
+!!    inssor(3f) - [orderpack:SORT] Sorts XDONT into increasing order (Insertion sort)
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine inssor (yyyyyy)
+!!     Subroutine ${KIND}_inssor (XDONT)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!             ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28,10 +25,16 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
+!!    Sorts XDONT into increasing order (Insertion sort)
+!!
+!!    This subroutine uses insertion sort. It does not use any work array
+!!    and is faster when XDONT is of very small size (< 20), or already
+!!    almost sorted, but worst case behavior can happen fairly probably
+!!    (initially inverse sorted).  In many cases, the quicksort or merge
+!!    sort method is faster.
 !!
 !!##OPTIONS
-!!     XXXXX      description
-!!     YYYYY      description
+!!     XDONT      array to sort
 !!
 !!##EXAMPLES
 !!
@@ -46,33 +49,19 @@ contains
 !!   Results:
 !!
 !!##AUTHOR
-!!     Michel Olagnon, 2000-2012
+!!     Michel Olagnon - Apr. 2000
 !!
 !!     John Urban, 2022.04.16
-!!         o added man-page and reduced to a template using the
-!!           prep(1) preprocessor.
+!!     o added man-page and reduced to a template using the
+!!       prep(1) preprocessor.
 !!
 !!##LICENSE
 !!    CC0-1.0
-
-Subroutine D_inssor (XDONT)
-!! Sorts XDONT into increasing order (Insertion sort)
-!!__________________________________________________________
-!! This subroutine uses insertion sort. It does not use any
-!! work array and is faster when XDONT is of very small size
-!! (< 20), or already almost sorted, but worst case behavior
-!! can happen fairly probably (initially inverse sorted).
-!! In many cases, the quicksort or merge sort method is faster.
-!! Michel Olagnon - Apr. 2000
-!!__________________________________________________________
-!!__________________________________________________________
+Subroutine real64_inssor (XDONT)
 ! __________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (InOut) :: XDONT
+      Real (kind=real64), Dimension (:), Intent (InOut) :: XDONT
+      Real (Kind=real64) :: XWRK, XMIN
 ! __________________________________________________________
-      Real (Kind=kdp) :: XWRK, XMIN
-!
-! __________________________________________________________
-!
       Integer :: ICRS, IDCR, NDON
 !
       NDON = Size (XDONT)
@@ -117,26 +106,12 @@ Subroutine D_inssor (XDONT)
 !
       Return
 !
-End Subroutine D_inssor
-
-Subroutine R_inssor (XDONT)
-!! Sorts XDONT into increasing order (Insertion sort)
-!!__________________________________________________________
-!! This subroutine uses insertion sort. It does not use any
-!! work array and is faster when XDONT is of very small size
-!! (< 20), or already almost sorted, but worst case behavior
-!! can happen fairly probably (initially inverse sorted).
-!! In many cases, the quicksort or merge sort method is faster.
-!! Michel Olagnon - Apr. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-! _________________________________________________________
-      Real, Dimension (:), Intent (InOut) :: XDONT
+End Subroutine real64_inssor
+Subroutine real32_inssor (XDONT)
 ! __________________________________________________________
-      Real :: XWRK, XMIN
-!
+      Real (kind=real32), Dimension (:), Intent (InOut) :: XDONT
+      Real (Kind=real32) :: XWRK, XMIN
 ! __________________________________________________________
-!
       Integer :: ICRS, IDCR, NDON
 !
       NDON = Size (XDONT)
@@ -181,25 +156,12 @@ Subroutine R_inssor (XDONT)
 !
       Return
 !
-End Subroutine R_inssor
-Subroutine I_inssor (XDONT)
-!! Sorts XDONT into increasing order (Insertion sort)
-!!__________________________________________________________
-!! This subroutine uses insertion sort. It does not use any
-!! work array and is faster when XDONT is of very small size
-!! (< 20), or already almost sorted, but worst case behavior
-!! can happen fairly probably (initially inverse sorted).
-!! In many cases, the quicksort or merge sort method is faster.
-!! Michel Olagnon - Apr. 2000
-!!__________________________________________________________
-!!__________________________________________________________
+End Subroutine real32_inssor
+Subroutine int32_inssor (XDONT)
 ! __________________________________________________________
-      Integer, Dimension (:), Intent (InOut)  :: XDONT
+      Integer (kind=int32), Dimension (:), Intent (InOut) :: XDONT
+      Integer (Kind=int32) :: XWRK, XMIN
 ! __________________________________________________________
-      Integer :: XWRK, XMIN
-!
-! __________________________________________________________
-!
       Integer :: ICRS, IDCR, NDON
 !
       NDON = Size (XDONT)
@@ -244,5 +206,5 @@ Subroutine I_inssor (XDONT)
 !
       Return
 !
-End Subroutine I_inssor
+End Subroutine int32_inssor
 end module M_inssor

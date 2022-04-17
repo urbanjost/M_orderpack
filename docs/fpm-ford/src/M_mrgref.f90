@@ -1,24 +1,99 @@
 Module M_mrgref
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: mrgref
-private :: kdp
-private :: R_mrgref, I_mrgref, D_mrgref
 interface mrgref
-  module procedure d_mrgref, r_mrgref, i_mrgref
+  module procedure real64_mrgref, real32_mrgref, int32_mrgref
 end interface mrgref
 contains
-
-Subroutine D_mrgref (XVALT, IRNGT)
-!!  Ranks array XVALT into index array IRNGT, using merge-sort
+!>
+!!##NAME
+!!    mrgref(3f) - [orderpack:RANK] Ranks array XVALT into index array IRNGT,
+!!                 using basic merge-sort
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ${KIND}_mrgref (XVALT, IRNGT)
+!!
+!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XVALT
+!!       Integer, Dimension (:), Intent (Out) :: IRNGT
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!    Ranks array XVALT into index array IRNGT, using merge-sort
+!!
+!!    This version is not optimized for performance, and is thus
+!!    not as difficult to read as some other ones.
+!!
+!!##OPTIONS
+!!     XVALT      input array to rank
+!!     IRNGT      returned rank array
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_mrgref
+!!    use M_mrgref, only : mrgref
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    integer,parameter             :: dp=kind(0.0d0)
+!!    integer,parameter             :: isz=10000
+!!    real(kind=dp)                 :: dd(isz)
+!!    real(kind=dp)                 :: pp
+!!    integer                       :: indx(isz)
+!!    integer                       :: i,j,k
+!!       ! make some random numbers
+!!       call random_seed()
+!!       call random_number(dd)
+!!       dd=dd-0.50_dp
+!!       k=int(log(huge(0.0_dp))/log(2.0_dp))-1
+!!       do i=1,isz
+!!          call random_number(pp)
+!!          j=floor((k+1)*pp)
+!!          dd(i)=dd(i)*(2.0_dp**j)
+!!       enddo
+!!       ! rank data
+!!       call mrgref(dd,indx)
+!!       ! check order
+!!       do i=1,isz-1
+!!          if(dd(indx(i)).gt.dd(indx(i+1)))then
+!!             write(*,g)'ERROR: data not sorted i=',i,'index=',indx(i), &
+!!             & 'values ',dd(indx(i)),dd(indx(i+1))
+!!             stop 1
+!!          endif
+!!       enddo
+!!       ! sort data using rank values
+!!       dd=dd(indx)
+!!       write(*,g)'sorted ',isz,'values'
+!!       write(*,g)'from',dd(1),'to',dd(isz)
+!!       write(*,*)minval(dd).eq.dd(1)
+!!       write(*,*)maxval(dd).eq.dd(isz)
+!!       write(*,*)minloc(dd).eq.1
+!!       write(*,*)maxloc(dd).eq.isz
+!!    end program demo_mrgref
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon - April 2000
+!!
+!!     John Urban, 2022.04.16
+!!         o added man-page and reduced to a template using the
+!!           prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
+Subroutine real64_mrgref (XVALT, IRNGT)
 !!__________________________________________________________
-!!  This version is not optimized for performance, and is thus
-!!  not as difficult to read as some other ones.
-!!  Michel Olagnon - April 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (In) :: XVALT
+      Real (kind=real64), Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
 !
@@ -137,17 +212,10 @@ Subroutine D_mrgref (XVALT, IRNGT)
       Deallocate (JWRKT)
       Return
 !
-End Subroutine D_mrgref
-
-Subroutine R_mrgref (XVALT, IRNGT)
-!!  Ranks array XVALT into index array IRNGT, using merge-sort
+End Subroutine real64_mrgref
+Subroutine real32_mrgref (XVALT, IRNGT)
 !!__________________________________________________________
-!!  This version is not optimized for performance, and is thus
-!!  not as difficult to read as some other ones.
-!!  Michel Olagnon - April 2000
-!!__________________________________________________________
-!!_________________________________________________________
-      Real, Dimension (:), Intent (In) :: XVALT
+      Real (kind=real32), Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
 !
@@ -266,16 +334,10 @@ Subroutine R_mrgref (XVALT, IRNGT)
       Deallocate (JWRKT)
       Return
 !
-End Subroutine R_mrgref
-Subroutine I_mrgref (XVALT, IRNGT)
-!!  Ranks array XVALT into index array IRNGT, using merge-sort
+End Subroutine real32_mrgref
+Subroutine int32_mrgref (XVALT, IRNGT)
 !!__________________________________________________________
-!!  This version is not optimized for performance, and is thus
-!!  not as difficult to read as some other ones.
-!!  Michel Olagnon - April 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In)  :: XVALT
+      Integer (kind=int32), Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
 !
@@ -394,5 +456,5 @@ Subroutine I_mrgref (XVALT, IRNGT)
       Deallocate (JWRKT)
       Return
 !
-End Subroutine I_mrgref
+End Subroutine int32_mrgref
 end module M_mrgref

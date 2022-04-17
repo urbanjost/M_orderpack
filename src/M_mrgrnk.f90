@@ -2,24 +2,22 @@ Module M_mrgrnk
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: mrgrnk
-private :: kdp
-private :: R_mrgrnk, I_mrgrnk, D_mrgrnk
 interface mrgrnk
-  module procedure D_mrgrnk, R_mrgrnk, I_mrgrnk
+  module procedure real64_mrgrnk, real32_mrgrnk, int32_mrgrnk
 end interface mrgrnk
 contains
 !>
 !!##NAME
-!!    mrgrnk(3f) - [orderpack:RANK] do stuff
+!!    mrgrnk(3f) - [orderpack:RANK] ranks an array using a merge-sort algorithm
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine mrgrnk (yyyyyy)
+!!     Subroutine ${KIND}_mrgrnk (XDONT, IRNGT)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+!!       Integer, Dimension (:), Intent (Out) :: IRNGT
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28,10 +26,14 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
+!!     MRGRNK produces a Merge-sort ranking of an array.
+!!
+!!     For performance reasons, the first 2 passes are taken
+!!     out of the standard loop, and use dedicated coding.
 !!
 !!##OPTIONS
-!!     XXXXX      description
-!!     YYYYY      description
+!!     XDONT      The array to sort
+!!     IRNGT      The rank index returned
 !!
 !!##EXAMPLES
 !!
@@ -40,32 +42,67 @@ contains
 !!    program demo_mrgrnk
 !!    use M_mrgrnk, only : mrgrnk
 !!    implicit none
-!!       !x!call mrgrnk(yyyyyy)
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    integer,parameter             :: dp=kind(0.0d0)
+!!    integer,parameter             :: isz=1000000
+!!    real(kind=dp)                 :: dd(isz)
+!!    real(kind=dp)                 :: pp
+!!    integer                       :: indx(isz)
+!!    integer                       :: i,j,k
+!!       ! make some random numbers
+!!       call random_seed()
+!!       call random_number(dd)
+!!       dd=dd-0.50_dp
+!!       k=int(log(huge(0.0_dp))/log(2.0_dp))-1
+!!       do i=1,isz
+!!          call random_number(pp)
+!!          j=floor((k+1)*pp)
+!!          dd(i)=dd(i)*(2.0_dp**j)
+!!       enddo
+!!       ! rank data
+!!       call mrgrnk(dd,indx)
+!!       ! check order
+!!       do i=1,isz-1
+!!          if(dd(indx(i)).gt.dd(indx(i+1)))then
+!!             write(*,g)'ERROR: data not sorted i=',i,'index=',indx(i), &
+!!             & 'values ',dd(indx(i)),dd(indx(i+1))
+!!             stop 1
+!!          endif
+!!       enddo
+!!       ! sort data using rank values
+!!       dd=dd(indx)
+!!       write(*,g)'sorted ',isz,'values'
+!!       write(*,g)'from',dd(1),'to',dd(isz)
+!!       write(*,*)minval(dd).eq.dd(1)
+!!       write(*,*)maxval(dd).eq.dd(isz)
+!!       write(*,*)minloc(dd).eq.1
+!!       write(*,*)maxloc(dd).eq.isz
 !!    end program demo_mrgrnk
 !!
 !!   Results:
+!!
+!!    > sorted  1000000 values
+!!    > from -0.44921023328051548E+308 to 0.44715236470073772E+308
+!!    >  T
+!!    >  T
+!!    >  T
+!!    >  T
 !!
 !!##AUTHOR
 !!     Michel Olagnon, 2000-2012
 !!
 !!     John Urban, 2022.04.16
-!!         o added man-page and reduced to a template using the
-!!           prep(1) preprocessor.
+!!     o added man-page and reduced to a template using the
+!!       prep(1) preprocessor.
 !!
 !!##LICENSE
 !!    CC0-1.0
-
-Subroutine D_mrgrnk (XDONT, IRNGT)
-!!__________________________________________________________
-!!  MRGRNK = Merge-sort ranking of an array
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
+Subroutine real64_mrgrnk (XDONT, IRNGT)
+! __________________________________________________________
+      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
-      Real (kind=kdp) :: XVALA, XVALB
+      Real (kind=real64) :: XVALA, XVALB
 !
       Integer, Dimension (SIZE(IRNGT)) :: JWRKT
       Integer :: LMTNA, LMTNC, IRNG1, IRNG2
@@ -253,19 +290,13 @@ Subroutine D_mrgrnk (XDONT, IRNGT)
 !
       Return
 !
-End Subroutine D_mrgrnk
-
-Subroutine R_mrgrnk (XDONT, IRNGT)
-!!__________________________________________________________
-!!  MRGRNK = Merge-sort ranking of an array
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!_________________________________________________________
-      Real, Dimension (:), Intent (In) :: XDONT
+End Subroutine real64_mrgrnk
+Subroutine real32_mrgrnk (XDONT, IRNGT)
+! __________________________________________________________
+      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
-      Real :: XVALA, XVALB
+      Real (kind=real32) :: XVALA, XVALB
 !
       Integer, Dimension (SIZE(IRNGT)) :: JWRKT
       Integer :: LMTNA, LMTNC, IRNG1, IRNG2
@@ -453,18 +484,13 @@ Subroutine R_mrgrnk (XDONT, IRNGT)
 !
       Return
 !
-End Subroutine R_mrgrnk
-Subroutine I_mrgrnk (XDONT, IRNGT)
-!!__________________________________________________________
-!!  MRGRNK = Merge-sort ranking of an array
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In)  :: XDONT
+End Subroutine real32_mrgrnk
+Subroutine int32_mrgrnk (XDONT, IRNGT)
+! __________________________________________________________
+      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
-      Integer :: XVALA, XVALB
+      Integer (kind=int32) :: XVALA, XVALB
 !
       Integer, Dimension (SIZE(IRNGT)) :: JWRKT
       Integer :: LMTNA, LMTNC, IRNG1, IRNG2
@@ -652,5 +678,5 @@ Subroutine I_mrgrnk (XDONT, IRNGT)
 !
       Return
 !
-End Subroutine I_mrgrnk
+End Subroutine int32_mrgrnk
 end module M_mrgrnk

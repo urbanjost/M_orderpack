@@ -1,49 +1,90 @@
 Module M_refsor
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: refsor
-private :: kdp
-private :: R_refsor, I_refsor, D_refsor
-private :: R_inssor, I_inssor, D_inssor
-private :: R_subsor, I_subsor, D_subsor
+private :: real64_refsor, real32_refsor, int32_refsor
+private :: real64_inssor, real32_inssor, int32_inssor
+private :: real64_subsor, real32_subsor, int32_subsor
 interface refsor
-  module procedure d_refsor, r_refsor, i_refsor
+  module procedure real64_refsor, real32_refsor, int32_refsor
 end interface refsor
 contains
+!>
+!!##NAME
+!!    refsor(3f) - [orderpack:SORT] Sorts array into ascending order - Quicksort
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ${KIND}_refsor (XDONT)
+!!
+!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!    Sorts XDONT into ascending order using the Quicksort method
+!!
+!!    Quicksort chooses a "pivot" in the set, and explores the array from
+!!    both ends, looking for a value > pivot with the increasing index,
+!!    for a value <= pivot with the decreasing index, and swapping them
+!!    when it has found one of each.  The array is then subdivided in 2
+!!    ([3]) subsets:
+!!
+!!        { values <= pivot} {pivot} {values > pivot}
+!!
+!!    One then call recursively the program to sort each subset.
+!!    When the size of the subarray is small enough, one uses an
+!!    insertion sort that is faster for very small sets.
+!!
+!!##OPTIONS
+!!     XDONT      array to sort
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_refsor
+!!    use M_refsor, only : refsor
+!!    implicit none
+!!       !x!call refsor(yyyyyy)
+!!    end program demo_refsor
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon - Apr. 2000
+!!
+!!     John Urban, 2022.04.16
+!!     o added man-page and reduced to a template using the
+!!       prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
+Subroutine real64_refsor (XDONT)
+! __________________________________________________________
+      Real (kind=real64), Dimension (:), Intent (InOut) :: XDONT
+! __________________________________________________________
+!
+      Call real64_subsor (XDONT, 1, Size (XDONT))
+      Call real64_inssor (XDONT)
 
-Subroutine D_refsor (XDONT)
-!! Sorts XDONT into ascending order - Quicksort
-!!__________________________________________________________
-!! Quicksort chooses a "pivot" in the set, and explores the
-!! array from both ends, looking for a value > pivot with the
-!! increasing index, for a value <= pivot with the decreasing
-!! index, and swapping them when it has found one of each.
-!! The array is then subdivided in 2 ([3]) subsets:
-!! { values <= pivot} {pivot} {values > pivot}
-!! One then call recursively the program to sort each subset.
-!! When the size of the subarray is small enough, one uses an
-!! insertion sort that is faster for very small sets.
-!! Michel Olagnon - Apr. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (InOut) :: XDONT
-! __________________________________________________________
-!
-!
-      Call D_subsor (XDONT, 1, Size (XDONT))
-      Call D_inssor (XDONT)
-      Return
-End Subroutine D_refsor
-Recursive Subroutine D_subsor (XDONT, IDEB1, IFIN1)
+End Subroutine real64_refsor
+
+Recursive Subroutine real64_subsor (XDONT, IDEB1, IFIN1)
 !  Sorts XDONT from IDEB1 to IFIN1
 ! __________________________________________________________
-      Real(kind=kdp), dimension (:), Intent (InOut) :: XDONT
+      Real(kind=real64), dimension (:), Intent (InOut) :: XDONT
       Integer, Intent (In) :: IDEB1, IFIN1
 ! __________________________________________________________
       Integer, Parameter :: NINS = 16 ! Max for insertion sort
       Integer :: ICRS, IDEB, IDCR, IFIN, IMIL
-      Real(kind=kdp) :: XPIV, XWRK
+      Real(kind=real64) :: XPIV, XWRK
 !
       IDEB = IDEB1
       IFIN = IFIN1
@@ -113,18 +154,19 @@ Recursive Subroutine D_subsor (XDONT, IDEB1, IFIN1)
 !
 !  One now sorts each of the two sub-intervals
 !
-         Call D_subsor (XDONT, IDEB1, ICRS-1)
-         Call D_subsor (XDONT, IDCR, IFIN1)
+         Call real64_subsor (XDONT, IDEB1, ICRS-1)
+         Call real64_subsor (XDONT, IDCR, IFIN1)
       End If
-      Return
-   End Subroutine D_subsor
-   Subroutine D_inssor (XDONT)
+
+   End Subroutine real64_subsor
+
+   Subroutine real64_inssor (XDONT)
 !  Sorts XDONT into increasing order (Insertion sort)
 ! __________________________________________________________
-      Real(kind=kdp), dimension (:), Intent (InOut) :: XDONT
+      Real(kind=real64), dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
       Integer :: ICRS, IDCR
-      Real(kind=kdp) :: XWRK
+      Real(kind=real64) :: XWRK
 !
       Do ICRS = 2, Size (XDONT)
          XWRK = XDONT (ICRS)
@@ -137,42 +179,26 @@ Recursive Subroutine D_subsor (XDONT, IDEB1, IFIN1)
          XDONT (IDCR+1) = XWRK
       End Do
 !
-      Return
-!
-End Subroutine D_inssor
-!
-Subroutine R_refsor (XDONT)
-!! Sorts XDONT into ascending order - Quicksort
-!!__________________________________________________________
-!! Quicksort chooses a "pivot" in the set, and explores the
-!! array from both ends, looking for a value > pivot with the
-!! increasing index, for a value <= pivot with the decreasing
-!! index, and swapping them when it has found one of each.
-!! The array is then subdivided in 2 ([3]) subsets:
-!! { values <= pivot} {pivot} {values > pivot}
-!! One then call recursively the program to sort each subset.
-!! When the size of the subarray is small enough, one uses an
-!! insertion sort that is faster for very small sets.
-!! Michel Olagnon - Apr. 2000
-!!__________________________________________________________
-!!_________________________________________________________
-      Real, Dimension (:), Intent (InOut) :: XDONT
+End Subroutine real64_inssor
+Subroutine real32_refsor (XDONT)
+! __________________________________________________________
+      Real (kind=real32), Dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
 !
-!
-      Call R_subsor (XDONT, 1, Size (XDONT))
-      Call R_inssor (XDONT)
-      Return
-End Subroutine R_refsor
-Recursive Subroutine R_subsor (XDONT, IDEB1, IFIN1)
+      Call real32_subsor (XDONT, 1, Size (XDONT))
+      Call real32_inssor (XDONT)
+
+End Subroutine real32_refsor
+
+Recursive Subroutine real32_subsor (XDONT, IDEB1, IFIN1)
 !  Sorts XDONT from IDEB1 to IFIN1
 ! __________________________________________________________
-      Real, dimension (:), Intent (InOut) :: XDONT
+      Real(kind=real32), dimension (:), Intent (InOut) :: XDONT
       Integer, Intent (In) :: IDEB1, IFIN1
 ! __________________________________________________________
       Integer, Parameter :: NINS = 16 ! Max for insertion sort
       Integer :: ICRS, IDEB, IDCR, IFIN, IMIL
-      Real :: XPIV, XWRK
+      Real(kind=real32) :: XPIV, XWRK
 !
       IDEB = IDEB1
       IFIN = IFIN1
@@ -242,18 +268,19 @@ Recursive Subroutine R_subsor (XDONT, IDEB1, IFIN1)
 !
 !  One now sorts each of the two sub-intervals
 !
-         Call R_subsor (XDONT, IDEB1, ICRS-1)
-         Call R_subsor (XDONT, IDCR, IFIN1)
+         Call real32_subsor (XDONT, IDEB1, ICRS-1)
+         Call real32_subsor (XDONT, IDCR, IFIN1)
       End If
-      Return
-   End Subroutine R_subsor
-   Subroutine R_inssor (XDONT)
+
+   End Subroutine real32_subsor
+
+   Subroutine real32_inssor (XDONT)
 !  Sorts XDONT into increasing order (Insertion sort)
 ! __________________________________________________________
-      Real, dimension (:), Intent (InOut) :: XDONT
+      Real(kind=real32), dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
       Integer :: ICRS, IDCR
-      Real :: XWRK
+      Real(kind=real32) :: XWRK
 !
       Do ICRS = 2, Size (XDONT)
          XWRK = XDONT (ICRS)
@@ -266,42 +293,26 @@ Recursive Subroutine R_subsor (XDONT, IDEB1, IFIN1)
          XDONT (IDCR+1) = XWRK
       End Do
 !
-      Return
-!
-End Subroutine R_inssor
-!
-Subroutine I_refsor (XDONT)
-!! Sorts XDONT into ascending order - Quicksort
-!!__________________________________________________________
-!! Quicksort chooses a "pivot" in the set, and explores the
-!! array from both ends, looking for a value > pivot with the
-!! increasing index, for a value <= pivot with the decreasing
-!! index, and swapping them when it has found one of each.
-!! The array is then subdivided in 2 ([3]) subsets:
-!! { values <= pivot} {pivot} {values > pivot}
-!! One then call recursively the program to sort each subset.
-!! When the size of the subarray is small enough, one uses an
-!! insertion sort that is faster for very small sets.
-!! Michel Olagnon - Apr. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (InOut)  :: XDONT
+End Subroutine real32_inssor
+Subroutine int32_refsor (XDONT)
+! __________________________________________________________
+      Integer (kind=int32), Dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
 !
-!
-      Call I_subsor (XDONT, 1, Size (XDONT))
-      Call I_inssor (XDONT)
-      Return
-End Subroutine I_refsor
-Recursive Subroutine I_subsor (XDONT, IDEB1, IFIN1)
+      Call int32_subsor (XDONT, 1, Size (XDONT))
+      Call int32_inssor (XDONT)
+
+End Subroutine int32_refsor
+
+Recursive Subroutine int32_subsor (XDONT, IDEB1, IFIN1)
 !  Sorts XDONT from IDEB1 to IFIN1
 ! __________________________________________________________
-      Integer, dimension (:), Intent (InOut) :: XDONT
+      Integer(kind=int32), dimension (:), Intent (InOut) :: XDONT
       Integer, Intent (In) :: IDEB1, IFIN1
 ! __________________________________________________________
       Integer, Parameter :: NINS = 16 ! Max for insertion sort
       Integer :: ICRS, IDEB, IDCR, IFIN, IMIL
-      Integer :: XPIV, XWRK
+      Integer(kind=int32) :: XPIV, XWRK
 !
       IDEB = IDEB1
       IFIN = IFIN1
@@ -371,18 +382,19 @@ Recursive Subroutine I_subsor (XDONT, IDEB1, IFIN1)
 !
 !  One now sorts each of the two sub-intervals
 !
-         Call I_subsor (XDONT, IDEB1, ICRS-1)
-         Call I_subsor (XDONT, IDCR, IFIN1)
+         Call int32_subsor (XDONT, IDEB1, ICRS-1)
+         Call int32_subsor (XDONT, IDCR, IFIN1)
       End If
-      Return
-   End Subroutine I_subsor
-   Subroutine I_inssor (XDONT)
+
+   End Subroutine int32_subsor
+
+   Subroutine int32_inssor (XDONT)
 !  Sorts XDONT into increasing order (Insertion sort)
 ! __________________________________________________________
-      Integer, dimension (:), Intent (InOut) :: XDONT
+      Integer(kind=int32), dimension (:), Intent (InOut) :: XDONT
 ! __________________________________________________________
       Integer :: ICRS, IDCR
-      Integer :: XWRK
+      Integer(kind=int32) :: XWRK
 !
       Do ICRS = 2, Size (XDONT)
          XWRK = XDONT (ICRS)
@@ -395,8 +407,5 @@ Recursive Subroutine I_subsor (XDONT, IDEB1, IFIN1)
          XDONT (IDCR+1) = XWRK
       End Do
 !
-      Return
-!
-End Subroutine I_inssor
-!
+End Subroutine int32_inssor
 end module M_refsor

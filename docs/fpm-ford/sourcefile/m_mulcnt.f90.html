@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.5% of total for source files.">58 statements</a>
+    title=" 0.5% of total for source files.">57 statements</a>
      </li> 
      
      
@@ -262,98 +262,130 @@
     <section>
       <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl"><pre><span></span><a name="ln-1"></a><span class="k">Module </span><span class="n">M_mulcnt</span>
-<a name="ln-2"></a><span class="k">Use </span><span class="n">M_uniinv</span>
-<a name="ln-3"></a><span class="k">implicit none</span>
-<a name="ln-4"></a><span class="k">Private</span>
-<a name="ln-5"></a><span class="kt">Integer</span><span class="p">,</span> <span class="k">Parameter</span> <span class="kd">::</span> <span class="n">kdp</span> <span class="o">=</span> <span class="nb">selected_real_kind</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<a name="ln-2"></a><span class="k">use</span><span class="p">,</span><span class="k">intrinsic</span> <span class="kd">::</span> <span class="n">iso_fortran_env</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">int8</span><span class="p">,</span> <span class="n">int16</span><span class="p">,</span> <span class="n">int32</span><span class="p">,</span> <span class="n">int64</span><span class="p">,</span> <span class="n">real32</span><span class="p">,</span> <span class="n">real64</span><span class="p">,</span> <span class="n">real128</span>
+<a name="ln-3"></a><span class="k">Use </span><span class="n">M_uniinv</span>
+<a name="ln-4"></a><span class="k">implicit none</span>
+<a name="ln-5"></a><span class="k">Private</span>
 <a name="ln-6"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">mulcnt</span>
-<a name="ln-7"></a><span class="k">private</span> <span class="kd">::</span> <span class="n">kdp</span>
-<a name="ln-8"></a><span class="k">private</span> <span class="kd">::</span> <span class="n">R_mulcnt</span><span class="p">,</span> <span class="n">I_mulcnt</span><span class="p">,</span> <span class="n">D_mulcnt</span>
-<a name="ln-9"></a><span class="k">interface </span><span class="n">mulcnt</span>
-<a name="ln-10"></a>  <span class="k">module procedure </span><span class="n">d_mulcnt</span><span class="p">,</span> <span class="n">r_mulcnt</span><span class="p">,</span> <span class="n">i_mulcnt</span>
-<a name="ln-11"></a><span class="k">end interface </span><span class="n">mulcnt</span>
-<a name="ln-12"></a><span class="k">contains</span>
-<a name="ln-13"></a>
-<a name="ln-14"></a><span class="k">Subroutine </span><span class="n">D_mulcnt</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IMULT</span><span class="p">)</span>
-<a name="ln-15"></a><span class="c">!!  MULCNT = Give for each array value its multiplicity</span>
-<a name="ln-16"></a><span class="c">!!           (number of times that it appears in the array)</span>
-<a name="ln-17"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-18"></a><span class="c">!! Michel Olagnon - Mar. 2000</span>
-<a name="ln-19"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-20"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-21"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">kdp</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">In</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-22"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">IMULT</span>
-<a name="ln-23"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-24"></a><span class="c">!</span>
-<a name="ln-25"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
-<a name="ln-26"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">ICNTT</span>
-<a name="ln-27"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
-<a name="ln-28"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-29"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
-<a name="ln-30"></a>      <span class="n">ICNTT</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-31"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-32"></a>            <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
-<a name="ln-33"></a>      <span class="k">End Do</span>
-<a name="ln-34"></a><span class="k">      Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-35"></a>            <span class="n">IMULT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span>
-<a name="ln-36"></a>      <span class="k">End Do</span>
-<a name="ln-37"></a>
-<a name="ln-38"></a><span class="c">!</span>
-<a name="ln-39"></a><span class="k">End Subroutine </span><span class="n">D_mulcnt</span>
-<a name="ln-40"></a>
-<a name="ln-41"></a><span class="k">Subroutine </span><span class="n">R_mulcnt</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IMULT</span><span class="p">)</span>
-<a name="ln-42"></a><span class="c">!   MULCNT = Give for each array value its multiplicity</span>
-<a name="ln-43"></a><span class="c">!            (number of times that it appears in the array)</span>
-<a name="ln-44"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-45"></a><span class="c">!  Michel Olagnon - Mar. 2000</span>
-<a name="ln-46"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-47"></a><span class="c">! _________________________________________________________</span>
-<a name="ln-48"></a>      <span class="kt">Real</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">In</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-49"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">IMULT</span>
-<a name="ln-50"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-51"></a><span class="c">!</span>
-<a name="ln-52"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
-<a name="ln-53"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">ICNTT</span>
-<a name="ln-54"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
-<a name="ln-55"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-56"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
-<a name="ln-57"></a>      <span class="n">ICNTT</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-58"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-59"></a>            <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
-<a name="ln-60"></a>      <span class="k">End Do</span>
-<a name="ln-61"></a><span class="k">      Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-62"></a>            <span class="n">IMULT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span>
-<a name="ln-63"></a>      <span class="k">End Do</span>
-<a name="ln-64"></a>
-<a name="ln-65"></a><span class="c">!</span>
-<a name="ln-66"></a><span class="k">End Subroutine </span><span class="n">R_mulcnt</span>
-<a name="ln-67"></a><span class="k">Subroutine </span><span class="n">I_mulcnt</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IMULT</span><span class="p">)</span>
-<a name="ln-68"></a><span class="c">!!  MULCNT = Give for each array value its multiplicity</span>
-<a name="ln-69"></a><span class="c">!!           (number of times that it appears in the array)</span>
-<a name="ln-70"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-71"></a><span class="c">!! Michel Olagnon - Mar. 2000</span>
-<a name="ln-72"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-73"></a><span class="c">!!__________________________________________________________</span>
-<a name="ln-74"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">In</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-75"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">IMULT</span>
+<a name="ln-7"></a><span class="k">private</span> <span class="kd">::</span> <span class="n">real64_mulcnt</span><span class="p">,</span> <span class="n">real32_mulcnt</span><span class="p">,</span> <span class="n">int32_mulcnt</span>
+<a name="ln-8"></a><span class="k">interface </span><span class="n">mulcnt</span>
+<a name="ln-9"></a>  <span class="k">module procedure </span><span class="n">real64_mulcnt</span><span class="p">,</span> <span class="n">real32_mulcnt</span><span class="p">,</span> <span class="n">int32_mulcnt</span>
+<a name="ln-10"></a><span class="k">end interface </span><span class="n">mulcnt</span>
+<a name="ln-11"></a><span class="k">contains</span>
+<a name="ln-12"></a><span class="c">!&gt;</span>
+<a name="ln-13"></a><span class="c">!!##NAME</span>
+<a name="ln-14"></a><span class="c">!!    mulcnt(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each array value</span>
+<a name="ln-15"></a><span class="c">!!                 (number of times that it appears in the array)</span>
+<a name="ln-16"></a><span class="c">!!                 (LICENSE:CC0-1.0)</span>
+<a name="ln-17"></a><span class="c">!!</span>
+<a name="ln-18"></a><span class="c">!!##SYNOPSIS</span>
+<a name="ln-19"></a><span class="c">!!</span>
+<a name="ln-20"></a><span class="c">!!     Subroutine mulcnt (XDONT, IMULT)</span>
+<a name="ln-21"></a><span class="c">!!</span>
+<a name="ln-22"></a><span class="c">!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)</span>
+<a name="ln-23"></a><span class="c">!!       Integer, Dimension (:), Intent (Out) :: IMULT</span>
+<a name="ln-24"></a><span class="c">!!</span>
+<a name="ln-25"></a><span class="c">!!    Where ${TYPE}(kind=${KIND}) may be</span>
+<a name="ln-26"></a><span class="c">!!</span>
+<a name="ln-27"></a><span class="c">!!       o Real(kind=real32)</span>
+<a name="ln-28"></a><span class="c">!!       o Real(kind=real64)</span>
+<a name="ln-29"></a><span class="c">!!       o Integer(kind=int32)</span>
+<a name="ln-30"></a><span class="c">!!</span>
+<a name="ln-31"></a><span class="c">!!##DESCRIPTION</span>
+<a name="ln-32"></a><span class="c">!!     MULCNT = Give for each array value its multiplicity</span>
+<a name="ln-33"></a><span class="c">!!              (number of times that it appears in the array)</span>
+<a name="ln-34"></a><span class="c">!!</span>
+<a name="ln-35"></a><span class="c">!!##OPTIONS</span>
+<a name="ln-36"></a><span class="c">!!     XDONT      input array</span>
+<a name="ln-37"></a><span class="c">!!     IMULT      array containing how often the value in XDONT</span>
+<a name="ln-38"></a><span class="c">!!                appears in XDONT</span>
+<a name="ln-39"></a><span class="c">!!</span>
+<a name="ln-40"></a><span class="c">!!##EXAMPLES</span>
+<a name="ln-41"></a><span class="c">!!</span>
+<a name="ln-42"></a><span class="c">!!   Sample program:</span>
+<a name="ln-43"></a><span class="c">!!</span>
+<a name="ln-44"></a><span class="c">!!    program demo_mulcnt</span>
+<a name="ln-45"></a><span class="c">!!    use M_mulcnt, only : mulcnt</span>
+<a name="ln-46"></a><span class="c">!!    implicit none</span>
+<a name="ln-47"></a><span class="c">!!    real,parameter :: xdont(*)=[1,2,3,4,5,6,7,4,5,6,6,2]</span>
+<a name="ln-48"></a><span class="c">!!    integer, dimension(size(xdont)) :: imult</span>
+<a name="ln-49"></a><span class="c">!!       call mulcnt(xdont,imult)</span>
+<a name="ln-50"></a><span class="c">!!       write(*,*)xdont</span>
+<a name="ln-51"></a><span class="c">!!       write(*,*)imult</span>
+<a name="ln-52"></a><span class="c">!!    end program demo_mulcnt</span>
+<a name="ln-53"></a><span class="c">!!</span>
+<a name="ln-54"></a><span class="c">!!   Results:</span>
+<a name="ln-55"></a><span class="c">!!</span>
+<a name="ln-56"></a><span class="c">!!     1.00 2.00 3.00 4.00 5.00 6.00 7.00 4.00 5.00 6.00 6.00 2.00</span>
+<a name="ln-57"></a><span class="c">!!     1 2 1 2 2 3 1 2 2 3 3 2</span>
+<a name="ln-58"></a><span class="c">!!</span>
+<a name="ln-59"></a><span class="c">!!##AUTHOR</span>
+<a name="ln-60"></a><span class="c">!!     Michel Olagnon, Mar 2000</span>
+<a name="ln-61"></a><span class="c">!!</span>
+<a name="ln-62"></a><span class="c">!!     John Urban, 2022.04.16</span>
+<a name="ln-63"></a><span class="c">!!         o added man-page and reduced to a template using the</span>
+<a name="ln-64"></a><span class="c">!!           prep(1) preprocessor.</span>
+<a name="ln-65"></a><span class="c">!!</span>
+<a name="ln-66"></a><span class="c">!!##LICENSE</span>
+<a name="ln-67"></a><span class="c">!!    CC0-1.0</span>
+<a name="ln-68"></a><span class="k">Subroutine </span><span class="n">real64_mulcnt</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IMULT</span><span class="p">)</span>
+<a name="ln-69"></a><span class="c">!j__________________________________________________________</span>
+<a name="ln-70"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real64</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">In</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
+<a name="ln-71"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">IMULT</span>
+<a name="ln-72"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-73"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
+<a name="ln-74"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">ICNTT</span>
+<a name="ln-75"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
 <a name="ln-76"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-77"></a><span class="c">!</span>
-<a name="ln-78"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
-<a name="ln-79"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">ICNTT</span>
-<a name="ln-80"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
-<a name="ln-81"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-82"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
-<a name="ln-83"></a>      <span class="n">ICNTT</span> <span class="o">=</span> <span class="mi">0</span>
-<a name="ln-84"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-85"></a>            <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
-<a name="ln-86"></a>      <span class="k">End Do</span>
-<a name="ln-87"></a><span class="k">      Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-88"></a>            <span class="n">IMULT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span>
-<a name="ln-89"></a>      <span class="k">End Do</span>
-<a name="ln-90"></a>
-<a name="ln-91"></a><span class="c">!</span>
-<a name="ln-92"></a><span class="k">End Subroutine </span><span class="n">I_mulcnt</span>
-<a name="ln-93"></a><span class="k">end module </span><span class="n">M_mulcnt</span>
+<a name="ln-77"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
+<a name="ln-78"></a>      <span class="n">ICNTT</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-79"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-80"></a>            <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="ln-81"></a>      <span class="k">End Do</span>
+<a name="ln-82"></a><span class="k">      Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-83"></a>            <span class="n">IMULT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span>
+<a name="ln-84"></a>      <span class="k">End Do</span>
+<a name="ln-85"></a><span class="c">!</span>
+<a name="ln-86"></a><span class="k">End Subroutine </span><span class="n">real64_mulcnt</span>
+<a name="ln-87"></a><span class="k">Subroutine </span><span class="n">real32_mulcnt</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IMULT</span><span class="p">)</span>
+<a name="ln-88"></a><span class="c">!j__________________________________________________________</span>
+<a name="ln-89"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real32</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">In</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
+<a name="ln-90"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">IMULT</span>
+<a name="ln-91"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-92"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
+<a name="ln-93"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">ICNTT</span>
+<a name="ln-94"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
+<a name="ln-95"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-96"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
+<a name="ln-97"></a>      <span class="n">ICNTT</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-98"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-99"></a>            <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="ln-100"></a>      <span class="k">End Do</span>
+<a name="ln-101"></a><span class="k">      Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-102"></a>            <span class="n">IMULT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span>
+<a name="ln-103"></a>      <span class="k">End Do</span>
+<a name="ln-104"></a><span class="c">!</span>
+<a name="ln-105"></a><span class="k">End Subroutine </span><span class="n">real32_mulcnt</span>
+<a name="ln-106"></a><span class="k">Subroutine </span><span class="n">int32_mulcnt</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IMULT</span><span class="p">)</span>
+<a name="ln-107"></a><span class="c">!j__________________________________________________________</span>
+<a name="ln-108"></a>      <span class="kt">Integer</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">int32</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">In</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
+<a name="ln-109"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">IMULT</span>
+<a name="ln-110"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-111"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">IWRKT</span>
+<a name="ln-112"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(</span><span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">ICNTT</span>
+<a name="ln-113"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span>
+<a name="ln-114"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-115"></a>      <span class="k">Call </span><span class="n">UNIINV</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">,</span> <span class="n">IWRKT</span><span class="p">)</span>
+<a name="ln-116"></a>      <span class="n">ICNTT</span> <span class="o">=</span> <span class="mi">0</span>
+<a name="ln-117"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-118"></a>            <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+<a name="ln-119"></a>      <span class="k">End Do</span>
+<a name="ln-120"></a><span class="k">      Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Size</span><span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
+<a name="ln-121"></a>            <span class="n">IMULT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">ICNTT</span><span class="p">(</span><span class="n">IWRKT</span><span class="p">(</span><span class="n">ICRS</span><span class="p">))</span>
+<a name="ln-122"></a>      <span class="k">End Do</span>
+<a name="ln-123"></a><span class="c">!</span>
+<a name="ln-124"></a><span class="k">End Subroutine </span><span class="n">int32_mulcnt</span>
+<a name="ln-125"></a><span class="k">end module </span><span class="n">M_mulcnt</span>
 </pre></div>
 
     </section>
@@ -372,7 +404,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-15 21:52  
+             on 2022-04-17 15:06  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

@@ -1,36 +1,78 @@
 Module M_rnkpar
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: rnkpar
-private :: kdp
-private :: R_rnkpar, I_rnkpar, D_rnkpar
 interface rnkpar
-  module procedure d_rnkpar, r_rnkpar, i_rnkpar
+  module procedure real64_rnkpar, real32_rnkpar, int32_rnkpar
 end interface rnkpar
 contains
-
-Subroutine D_rnkpar (XDONT, IRNGT, NORD)
-!! Ranks partially XDONT by IRNGT, up to order NORD
+!>
+!!##NAME
+!!    rnkpar(3f) - [orderpack:PARTIAL_RANK] Ranks partially XDONT by IRNGT, up to order NORD
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine ${KIND}_rnkpar (XDONT, IRNGT, NORD)
+!!
+!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+!!       Integer, Dimension (:), Intent (Out) :: IRNGT
+!!       Integer, Intent (In) :: NORD
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!    Ranks partially XDONT by IRNGT, up to order NORD
+!!
+!!    This routine uses a pivoting strategy such as the one of
+!!    finding the median based on the quicksort algorithm, but
+!!    we skew the pivot choice to try to bring it to NORD as
+!!    fast as possible. It uses 2 temporary arrays, where it
+!!    stores the indices of the values smaller than the pivot
+!!    (ILOWT), and the indices of values larger than the pivot
+!!    that we might still need later on (IHIGT). It iterates
+!!    until it can bring the number of values in ILOWT to
+!!    exactly NORD, and then uses an insertion sort to rank
+!!    this set, since it is supposedly small.
+!!
+!!##OPTIONS
+!!     XDONT      array to rank the elements of
+!!     IRNGT      returned ranks
+!!     NORD       number of rank values to return
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_rnkpar
+!!    use M_rnkpar, only : rnkpar
+!!    implicit none
+!!       !x!call rnkpar(yyyyyy)
+!!    end program demo_rnkpar
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon - Feb. 2000
+!!
+!!     John Urban, 2022.04.16
+!!         o added man-page and reduced to a template using the
+!!           prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
+Subroutine real64_rnkpar (XDONT, IRNGT, NORD)
 !!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then uses an insertion sort to rank
-!! this set, since it is supposedly small.
-!! Michel Olagnon - Feb. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
+      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
-      Real (kind=kdp) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
+      Real (kind=real64) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
       Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
@@ -528,29 +570,14 @@ Subroutine D_rnkpar (XDONT, IRNGT, NORD)
      Return
 !
 !
-End Subroutine D_rnkpar
-
-Subroutine R_rnkpar (XDONT, IRNGT, NORD)
-!! Ranks partially XDONT by IRNGT, up to order NORD
+End Subroutine real64_rnkpar
+Subroutine real32_rnkpar (XDONT, IRNGT, NORD)
 !!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then uses an insertion sort to rank
-!! this set, since it is supposedly small.
-!! Michel Olagnon - Feb. 2000
-!!__________________________________________________________
-!!_________________________________________________________
-      Real, Dimension (:), Intent (In) :: XDONT
+      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
-      Real    :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
+      Real (kind=real32) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
       Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
@@ -1048,28 +1075,14 @@ Subroutine R_rnkpar (XDONT, IRNGT, NORD)
      Return
 !
 !
-End Subroutine R_rnkpar
-Subroutine I_rnkpar (XDONT, IRNGT, NORD)
-!! Ranks partially XDONT by IRNGT, up to order NORD
+End Subroutine real32_rnkpar
+Subroutine int32_rnkpar (XDONT, IRNGT, NORD)
 !!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then uses an insertion sort to rank
-!! this set, since it is supposedly small.
-!! Michel Olagnon - Feb. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In)  :: XDONT
+      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
-      Integer :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
+      Integer (kind=int32) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
       Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
@@ -1567,5 +1580,5 @@ Subroutine I_rnkpar (XDONT, IRNGT, NORD)
      Return
 !
 !
-End Subroutine I_rnkpar
+End Subroutine int32_rnkpar
 end module M_rnkpar

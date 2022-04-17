@@ -8,31 +8,287 @@ interface \mbox{\hyperlink{interfacem__mrgref_1_1mrgref}{mrgref}}
 \doxysubsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__mrgref_a478ccc668e553d0f0b36c53d5be9d8ae}{d\+\_\+mrgref}} (X\+V\+A\+LT, I\+R\+N\+GT)
+subroutine \mbox{\hyperlink{namespacem__mrgref_a00e19c399f101c2ae55102232660abe7}{real64\+\_\+mrgref}} (X\+V\+A\+LT, I\+R\+N\+GT)
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__mrgref_a396d1a06dea1912e9ab1ccb613d57b7b}{r\+\_\+mrgref}} (X\+V\+A\+LT, I\+R\+N\+GT)
+subroutine \mbox{\hyperlink{namespacem__mrgref_ac2b6e0a4989e07ca85f6bae35ae20c74}{real32\+\_\+mrgref}} (X\+V\+A\+LT, I\+R\+N\+GT)
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__mrgref_a805fec43f8c93a694c071e327c9a06d9}{i\+\_\+mrgref}} (X\+V\+A\+LT, I\+R\+N\+GT)
-\end{DoxyCompactItemize}
-\doxysubsection*{Variables}
-\begin{DoxyCompactItemize}
-\item 
-integer, parameter, private \mbox{\hyperlink{namespacem__mrgref_a16cfcb4e718ad5365de3fb20a7830010}{kdp}} = selected\+\_\+real\+\_\+kind(15)
+subroutine \mbox{\hyperlink{namespacem__mrgref_a46b3be1cb7028459157ac20652afe5f7}{int32\+\_\+mrgref}} (X\+V\+A\+LT, I\+R\+N\+GT)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function/\+Subroutine Documentation}
-\mbox{\Hypertarget{namespacem__mrgref_a478ccc668e553d0f0b36c53d5be9d8ae}\label{namespacem__mrgref_a478ccc668e553d0f0b36c53d5be9d8ae}} 
-\index{m\_mrgref@{m\_mrgref}!d\_mrgref@{d\_mrgref}}
-\index{d\_mrgref@{d\_mrgref}!m\_mrgref@{m\_mrgref}}
-\doxysubsubsection{\texorpdfstring{d\_mrgref()}{d\_mrgref()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+mrgref\+::d\+\_\+mrgref (\begin{DoxyParamCaption}\item[{real (kind=\mbox{\hyperlink{namespacem__mrgref_a16cfcb4e718ad5365de3fb20a7830010}{kdp}}), dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+\mbox{\Hypertarget{namespacem__mrgref_a46b3be1cb7028459157ac20652afe5f7}\label{namespacem__mrgref_a46b3be1cb7028459157ac20652afe5f7}} 
+\index{m\_mrgref@{m\_mrgref}!int32\_mrgref@{int32\_mrgref}}
+\index{int32\_mrgref@{int32\_mrgref}!m\_mrgref@{m\_mrgref}}
+\doxysubsubsection{\texorpdfstring{int32\_mrgref()}{int32\_mrgref()}}
+{\footnotesize\ttfamily subroutine m\+\_\+mrgref\+::int32\+\_\+mrgref (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{339 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{340       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XVALT}
+\DoxyCodeLine{341       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
+\DoxyCodeLine{342 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{343 \textcolor{comment}{!}}
+\DoxyCodeLine{344       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Allocatable} :: JWRKT}
+\DoxyCodeLine{345       \textcolor{keywordtype}{Integer} :: LMTNA, LMTNC}
+\DoxyCodeLine{346       \textcolor{keywordtype}{Integer} :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB}
+\DoxyCodeLine{347 \textcolor{comment}{!}}
+\DoxyCodeLine{348       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
+\DoxyCodeLine{349       \textcolor{keywordflow}{If} (nval <= 0) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{350          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{351 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{352 \textcolor{comment}{!}}
+\DoxyCodeLine{353 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
+\DoxyCodeLine{354 \textcolor{comment}{!}}
+\DoxyCodeLine{355       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
+\DoxyCodeLine{356          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{357             irngt(iind-\/1) = iind -\/ 1}
+\DoxyCodeLine{358             irngt(iind) = iind}
+\DoxyCodeLine{359          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{360             irngt(iind-\/1) = iind}
+\DoxyCodeLine{361             irngt(iind) = iind -\/ 1}
+\DoxyCodeLine{362 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{363 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{364       \textcolor{keywordflow}{If} (modulo(nval, 2) /= 0) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{365          irngt(nval) = nval}
+\DoxyCodeLine{366 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{367 \textcolor{comment}{!}}
+\DoxyCodeLine{368 \textcolor{comment}{!  We will now have ordered subsets A -\/ B -\/ A -\/ B -\/ ...}}
+\DoxyCodeLine{369 \textcolor{comment}{!  and merge A and B couples into     C   -\/   C   -\/ ...}}
+\DoxyCodeLine{370 \textcolor{comment}{!}}
+\DoxyCodeLine{371       \textcolor{keyword}{Allocate} (jwrkt(1:nval))}
+\DoxyCodeLine{372       lmtnc = 2}
+\DoxyCodeLine{373       lmtna = 2}
+\DoxyCodeLine{374 \textcolor{comment}{!}}
+\DoxyCodeLine{375 \textcolor{comment}{!  Iteration. Each time, the length of the ordered subsets}}
+\DoxyCodeLine{376 \textcolor{comment}{!  is doubled.}}
+\DoxyCodeLine{377 \textcolor{comment}{!}}
+\DoxyCodeLine{378       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{379          \textcolor{keywordflow}{If} (lmtna >= nval) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{380          iwrkf = 0}
+\DoxyCodeLine{381          lmtnc = 2 * lmtnc}
+\DoxyCodeLine{382          iwrk = 0}
+\DoxyCodeLine{383 \textcolor{comment}{!}}
+\DoxyCodeLine{384 \textcolor{comment}{!   Loop on merges of A and B into C}}
+\DoxyCodeLine{385 \textcolor{comment}{!}}
+\DoxyCodeLine{386          \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{387             iinda = iwrkf}
+\DoxyCodeLine{388             iwrkd = iwrkf + 1}
+\DoxyCodeLine{389             iwrkf = iinda + lmtnc}
+\DoxyCodeLine{390             jinda = iinda + lmtna}
+\DoxyCodeLine{391             \textcolor{keywordflow}{If} (iwrkf >= nval) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{392                \textcolor{keywordflow}{If} (jinda >= nval) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{393                iwrkf = nval}
+\DoxyCodeLine{394 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{395             iindb = jinda}
+\DoxyCodeLine{396 \textcolor{comment}{!}}
+\DoxyCodeLine{397 \textcolor{comment}{!   Shortcut for the case when the max of A is smaller}}
+\DoxyCodeLine{398 \textcolor{comment}{!   than the min of B (no need to do anything)}}
+\DoxyCodeLine{399 \textcolor{comment}{!}}
+\DoxyCodeLine{400             \textcolor{keywordflow}{If} (xvalt(irngt(jinda)) <= xvalt(irngt(jinda+1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{401                iwrk = iwrkf}
+\DoxyCodeLine{402                cycle}
+\DoxyCodeLine{403 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{404 \textcolor{comment}{!}}
+\DoxyCodeLine{405 \textcolor{comment}{!  One steps in the C subset, that we create in the final rank array}}
+\DoxyCodeLine{406 \textcolor{comment}{!}}
+\DoxyCodeLine{407             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{408                \textcolor{keywordflow}{If} (iwrk >= iwrkf) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{409 \textcolor{comment}{!}}
+\DoxyCodeLine{410 \textcolor{comment}{!  Make a copy of the rank array for next iteration}}
+\DoxyCodeLine{411 \textcolor{comment}{!}}
+\DoxyCodeLine{412                   irngt(iwrkd:iwrkf) = jwrkt(iwrkd:iwrkf)}
+\DoxyCodeLine{413                   \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{414 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{415 \textcolor{comment}{!}}
+\DoxyCodeLine{416                iwrk = iwrk + 1}
+\DoxyCodeLine{417 \textcolor{comment}{!}}
+\DoxyCodeLine{418 \textcolor{comment}{!  We still have unprocessed values in both A and B}}
+\DoxyCodeLine{419 \textcolor{comment}{!}}
+\DoxyCodeLine{420                \textcolor{keywordflow}{If} (iinda < jinda) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{421                   \textcolor{keywordflow}{If} (iindb < iwrkf) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{422                      \textcolor{keywordflow}{If} (xvalt(irngt(iinda+1)) > xvalt(irngt(iindb+1))) \&}
+\DoxyCodeLine{423                     \& \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{424                         iindb = iindb + 1}
+\DoxyCodeLine{425                         jwrkt(iwrk) = irngt(iindb)}
+\DoxyCodeLine{426                      \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{427                         iinda = iinda + 1}
+\DoxyCodeLine{428                         jwrkt(iwrk) = irngt(iinda)}
+\DoxyCodeLine{429 \textcolor{keywordflow}{                     End If}}
+\DoxyCodeLine{430                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{431 \textcolor{comment}{!}}
+\DoxyCodeLine{432 \textcolor{comment}{!  Only A still with unprocessed values}}
+\DoxyCodeLine{433 \textcolor{comment}{!}}
+\DoxyCodeLine{434                      iinda = iinda + 1}
+\DoxyCodeLine{435                      jwrkt(iwrk) = irngt(iinda)}
+\DoxyCodeLine{436 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{437                \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{438 \textcolor{comment}{!}}
+\DoxyCodeLine{439 \textcolor{comment}{!  Only B still with unprocessed values}}
+\DoxyCodeLine{440 \textcolor{comment}{!}}
+\DoxyCodeLine{441                   irngt(iwrkd:iindb) = jwrkt(iwrkd:iindb)}
+\DoxyCodeLine{442                   iwrk = iwrkf}
+\DoxyCodeLine{443                   \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{444 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{445 \textcolor{comment}{!}}
+\DoxyCodeLine{446 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{447 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{448 \textcolor{comment}{!}}
+\DoxyCodeLine{449 \textcolor{comment}{!  The Cs become As and Bs}}
+\DoxyCodeLine{450 \textcolor{comment}{!}}
+\DoxyCodeLine{451          lmtna = 2 * lmtna}
+\DoxyCodeLine{452 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{453 \textcolor{comment}{!}}
+\DoxyCodeLine{454 \textcolor{comment}{!  Clean up}}
+\DoxyCodeLine{455 \textcolor{comment}{!}}
+\DoxyCodeLine{456       \textcolor{keyword}{Deallocate} (jwrkt)}
+\DoxyCodeLine{457       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{458 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacem__mrgref_ac2b6e0a4989e07ca85f6bae35ae20c74}\label{namespacem__mrgref_ac2b6e0a4989e07ca85f6bae35ae20c74}} 
+\index{m\_mrgref@{m\_mrgref}!real32\_mrgref@{real32\_mrgref}}
+\index{real32\_mrgref@{real32\_mrgref}!m\_mrgref@{m\_mrgref}}
+\doxysubsubsection{\texorpdfstring{real32\_mrgref()}{real32\_mrgref()}}
+{\footnotesize\ttfamily subroutine m\+\_\+mrgref\+::real32\+\_\+mrgref (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{217 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{218 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xvalt}
+\DoxyCodeLine{219       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
+\DoxyCodeLine{220 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{221 \textcolor{comment}{!}}
+\DoxyCodeLine{222       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Allocatable} :: JWRKT}
+\DoxyCodeLine{223       \textcolor{keywordtype}{Integer} :: LMTNA, LMTNC}
+\DoxyCodeLine{224       \textcolor{keywordtype}{Integer} :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB}
+\DoxyCodeLine{225 \textcolor{comment}{!}}
+\DoxyCodeLine{226       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
+\DoxyCodeLine{227       \textcolor{keywordflow}{If} (nval <= 0) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{228          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{229 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{230 \textcolor{comment}{!}}
+\DoxyCodeLine{231 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
+\DoxyCodeLine{232 \textcolor{comment}{!}}
+\DoxyCodeLine{233       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
+\DoxyCodeLine{234          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{235             irngt(iind-\/1) = iind -\/ 1}
+\DoxyCodeLine{236             irngt(iind) = iind}
+\DoxyCodeLine{237          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{238             irngt(iind-\/1) = iind}
+\DoxyCodeLine{239             irngt(iind) = iind -\/ 1}
+\DoxyCodeLine{240 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{241 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{242       \textcolor{keywordflow}{If} (modulo(nval, 2) /= 0) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{243          irngt(nval) = nval}
+\DoxyCodeLine{244 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{245 \textcolor{comment}{!}}
+\DoxyCodeLine{246 \textcolor{comment}{!  We will now have ordered subsets A -\/ B -\/ A -\/ B -\/ ...}}
+\DoxyCodeLine{247 \textcolor{comment}{!  and merge A and B couples into     C   -\/   C   -\/ ...}}
+\DoxyCodeLine{248 \textcolor{comment}{!}}
+\DoxyCodeLine{249       \textcolor{keyword}{Allocate} (jwrkt(1:nval))}
+\DoxyCodeLine{250       lmtnc = 2}
+\DoxyCodeLine{251       lmtna = 2}
+\DoxyCodeLine{252 \textcolor{comment}{!}}
+\DoxyCodeLine{253 \textcolor{comment}{!  Iteration. Each time, the length of the ordered subsets}}
+\DoxyCodeLine{254 \textcolor{comment}{!  is doubled.}}
+\DoxyCodeLine{255 \textcolor{comment}{!}}
+\DoxyCodeLine{256       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{257          \textcolor{keywordflow}{If} (lmtna >= nval) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{258          iwrkf = 0}
+\DoxyCodeLine{259          lmtnc = 2 * lmtnc}
+\DoxyCodeLine{260          iwrk = 0}
+\DoxyCodeLine{261 \textcolor{comment}{!}}
+\DoxyCodeLine{262 \textcolor{comment}{!   Loop on merges of A and B into C}}
+\DoxyCodeLine{263 \textcolor{comment}{!}}
+\DoxyCodeLine{264          \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{265             iinda = iwrkf}
+\DoxyCodeLine{266             iwrkd = iwrkf + 1}
+\DoxyCodeLine{267             iwrkf = iinda + lmtnc}
+\DoxyCodeLine{268             jinda = iinda + lmtna}
+\DoxyCodeLine{269             \textcolor{keywordflow}{If} (iwrkf >= nval) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{270                \textcolor{keywordflow}{If} (jinda >= nval) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{271                iwrkf = nval}
+\DoxyCodeLine{272 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{273             iindb = jinda}
+\DoxyCodeLine{274 \textcolor{comment}{!}}
+\DoxyCodeLine{275 \textcolor{comment}{!   Shortcut for the case when the max of A is smaller}}
+\DoxyCodeLine{276 \textcolor{comment}{!   than the min of B (no need to do anything)}}
+\DoxyCodeLine{277 \textcolor{comment}{!}}
+\DoxyCodeLine{278             \textcolor{keywordflow}{If} (xvalt(irngt(jinda)) <= xvalt(irngt(jinda+1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{279                iwrk = iwrkf}
+\DoxyCodeLine{280                cycle}
+\DoxyCodeLine{281 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{282 \textcolor{comment}{!}}
+\DoxyCodeLine{283 \textcolor{comment}{!  One steps in the C subset, that we create in the final rank array}}
+\DoxyCodeLine{284 \textcolor{comment}{!}}
+\DoxyCodeLine{285             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{286                \textcolor{keywordflow}{If} (iwrk >= iwrkf) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{287 \textcolor{comment}{!}}
+\DoxyCodeLine{288 \textcolor{comment}{!  Make a copy of the rank array for next iteration}}
+\DoxyCodeLine{289 \textcolor{comment}{!}}
+\DoxyCodeLine{290                   irngt(iwrkd:iwrkf) = jwrkt(iwrkd:iwrkf)}
+\DoxyCodeLine{291                   \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{292 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{293 \textcolor{comment}{!}}
+\DoxyCodeLine{294                iwrk = iwrk + 1}
+\DoxyCodeLine{295 \textcolor{comment}{!}}
+\DoxyCodeLine{296 \textcolor{comment}{!  We still have unprocessed values in both A and B}}
+\DoxyCodeLine{297 \textcolor{comment}{!}}
+\DoxyCodeLine{298                \textcolor{keywordflow}{If} (iinda < jinda) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{299                   \textcolor{keywordflow}{If} (iindb < iwrkf) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{300                      \textcolor{keywordflow}{If} (xvalt(irngt(iinda+1)) > xvalt(irngt(iindb+1))) \&}
+\DoxyCodeLine{301                     \& \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{302                         iindb = iindb + 1}
+\DoxyCodeLine{303                         jwrkt(iwrk) = irngt(iindb)}
+\DoxyCodeLine{304                      \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{305                         iinda = iinda + 1}
+\DoxyCodeLine{306                         jwrkt(iwrk) = irngt(iinda)}
+\DoxyCodeLine{307 \textcolor{keywordflow}{                     End If}}
+\DoxyCodeLine{308                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{309 \textcolor{comment}{!}}
+\DoxyCodeLine{310 \textcolor{comment}{!  Only A still with unprocessed values}}
+\DoxyCodeLine{311 \textcolor{comment}{!}}
+\DoxyCodeLine{312                      iinda = iinda + 1}
+\DoxyCodeLine{313                      jwrkt(iwrk) = irngt(iinda)}
+\DoxyCodeLine{314 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{315                \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{316 \textcolor{comment}{!}}
+\DoxyCodeLine{317 \textcolor{comment}{!  Only B still with unprocessed values}}
+\DoxyCodeLine{318 \textcolor{comment}{!}}
+\DoxyCodeLine{319                   irngt(iwrkd:iindb) = jwrkt(iwrkd:iindb)}
+\DoxyCodeLine{320                   iwrk = iwrkf}
+\DoxyCodeLine{321                   \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{322 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{323 \textcolor{comment}{!}}
+\DoxyCodeLine{324 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{325 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{326 \textcolor{comment}{!}}
+\DoxyCodeLine{327 \textcolor{comment}{!  The Cs become As and Bs}}
+\DoxyCodeLine{328 \textcolor{comment}{!}}
+\DoxyCodeLine{329          lmtna = 2 * lmtna}
+\DoxyCodeLine{330 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{331 \textcolor{comment}{!}}
+\DoxyCodeLine{332 \textcolor{comment}{!  Clean up}}
+\DoxyCodeLine{333 \textcolor{comment}{!}}
+\DoxyCodeLine{334       \textcolor{keyword}{Deallocate} (jwrkt)}
+\DoxyCodeLine{335       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{336 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacem__mrgref_a00e19c399f101c2ae55102232660abe7}\label{namespacem__mrgref_a00e19c399f101c2ae55102232660abe7}} 
+\index{m\_mrgref@{m\_mrgref}!real64\_mrgref@{real64\_mrgref}}
+\index{real64\_mrgref@{real64\_mrgref}!m\_mrgref@{m\_mrgref}}
+\doxysubsubsection{\texorpdfstring{real64\_mrgref()}{real64\_mrgref()}}
+{\footnotesize\ttfamily subroutine m\+\_\+mrgref\+::real64\+\_\+mrgref (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 \hypertarget{namespacem__mrgref_autotoc_md50}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__mrgref_autotoc_md50}
-mrgref(3f) -\/ \mbox{[}orderpack\+:R\+A\+NK\mbox{]} do stuff (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__mrgref_autotoc_md51}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__mrgref_autotoc_md51}
-\begin{DoxyVerb} Subroutine mrgref (yyyyyy)
+mrgref(3f) -\/ \mbox{[}orderpack\+:R\+A\+NK\mbox{]} Ranks array X\+V\+A\+LT into index array I\+R\+N\+GT, using basic merge-\/sort (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__mrgref_autotoc_md51}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__mrgref_autotoc_md51}
+\begin{DoxyVerb} Subroutine ${KIND}_mrgref (XVALT, IRNGT)
 
-  ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+   ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XVALT
+   Integer, Dimension (:), Intent (Out) :: IRNGT
 
 Where ${TYPE}(kind=${KIND}) may be
 
@@ -41,429 +297,139 @@ Where ${TYPE}(kind=${KIND}) may be
    o Integer(kind=int32)
 \end{DoxyVerb}
 \hypertarget{namespacem__mrgref_autotoc_md52}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__mrgref_autotoc_md52}
-\hypertarget{namespacem__mrgref_autotoc_md53}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__mrgref_autotoc_md53}
-X\+X\+X\+XX description Y\+Y\+Y\+YY description\hypertarget{namespacem__mrgref_autotoc_md54}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__mrgref_autotoc_md54}
+Ranks array X\+V\+A\+LT into index array I\+R\+N\+GT, using merge-\/sort
+
+This version is not optimized for performance, and is thus not as difficult to read as some other ones.\hypertarget{namespacem__mrgref_autotoc_md53}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__mrgref_autotoc_md53}
+X\+V\+A\+LT input array to rank I\+R\+N\+GT returned rank array\hypertarget{namespacem__mrgref_autotoc_md54}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__mrgref_autotoc_md54}
 Sample program\+:
 
-program demo\+\_\+mrgref use M\+\_\+mrgref, only \+: mrgref implicit none !x!call mrgref(yyyyyy) end program demo\+\_\+mrgref
+program demo\+\_\+mrgref use M\+\_\+mrgref, only \+: mrgref implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,parameter \+:: dp=kind(0.\+0d0) integer,parameter \+:: isz=10000 real(kind=dp) \+:: dd(isz) real(kind=dp) \+:: pp integer \+:: indx(isz) integer \+:: i,j,k ! make some random numbers call random\+\_\+seed() call random\+\_\+number(dd) dd=dd-\/0.\+50\+\_\+dp k=int(log(huge(0.\+0\+\_\+dp))/log(2.\+0\+\_\+dp))-\/1 do i=1,isz call random\+\_\+number(pp) j=floor((k+1)$\ast$pp) dd(i)=dd(i)$\ast$(2.\+0\+\_\+dp$\ast$$\ast$j) enddo ! rank data call mrgref(dd,indx) ! check order do i=1,isz-\/1 if(dd(indx(i)).gt.\+dd(indx(i+1)))then write($\ast$,g)\textquotesingle{}E\+R\+R\+OR\+: data not sorted i=\textquotesingle{},i,\textquotesingle{}index=\textquotesingle{},indx(i), \& \& \textquotesingle{}values \textquotesingle{},dd(indx(i)),dd(indx(i+1)) stop 1 endif enddo ! sort data using rank values dd=dd(indx) write($\ast$,g)\textquotesingle{}sorted \textquotesingle{},isz,\textquotesingle{}values\textquotesingle{} write($\ast$,g)\textquotesingle{}from\textquotesingle{},dd(1),\textquotesingle{}to\textquotesingle{},dd(isz) write($\ast$,$\ast$)minval(dd).eq.\+dd(1) write($\ast$,$\ast$)maxval(dd).eq.\+dd(isz) write($\ast$,$\ast$)minloc(dd).eq.\+1 write($\ast$,$\ast$)maxloc(dd).eq.\+isz end program demo\+\_\+mrgref
 
 Results\+:\hypertarget{namespacem__mrgref_autotoc_md55}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__mrgref_autotoc_md55}
-Michel Olagnon, 2000-\/2012
+Michel Olagnon -\/ April 2000
 
 John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__mrgref_autotoc_md56}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__mrgref_autotoc_md56}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{59 \textcolor{comment}{!!  Ranks array XVALT into index array IRNGT, using merge-\/sort}}
-\DoxyCodeLine{60 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{61 \textcolor{comment}{!!  This version is not optimized for performance, and is thus}}
-\DoxyCodeLine{62 \textcolor{comment}{!!  not as difficult to read as some other ones.}}
-\DoxyCodeLine{63 \textcolor{comment}{!!  Michel Olagnon -\/ April 2000}}
-\DoxyCodeLine{64 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{65 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{66 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xvalt}
-\DoxyCodeLine{67       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
-\DoxyCodeLine{68 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{69 \textcolor{comment}{!}}
-\DoxyCodeLine{70       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Allocatable} :: JWRKT}
-\DoxyCodeLine{71       \textcolor{keywordtype}{Integer} :: LMTNA, LMTNC}
-\DoxyCodeLine{72       \textcolor{keywordtype}{Integer} :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB}
-\DoxyCodeLine{73 \textcolor{comment}{!}}
-\DoxyCodeLine{74       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
-\DoxyCodeLine{75       \textcolor{keywordflow}{If} (nval <= 0) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{76          \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{77 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{78 \textcolor{comment}{!}}
-\DoxyCodeLine{79 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
-\DoxyCodeLine{80 \textcolor{comment}{!}}
-\DoxyCodeLine{81       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
-\DoxyCodeLine{82          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{83             irngt(iind-\/1) = iind -\/ 1}
-\DoxyCodeLine{84             irngt(iind) = iind}
-\DoxyCodeLine{85          \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{86             irngt(iind-\/1) = iind}
-\DoxyCodeLine{87             irngt(iind) = iind -\/ 1}
-\DoxyCodeLine{88 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{89 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{90       \textcolor{keywordflow}{If} (modulo(nval, 2) /= 0) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{91          irngt(nval) = nval}
-\DoxyCodeLine{92 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{93 \textcolor{comment}{!}}
-\DoxyCodeLine{94 \textcolor{comment}{!  We will now have ordered subsets A -\/ B -\/ A -\/ B -\/ ...}}
-\DoxyCodeLine{95 \textcolor{comment}{!  and merge A and B couples into     C   -\/   C   -\/ ...}}
-\DoxyCodeLine{96 \textcolor{comment}{!}}
-\DoxyCodeLine{97       \textcolor{keyword}{Allocate} (jwrkt(1:nval))}
-\DoxyCodeLine{98       lmtnc = 2}
-\DoxyCodeLine{99       lmtna = 2}
-\DoxyCodeLine{100 \textcolor{comment}{!}}
-\DoxyCodeLine{101 \textcolor{comment}{!  Iteration. Each time, the length of the ordered subsets}}
-\DoxyCodeLine{102 \textcolor{comment}{!  is doubled.}}
+\DoxyCodeLine{95 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{96 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xvalt}
+\DoxyCodeLine{97       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
+\DoxyCodeLine{98 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{99 \textcolor{comment}{!}}
+\DoxyCodeLine{100       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Allocatable} :: JWRKT}
+\DoxyCodeLine{101       \textcolor{keywordtype}{Integer} :: LMTNA, LMTNC}
+\DoxyCodeLine{102       \textcolor{keywordtype}{Integer} :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB}
 \DoxyCodeLine{103 \textcolor{comment}{!}}
-\DoxyCodeLine{104       \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{105          \textcolor{keywordflow}{If} (lmtna >= nval) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{106          iwrkf = 0}
-\DoxyCodeLine{107          lmtnc = 2 * lmtnc}
-\DoxyCodeLine{108          iwrk = 0}
-\DoxyCodeLine{109 \textcolor{comment}{!}}
-\DoxyCodeLine{110 \textcolor{comment}{!   Loop on merges of A and B into C}}
-\DoxyCodeLine{111 \textcolor{comment}{!}}
-\DoxyCodeLine{112          \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{113             iinda = iwrkf}
-\DoxyCodeLine{114             iwrkd = iwrkf + 1}
-\DoxyCodeLine{115             iwrkf = iinda + lmtnc}
-\DoxyCodeLine{116             jinda = iinda + lmtna}
-\DoxyCodeLine{117             \textcolor{keywordflow}{If} (iwrkf >= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{118                \textcolor{keywordflow}{If} (jinda >= nval) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{119                iwrkf = nval}
-\DoxyCodeLine{120 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{121             iindb = jinda}
-\DoxyCodeLine{122 \textcolor{comment}{!}}
-\DoxyCodeLine{123 \textcolor{comment}{!   Shortcut for the case when the max of A is smaller}}
-\DoxyCodeLine{124 \textcolor{comment}{!   than the min of B (no need to do anything)}}
-\DoxyCodeLine{125 \textcolor{comment}{!}}
-\DoxyCodeLine{126             \textcolor{keywordflow}{If} (xvalt(irngt(jinda)) <= xvalt(irngt(jinda+1))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{127                iwrk = iwrkf}
-\DoxyCodeLine{128                cycle}
-\DoxyCodeLine{129 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{104       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
+\DoxyCodeLine{105       \textcolor{keywordflow}{If} (nval <= 0) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{106          \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{107 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{108 \textcolor{comment}{!}}
+\DoxyCodeLine{109 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
+\DoxyCodeLine{110 \textcolor{comment}{!}}
+\DoxyCodeLine{111       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
+\DoxyCodeLine{112          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{113             irngt(iind-\/1) = iind -\/ 1}
+\DoxyCodeLine{114             irngt(iind) = iind}
+\DoxyCodeLine{115          \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{116             irngt(iind-\/1) = iind}
+\DoxyCodeLine{117             irngt(iind) = iind -\/ 1}
+\DoxyCodeLine{118 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{119 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{120       \textcolor{keywordflow}{If} (modulo(nval, 2) /= 0) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{121          irngt(nval) = nval}
+\DoxyCodeLine{122 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{123 \textcolor{comment}{!}}
+\DoxyCodeLine{124 \textcolor{comment}{!  We will now have ordered subsets A -\/ B -\/ A -\/ B -\/ ...}}
+\DoxyCodeLine{125 \textcolor{comment}{!  and merge A and B couples into     C   -\/   C   -\/ ...}}
+\DoxyCodeLine{126 \textcolor{comment}{!}}
+\DoxyCodeLine{127       \textcolor{keyword}{Allocate} (jwrkt(1:nval))}
+\DoxyCodeLine{128       lmtnc = 2}
+\DoxyCodeLine{129       lmtna = 2}
 \DoxyCodeLine{130 \textcolor{comment}{!}}
-\DoxyCodeLine{131 \textcolor{comment}{!  One steps in the C subset, that we create in the final rank array}}
-\DoxyCodeLine{132 \textcolor{comment}{!}}
-\DoxyCodeLine{133             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{134                \textcolor{keywordflow}{If} (iwrk >= iwrkf) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{135 \textcolor{comment}{!}}
-\DoxyCodeLine{136 \textcolor{comment}{!  Make a copy of the rank array for next iteration}}
-\DoxyCodeLine{137 \textcolor{comment}{!}}
-\DoxyCodeLine{138                   irngt(iwrkd:iwrkf) = jwrkt(iwrkd:iwrkf)}
-\DoxyCodeLine{139                   \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{140 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{131 \textcolor{comment}{!  Iteration. Each time, the length of the ordered subsets}}
+\DoxyCodeLine{132 \textcolor{comment}{!  is doubled.}}
+\DoxyCodeLine{133 \textcolor{comment}{!}}
+\DoxyCodeLine{134       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{135          \textcolor{keywordflow}{If} (lmtna >= nval) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{136          iwrkf = 0}
+\DoxyCodeLine{137          lmtnc = 2 * lmtnc}
+\DoxyCodeLine{138          iwrk = 0}
+\DoxyCodeLine{139 \textcolor{comment}{!}}
+\DoxyCodeLine{140 \textcolor{comment}{!   Loop on merges of A and B into C}}
 \DoxyCodeLine{141 \textcolor{comment}{!}}
-\DoxyCodeLine{142                iwrk = iwrk + 1}
-\DoxyCodeLine{143 \textcolor{comment}{!}}
-\DoxyCodeLine{144 \textcolor{comment}{!  We still have unprocessed values in both A and B}}
-\DoxyCodeLine{145 \textcolor{comment}{!}}
-\DoxyCodeLine{146                \textcolor{keywordflow}{If} (iinda < jinda) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{147                   \textcolor{keywordflow}{If} (iindb < iwrkf) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{148                      \textcolor{keywordflow}{If} (xvalt(irngt(iinda+1)) > xvalt(irngt(iindb+1))) \&}
-\DoxyCodeLine{149                     \& \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{150                         iindb = iindb + 1}
-\DoxyCodeLine{151                         jwrkt(iwrk) = irngt(iindb)}
-\DoxyCodeLine{152                      \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{153                         iinda = iinda + 1}
-\DoxyCodeLine{154                         jwrkt(iwrk) = irngt(iinda)}
-\DoxyCodeLine{155 \textcolor{keywordflow}{                     End If}}
-\DoxyCodeLine{156                   \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{157 \textcolor{comment}{!}}
-\DoxyCodeLine{158 \textcolor{comment}{!  Only A still with unprocessed values}}
-\DoxyCodeLine{159 \textcolor{comment}{!}}
-\DoxyCodeLine{160                      iinda = iinda + 1}
-\DoxyCodeLine{161                      jwrkt(iwrk) = irngt(iinda)}
-\DoxyCodeLine{162 \textcolor{keywordflow}{                  End If}}
-\DoxyCodeLine{163                \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{164 \textcolor{comment}{!}}
-\DoxyCodeLine{165 \textcolor{comment}{!  Only B still with unprocessed values}}
-\DoxyCodeLine{166 \textcolor{comment}{!}}
-\DoxyCodeLine{167                   irngt(iwrkd:iindb) = jwrkt(iwrkd:iindb)}
-\DoxyCodeLine{168                   iwrk = iwrkf}
+\DoxyCodeLine{142          \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{143             iinda = iwrkf}
+\DoxyCodeLine{144             iwrkd = iwrkf + 1}
+\DoxyCodeLine{145             iwrkf = iinda + lmtnc}
+\DoxyCodeLine{146             jinda = iinda + lmtna}
+\DoxyCodeLine{147             \textcolor{keywordflow}{If} (iwrkf >= nval) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{148                \textcolor{keywordflow}{If} (jinda >= nval) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{149                iwrkf = nval}
+\DoxyCodeLine{150 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{151             iindb = jinda}
+\DoxyCodeLine{152 \textcolor{comment}{!}}
+\DoxyCodeLine{153 \textcolor{comment}{!   Shortcut for the case when the max of A is smaller}}
+\DoxyCodeLine{154 \textcolor{comment}{!   than the min of B (no need to do anything)}}
+\DoxyCodeLine{155 \textcolor{comment}{!}}
+\DoxyCodeLine{156             \textcolor{keywordflow}{If} (xvalt(irngt(jinda)) <= xvalt(irngt(jinda+1))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{157                iwrk = iwrkf}
+\DoxyCodeLine{158                cycle}
+\DoxyCodeLine{159 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{160 \textcolor{comment}{!}}
+\DoxyCodeLine{161 \textcolor{comment}{!  One steps in the C subset, that we create in the final rank array}}
+\DoxyCodeLine{162 \textcolor{comment}{!}}
+\DoxyCodeLine{163             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{164                \textcolor{keywordflow}{If} (iwrk >= iwrkf) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{165 \textcolor{comment}{!}}
+\DoxyCodeLine{166 \textcolor{comment}{!  Make a copy of the rank array for next iteration}}
+\DoxyCodeLine{167 \textcolor{comment}{!}}
+\DoxyCodeLine{168                   irngt(iwrkd:iwrkf) = jwrkt(iwrkd:iwrkf)}
 \DoxyCodeLine{169                   \textcolor{keywordflow}{Exit}}
 \DoxyCodeLine{170 \textcolor{keywordflow}{               End If}}
 \DoxyCodeLine{171 \textcolor{comment}{!}}
-\DoxyCodeLine{172 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{173 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{174 \textcolor{comment}{!}}
-\DoxyCodeLine{175 \textcolor{comment}{!  The Cs become As and Bs}}
-\DoxyCodeLine{176 \textcolor{comment}{!}}
-\DoxyCodeLine{177          lmtna = 2 * lmtna}
-\DoxyCodeLine{178 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{179 \textcolor{comment}{!}}
-\DoxyCodeLine{180 \textcolor{comment}{!  Clean up}}
-\DoxyCodeLine{181 \textcolor{comment}{!}}
-\DoxyCodeLine{182       \textcolor{keyword}{Deallocate} (jwrkt)}
-\DoxyCodeLine{183       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{184 \textcolor{comment}{!}}
-
-\end{DoxyCode}
-\mbox{\Hypertarget{namespacem__mrgref_a805fec43f8c93a694c071e327c9a06d9}\label{namespacem__mrgref_a805fec43f8c93a694c071e327c9a06d9}} 
-\index{m\_mrgref@{m\_mrgref}!i\_mrgref@{i\_mrgref}}
-\index{i\_mrgref@{i\_mrgref}!m\_mrgref@{m\_mrgref}}
-\doxysubsubsection{\texorpdfstring{i\_mrgref()}{i\_mrgref()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+mrgref\+::i\+\_\+mrgref (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{316 \textcolor{comment}{!!  Ranks array XVALT into index array IRNGT, using merge-\/sort}}
-\DoxyCodeLine{317 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{318 \textcolor{comment}{!!  This version is not optimized for performance, and is thus}}
-\DoxyCodeLine{319 \textcolor{comment}{!!  not as difficult to read as some other ones.}}
-\DoxyCodeLine{320 \textcolor{comment}{!!  Michel Olagnon -\/ April 2000}}
-\DoxyCodeLine{321 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{322 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{323       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)}  :: XVALT}
-\DoxyCodeLine{324       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
-\DoxyCodeLine{325 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{326 \textcolor{comment}{!}}
-\DoxyCodeLine{327       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Allocatable} :: JWRKT}
-\DoxyCodeLine{328       \textcolor{keywordtype}{Integer} :: LMTNA, LMTNC}
-\DoxyCodeLine{329       \textcolor{keywordtype}{Integer} :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB}
-\DoxyCodeLine{330 \textcolor{comment}{!}}
-\DoxyCodeLine{331       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
-\DoxyCodeLine{332       \textcolor{keywordflow}{If} (nval <= 0) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{333          \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{334 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{335 \textcolor{comment}{!}}
-\DoxyCodeLine{336 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
-\DoxyCodeLine{337 \textcolor{comment}{!}}
-\DoxyCodeLine{338       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
-\DoxyCodeLine{339          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{340             irngt(iind-\/1) = iind -\/ 1}
-\DoxyCodeLine{341             irngt(iind) = iind}
-\DoxyCodeLine{342          \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{343             irngt(iind-\/1) = iind}
-\DoxyCodeLine{344             irngt(iind) = iind -\/ 1}
-\DoxyCodeLine{345 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{346 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{347       \textcolor{keywordflow}{If} (modulo(nval, 2) /= 0) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{348          irngt(nval) = nval}
-\DoxyCodeLine{349 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{350 \textcolor{comment}{!}}
-\DoxyCodeLine{351 \textcolor{comment}{!  We will now have ordered subsets A -\/ B -\/ A -\/ B -\/ ...}}
-\DoxyCodeLine{352 \textcolor{comment}{!  and merge A and B couples into     C   -\/   C   -\/ ...}}
-\DoxyCodeLine{353 \textcolor{comment}{!}}
-\DoxyCodeLine{354       \textcolor{keyword}{Allocate} (jwrkt(1:nval))}
-\DoxyCodeLine{355       lmtnc = 2}
-\DoxyCodeLine{356       lmtna = 2}
-\DoxyCodeLine{357 \textcolor{comment}{!}}
-\DoxyCodeLine{358 \textcolor{comment}{!  Iteration. Each time, the length of the ordered subsets}}
-\DoxyCodeLine{359 \textcolor{comment}{!  is doubled.}}
-\DoxyCodeLine{360 \textcolor{comment}{!}}
-\DoxyCodeLine{361       \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{362          \textcolor{keywordflow}{If} (lmtna >= nval) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{363          iwrkf = 0}
-\DoxyCodeLine{364          lmtnc = 2 * lmtnc}
-\DoxyCodeLine{365          iwrk = 0}
-\DoxyCodeLine{366 \textcolor{comment}{!}}
-\DoxyCodeLine{367 \textcolor{comment}{!   Loop on merges of A and B into C}}
-\DoxyCodeLine{368 \textcolor{comment}{!}}
-\DoxyCodeLine{369          \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{370             iinda = iwrkf}
-\DoxyCodeLine{371             iwrkd = iwrkf + 1}
-\DoxyCodeLine{372             iwrkf = iinda + lmtnc}
-\DoxyCodeLine{373             jinda = iinda + lmtna}
-\DoxyCodeLine{374             \textcolor{keywordflow}{If} (iwrkf >= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{375                \textcolor{keywordflow}{If} (jinda >= nval) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{376                iwrkf = nval}
-\DoxyCodeLine{377 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{378             iindb = jinda}
-\DoxyCodeLine{379 \textcolor{comment}{!}}
-\DoxyCodeLine{380 \textcolor{comment}{!   Shortcut for the case when the max of A is smaller}}
-\DoxyCodeLine{381 \textcolor{comment}{!   than the min of B (no need to do anything)}}
-\DoxyCodeLine{382 \textcolor{comment}{!}}
-\DoxyCodeLine{383             \textcolor{keywordflow}{If} (xvalt(irngt(jinda)) <= xvalt(irngt(jinda+1))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{384                iwrk = iwrkf}
-\DoxyCodeLine{385                cycle}
-\DoxyCodeLine{386 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{387 \textcolor{comment}{!}}
-\DoxyCodeLine{388 \textcolor{comment}{!  One steps in the C subset, that we create in the final rank array}}
-\DoxyCodeLine{389 \textcolor{comment}{!}}
-\DoxyCodeLine{390             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{391                \textcolor{keywordflow}{If} (iwrk >= iwrkf) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{392 \textcolor{comment}{!}}
-\DoxyCodeLine{393 \textcolor{comment}{!  Make a copy of the rank array for next iteration}}
-\DoxyCodeLine{394 \textcolor{comment}{!}}
-\DoxyCodeLine{395                   irngt(iwrkd:iwrkf) = jwrkt(iwrkd:iwrkf)}
-\DoxyCodeLine{396                   \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{397 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{398 \textcolor{comment}{!}}
-\DoxyCodeLine{399                iwrk = iwrk + 1}
-\DoxyCodeLine{400 \textcolor{comment}{!}}
-\DoxyCodeLine{401 \textcolor{comment}{!  We still have unprocessed values in both A and B}}
-\DoxyCodeLine{402 \textcolor{comment}{!}}
-\DoxyCodeLine{403                \textcolor{keywordflow}{If} (iinda < jinda) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{404                   \textcolor{keywordflow}{If} (iindb < iwrkf) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{405                      \textcolor{keywordflow}{If} (xvalt(irngt(iinda+1)) > xvalt(irngt(iindb+1))) \&}
-\DoxyCodeLine{406                     \& \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{407                         iindb = iindb + 1}
-\DoxyCodeLine{408                         jwrkt(iwrk) = irngt(iindb)}
-\DoxyCodeLine{409                      \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{410                         iinda = iinda + 1}
-\DoxyCodeLine{411                         jwrkt(iwrk) = irngt(iinda)}
-\DoxyCodeLine{412 \textcolor{keywordflow}{                     End If}}
-\DoxyCodeLine{413                   \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{414 \textcolor{comment}{!}}
-\DoxyCodeLine{415 \textcolor{comment}{!  Only A still with unprocessed values}}
-\DoxyCodeLine{416 \textcolor{comment}{!}}
-\DoxyCodeLine{417                      iinda = iinda + 1}
-\DoxyCodeLine{418                      jwrkt(iwrk) = irngt(iinda)}
-\DoxyCodeLine{419 \textcolor{keywordflow}{                  End If}}
-\DoxyCodeLine{420                \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{421 \textcolor{comment}{!}}
-\DoxyCodeLine{422 \textcolor{comment}{!  Only B still with unprocessed values}}
-\DoxyCodeLine{423 \textcolor{comment}{!}}
-\DoxyCodeLine{424                   irngt(iwrkd:iindb) = jwrkt(iwrkd:iindb)}
-\DoxyCodeLine{425                   iwrk = iwrkf}
-\DoxyCodeLine{426                   \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{427 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{428 \textcolor{comment}{!}}
-\DoxyCodeLine{429 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{430 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{431 \textcolor{comment}{!}}
-\DoxyCodeLine{432 \textcolor{comment}{!  The Cs become As and Bs}}
-\DoxyCodeLine{433 \textcolor{comment}{!}}
-\DoxyCodeLine{434          lmtna = 2 * lmtna}
-\DoxyCodeLine{435 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{436 \textcolor{comment}{!}}
-\DoxyCodeLine{437 \textcolor{comment}{!  Clean up}}
-\DoxyCodeLine{438 \textcolor{comment}{!}}
-\DoxyCodeLine{439       \textcolor{keyword}{Deallocate} (jwrkt)}
-\DoxyCodeLine{440       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{441 \textcolor{comment}{!}}
-
-\end{DoxyCode}
-\mbox{\Hypertarget{namespacem__mrgref_a396d1a06dea1912e9ab1ccb613d57b7b}\label{namespacem__mrgref_a396d1a06dea1912e9ab1ccb613d57b7b}} 
-\index{m\_mrgref@{m\_mrgref}!r\_mrgref@{r\_mrgref}}
-\index{r\_mrgref@{r\_mrgref}!m\_mrgref@{m\_mrgref}}
-\doxysubsubsection{\texorpdfstring{r\_mrgref()}{r\_mrgref()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+mrgref\+::r\+\_\+mrgref (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{188 \textcolor{comment}{!!  Ranks array XVALT into index array IRNGT, using merge-\/sort}}
-\DoxyCodeLine{189 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{190 \textcolor{comment}{!!  This version is not optimized for performance, and is thus}}
-\DoxyCodeLine{191 \textcolor{comment}{!!  not as difficult to read as some other ones.}}
-\DoxyCodeLine{192 \textcolor{comment}{!!  Michel Olagnon -\/ April 2000}}
-\DoxyCodeLine{193 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{194 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{195 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XVALT}
-\DoxyCodeLine{196       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
-\DoxyCodeLine{197 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{198 \textcolor{comment}{!}}
-\DoxyCodeLine{199       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Allocatable} :: JWRKT}
-\DoxyCodeLine{200       \textcolor{keywordtype}{Integer} :: LMTNA, LMTNC}
-\DoxyCodeLine{201       \textcolor{keywordtype}{Integer} :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB}
-\DoxyCodeLine{202 \textcolor{comment}{!}}
-\DoxyCodeLine{203       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
-\DoxyCodeLine{204       \textcolor{keywordflow}{If} (nval <= 0) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{205          \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{206 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{207 \textcolor{comment}{!}}
-\DoxyCodeLine{208 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
+\DoxyCodeLine{172                iwrk = iwrk + 1}
+\DoxyCodeLine{173 \textcolor{comment}{!}}
+\DoxyCodeLine{174 \textcolor{comment}{!  We still have unprocessed values in both A and B}}
+\DoxyCodeLine{175 \textcolor{comment}{!}}
+\DoxyCodeLine{176                \textcolor{keywordflow}{If} (iinda < jinda) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{177                   \textcolor{keywordflow}{If} (iindb < iwrkf) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{178                      \textcolor{keywordflow}{If} (xvalt(irngt(iinda+1)) > xvalt(irngt(iindb+1))) \&}
+\DoxyCodeLine{179                     \& \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{180                         iindb = iindb + 1}
+\DoxyCodeLine{181                         jwrkt(iwrk) = irngt(iindb)}
+\DoxyCodeLine{182                      \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{183                         iinda = iinda + 1}
+\DoxyCodeLine{184                         jwrkt(iwrk) = irngt(iinda)}
+\DoxyCodeLine{185 \textcolor{keywordflow}{                     End If}}
+\DoxyCodeLine{186                   \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{187 \textcolor{comment}{!}}
+\DoxyCodeLine{188 \textcolor{comment}{!  Only A still with unprocessed values}}
+\DoxyCodeLine{189 \textcolor{comment}{!}}
+\DoxyCodeLine{190                      iinda = iinda + 1}
+\DoxyCodeLine{191                      jwrkt(iwrk) = irngt(iinda)}
+\DoxyCodeLine{192 \textcolor{keywordflow}{                  End If}}
+\DoxyCodeLine{193                \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{194 \textcolor{comment}{!}}
+\DoxyCodeLine{195 \textcolor{comment}{!  Only B still with unprocessed values}}
+\DoxyCodeLine{196 \textcolor{comment}{!}}
+\DoxyCodeLine{197                   irngt(iwrkd:iindb) = jwrkt(iwrkd:iindb)}
+\DoxyCodeLine{198                   iwrk = iwrkf}
+\DoxyCodeLine{199                   \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{200 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{201 \textcolor{comment}{!}}
+\DoxyCodeLine{202 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{203 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{204 \textcolor{comment}{!}}
+\DoxyCodeLine{205 \textcolor{comment}{!  The Cs become As and Bs}}
+\DoxyCodeLine{206 \textcolor{comment}{!}}
+\DoxyCodeLine{207          lmtna = 2 * lmtna}
+\DoxyCodeLine{208 \textcolor{keywordflow}{      End Do}}
 \DoxyCodeLine{209 \textcolor{comment}{!}}
-\DoxyCodeLine{210       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
-\DoxyCodeLine{211          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{212             irngt(iind-\/1) = iind -\/ 1}
-\DoxyCodeLine{213             irngt(iind) = iind}
-\DoxyCodeLine{214          \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{215             irngt(iind-\/1) = iind}
-\DoxyCodeLine{216             irngt(iind) = iind -\/ 1}
-\DoxyCodeLine{217 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{218 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{219       \textcolor{keywordflow}{If} (modulo(nval, 2) /= 0) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{220          irngt(nval) = nval}
-\DoxyCodeLine{221 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{222 \textcolor{comment}{!}}
-\DoxyCodeLine{223 \textcolor{comment}{!  We will now have ordered subsets A -\/ B -\/ A -\/ B -\/ ...}}
-\DoxyCodeLine{224 \textcolor{comment}{!  and merge A and B couples into     C   -\/   C   -\/ ...}}
-\DoxyCodeLine{225 \textcolor{comment}{!}}
-\DoxyCodeLine{226       \textcolor{keyword}{Allocate} (jwrkt(1:nval))}
-\DoxyCodeLine{227       lmtnc = 2}
-\DoxyCodeLine{228       lmtna = 2}
-\DoxyCodeLine{229 \textcolor{comment}{!}}
-\DoxyCodeLine{230 \textcolor{comment}{!  Iteration. Each time, the length of the ordered subsets}}
-\DoxyCodeLine{231 \textcolor{comment}{!  is doubled.}}
-\DoxyCodeLine{232 \textcolor{comment}{!}}
-\DoxyCodeLine{233       \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{234          \textcolor{keywordflow}{If} (lmtna >= nval) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{235          iwrkf = 0}
-\DoxyCodeLine{236          lmtnc = 2 * lmtnc}
-\DoxyCodeLine{237          iwrk = 0}
-\DoxyCodeLine{238 \textcolor{comment}{!}}
-\DoxyCodeLine{239 \textcolor{comment}{!   Loop on merges of A and B into C}}
-\DoxyCodeLine{240 \textcolor{comment}{!}}
-\DoxyCodeLine{241          \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{242             iinda = iwrkf}
-\DoxyCodeLine{243             iwrkd = iwrkf + 1}
-\DoxyCodeLine{244             iwrkf = iinda + lmtnc}
-\DoxyCodeLine{245             jinda = iinda + lmtna}
-\DoxyCodeLine{246             \textcolor{keywordflow}{If} (iwrkf >= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{247                \textcolor{keywordflow}{If} (jinda >= nval) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{248                iwrkf = nval}
-\DoxyCodeLine{249 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{250             iindb = jinda}
-\DoxyCodeLine{251 \textcolor{comment}{!}}
-\DoxyCodeLine{252 \textcolor{comment}{!   Shortcut for the case when the max of A is smaller}}
-\DoxyCodeLine{253 \textcolor{comment}{!   than the min of B (no need to do anything)}}
-\DoxyCodeLine{254 \textcolor{comment}{!}}
-\DoxyCodeLine{255             \textcolor{keywordflow}{If} (xvalt(irngt(jinda)) <= xvalt(irngt(jinda+1))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{256                iwrk = iwrkf}
-\DoxyCodeLine{257                cycle}
-\DoxyCodeLine{258 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{259 \textcolor{comment}{!}}
-\DoxyCodeLine{260 \textcolor{comment}{!  One steps in the C subset, that we create in the final rank array}}
-\DoxyCodeLine{261 \textcolor{comment}{!}}
-\DoxyCodeLine{262             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{263                \textcolor{keywordflow}{If} (iwrk >= iwrkf) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{264 \textcolor{comment}{!}}
-\DoxyCodeLine{265 \textcolor{comment}{!  Make a copy of the rank array for next iteration}}
-\DoxyCodeLine{266 \textcolor{comment}{!}}
-\DoxyCodeLine{267                   irngt(iwrkd:iwrkf) = jwrkt(iwrkd:iwrkf)}
-\DoxyCodeLine{268                   \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{269 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{270 \textcolor{comment}{!}}
-\DoxyCodeLine{271                iwrk = iwrk + 1}
-\DoxyCodeLine{272 \textcolor{comment}{!}}
-\DoxyCodeLine{273 \textcolor{comment}{!  We still have unprocessed values in both A and B}}
-\DoxyCodeLine{274 \textcolor{comment}{!}}
-\DoxyCodeLine{275                \textcolor{keywordflow}{If} (iinda < jinda) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{276                   \textcolor{keywordflow}{If} (iindb < iwrkf) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{277                      \textcolor{keywordflow}{If} (xvalt(irngt(iinda+1)) > xvalt(irngt(iindb+1))) \&}
-\DoxyCodeLine{278                     \& \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{279                         iindb = iindb + 1}
-\DoxyCodeLine{280                         jwrkt(iwrk) = irngt(iindb)}
-\DoxyCodeLine{281                      \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{282                         iinda = iinda + 1}
-\DoxyCodeLine{283                         jwrkt(iwrk) = irngt(iinda)}
-\DoxyCodeLine{284 \textcolor{keywordflow}{                     End If}}
-\DoxyCodeLine{285                   \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{286 \textcolor{comment}{!}}
-\DoxyCodeLine{287 \textcolor{comment}{!  Only A still with unprocessed values}}
-\DoxyCodeLine{288 \textcolor{comment}{!}}
-\DoxyCodeLine{289                      iinda = iinda + 1}
-\DoxyCodeLine{290                      jwrkt(iwrk) = irngt(iinda)}
-\DoxyCodeLine{291 \textcolor{keywordflow}{                  End If}}
-\DoxyCodeLine{292                \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{293 \textcolor{comment}{!}}
-\DoxyCodeLine{294 \textcolor{comment}{!  Only B still with unprocessed values}}
-\DoxyCodeLine{295 \textcolor{comment}{!}}
-\DoxyCodeLine{296                   irngt(iwrkd:iindb) = jwrkt(iwrkd:iindb)}
-\DoxyCodeLine{297                   iwrk = iwrkf}
-\DoxyCodeLine{298                   \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{299 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{300 \textcolor{comment}{!}}
-\DoxyCodeLine{301 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{302 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{303 \textcolor{comment}{!}}
-\DoxyCodeLine{304 \textcolor{comment}{!  The Cs become As and Bs}}
-\DoxyCodeLine{305 \textcolor{comment}{!}}
-\DoxyCodeLine{306          lmtna = 2 * lmtna}
-\DoxyCodeLine{307 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{308 \textcolor{comment}{!}}
-\DoxyCodeLine{309 \textcolor{comment}{!  Clean up}}
-\DoxyCodeLine{310 \textcolor{comment}{!}}
-\DoxyCodeLine{311       \textcolor{keyword}{Deallocate} (jwrkt)}
-\DoxyCodeLine{312       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{313 \textcolor{comment}{!}}
-
-\end{DoxyCode}
-
-
-\doxysubsection{Variable Documentation}
-\mbox{\Hypertarget{namespacem__mrgref_a16cfcb4e718ad5365de3fb20a7830010}\label{namespacem__mrgref_a16cfcb4e718ad5365de3fb20a7830010}} 
-\index{m\_mrgref@{m\_mrgref}!kdp@{kdp}}
-\index{kdp@{kdp}!m\_mrgref@{m\_mrgref}}
-\doxysubsubsection{\texorpdfstring{kdp}{kdp}}
-{\footnotesize\ttfamily integer, parameter, private m\+\_\+mrgref\+::kdp = selected\+\_\+real\+\_\+kind(15)\hspace{0.3cm}{\ttfamily [private]}}
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{5 \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: kdp = selected\_real\_kind(15)}
+\DoxyCodeLine{210 \textcolor{comment}{!  Clean up}}
+\DoxyCodeLine{211 \textcolor{comment}{!}}
+\DoxyCodeLine{212       \textcolor{keyword}{Deallocate} (jwrkt)}
+\DoxyCodeLine{213       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{214 \textcolor{comment}{!}}
 
 \end{DoxyCode}

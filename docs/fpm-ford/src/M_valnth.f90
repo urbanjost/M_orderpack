@@ -1,40 +1,97 @@
 Module M_valnth
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: valnth
-private :: kdp
-private :: R_valnth, I_valnth, D_valnth
 interface valnth
-  module procedure d_valnth, r_valnth, i_valnth
+  module procedure real64_valnth, real32_valnth, int32_valnth
 end interface valnth
 contains
-
-Function D_valnth (XDONT, NORD) Result (valnth)
-!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (Kind=kdp), Dimension (:), Intent (In) :: XDONT
-      Real (Kind=kdp) :: valnth
-      Integer, Intent (In) :: NORD
+!>
+!!##NAME
+!!    valnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array, i.e
+!!                 fractile of order NORD/SIZE(XDONT).
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Function ${KIND}_valnth (XDONT, NORD) Result (valnth)
+!!
+!!      ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+!!      ${TYPE} (Kind=${KIND}) :: valnth
+!!      Integer, Intent (In) :: NORD
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!   Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
+!!
+!!   This routine uses a pivoting strategy such as the one of finding the
+!!   median based on the quicksort algorithm, but we skew the pivot choice
+!!   to try to bring it to NORD as fast as possible. It uses 2 temporary
+!!   arrays, where it stores the indices of the values smaller than the
+!!   pivot (ILOWT), and the indices of values larger than the pivot that we
+!!   might still need later on (IHIGT). It iterates until it can bring the
+!!   number of values in ILOWT to exactly NORD, and then finds the maximum
+!!   of this set.
+!!
+!!##OPTIONS
+!!     XDONT    array to search
+!!     NORD     Nth lowest value to find
+!!##RETURNS
+!!     VALNTH   Nth lowest value
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_valnth
+!!    use M_valnth, only : valnth
+!!    implicit none
+!!    character(len=*),parameter :: list= '(*(g0:,", "))'
+!!    real,parameter ::  xdont(*)=[1.1,20.20,3.3,10.10,5.5,4.4,2.2]
+!!    integer :: i
+!!       write(*,list) 'ORIGINAL:',xdont
+!!       do i=1,size(xdont)
+!!          write(*,list)i,valnth(xdont,i)
+!!       enddo
+!!    end program demo_valnth
+!!
+!!   Results:
+!!
+!!    ORIGINAL:, 1.100, 20.20, 3.300, 10.10, 5.500, 4.400, 2.200
+!!    1, 1.100000
+!!    2, 2.200000
+!!    3, 3.300000
+!!    4, 4.400000
+!!    5, 5.500000
+!!    6, 10.10000
+!!    7, 20.20000
+!!
+!!##AUTHOR
+!!     Michel Olagnon - Aug. 2000
+!!
+!!     John Urban, 2022.04.16
+!!     o added man-page and reduced to a template using the
+!!       prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
+Function real64_valnth (XDONT, NORD) Result (valnth)
 ! __________________________________________________________
-      Real (Kind=kdp), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
-      Real (Kind=kdp) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
+Real (Kind=real64), Dimension (:), Intent (In) :: XDONT
+Real (Kind=real64) :: valnth
+Integer, Intent (In) :: NORD
+! __________________________________________________________
+Real (Kind=real64), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+Real (Kind=real64) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !
-      Integer :: NDON, JHIG, JLOW, IHIG
-      Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
-      Integer :: JLM2, JLM1, JHM2, JHM1, INTH
+Integer :: NDON, JHIG, JLOW, IHIG
+Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
+Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
       NDON = SIZE (XDONT)
       INTH = MAX (MIN (NORD, NDON), 1)
@@ -500,36 +557,20 @@ Function D_valnth (XDONT, NORD) Result (valnth)
 !  Now, we only need to find maximum of the 1:INTH set
 !
       VALNTH = MAXVAL (XLOWT (1:INTH))
-      Return
 !
-!
-End Function D_valnth
-
-Function R_valnth (XDONT, NORD) Result (valnth)
-!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!_________________________________________________________
-      Real, Dimension (:), Intent (In) :: XDONT
-      Real :: valnth
-      Integer, Intent (In) :: NORD
+End Function real64_valnth
+Function real32_valnth (XDONT, NORD) Result (valnth)
 ! __________________________________________________________
-      Real, Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
-      Real :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
+Real (Kind=real32), Dimension (:), Intent (In) :: XDONT
+Real (Kind=real32) :: valnth
+Integer, Intent (In) :: NORD
+! __________________________________________________________
+Real (Kind=real32), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+Real (Kind=real32) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !
-      Integer :: NDON, JHIG, JLOW, IHIG
-      Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
-      Integer :: JLM2, JLM1, JHM2, JHM1, INTH
+Integer :: NDON, JHIG, JLOW, IHIG
+Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
+Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
       NDON = SIZE (XDONT)
       INTH = MAX (MIN (NORD, NDON), 1)
@@ -995,35 +1036,20 @@ Function R_valnth (XDONT, NORD) Result (valnth)
 !  Now, we only need to find maximum of the 1:INTH set
 !
       VALNTH = MAXVAL (XLOWT (1:INTH))
-      Return
 !
-!
-End Function R_valnth
-Function I_valnth (XDONT, NORD) Result (valnth)
-!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In) :: XDONT
-      Integer :: valnth
-      Integer, Intent (In) :: NORD
+End Function real32_valnth
+Function int32_valnth (XDONT, NORD) Result (valnth)
 ! __________________________________________________________
-      Integer, Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
-      Integer :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
+Integer (Kind=int32), Dimension (:), Intent (In) :: XDONT
+Integer (Kind=int32) :: valnth
+Integer, Intent (In) :: NORD
+! __________________________________________________________
+Integer (Kind=int32), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+Integer (Kind=int32) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !
-      Integer :: NDON, JHIG, JLOW, IHIG
-      Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
-      Integer :: JLM2, JLM1, JHM2, JHM1, INTH
+Integer :: NDON, JHIG, JLOW, IHIG
+Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
+Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
       NDON = SIZE (XDONT)
       INTH = MAX (MIN (NORD, NDON), 1)
@@ -1489,8 +1515,6 @@ Function I_valnth (XDONT, NORD) Result (valnth)
 !  Now, we only need to find maximum of the 1:INTH set
 !
       VALNTH = MAXVAL (XLOWT (1:INTH))
-      Return
 !
-!
-End Function I_valnth
+End Function int32_valnth
 end module M_valnth
