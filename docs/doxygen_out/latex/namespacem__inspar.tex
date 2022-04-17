@@ -28,111 +28,30 @@ integer, parameter, private \mbox{\hyperlink{namespacem__inspar_a4faa95d043812dd
 \doxysubsubsection{\texorpdfstring{d\_inspar()}{d\_inspar()}}
 {\footnotesize\ttfamily subroutine, private m\+\_\+inspar\+::d\+\_\+inspar (\begin{DoxyParamCaption}\item[{real (kind=\mbox{\hyperlink{namespacem__inspar_a4faa95d043812dda86726822accfbec6}{kdp}}), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+\hypertarget{namespacem__inspar_autotoc_md29}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inspar_autotoc_md29}
+inspar(3f) -\/ \mbox{[}orderpack\mbox{]} do stuff (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__inspar_autotoc_md30}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inspar_autotoc_md30}
+\begin{DoxyVerb} Subroutine inspar (yyyyyy)
 
-\begin{DoxyCode}{0}
-\DoxyCodeLine{14 \textcolor{comment}{!! Sorts partially XDONT, bringing the NORD lowest values at the}}
-\DoxyCodeLine{15 \textcolor{comment}{!! begining of the array}}
-\DoxyCodeLine{16 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{17 \textcolor{comment}{!! This subroutine uses insertion sort, limiting insertion}}
-\DoxyCodeLine{18 \textcolor{comment}{!! to the first NORD values. It does not use any work array}}
-\DoxyCodeLine{19 \textcolor{comment}{!! and is faster when NORD is very small (2-\/5), but worst case}}
-\DoxyCodeLine{20 \textcolor{comment}{!! behavior can happen fairly probably (initially inverse sorted)}}
-\DoxyCodeLine{21 \textcolor{comment}{!! In many cases, the refined quicksort method is faster.}}
-\DoxyCodeLine{22 \textcolor{comment}{!! Michel Olagnon -\/ Feb. 2000}}
-\DoxyCodeLine{23 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{24 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{25 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
-\DoxyCodeLine{26       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
-\DoxyCodeLine{27 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{28 \textcolor{keywordtype}{      Real} (kind=kdp) :: xwrk, xwrk1}
-\DoxyCodeLine{29 \textcolor{comment}{!}}
-\DoxyCodeLine{30       \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
-\DoxyCodeLine{31 \textcolor{comment}{!}}
-\DoxyCodeLine{32       \textcolor{keywordflow}{Do} icrs = 2, nord}
-\DoxyCodeLine{33          xwrk = xdont(icrs)}
-\DoxyCodeLine{34          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{35             \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{36             xdont(idcr+1) = xdont(idcr)}
-\DoxyCodeLine{37 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{38          xdont(idcr+1) = xwrk}
-\DoxyCodeLine{39 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{40 \textcolor{comment}{!}}
-\DoxyCodeLine{41       xwrk1 = xdont(nord)}
-\DoxyCodeLine{42       \textcolor{keywordflow}{Do} icrs = nord + 1, \textcolor{keyword}{SIZE} (xdont)}
-\DoxyCodeLine{43          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{44             xwrk = xdont(icrs)}
-\DoxyCodeLine{45             xdont(icrs) = xwrk1}
-\DoxyCodeLine{46             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{47                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{48                xdont(idcr+1) = xdont(idcr)}
-\DoxyCodeLine{49 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{50             xdont(idcr+1) = xwrk}
-\DoxyCodeLine{51             xwrk1 = xdont(nord)}
-\DoxyCodeLine{52 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{53 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{54 \textcolor{comment}{!}}
-\DoxyCodeLine{55 \textcolor{comment}{!}}
+  ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
 
-\end{DoxyCode}
-\mbox{\Hypertarget{namespacem__inspar_aa97a0b2f40c81edd950c62d0030b3a29}\label{namespacem__inspar_aa97a0b2f40c81edd950c62d0030b3a29}} 
-\index{m\_inspar@{m\_inspar}!i\_inspar@{i\_inspar}}
-\index{i\_inspar@{i\_inspar}!m\_inspar@{m\_inspar}}
-\doxysubsubsection{\texorpdfstring{i\_inspar()}{i\_inspar()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+inspar\+::i\+\_\+inspar (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+Where ${TYPE}(kind=${KIND}) may be
 
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+\end{DoxyVerb}
+\hypertarget{namespacem__inspar_autotoc_md31}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inspar_autotoc_md31}
+\hypertarget{namespacem__inspar_autotoc_md32}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inspar_autotoc_md32}
+X\+X\+X\+XX description Y\+Y\+Y\+YY description\hypertarget{namespacem__inspar_autotoc_md33}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inspar_autotoc_md33}
+Sample program\+:
 
-\begin{DoxyCode}{0}
-\DoxyCodeLine{103 \textcolor{comment}{!! Sorts partially XDONT, bringing the NORD lowest values at the}}
-\DoxyCodeLine{104 \textcolor{comment}{!! begining of the array}}
-\DoxyCodeLine{105 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{106 \textcolor{comment}{!! This subroutine uses insertion sort, limiting insertion}}
-\DoxyCodeLine{107 \textcolor{comment}{!! to the first NORD values. It does not use any work array}}
-\DoxyCodeLine{108 \textcolor{comment}{!! and is faster when NORD is very small (2-\/5), but worst case}}
-\DoxyCodeLine{109 \textcolor{comment}{!! behavior can happen fairly probably (initially inverse sorted)}}
-\DoxyCodeLine{110 \textcolor{comment}{!! In many cases, the refined quicksort method is faster.}}
-\DoxyCodeLine{111 \textcolor{comment}{!! Michel Olagnon -\/ Feb. 2000}}
-\DoxyCodeLine{112 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{113 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{114       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)}  :: XDONT}
-\DoxyCodeLine{115       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
-\DoxyCodeLine{116 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{117       \textcolor{keywordtype}{Integer} :: XWRK, XWRK1}
-\DoxyCodeLine{118 \textcolor{comment}{!}}
-\DoxyCodeLine{119       \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
-\DoxyCodeLine{120 \textcolor{comment}{!}}
-\DoxyCodeLine{121       \textcolor{keywordflow}{Do} icrs = 2, nord}
-\DoxyCodeLine{122          xwrk = xdont(icrs)}
-\DoxyCodeLine{123          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{124             \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{125             xdont(idcr+1) = xdont(idcr)}
-\DoxyCodeLine{126 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{127          xdont(idcr+1) = xwrk}
-\DoxyCodeLine{128 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{129 \textcolor{comment}{!}}
-\DoxyCodeLine{130       xwrk1 = xdont(nord)}
-\DoxyCodeLine{131       \textcolor{keywordflow}{Do} icrs = nord + 1, \textcolor{keyword}{SIZE} (xdont)}
-\DoxyCodeLine{132          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{133             xwrk = xdont(icrs)}
-\DoxyCodeLine{134             xdont(icrs) = xwrk1}
-\DoxyCodeLine{135             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{136                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{137                xdont(idcr+1) = xdont(idcr)}
-\DoxyCodeLine{138 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{139             xdont(idcr+1) = xwrk}
-\DoxyCodeLine{140             xwrk1 = xdont(nord)}
-\DoxyCodeLine{141 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{142 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{143 \textcolor{comment}{!}}
-\DoxyCodeLine{144 \textcolor{comment}{!}}
+program demo\+\_\+inspar use M\+\_\+inspar, only \+: inspar implicit none call inspar(yyyyyy) end program demo\+\_\+inspar
 
-\end{DoxyCode}
-\mbox{\Hypertarget{namespacem__inspar_a02adab08a9d9c1c704b379e66a7e1a91}\label{namespacem__inspar_a02adab08a9d9c1c704b379e66a7e1a91}} 
-\index{m\_inspar@{m\_inspar}!r\_inspar@{r\_inspar}}
-\index{r\_inspar@{r\_inspar}!m\_inspar@{m\_inspar}}
-\doxysubsubsection{\texorpdfstring{r\_inspar()}{r\_inspar()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+inspar\+::r\+\_\+inspar (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+Results\+:\hypertarget{namespacem__inspar_autotoc_md34}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inspar_autotoc_md34}
+Michel Olagnon, 2000-\/2012
 
-
+John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__inspar_autotoc_md35}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inspar_autotoc_md35}
+C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{59 \textcolor{comment}{!! Sorts partially XDONT, bringing the NORD lowest values at the}}
 \DoxyCodeLine{60 \textcolor{comment}{!! begining of the array}}
@@ -144,11 +63,11 @@ integer, parameter, private \mbox{\hyperlink{namespacem__inspar_a4faa95d043812dd
 \DoxyCodeLine{66 \textcolor{comment}{!! In many cases, the refined quicksort method is faster.}}
 \DoxyCodeLine{67 \textcolor{comment}{!! Michel Olagnon -\/ Feb. 2000}}
 \DoxyCodeLine{68 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{69 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{70 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{69 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{70 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
 \DoxyCodeLine{71       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
 \DoxyCodeLine{72 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{73 \textcolor{keywordtype}{      Real}    :: XWRK, XWRK1}
+\DoxyCodeLine{73 \textcolor{keywordtype}{      Real} (kind=kdp) :: xwrk, xwrk1}
 \DoxyCodeLine{74 \textcolor{comment}{!}}
 \DoxyCodeLine{75       \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
 \DoxyCodeLine{76 \textcolor{comment}{!}}
@@ -178,6 +97,110 @@ integer, parameter, private \mbox{\hyperlink{namespacem__inspar_a4faa95d043812dd
 \DoxyCodeLine{100 \textcolor{comment}{!}}
 
 \end{DoxyCode}
+\mbox{\Hypertarget{namespacem__inspar_aa97a0b2f40c81edd950c62d0030b3a29}\label{namespacem__inspar_aa97a0b2f40c81edd950c62d0030b3a29}} 
+\index{m\_inspar@{m\_inspar}!i\_inspar@{i\_inspar}}
+\index{i\_inspar@{i\_inspar}!m\_inspar@{m\_inspar}}
+\doxysubsubsection{\texorpdfstring{i\_inspar()}{i\_inspar()}}
+{\footnotesize\ttfamily subroutine, private m\+\_\+inspar\+::i\+\_\+inspar (\begin{DoxyParamCaption}\item[{integer, dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{148 \textcolor{comment}{!! Sorts partially XDONT, bringing the NORD lowest values at the}}
+\DoxyCodeLine{149 \textcolor{comment}{!! begining of the array}}
+\DoxyCodeLine{150 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{151 \textcolor{comment}{!! This subroutine uses insertion sort, limiting insertion}}
+\DoxyCodeLine{152 \textcolor{comment}{!! to the first NORD values. It does not use any work array}}
+\DoxyCodeLine{153 \textcolor{comment}{!! and is faster when NORD is very small (2-\/5), but worst case}}
+\DoxyCodeLine{154 \textcolor{comment}{!! behavior can happen fairly probably (initially inverse sorted)}}
+\DoxyCodeLine{155 \textcolor{comment}{!! In many cases, the refined quicksort method is faster.}}
+\DoxyCodeLine{156 \textcolor{comment}{!! Michel Olagnon -\/ Feb. 2000}}
+\DoxyCodeLine{157 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{158 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{159       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)}  :: XDONT}
+\DoxyCodeLine{160       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{161 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{162       \textcolor{keywordtype}{Integer} :: XWRK, XWRK1}
+\DoxyCodeLine{163 \textcolor{comment}{!}}
+\DoxyCodeLine{164       \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
+\DoxyCodeLine{165 \textcolor{comment}{!}}
+\DoxyCodeLine{166       \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{167          xwrk = xdont(icrs)}
+\DoxyCodeLine{168          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{169             \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{170             xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{171 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{172          xdont(idcr+1) = xwrk}
+\DoxyCodeLine{173 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{174 \textcolor{comment}{!}}
+\DoxyCodeLine{175       xwrk1 = xdont(nord)}
+\DoxyCodeLine{176       \textcolor{keywordflow}{Do} icrs = nord + 1, \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{177          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{178             xwrk = xdont(icrs)}
+\DoxyCodeLine{179             xdont(icrs) = xwrk1}
+\DoxyCodeLine{180             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{181                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{182                xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{183 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{184             xdont(idcr+1) = xwrk}
+\DoxyCodeLine{185             xwrk1 = xdont(nord)}
+\DoxyCodeLine{186 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{187 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{188 \textcolor{comment}{!}}
+\DoxyCodeLine{189 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacem__inspar_a02adab08a9d9c1c704b379e66a7e1a91}\label{namespacem__inspar_a02adab08a9d9c1c704b379e66a7e1a91}} 
+\index{m\_inspar@{m\_inspar}!r\_inspar@{r\_inspar}}
+\index{r\_inspar@{r\_inspar}!m\_inspar@{m\_inspar}}
+\doxysubsubsection{\texorpdfstring{r\_inspar()}{r\_inspar()}}
+{\footnotesize\ttfamily subroutine, private m\+\_\+inspar\+::r\+\_\+inspar (\begin{DoxyParamCaption}\item[{real, dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{104 \textcolor{comment}{!! Sorts partially XDONT, bringing the NORD lowest values at the}}
+\DoxyCodeLine{105 \textcolor{comment}{!! begining of the array}}
+\DoxyCodeLine{106 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{107 \textcolor{comment}{!! This subroutine uses insertion sort, limiting insertion}}
+\DoxyCodeLine{108 \textcolor{comment}{!! to the first NORD values. It does not use any work array}}
+\DoxyCodeLine{109 \textcolor{comment}{!! and is faster when NORD is very small (2-\/5), but worst case}}
+\DoxyCodeLine{110 \textcolor{comment}{!! behavior can happen fairly probably (initially inverse sorted)}}
+\DoxyCodeLine{111 \textcolor{comment}{!! In many cases, the refined quicksort method is faster.}}
+\DoxyCodeLine{112 \textcolor{comment}{!! Michel Olagnon -\/ Feb. 2000}}
+\DoxyCodeLine{113 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{114 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{115 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{116       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{117 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{118 \textcolor{keywordtype}{      Real}    :: XWRK, XWRK1}
+\DoxyCodeLine{119 \textcolor{comment}{!}}
+\DoxyCodeLine{120       \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
+\DoxyCodeLine{121 \textcolor{comment}{!}}
+\DoxyCodeLine{122       \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{123          xwrk = xdont(icrs)}
+\DoxyCodeLine{124          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{125             \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{126             xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{127 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{128          xdont(idcr+1) = xwrk}
+\DoxyCodeLine{129 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{130 \textcolor{comment}{!}}
+\DoxyCodeLine{131       xwrk1 = xdont(nord)}
+\DoxyCodeLine{132       \textcolor{keywordflow}{Do} icrs = nord + 1, \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{133          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{134             xwrk = xdont(icrs)}
+\DoxyCodeLine{135             xdont(icrs) = xwrk1}
+\DoxyCodeLine{136             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{137                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{138                xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{139 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{140             xdont(idcr+1) = xwrk}
+\DoxyCodeLine{141             xwrk1 = xdont(nord)}
+\DoxyCodeLine{142 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{143 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{144 \textcolor{comment}{!}}
+\DoxyCodeLine{145 \textcolor{comment}{!}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Variable Documentation}
@@ -189,6 +212,6 @@ integer, parameter, private \mbox{\hyperlink{namespacem__inspar_a4faa95d043812dd
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{4 \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: kdp = selected\_real\_kind(15)}
+\DoxyCodeLine{5 \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Parameter} :: kdp = selected\_real\_kind(15)}
 
 \end{DoxyCode}

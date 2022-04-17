@@ -1,4 +1,5 @@
 Module M_refsor
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
@@ -11,6 +12,50 @@ interface refsor
   module procedure d_refsor, r_refsor, i_refsor
 end interface refsor
 contains
+!>
+!!##NAME
+!!    refsor(3f) - [orderpack] do stuff
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine refsor (yyyyyy)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!
+!!##OPTIONS
+!!     XXXXX      description
+!!     YYYYY      description
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_refsor
+!!    use M_refsor, only : refsor
+!!    implicit none
+!!       call refsor(yyyyyy)
+!!    end program demo_refsor
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon, 2000-2012
+!!
+!!     John Urban, 2022.04.16
+!!         o added man-page and reduced to a template using the
+!!           prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
 
 Subroutine D_refsor (XDONT)
 !! Sorts XDONT into ascending order - Quicksort

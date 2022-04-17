@@ -1,0 +1,208 @@
+<html> 
+<head> 
+<title> </title>
+<style> 
+px {font-family: "Lucida Console", Monaco }
+p { font-size:100%; line-height:1.1em; }
+body {xfont-style: sans-serif}
+body {
+color:#333; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:1em; line-height:1.3em; }
+a:visited { color:#666; }
+h1,h2,h3,h4,h5,h6 { color:#333; font-family:georgia, verdana, sans-serif; }
+h1 { font-size:150%; page-break-before:auto;background-color: #aaaaff}
+h2 { font-size:143%;color:teal; }
+h3 { font-size:134%;color:blue; }
+h4 { font-size:120%;color:gray; }
+img { max-width: 55em}
+p{ padding: 0;margin:0; }
+p{ padding-right:1.4em; }
+p{ padding-bottom:0.1em; }
+p{ padding-top:1em; }
+p{ whitespace: pre-wrap; }
+h5,h6 { font-size:100% }
+a.nav,a:link.nav, a:visited.nav { background-color:#FFF; color:#000; }
+XXtable { border:double #000; border-collapse:collapse; }
+XXtable { border-collapse:collapse; }
+XXtd { border:thin solid #888; }
+XXtd { border:none; }
+li { margin-bottom:0.5em; }
+blockquote { display:block; font-size:100%; line-height:1.1em; margin:0 0 0.5em; padding:0 2.5em; }
+pre { background-color:#DDD; font-size:100%; overflow:auto; padding:1em; }
+a,li span { color:#000; }
+a:hover, a.nav:hover, a:hover math { background-color:#000; color:#FFF; }
+#Container { margin:0 10px; text-align:center; background-color: #BBB}
+#Content { border-top:none; margin:auto; padding:0.3em; text-align:left; width:100%; max-width:55em; background:#FFF}
+span.webName { font-size:.5em; }
+textarea#content { font-size: 1em; line-height: 1.125; }
+h1#pageName { line-height:1em; margin:0.2em 0 0.2em 0; padding:0; }
+.property { color:#666; font-size:100%; }
+a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
+.byline { color:#666; font-size:1.0em; font-style:italic; margin-bottom:1em; padding-top:1px; } 
+</style> 
+</head>
+<BODY bgcolor=#F0F0F0 text=#000000 link=#0000ff vlink=#C000C0 alink=#ff0000><A NAME=top></A>
+<h5><a href="https://github.com/urbanjost/M_valnth">[UP]</a></h5>
+<div id="Container">
+<div id="Content">
+<CENTER>
+<H1><HR><I>Manual Reference Pages &nbsp;-&nbsp;</I><NOBR>fndnth (3orderpack)</NOBR><HR></H1>
+</CENTER>
+<A name=0>
+
+     <H3>NAME</H3>
+
+</A>
+<BLOCKQUOTE>
+<B>fndnth</B>(3f) - [orderpack] Return NORDth value of XDONT, i.e fractile
+of order <B>NORD/SIZE</B>(XDONT).
+(LICENSE:CC0-1.0)
+<P>
+</BLOCKQUOTE>
+<A name=contents></A><H3>CONTENTS</H3></A>
+<BLOCKQUOTE>
+<A HREF=#1>Synopsis</A><BR>
+<A HREF=#2>Description</A><BR>
+<A HREF=#3>Options</A><BR>
+<A HREF=#4>Returns</A><BR>
+<A HREF=#5>Examples</A><BR>
+<A HREF=#6>Author</A><BR>
+<A HREF=#7>License</A><BR>
+</BLOCKQUOTE>
+<A name=8>
+
+     <H3>SYNOPSIS</H3>
+
+</A>
+<BLOCKQUOTE>
+Function fndnth (<I>XDONT</I>, <I>NORD</I>) Result (<I>FNDNTH</I>)
+<P>
+<PRE>
+     Real (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+     Integer, Intent (In) :: NORD
+     Real (Kind=${KIND}) :: FNDNTH
+<P>
+</PRE>
+</BLOCKQUOTE>
+Where ${TYPE}(kind=${KIND}) may be
+<BLOCKQUOTE>
+<TABLE cellpadding=3><!-- tsb: Where ${TYPE}(kind=${KIND}) may be
+ -->
+<TR></TR><TR></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+<B>Real</B>(kind=real32)
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+<B>Real</B>(kind=real64)
+</TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+<B>Integer</B>(kind=int32)
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=2>
+
+     <H3>DESCRIPTION</H3>
+
+</A>
+<BLOCKQUOTE>
+Return NORDth value of <I>XDONT</I>, ie. fractile of order <I>NORD</I>/SIZE(<I>XDONT</I>).
+<P>
+This subroutine uses insertion sort, limiting insertion to the
+first <I>NORD</I> values. It is faster when <I>NORD</I> is very small (2-5), and
+it requires only a work array of size <I>NORD</I> and type of <I>XDONT</I>, but
+worst case behavior can happen fairly probably (initially inverse
+sorted). In many cases, the refined quicksort method is faster.
+</BLOCKQUOTE>
+<A name=3>
+
+     <H3>OPTIONS</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B></B><I>XDONT</I> </TD><TD valign=bottom>
+input array of values
+</TD></TR>
+<TR valign=top><TD width=6% nowrap>
+<B></B><I>NORD</I> </TD><TD valign=bottom>
+specify nth value of sorted <I>XDONT</I> array to return, from
+1 to <B>size</B>(<I>XDONT</I>).
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=4>
+
+     <H3>RETURNS</H3>
+
+</A>
+<BLOCKQUOTE>
+<TABLE cellpadding=3>
+<TR valign=top><TD width=6% nowrap>
+<B></B><I>FNDNTH</I> </TD><TD valign=bottom>
+returned value0
+</TD></TR>
+<TR></TR></TABLE></BLOCKQUOTE>
+<A name=5>
+
+     <H3>EXAMPLES</H3>
+
+</A>
+<BLOCKQUOTE>
+Sample program:
+<P>
+<PRE>
+   program demo_fndnth
+   use M_fndnth, only : fndnth
+   implicit none
+   integer,allocatable :: iarr(:)
+      iarr=[80,70,30,40,50,60,20,10]
+      write(*,*)fndnth(iarr,3)
+      write(*,*)fndnth(iarr,1)
+      write(*,*)fndnth(iarr,7)
+   end program demo_fndnth
+<P>
+</PRE>
+Results:
+<P>
+<PRE>
+          30
+          10
+          70
+<P>
+</PRE>
+</BLOCKQUOTE>
+<A name=6>
+
+     <H3>AUTHOR</H3>
+
+</A>
+<BLOCKQUOTE>
+Michel Olagnon - Aug. 2000
+<P>
+<PRE>
+    John Urban, 2022.04.16
+        o added man-page and reduced to a template using the
+          prep(1) preprocessor.
+<P>
+</PRE>
+</BLOCKQUOTE>
+<A name=7>
+
+     <H3>LICENSE</H3>
+
+</A>
+<BLOCKQUOTE>
+CC0-1.0
+</BLOCKQUOTE>
+<P><HR>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>fndnth (3orderpack)</TD> <TD align=right width=33%><I>April 16, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 938e60e1-a9b5-4dcd-8376-fcaf99f36c44 using man macros.</FONT>
+<br><br><center><img src="images/fndnth.gif"></center>
+</div>
+</div>
+</body>
+</HTML>

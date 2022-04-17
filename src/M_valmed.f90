@@ -1,4 +1,5 @@
 Module M_valmed
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
@@ -9,6 +10,50 @@ interface valmed
   module procedure d_valmed, r_valmed, i_valmed
 end interface valmed
 contains
+!>
+!!##NAME
+!!    valmed(3f) - [orderpack] do stuff
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine valmed (yyyyyy)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!
+!!##OPTIONS
+!!     XXXXX      description
+!!     YYYYY      description
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_valmed
+!!    use M_valmed, only : valmed
+!!    implicit none
+!!       call valmed(yyyyyy)
+!!    end program demo_valmed
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon, 2000-2012
+!!
+!!     John Urban, 2022.04.16
+!!         o added man-page and reduced to a template using the
+!!           prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
 
 Recursive Function D_valmed (XDONT) Result (res_med)
 !! Finds the median of XDONT using the recursive procedure

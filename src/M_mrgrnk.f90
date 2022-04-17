@@ -1,4 +1,5 @@
 Module M_mrgrnk
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
@@ -9,6 +10,50 @@ interface mrgrnk
   module procedure D_mrgrnk, R_mrgrnk, I_mrgrnk
 end interface mrgrnk
 contains
+!>
+!!##NAME
+!!    mrgrnk(3f) - [orderpack] do stuff
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine mrgrnk (yyyyyy)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!
+!!##OPTIONS
+!!     XXXXX      description
+!!     YYYYY      description
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_mrgrnk
+!!    use M_mrgrnk, only : mrgrnk
+!!    implicit none
+!!       call mrgrnk(yyyyyy)
+!!    end program demo_mrgrnk
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon, 2000-2012
+!!
+!!     John Urban, 2022.04.16
+!!         o added man-page and reduced to a template using the
+!!           prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
 
 Subroutine D_mrgrnk (XDONT, IRNGT)
 !!__________________________________________________________

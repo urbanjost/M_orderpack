@@ -1,4 +1,5 @@
 Module M_unista
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 Use M_uniinv
 implicit none
 Private
@@ -10,6 +11,50 @@ interface unista
   module procedure d_unista, r_unista, i_unista
 end interface unista
 contains
+!>
+!!##NAME
+!!    unista(3f) - [orderpack] do stuff
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine unista (yyyyyy)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!
+!!##OPTIONS
+!!     XXXXX      description
+!!     YYYYY      description
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_unista
+!!    use M_unista, only : unista
+!!    implicit none
+!!       call unista(yyyyyy)
+!!    end program demo_unista
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon, 2000-2012
+!!
+!!     John Urban, 2022.04.16
+!!         o added man-page and reduced to a template using the
+!!           prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
 
 Subroutine D_unista (XDONT, NUNI)
 !!  UNISTA = (Stable unique) Removes duplicates from an array,

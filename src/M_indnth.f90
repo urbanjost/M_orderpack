@@ -1,4 +1,5 @@
 Module M_indnth
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
@@ -9,6 +10,50 @@ interface indnth
   module procedure d_indnth, r_indnth, i_indnth
 end interface indnth
 contains
+!>
+!!##NAME
+!!    indnth(3f) - [orderpack] do stuff
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine indnth (yyyyyy)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!
+!!##OPTIONS
+!!     XXXXX      description
+!!     YYYYY      description
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_indnth
+!!    use M_indnth, only : indnth
+!!    implicit none
+!!       call indnth(yyyyyy)
+!!    end program demo_indnth
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon, 2000-2012
+!!
+!!     John Urban, 2022.04.16
+!!         o added man-page and reduced to a template using the
+!!           prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
 
 Function D_indnth (XDONT, NORD) Result (INDNTH)
 !! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).

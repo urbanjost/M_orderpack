@@ -1,4 +1,5 @@
 Module M_rapknr
+use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
 Integer, Parameter :: kdp = selected_real_kind(15)
@@ -9,6 +10,50 @@ interface rapknr
   module procedure d_rapknr, r_rapknr, i_rapknr
 end interface rapknr
 contains
+!>
+!!##NAME
+!!    rapknr(3f) - [orderpack] do stuff
+!!                 (LICENSE:CC0-1.0)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine rapknr (yyyyyy)
+!!
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!
+!!##OPTIONS
+!!     XXXXX      description
+!!     YYYYY      description
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_rapknr
+!!    use M_rapknr, only : rapknr
+!!    implicit none
+!!       call rapknr(yyyyyy)
+!!    end program demo_rapknr
+!!
+!!   Results:
+!!
+!!##AUTHOR
+!!     Michel Olagnon, 2000-2012
+!!
+!!     John Urban, 2022.04.16
+!!         o added man-page and reduced to a template using the
+!!           prep(1) preprocessor.
+!!
+!!##LICENSE
+!!    CC0-1.0
 
 Subroutine D_rapknr (XDONT, IRNGT, NORD)
 !! Ranks partially XDONT by IRNGT, up to order NORD, in decreasing order.

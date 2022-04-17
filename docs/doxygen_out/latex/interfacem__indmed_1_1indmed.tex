@@ -18,23 +18,46 @@ subroutine \mbox{\hyperlink{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa8
 \doxysubsubsection{\texorpdfstring{d\_indmed()}{d\_indmed()}}
 {\footnotesize\ttfamily subroutine m\+\_\+indmed\+::indmed\+::d\+\_\+indmed (\begin{DoxyParamCaption}\item[{real (kind=\mbox{\hyperlink{namespacem__indmed_a9a57777f2d73827dcf6eeaaa4c2bb397}{kdp}}), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(out)}]{I\+N\+DM }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
+\hypertarget{namespacem__indmed_autotoc_md15}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__indmed_autotoc_md15}
+indmed(3f) -\/ \mbox{[}orderpack\mbox{]} do stuff (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__indmed_autotoc_md16}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__indmed_autotoc_md16}
+\begin{DoxyVerb} Subroutine indmed (yyyyyy)
 
+  ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+\end{DoxyVerb}
+\hypertarget{namespacem__indmed_autotoc_md17}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__indmed_autotoc_md17}
+\hypertarget{namespacem__indmed_autotoc_md18}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__indmed_autotoc_md18}
+X\+X\+X\+XX description Y\+Y\+Y\+YY description\hypertarget{namespacem__indmed_autotoc_md19}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__indmed_autotoc_md19}
+Sample program\+:
+
+program demo\+\_\+indmed use M\+\_\+indmed, only \+: indmed implicit none call indmed(yyyyyy) end program demo\+\_\+indmed
+
+Results\+:\hypertarget{namespacem__indmed_autotoc_md20}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__indmed_autotoc_md20}
+Michel Olagnon, 2000-\/2012
+
+John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__indmed_autotoc_md21}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__indmed_autotoc_md21}
+C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{16 \textcolor{comment}{!! Returns index of median value of XDONT.}}
-\DoxyCodeLine{17 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{18 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
-\DoxyCodeLine{19       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
-\DoxyCodeLine{20 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{21       \textcolor{keywordtype}{Integer} :: IDON}
-\DoxyCodeLine{22 \textcolor{comment}{!}}
-\DoxyCodeLine{23       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
-\DoxyCodeLine{24       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
-\DoxyCodeLine{25          idont(idon) = idon}
-\DoxyCodeLine{26 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{27 \textcolor{comment}{!}}
-\DoxyCodeLine{28       \textcolor{keyword}{Call }d\_med (xdont, idont, indm)}
-\DoxyCodeLine{29 \textcolor{comment}{!}}
-\DoxyCodeLine{30       \textcolor{keyword}{Deallocate} (idont)}
+\DoxyCodeLine{61 \textcolor{comment}{!! Returns index of median value of XDONT.}}
+\DoxyCodeLine{62 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{63 \textcolor{keywordtype}{      Real} (kind=kdp), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{64       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
+\DoxyCodeLine{65 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{66       \textcolor{keywordtype}{Integer} :: IDON}
+\DoxyCodeLine{67 \textcolor{comment}{!}}
+\DoxyCodeLine{68       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
+\DoxyCodeLine{69       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
+\DoxyCodeLine{70          idont(idon) = idon}
+\DoxyCodeLine{71 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{72 \textcolor{comment}{!}}
+\DoxyCodeLine{73       \textcolor{keyword}{Call }d\_med (xdont, idont, indm)}
+\DoxyCodeLine{74 \textcolor{comment}{!}}
+\DoxyCodeLine{75       \textcolor{keyword}{Deallocate} (idont)}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa83473b470d0}\label{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa83473b470d0}} 
@@ -45,21 +68,21 @@ subroutine \mbox{\hyperlink{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa8
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{809 \textcolor{comment}{!! Returns index of median value of XDONT.}}
-\DoxyCodeLine{810 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{811       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
-\DoxyCodeLine{812       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
-\DoxyCodeLine{813 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{814       \textcolor{keywordtype}{Integer} :: IDON}
-\DoxyCodeLine{815 \textcolor{comment}{!}}
-\DoxyCodeLine{816       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
-\DoxyCodeLine{817       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
-\DoxyCodeLine{818          idont(idon) = idon}
-\DoxyCodeLine{819 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{820 \textcolor{comment}{!}}
-\DoxyCodeLine{821       \textcolor{keyword}{Call }i\_med (xdont, idont, indm)}
-\DoxyCodeLine{822 \textcolor{comment}{!}}
-\DoxyCodeLine{823       \textcolor{keyword}{Deallocate} (idont)}
+\DoxyCodeLine{854 \textcolor{comment}{!! Returns index of median value of XDONT.}}
+\DoxyCodeLine{855 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{856       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{857       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
+\DoxyCodeLine{858 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{859       \textcolor{keywordtype}{Integer} :: IDON}
+\DoxyCodeLine{860 \textcolor{comment}{!}}
+\DoxyCodeLine{861       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
+\DoxyCodeLine{862       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
+\DoxyCodeLine{863          idont(idon) = idon}
+\DoxyCodeLine{864 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{865 \textcolor{comment}{!}}
+\DoxyCodeLine{866       \textcolor{keyword}{Call }i\_med (xdont, idont, indm)}
+\DoxyCodeLine{867 \textcolor{comment}{!}}
+\DoxyCodeLine{868       \textcolor{keyword}{Deallocate} (idont)}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__indmed_1_1indmed_a6ef59e522a8fc8aec20bc594b9abd3e2}\label{interfacem__indmed_1_1indmed_a6ef59e522a8fc8aec20bc594b9abd3e2}} 
@@ -70,21 +93,21 @@ subroutine \mbox{\hyperlink{interfacem__indmed_1_1indmed_a879a90a2842ac788421fa8
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{413 \textcolor{comment}{!  Returns index of median value of XDONT.}}
-\DoxyCodeLine{414 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{415 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
-\DoxyCodeLine{416       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
-\DoxyCodeLine{417 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{418       \textcolor{keywordtype}{Integer} :: IDON}
-\DoxyCodeLine{419 \textcolor{comment}{!}}
-\DoxyCodeLine{420       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
-\DoxyCodeLine{421       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
-\DoxyCodeLine{422          idont(idon) = idon}
-\DoxyCodeLine{423 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{424 \textcolor{comment}{!}}
-\DoxyCodeLine{425       \textcolor{keyword}{Call }r\_med (xdont, idont, indm)}
-\DoxyCodeLine{426 \textcolor{comment}{!}}
-\DoxyCodeLine{427       \textcolor{keyword}{Deallocate} (idont)}
+\DoxyCodeLine{458 \textcolor{comment}{!  Returns index of median value of XDONT.}}
+\DoxyCodeLine{459 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{460 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{461       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: INDM}
+\DoxyCodeLine{462 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{463       \textcolor{keywordtype}{Integer} :: IDON}
+\DoxyCodeLine{464 \textcolor{comment}{!}}
+\DoxyCodeLine{465       \textcolor{keyword}{Allocate} (idont(\textcolor{keyword}{SIZE}(xdont)))}
+\DoxyCodeLine{466       \textcolor{keywordflow}{Do} idon = 1, \textcolor{keyword}{SIZE}(xdont)}
+\DoxyCodeLine{467          idont(idon) = idon}
+\DoxyCodeLine{468 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{469 \textcolor{comment}{!}}
+\DoxyCodeLine{470       \textcolor{keyword}{Call }r\_med (xdont, idont, indm)}
+\DoxyCodeLine{471 \textcolor{comment}{!}}
+\DoxyCodeLine{472       \textcolor{keyword}{Deallocate} (idont)}
 
 \end{DoxyCode}
 
