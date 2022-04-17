@@ -20,54 +20,54 @@ subroutine \mbox{\hyperlink{interfacem__inssor_1_1inssor_a3a65fd97a262e48979db73
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{161 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{162       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
-\DoxyCodeLine{163       \textcolor{keywordtype}{Integer (Kind=int32)} :: XWRK, XMIN}
-\DoxyCodeLine{164 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{165       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, NDON}
-\DoxyCodeLine{166 \textcolor{comment}{!}}
-\DoxyCodeLine{167       ndon = \textcolor{keyword}{Size} (xdont)}
-\DoxyCodeLine{168 \textcolor{comment}{!}}
-\DoxyCodeLine{169 \textcolor{comment}{! We first bring the minimum to the first location in the array.}}
-\DoxyCodeLine{170 \textcolor{comment}{! That way, we will have a "guard", and when looking for the}}
-\DoxyCodeLine{171 \textcolor{comment}{! right place to insert a value, no loop test is necessary.}}
-\DoxyCodeLine{172 \textcolor{comment}{!}}
-\DoxyCodeLine{173       \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{174           xmin = xdont(1)}
-\DoxyCodeLine{175       \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{176           xmin = xdont(ndon)}
-\DoxyCodeLine{177           xdont(ndon) = xdont(1)}
-\DoxyCodeLine{178 \textcolor{keywordflow}{      Endif}}
-\DoxyCodeLine{179       \textcolor{keywordflow}{Do} idcr = ndon-\/1, 2, -\/1}
-\DoxyCodeLine{180          xwrk = xdont(idcr)}
-\DoxyCodeLine{181          \textcolor{keywordflow}{IF} (xwrk < xmin) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{182             xdont(idcr) = xmin}
-\DoxyCodeLine{183             xmin = xwrk}
-\DoxyCodeLine{184 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{185 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{186       xdont(1) = xmin}
-\DoxyCodeLine{187 \textcolor{comment}{!}}
-\DoxyCodeLine{188 \textcolor{comment}{! The first value is now the minimum}}
-\DoxyCodeLine{189 \textcolor{comment}{! Loop over the array, and when a value is smaller than}}
-\DoxyCodeLine{190 \textcolor{comment}{! the previous one, loop down to insert it at its right place.}}
-\DoxyCodeLine{191 \textcolor{comment}{!}}
-\DoxyCodeLine{192       \textcolor{keywordflow}{Do} icrs = 3, ndon}
-\DoxyCodeLine{193          xwrk = xdont(icrs)}
-\DoxyCodeLine{194          idcr = icrs -\/ 1}
-\DoxyCodeLine{195          \textcolor{keywordflow}{If} (xwrk < xdont(idcr)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{196             xdont(icrs) = xdont(idcr)}
-\DoxyCodeLine{197             idcr = idcr -\/ 1}
-\DoxyCodeLine{198             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{199                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{200                xdont(idcr+1) = xdont(idcr)}
-\DoxyCodeLine{201                idcr = idcr -\/ 1}
-\DoxyCodeLine{202 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{203             xdont(idcr+1) = xwrk}
-\DoxyCodeLine{204 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{205 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{206 \textcolor{comment}{!}}
-\DoxyCodeLine{207       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{208 \textcolor{comment}{!}}
+\DoxyCodeLine{162 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{163       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{164       \textcolor{keywordtype}{Integer (Kind=int32)} :: XWRK, XMIN}
+\DoxyCodeLine{165 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{166       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, NDON}
+\DoxyCodeLine{167 \textcolor{comment}{!}}
+\DoxyCodeLine{168       ndon = \textcolor{keyword}{Size} (xdont)}
+\DoxyCodeLine{169 \textcolor{comment}{!}}
+\DoxyCodeLine{170 \textcolor{comment}{! We first bring the minimum to the first location in the array.}}
+\DoxyCodeLine{171 \textcolor{comment}{! That way, we will have a "guard", and when looking for the}}
+\DoxyCodeLine{172 \textcolor{comment}{! right place to insert a value, no loop test is necessary.}}
+\DoxyCodeLine{173 \textcolor{comment}{!}}
+\DoxyCodeLine{174       \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{175           xmin = xdont(1)}
+\DoxyCodeLine{176       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{177           xmin = xdont(ndon)}
+\DoxyCodeLine{178           xdont(ndon) = xdont(1)}
+\DoxyCodeLine{179 \textcolor{keywordflow}{      Endif}}
+\DoxyCodeLine{180       \textcolor{keywordflow}{Do} idcr = ndon-\/1, 2, -\/1}
+\DoxyCodeLine{181          xwrk = xdont(idcr)}
+\DoxyCodeLine{182          \textcolor{keywordflow}{IF} (xwrk < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{183             xdont(idcr) = xmin}
+\DoxyCodeLine{184             xmin = xwrk}
+\DoxyCodeLine{185 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{186 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{187       xdont(1) = xmin}
+\DoxyCodeLine{188 \textcolor{comment}{!}}
+\DoxyCodeLine{189 \textcolor{comment}{! The first value is now the minimum}}
+\DoxyCodeLine{190 \textcolor{comment}{! Loop over the array, and when a value is smaller than}}
+\DoxyCodeLine{191 \textcolor{comment}{! the previous one, loop down to insert it at its right place.}}
+\DoxyCodeLine{192 \textcolor{comment}{!}}
+\DoxyCodeLine{193       \textcolor{keywordflow}{Do} icrs = 3, ndon}
+\DoxyCodeLine{194          xwrk = xdont(icrs)}
+\DoxyCodeLine{195          idcr = icrs -\/ 1}
+\DoxyCodeLine{196          \textcolor{keywordflow}{If} (xwrk < xdont(idcr)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{197             xdont(icrs) = xdont(idcr)}
+\DoxyCodeLine{198             idcr = idcr -\/ 1}
+\DoxyCodeLine{199             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{200                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{201                xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{202                idcr = idcr -\/ 1}
+\DoxyCodeLine{203 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{204             xdont(idcr+1) = xwrk}
+\DoxyCodeLine{205 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{206 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{207 \textcolor{comment}{!}}
+\DoxyCodeLine{208       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{209 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__inssor_1_1inssor_ab8e61068f80e4f8ab9c214d1c656b7a6}\label{interfacem__inssor_1_1inssor_ab8e61068f80e4f8ab9c214d1c656b7a6}} 
@@ -78,54 +78,54 @@ subroutine \mbox{\hyperlink{interfacem__inssor_1_1inssor_a3a65fd97a262e48979db73
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{111 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{112 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
-\DoxyCodeLine{113 \textcolor{keywordtype}{      Real} (Kind=real32) :: xwrk, xmin}
-\DoxyCodeLine{114 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{115       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, NDON}
-\DoxyCodeLine{116 \textcolor{comment}{!}}
-\DoxyCodeLine{117       ndon = \textcolor{keyword}{Size} (xdont)}
-\DoxyCodeLine{118 \textcolor{comment}{!}}
-\DoxyCodeLine{119 \textcolor{comment}{! We first bring the minimum to the first location in the array.}}
-\DoxyCodeLine{120 \textcolor{comment}{! That way, we will have a "guard", and when looking for the}}
-\DoxyCodeLine{121 \textcolor{comment}{! right place to insert a value, no loop test is necessary.}}
-\DoxyCodeLine{122 \textcolor{comment}{!}}
-\DoxyCodeLine{123       \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{124           xmin = xdont(1)}
-\DoxyCodeLine{125       \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{126           xmin = xdont(ndon)}
-\DoxyCodeLine{127           xdont(ndon) = xdont(1)}
-\DoxyCodeLine{128 \textcolor{keywordflow}{      Endif}}
-\DoxyCodeLine{129       \textcolor{keywordflow}{Do} idcr = ndon-\/1, 2, -\/1}
-\DoxyCodeLine{130          xwrk = xdont(idcr)}
-\DoxyCodeLine{131          \textcolor{keywordflow}{IF} (xwrk < xmin) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{132             xdont(idcr) = xmin}
-\DoxyCodeLine{133             xmin = xwrk}
-\DoxyCodeLine{134 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{135 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{136       xdont(1) = xmin}
-\DoxyCodeLine{137 \textcolor{comment}{!}}
-\DoxyCodeLine{138 \textcolor{comment}{! The first value is now the minimum}}
-\DoxyCodeLine{139 \textcolor{comment}{! Loop over the array, and when a value is smaller than}}
-\DoxyCodeLine{140 \textcolor{comment}{! the previous one, loop down to insert it at its right place.}}
-\DoxyCodeLine{141 \textcolor{comment}{!}}
-\DoxyCodeLine{142       \textcolor{keywordflow}{Do} icrs = 3, ndon}
-\DoxyCodeLine{143          xwrk = xdont(icrs)}
-\DoxyCodeLine{144          idcr = icrs -\/ 1}
-\DoxyCodeLine{145          \textcolor{keywordflow}{If} (xwrk < xdont(idcr)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{146             xdont(icrs) = xdont(idcr)}
-\DoxyCodeLine{147             idcr = idcr -\/ 1}
-\DoxyCodeLine{148             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{149                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{150                xdont(idcr+1) = xdont(idcr)}
-\DoxyCodeLine{151                idcr = idcr -\/ 1}
-\DoxyCodeLine{152 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{153             xdont(idcr+1) = xwrk}
-\DoxyCodeLine{154 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{155 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{156 \textcolor{comment}{!}}
-\DoxyCodeLine{157       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{158 \textcolor{comment}{!}}
+\DoxyCodeLine{112 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{113 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{114 \textcolor{keywordtype}{      Real} (Kind=real32) :: xwrk, xmin}
+\DoxyCodeLine{115 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{116       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, NDON}
+\DoxyCodeLine{117 \textcolor{comment}{!}}
+\DoxyCodeLine{118       ndon = \textcolor{keyword}{Size} (xdont)}
+\DoxyCodeLine{119 \textcolor{comment}{!}}
+\DoxyCodeLine{120 \textcolor{comment}{! We first bring the minimum to the first location in the array.}}
+\DoxyCodeLine{121 \textcolor{comment}{! That way, we will have a "guard", and when looking for the}}
+\DoxyCodeLine{122 \textcolor{comment}{! right place to insert a value, no loop test is necessary.}}
+\DoxyCodeLine{123 \textcolor{comment}{!}}
+\DoxyCodeLine{124       \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{125           xmin = xdont(1)}
+\DoxyCodeLine{126       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{127           xmin = xdont(ndon)}
+\DoxyCodeLine{128           xdont(ndon) = xdont(1)}
+\DoxyCodeLine{129 \textcolor{keywordflow}{      Endif}}
+\DoxyCodeLine{130       \textcolor{keywordflow}{Do} idcr = ndon-\/1, 2, -\/1}
+\DoxyCodeLine{131          xwrk = xdont(idcr)}
+\DoxyCodeLine{132          \textcolor{keywordflow}{IF} (xwrk < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{133             xdont(idcr) = xmin}
+\DoxyCodeLine{134             xmin = xwrk}
+\DoxyCodeLine{135 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{136 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{137       xdont(1) = xmin}
+\DoxyCodeLine{138 \textcolor{comment}{!}}
+\DoxyCodeLine{139 \textcolor{comment}{! The first value is now the minimum}}
+\DoxyCodeLine{140 \textcolor{comment}{! Loop over the array, and when a value is smaller than}}
+\DoxyCodeLine{141 \textcolor{comment}{! the previous one, loop down to insert it at its right place.}}
+\DoxyCodeLine{142 \textcolor{comment}{!}}
+\DoxyCodeLine{143       \textcolor{keywordflow}{Do} icrs = 3, ndon}
+\DoxyCodeLine{144          xwrk = xdont(icrs)}
+\DoxyCodeLine{145          idcr = icrs -\/ 1}
+\DoxyCodeLine{146          \textcolor{keywordflow}{If} (xwrk < xdont(idcr)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{147             xdont(icrs) = xdont(idcr)}
+\DoxyCodeLine{148             idcr = idcr -\/ 1}
+\DoxyCodeLine{149             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{150                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{151                xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{152                idcr = idcr -\/ 1}
+\DoxyCodeLine{153 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{154             xdont(idcr+1) = xwrk}
+\DoxyCodeLine{155 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{156 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{157 \textcolor{comment}{!}}
+\DoxyCodeLine{158       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{159 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__inssor_1_1inssor_a580b50d13f53b62439080b0c309d0a30}\label{interfacem__inssor_1_1inssor_a580b50d13f53b62439080b0c309d0a30}} 
@@ -134,8 +134,8 @@ subroutine \mbox{\hyperlink{interfacem__inssor_1_1inssor_a3a65fd97a262e48979db73
 \doxysubsubsection{\texorpdfstring{real64\_inssor()}{real64\_inssor()}}
 {\footnotesize\ttfamily subroutine m\+\_\+inssor\+::inssor\+::real64\+\_\+inssor (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__inssor_autotoc_md36}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inssor_autotoc_md36}
-inssor(3f) -\/ \mbox{[}orderpack\+:S\+O\+RT\mbox{]} Sorts X\+D\+O\+NT into increasing order (Insertion sort) (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__inssor_autotoc_md37}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inssor_autotoc_md37}
+\hypertarget{namespacem__inssor_autotoc_md38}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inssor_autotoc_md38}
+inssor(3f) -\/ \mbox{[}orderpack\+:S\+O\+RT\mbox{]} Sorts X\+D\+O\+NT into increasing order (Insertion sort) (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__inssor_autotoc_md39}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inssor_autotoc_md39}
 \begin{DoxyVerb} Subroutine ${KIND}_inssor (XDONT)
 
          ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
@@ -146,69 +146,69 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
 \end{DoxyVerb}
-\hypertarget{namespacem__inssor_autotoc_md38}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inssor_autotoc_md38}
+\hypertarget{namespacem__inssor_autotoc_md40}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inssor_autotoc_md40}
 Sorts X\+D\+O\+NT into increasing order (Insertion sort)
 
-This subroutine uses insertion sort. It does not use any work array and is faster when X\+D\+O\+NT is of very small size ($<$ 20), or already almost sorted, but worst case behavior can happen fairly probably (initially inverse sorted). In many cases, the quicksort or merge sort method is faster.\hypertarget{namespacem__inssor_autotoc_md39}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inssor_autotoc_md39}
-X\+D\+O\+NT array to sort\hypertarget{namespacem__inssor_autotoc_md40}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inssor_autotoc_md40}
+This subroutine uses insertion sort. It does not use any work array and is faster when X\+D\+O\+NT is of very small size ($<$ 20), or already almost sorted, but worst case behavior can happen fairly probably (initially inverse sorted). In many cases, the quicksort or merge sort method is faster.\hypertarget{namespacem__inssor_autotoc_md41}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inssor_autotoc_md41}
+X\+D\+O\+NT array to sort\hypertarget{namespacem__inssor_autotoc_md42}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inssor_autotoc_md42}
 Sample program\+:
 
 program demo\+\_\+inssor use M\+\_\+inssor, only \+: inssor implicit none !x!call inssor(yyyyyy) end program demo\+\_\+inssor
 
-Results\+:\hypertarget{namespacem__inssor_autotoc_md41}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inssor_autotoc_md41}
+Results\+:\hypertarget{namespacem__inssor_autotoc_md43}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inssor_autotoc_md43}
 Michel Olagnon -\/ Apr. 2000
 
-John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__inssor_autotoc_md42}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inssor_autotoc_md42}
+John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__inssor_autotoc_md44}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inssor_autotoc_md44}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{61 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{62 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
-\DoxyCodeLine{63 \textcolor{keywordtype}{      Real} (Kind=real64) :: xwrk, xmin}
-\DoxyCodeLine{64 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{65       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, NDON}
-\DoxyCodeLine{66 \textcolor{comment}{!}}
-\DoxyCodeLine{67       ndon = \textcolor{keyword}{Size} (xdont)}
-\DoxyCodeLine{68 \textcolor{comment}{!}}
-\DoxyCodeLine{69 \textcolor{comment}{! We first bring the minimum to the first location in the array.}}
-\DoxyCodeLine{70 \textcolor{comment}{! That way, we will have a "guard", and when looking for the}}
-\DoxyCodeLine{71 \textcolor{comment}{! right place to insert a value, no loop test is necessary.}}
-\DoxyCodeLine{72 \textcolor{comment}{!}}
-\DoxyCodeLine{73       \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{74           xmin = xdont(1)}
-\DoxyCodeLine{75       \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{76           xmin = xdont(ndon)}
-\DoxyCodeLine{77           xdont(ndon) = xdont(1)}
-\DoxyCodeLine{78 \textcolor{keywordflow}{      Endif}}
-\DoxyCodeLine{79       \textcolor{keywordflow}{Do} idcr = ndon-\/1, 2, -\/1}
-\DoxyCodeLine{80          xwrk = xdont(idcr)}
-\DoxyCodeLine{81          \textcolor{keywordflow}{IF} (xwrk < xmin) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{82             xdont(idcr) = xmin}
-\DoxyCodeLine{83             xmin = xwrk}
-\DoxyCodeLine{84 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{85 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{86       xdont(1) = xmin}
-\DoxyCodeLine{87 \textcolor{comment}{!}}
-\DoxyCodeLine{88 \textcolor{comment}{! The first value is now the minimum}}
-\DoxyCodeLine{89 \textcolor{comment}{! Loop over the array, and when a value is smaller than}}
-\DoxyCodeLine{90 \textcolor{comment}{! the previous one, loop down to insert it at its right place.}}
-\DoxyCodeLine{91 \textcolor{comment}{!}}
-\DoxyCodeLine{92       \textcolor{keywordflow}{Do} icrs = 3, ndon}
-\DoxyCodeLine{93          xwrk = xdont(icrs)}
-\DoxyCodeLine{94          idcr = icrs -\/ 1}
-\DoxyCodeLine{95          \textcolor{keywordflow}{If} (xwrk < xdont(idcr)) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{96             xdont(icrs) = xdont(idcr)}
-\DoxyCodeLine{97             idcr = idcr -\/ 1}
-\DoxyCodeLine{98             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{99                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{100                xdont(idcr+1) = xdont(idcr)}
-\DoxyCodeLine{101                idcr = idcr -\/ 1}
-\DoxyCodeLine{102 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{103             xdont(idcr+1) = xwrk}
-\DoxyCodeLine{104 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{105 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{106 \textcolor{comment}{!}}
-\DoxyCodeLine{107       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{108 \textcolor{comment}{!}}
+\DoxyCodeLine{62 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{63 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{64 \textcolor{keywordtype}{      Real} (Kind=real64) :: xwrk, xmin}
+\DoxyCodeLine{65 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{66       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, NDON}
+\DoxyCodeLine{67 \textcolor{comment}{!}}
+\DoxyCodeLine{68       ndon = \textcolor{keyword}{Size} (xdont)}
+\DoxyCodeLine{69 \textcolor{comment}{!}}
+\DoxyCodeLine{70 \textcolor{comment}{! We first bring the minimum to the first location in the array.}}
+\DoxyCodeLine{71 \textcolor{comment}{! That way, we will have a "guard", and when looking for the}}
+\DoxyCodeLine{72 \textcolor{comment}{! right place to insert a value, no loop test is necessary.}}
+\DoxyCodeLine{73 \textcolor{comment}{!}}
+\DoxyCodeLine{74       \textcolor{keywordflow}{If} (xdont(1) < xdont(ndon)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{75           xmin = xdont(1)}
+\DoxyCodeLine{76       \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{77           xmin = xdont(ndon)}
+\DoxyCodeLine{78           xdont(ndon) = xdont(1)}
+\DoxyCodeLine{79 \textcolor{keywordflow}{      Endif}}
+\DoxyCodeLine{80       \textcolor{keywordflow}{Do} idcr = ndon-\/1, 2, -\/1}
+\DoxyCodeLine{81          xwrk = xdont(idcr)}
+\DoxyCodeLine{82          \textcolor{keywordflow}{IF} (xwrk < xmin) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{83             xdont(idcr) = xmin}
+\DoxyCodeLine{84             xmin = xwrk}
+\DoxyCodeLine{85 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{86 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{87       xdont(1) = xmin}
+\DoxyCodeLine{88 \textcolor{comment}{!}}
+\DoxyCodeLine{89 \textcolor{comment}{! The first value is now the minimum}}
+\DoxyCodeLine{90 \textcolor{comment}{! Loop over the array, and when a value is smaller than}}
+\DoxyCodeLine{91 \textcolor{comment}{! the previous one, loop down to insert it at its right place.}}
+\DoxyCodeLine{92 \textcolor{comment}{!}}
+\DoxyCodeLine{93       \textcolor{keywordflow}{Do} icrs = 3, ndon}
+\DoxyCodeLine{94          xwrk = xdont(icrs)}
+\DoxyCodeLine{95          idcr = icrs -\/ 1}
+\DoxyCodeLine{96          \textcolor{keywordflow}{If} (xwrk < xdont(idcr)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{97             xdont(icrs) = xdont(idcr)}
+\DoxyCodeLine{98             idcr = idcr -\/ 1}
+\DoxyCodeLine{99             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{100                \textcolor{keywordflow}{If} (xwrk >= xdont(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{101                xdont(idcr+1) = xdont(idcr)}
+\DoxyCodeLine{102                idcr = idcr -\/ 1}
+\DoxyCodeLine{103 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{104             xdont(idcr+1) = xwrk}
+\DoxyCodeLine{105 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{106 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{107 \textcolor{comment}{!}}
+\DoxyCodeLine{108       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{109 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 

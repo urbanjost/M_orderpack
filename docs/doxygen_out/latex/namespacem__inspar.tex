@@ -101,8 +101,8 @@ subroutine, private \mbox{\hyperlink{namespacem__inspar_a0391af44e3dbba2a1208dab
 \doxysubsubsection{\texorpdfstring{real64\_inspar()}{real64\_inspar()}}
 {\footnotesize\ttfamily subroutine, private m\+\_\+inspar\+::real64\+\_\+inspar (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__inspar_autotoc_md29}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inspar_autotoc_md29}
-inspar(3f) -\/ \mbox{[}orderpack\+:P\+A\+R\+T\+I\+A\+L\+\_\+\+S\+O\+RT\mbox{]} partially sorts an array, bringing the N lowest values to the beginning of the array (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__inspar_autotoc_md30}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inspar_autotoc_md30}
+\hypertarget{namespacem__inspar_autotoc_md31}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inspar_autotoc_md31}
+inspar(3f) -\/ \mbox{[}orderpack\+:P\+A\+R\+T\+I\+A\+L\+\_\+\+S\+O\+RT\mbox{]} partially sorts an array, bringing the N lowest values to the beginning of the array (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__inspar_autotoc_md32}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inspar_autotoc_md32}
 \begin{DoxyVerb} Subroutine inspar (XDONT, NORD)
   ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
   Integer, Intent (In) :: NORD
@@ -113,21 +113,21 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
 \end{DoxyVerb}
-\hypertarget{namespacem__inspar_autotoc_md31}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inspar_autotoc_md31}
+\hypertarget{namespacem__inspar_autotoc_md33}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inspar_autotoc_md33}
 I\+N\+S\+P\+AR partially sorts X\+D\+O\+NT, bringing the N\+O\+RD lowest values to the beginning of the array.
 
-This subroutine uses an insertion sort, limiting insertion to the first N\+O\+RD values. It does not use any work array and is faster when N\+O\+RD is very small (2-\/5), but worst case behavior can happen fairly probably (initially inverse sorted). Therefore, in many cases, the refined quicksort method is faster.\hypertarget{namespacem__inspar_autotoc_md32}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inspar_autotoc_md32}
-X\+D\+O\+NT The array to partially sort N\+O\+RD number of sorted values to return.\hypertarget{namespacem__inspar_autotoc_md33}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inspar_autotoc_md33}
+This subroutine uses an insertion sort, limiting insertion to the first N\+O\+RD values. It does not use any work array and is faster when N\+O\+RD is very small (2-\/5), but worst case behavior can happen fairly probably (initially inverse sorted). Therefore, in many cases, the refined quicksort method is faster.\hypertarget{namespacem__inspar_autotoc_md34}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inspar_autotoc_md34}
+X\+D\+O\+NT The array to partially sort N\+O\+RD number of sorted values to return.\hypertarget{namespacem__inspar_autotoc_md35}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inspar_autotoc_md35}
 Sample program\+:
 
 program demo\+\_\+inspar use M\+\_\+inspar, only \+: inspar implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: xdont(\+:) integer \+:: nord xdont=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} nord=5 write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},xdont call inspar(xdont,nord) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+:\textquotesingle{},nord write($\ast$,g)nord,\textquotesingle{}L\+O\+W\+E\+ST V\+A\+L\+U\+ES\+:\textquotesingle{},xdont(\+:nord) write($\ast$,g)\textquotesingle{}E\+N\+T\+I\+RE A\+R\+R\+AY\+:\textquotesingle{},xdont end program demo\+\_\+inspar
 
 Results\+:
 
-O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+: 5 5 L\+O\+W\+E\+ST V\+A\+L\+U\+ES\+: 1 1 4 5 5 E\+N\+T\+I\+RE A\+R\+R\+AY\+: 1 1 4 5 5 10 7 8 9 10 6\hypertarget{namespacem__inspar_autotoc_md34}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inspar_autotoc_md34}
+O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+: 5 5 L\+O\+W\+E\+ST V\+A\+L\+U\+ES\+: 1 1 4 5 5 E\+N\+T\+I\+RE A\+R\+R\+AY\+: 1 1 4 5 5 10 7 8 9 10 6\hypertarget{namespacem__inspar_autotoc_md36}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inspar_autotoc_md36}
 Michel Olagnon -\/ Feb. 2000
 
-John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__inspar_autotoc_md35}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inspar_autotoc_md35}
+John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__inspar_autotoc_md37}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inspar_autotoc_md37}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{80 real(kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}

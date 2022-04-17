@@ -13,12 +13,12 @@
      allocate(irngt(nord))
      call printme()
 
-!BUG     write(*,g)'If not enough values are unique, will change NORD'
-!BUG     xdont=[-1,0,-1,0,-1,0,-1]
-!BUG     nord=5
-!BUG     if(allocated(irngt))deallocate(irngt)
-!BUG     allocate(irngt(nord))
-!BUG     call printme()
+     !BUG!write(*,g)'If not enough values are unique, will change NORD'
+     !BUG!xdont=[-1,0,-1,0,-1,0,-1]
+     !BUG!nord=5
+     !BUG!if(allocated(irngt))deallocate(irngt)
+     !BUG!allocate(irngt(nord))
+     !BUG!call printme()
      contains
      subroutine printme()
         write(*,g)'ORIGINAL:',xdont

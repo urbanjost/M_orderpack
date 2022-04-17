@@ -9,7 +9,8 @@ end interface mrgrnk
 contains
 !>
 !!##NAME
-!!    mrgrnk(3f) - [orderpack:RANK] ranks an array using a merge-sort algorithm
+!!    mrgrnk(3f) - [orderpack:RANK] ranks an array using a merge-sort
+!!                 algorithm
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS

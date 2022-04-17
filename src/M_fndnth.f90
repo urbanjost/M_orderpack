@@ -10,8 +10,8 @@ end interface fndnth
 contains
 !>
 !!##NAME
-!!    fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array, i.e. return fractile
-!!                 of order NORD/SIZE(XDONT).
+!!    fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array,
+!!                 i.e. return fractile of order NORD/SIZE(XDONT).
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
@@ -29,20 +29,24 @@ contains
 !!    o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    Return NORDth value of XDONT, i.e. fractile of order NORD/SIZE(XDONT).
+!!    Return NORDth lowest value of XDONT, i.e. fractile of order
+!!    NORD/SIZE(XDONT).
 !!
 !!    This subroutine uses an insertion sort, limiting insertion to the
-!!    first NORD values. It is faster when NORD is very small (2-5), and
+!!    first NORD values. It is very fast when NORD is very small (2-5), and
 !!    it requires only a work array of size NORD and type of XDONT, but
 !!    worst case behavior can happen fairly probably (initially inverse
 !!    sorted). In many cases, the refined quicksort method is faster.
+!!
+!!    So this should be used when NORD is small and XDONT is likely to be
+!!    a random array, otherwise consider using
 !!
 !!##OPTIONS
 !!     XDONT     input array of values
 !!     NORD      specify Nth value of sorted XDONT array to return, from
 !!               1 to size(XDONT).
 !!##RETURNS
-!!     FNDNTH    returned value0
+!!     FNDNTH    returned value
 !!
 !!##EXAMPLES
 !!
@@ -51,25 +55,39 @@ contains
 !!    program demo_fndnth
 !!    use M_fndnth, only : fndnth
 !!    implicit none
+!!    character(len=*),parameter :: sp='(*(g0,1x))'
 !!    integer,allocatable :: iarr(:)
+!!    integer :: imiddle
 !!       iarr=[80,70,30,40,50,60,20,10]
-!!       write(*,*)fndnth(iarr,3)
-!!       write(*,*)fndnth(iarr,1)
-!!       write(*,*)fndnth(iarr,7)
+!!       print sp, 'ORIGINAL:',iarr
+!!       ! can return the same values as intrinsics minval() and maxval()
+!!       print sp, 'minval',fndnth(iarr,1),          minval(iarr)
+!!       print sp, 'maxval',fndnth(iarr,size(iarr)), maxval(iarr)
+!!       ! but more generally it can return the Nth lowest value.
+!!       print sp,'nord=',4, ' fractile=',fndnth(iarr,4)
+!!       ! so a value at the middle would be
+!!       imiddle=(size(iarr)+1)/2
+!!       print sp,'median=',fndnth(iarr,imiddle)
 !!    end program demo_fndnth
 !!
 !!   Results:
 !!
-!!           30
-!!           10
-!!           70
+!!    ORIGINAL: 80 70 30 40 50 60 20 10
+!!    minval 10 10
+!!    maxval 80 80
+!!    nord= 4 fractile= 40
+!!    median= 40
+!!
+!!##SEE ALSO
+!!
+!!    indnth(3), valnth(3)
 !!
 !!##AUTHOR
 !!    Michel Olagnon - Aug. 2000
 !!
-!!     John Urban, 2022.04.16
-!!         o added man-page and reduced to a template using the
-!!           prep(1) preprocessor.
+!!    John Urban, 2022.04.16
+!!    o added man-page and reduced to a template using the
+!!      prep(1) preprocessor.
 !!
 !!##LICENSE
 !!    CC0-1.0

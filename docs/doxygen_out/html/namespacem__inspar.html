@@ -248,10 +248,10 @@ Functions/Subroutines</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 NAME</h2>
 <p>inspar(3f) - [orderpack:PARTIAL_SORT] partially sorts an array, bringing the N lowest values to the beginning of the array (LICENSE:CC0-1.0)</p>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md32"></a>
 SYNOPSIS</h2>
 <pre class="fragment"> Subroutine inspar (XDONT, NORD)
   ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
@@ -262,24 +262,24 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real32)
    o Real(kind=real64)
    o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md31"></a>
+</pre><h2><a class="anchor" id="autotoc_md33"></a>
 DESCRIPTION</h2>
 <p>INSPAR partially sorts XDONT, bringing the NORD lowest values to the beginning of the array.</p>
 <p>This subroutine uses an insertion sort, limiting insertion to the first NORD values. It does not use any work array and is faster when NORD is very small (2-5), but worst case behavior can happen fairly probably (initially inverse sorted). Therefore, in many cases, the refined quicksort method is faster.</p>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 OPTIONS</h2>
 <p>XDONT The array to partially sort NORD number of sorted values to return.</p>
-<h2><a class="anchor" id="autotoc_md33"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
 <p>program demo_inspar use M_inspar, only : inspar implicit none character(len=*),parameter :: g='(*(g0,1x))' integer,allocatable :: xdont(:) integer :: nord xdont=[10,5,7,1,4,5,6,8,9,10,1] nord=5 write(*,g)'ORIGINAL:',xdont call inspar(xdont,nord) write(*,g)'NUMBER OF INDICES TO SORT:',nord write(*,g)nord,'LOWEST VALUES:',xdont(:nord) write(*,g)'ENTIRE ARRAY:',xdont end program demo_inspar</p>
 <p>Results:</p>
 <p>ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1 NUMBER OF INDICES TO SORT: 5 5 LOWEST VALUES: 1 1 4 5 5 ENTIRE ARRAY: 1 1 4 5 5 10 7 8 9 10 6</p>
-<h2><a class="anchor" id="autotoc_md34"></a>
+<h2><a class="anchor" id="autotoc_md36"></a>
 AUTHOR</h2>
 <p>Michel Olagnon - Feb. 2000</p>
 <p>John Urban, 2022.04.16 o added man-page and reduced to a template using the prep(1) preprocessor.</p>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<h2><a class="anchor" id="autotoc_md37"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;real(kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: xdont</div>

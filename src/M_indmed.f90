@@ -2,26 +2,24 @@ Module M_indmed
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: indmed
-private :: kdp
-private :: R_indmed, I_indmed, D_indmed
-private :: r_med, i_med, d_med
 Integer, Allocatable, Dimension(:), Private, Save :: IDONT
 interface indmed
-  module procedure d_indmed, r_indmed, i_indmed
+  module procedure real64_indmed, real32_indmed, int32_indmed
 end interface indmed
 contains
 !>
 !!##NAME
-!!    indmed(3f) - [orderpack:MEDIAN] do stuff
+!!    indmed(3f) - [orderpack:MEDIAN] Returns index of median value of
+!!                 an array.
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine indmed (yyyyyy)
+!!     Subroutine ${KIND}_indmed (XDONT, INDM)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+!!       Integer, Intent (Out) :: INDM
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -30,10 +28,16 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
+!!    Finds the index of the median of XDONT using the recursive procedure
+!!    described in Knuth, The Art of Computer Programming, vol. 3, 5.3.3 -
+!!    This procedure is linear in time, and does not require to be able to
+!!    interpolate in the set as the one used in INDNTH. It also has better
+!!    worst case behavior than INDNTH, but is about 30% slower in average
+!!    for random uniformly distributed values.
 !!
 !!##OPTIONS
-!!     XXXXX      description
-!!     YYYYY      description
+!!     XDONT     array to find the median value of.
+!!     INDM      index of the median value.
 !!
 !!##EXAMPLES
 !!
@@ -56,11 +60,8 @@ contains
 !!
 !!##LICENSE
 !!    CC0-1.0
-
-Subroutine D_indmed (XDONT, INDM)
-!! Returns index of median value of XDONT.
-!!__________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
+Subroutine real64_indmed (XDONT, INDM)
+      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
       Integer, Intent (Out) :: INDM
 ! __________________________________________________________
       Integer :: IDON
@@ -70,26 +71,19 @@ Subroutine D_indmed (XDONT, INDM)
          IDONT (IDON) = IDON
       End Do
 !
-      Call d_med (XDONT, IDONT, INDM)
+      Call real64_med (XDONT, IDONT, INDM)
 !
       Deallocate (IDONT)
-End Subroutine D_indmed
-   Recursive Subroutine d_med (XDATT, IDATT, ires_med)
-!! Finds the index of the median of XDONT using the recursive procedure
-!! described in Knuth, The Art of Computer Programming,
-!! vol. 3, 5.3.3 - This procedure is linear in time, and
-!! does not require to be able to interpolate in the
-!! set as the one used in INDNTH. It also has better worst
-!! case behavior than INDNTH, but is about 30% slower in
-!! average for random uniformly distributed values.
-!!__________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (In) :: XDATT
+End Subroutine real64_indmed
+
+Recursive Subroutine real64_med (XDATT, IDATT, ires_med)
+      Real (kind=real64), Dimension (:), Intent (In) :: XDATT
       Integer, Dimension (:), Intent (In) :: IDATT
       Integer, Intent (Out):: ires_med
 ! __________________________________________________________
 !
-      Real (kind=kdp), Parameter :: XHUGE = HUGE (XDATT)
-      Real (kind=kdp) :: XWRK, XWRK1, XMED7, XMAX, XMIN
+      Real (kind=real64), Parameter :: XHUGE = HUGE (XDATT)
+      Real (kind=real64) :: XWRK, XWRK1, XMED7, XMAX, XMIN
 !
       Integer, Dimension (7*(((Size (IDATT)+6)/7+6)/7)) :: ISTRT, IENDT, IMEDT
       Integer, Dimension (7*((Size(IDATT)+6)/7)) :: IWRKT
@@ -273,7 +267,7 @@ End Subroutine D_indmed
 !
 !  Find XMED7, the median of the medians
 !
-         Call d_med (XDATT, IMEDT(1:IDON1), IMED7)
+         Call real64_med (XDATT, IMEDT(1:IDON1), IMED7)
          XMED7 = XDATT (IMED7)
 !
 !  Count how many values are not higher than (and how many equal to) XMED7
@@ -452,12 +446,9 @@ End Subroutine D_indmed
                 Return
          End If
 !
-   END Subroutine d_med
-!
-Subroutine R_indmed (XDONT, INDM)
-!  Returns index of median value of XDONT.
-! __________________________________________________________
-      Real, Dimension (:), Intent (In) :: XDONT
+END Subroutine real64_med
+Subroutine real32_indmed (XDONT, INDM)
+      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
       Integer, Intent (Out) :: INDM
 ! __________________________________________________________
       Integer :: IDON
@@ -467,26 +458,19 @@ Subroutine R_indmed (XDONT, INDM)
          IDONT (IDON) = IDON
       End Do
 !
-      Call r_med (XDONT, IDONT, INDM)
+      Call real32_med (XDONT, IDONT, INDM)
 !
       Deallocate (IDONT)
-End Subroutine R_indmed
-   Recursive Subroutine r_med (XDATT, IDATT, ires_med)
-!! Finds the index of the median of XDONT using the recursive procedure
-!! described in Knuth, The Art of Computer Programming,
-!! vol. 3, 5.3.3 - This procedure is linear in time, and
-!! does not require to be able to interpolate in the
-!! set as the one used in INDNTH. It also has better worst
-!! case behavior than INDNTH, but is about 30% slower in
-!! average for random uniformly distributed values.
-!!__________________________________________________________
-      Real, Dimension (:), Intent (In) :: XDATT
+End Subroutine real32_indmed
+
+Recursive Subroutine real32_med (XDATT, IDATT, ires_med)
+      Real (kind=real32), Dimension (:), Intent (In) :: XDATT
       Integer, Dimension (:), Intent (In) :: IDATT
-      Integer, Intent (Out) :: ires_med
+      Integer, Intent (Out):: ires_med
 ! __________________________________________________________
 !
-      Real, Parameter :: XHUGE = HUGE (XDATT)
-      Real :: XWRK, XWRK1, XMED7, XMAX, XMIN
+      Real (kind=real32), Parameter :: XHUGE = HUGE (XDATT)
+      Real (kind=real32) :: XWRK, XWRK1, XMED7, XMAX, XMIN
 !
       Integer, Dimension (7*(((Size (IDATT)+6)/7+6)/7)) :: ISTRT, IENDT, IMEDT
       Integer, Dimension (7*((Size(IDATT)+6)/7)) :: IWRKT
@@ -563,7 +547,7 @@ End Subroutine R_indmed
 !  This is done by a variant of insertion sort where a first
 !  pass is used to bring the smallest element to the first position
 !  decreasing disorder at the same time, so that we may remove
-!  remove the loop test in the insertion loop.
+!  the loop test in the insertion loop.
 !
       IMAX = 1
       IMIN = 1
@@ -670,7 +654,7 @@ End Subroutine R_indmed
 !
 !  Find XMED7, the median of the medians
 !
-         Call r_med (XDATT, IMEDT(1:IDON1), IMED7)
+         Call real32_med (XDATT, IMEDT(1:IDON1), IMED7)
          XMED7 = XDATT (IMED7)
 !
 !  Count how many values are not higher than (and how many equal to) XMED7
@@ -849,11 +833,9 @@ End Subroutine R_indmed
                 Return
          End If
 !
-   END Subroutine r_med
-Subroutine I_indmed (XDONT, INDM)
-!! Returns index of median value of XDONT.
-! __________________________________________________________
-      Integer, Dimension (:), Intent (In) :: XDONT
+END Subroutine real32_med
+Subroutine int32_indmed (XDONT, INDM)
+      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
       Integer, Intent (Out) :: INDM
 ! __________________________________________________________
       Integer :: IDON
@@ -863,26 +845,19 @@ Subroutine I_indmed (XDONT, INDM)
          IDONT (IDON) = IDON
       End Do
 !
-      Call i_med (XDONT, IDONT, INDM)
+      Call int32_med (XDONT, IDONT, INDM)
 !
       Deallocate (IDONT)
-End Subroutine I_indmed
-   Recursive Subroutine i_med (XDATT, IDATT, ires_med)
-!! Finds the index of the median of XDONT using the recursive procedure
-!! described in Knuth, The Art of Computer Programming,
-!! vol. 3, 5.3.3 - This procedure is linear in time, and
-!! does not require to be able to interpolate in the
-!! set as the one used in INDNTH. It also has better worst
-!! case behavior than INDNTH, but is about 30% slower in
-!! average for random uniformly distributed values.
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In) :: XDATT
+End Subroutine int32_indmed
+
+Recursive Subroutine int32_med (XDATT, IDATT, ires_med)
+      Integer (kind=int32), Dimension (:), Intent (In) :: XDATT
       Integer, Dimension (:), Intent (In) :: IDATT
-      Integer, Intent (Out) :: ires_med
+      Integer, Intent (Out):: ires_med
 ! __________________________________________________________
 !
-      Integer, Parameter :: XHUGE = HUGE (XDATT)
-      Integer :: XWRK, XWRK1, XMED7, XMAX, XMIN
+      Integer (kind=int32), Parameter :: XHUGE = HUGE (XDATT)
+      Integer (kind=int32) :: XWRK, XWRK1, XMED7, XMAX, XMIN
 !
       Integer, Dimension (7*(((Size (IDATT)+6)/7+6)/7)) :: ISTRT, IENDT, IMEDT
       Integer, Dimension (7*((Size(IDATT)+6)/7)) :: IWRKT
@@ -959,7 +934,7 @@ End Subroutine I_indmed
 !  This is done by a variant of insertion sort where a first
 !  pass is used to bring the smallest element to the first position
 !  decreasing disorder at the same time, so that we may remove
-!  remove the loop test in the insertion loop.
+!  the loop test in the insertion loop.
 !
       IMAX = 1
       IMIN = 1
@@ -1066,7 +1041,7 @@ End Subroutine I_indmed
 !
 !  Find XMED7, the median of the medians
 !
-         Call i_med (XDATT, IMEDT(1:IDON1), IMED7)
+         Call int32_med (XDATT, IMEDT(1:IDON1), IMED7)
          XMED7 = XDATT (IMED7)
 !
 !  Count how many values are not higher than (and how many equal to) XMED7
@@ -1245,5 +1220,5 @@ End Subroutine I_indmed
                 Return
          End If
 !
-   END Subroutine i_med
+END Subroutine int32_med
 end module M_indmed

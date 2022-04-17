@@ -64,9 +64,9 @@ help_text=[ CHARACTER(LEN=128) :: &
 '   input files are large.',&
 '',&
 'OPTIONS',&
+'       INPUT_FILE(s)  input file(s)',&
 '       --col,c        column number to sort by. Columns are numbered',&
 '                      from left to right starting with one.',&
-'       INPUT_FILE(s)  input file(s)',&
 '       --verbose      display additional information for each file',&
 '       --help         display help text and exit',&
 '       --version      display version information and exit',&
@@ -96,9 +96,9 @@ help_text=[ CHARACTER(LEN=128) :: &
 !!    input files are large.
 !!
 !!##OPTIONS
+!!        INPUT_FILE(s)  input file(s)
 !!        --col,c        column number to sort by. Columns are numbered
 !!                       from left to right starting with one.
-!!        INPUT_FILE(s)  input file(s)
 !!        --verbose      display additional information for each file
 !!        --help         display help text and exit
 !!        --version      display version information and exit

@@ -2,24 +2,23 @@ Module M_median
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: median
-private :: kdp
-private :: R_median, I_median, D_median
 interface median
-  module procedure d_median, r_median, i_median
+  module procedure real64_median, real32_median, int32_median
 end interface median
 contains
 !>
 !!##NAME
-!!    median(3f) - [orderpack:MEDIAN] do stuff
+!!    median(3f) - [orderpack:MEDIAN] Return median value of array. If even
+!!                 number of data, average of the two "medians".
 !!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine median (yyyyyy)
+!!     Function ${KIND}_median (XDONT) Result (median)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!      ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+!!      ${TYPE} (Kind=${KIND}) :: median
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28,10 +27,26 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
+!!    Return median value of XDONT.
+!!    If even number of data, average of the two "medians".
+!!
+!!    This routine uses a pivoting strategy such as the one of
+!!    finding the median based on the quicksort algorithm, but
+!!    we skew the pivot choice to try to bring it to NORD as
+!!    fast as possible. It uses 2 temporary arrays, where it
+!!    stores the indices of the values smaller than the pivot
+!!    (ILOWT), and the indices of values larger than the pivot
+!!    that we might still need later on (IHIGT). It iterates
+!!    until it can bring the number of values in ILOWT to
+!!    exactly NORD, and then finds the maximum of this set.
 !!
 !!##OPTIONS
-!!     XXXXX      description
-!!     YYYYY      description
+!!     XDONT      array to determine the median value of.
+!!
+!!##RETURNS
+!!     MEDIAN     median value. If XDONT contains an even number
+!!                of elements the value is the average of the
+!!                two "medians".
 !!
 !!##EXAMPLES
 !!
@@ -46,7 +61,7 @@ contains
 !!   Results:
 !!
 !!##AUTHOR
-!!     Michel Olagnon, 2000-2012
+!!     Michel Olagnon - Aug. 2000
 !!
 !!     John Urban, 2022.04.16
 !!         o added man-page and reduced to a template using the
@@ -54,28 +69,12 @@ contains
 !!
 !!##LICENSE
 !!    CC0-1.0
-
-Function D_median (XDONT) Result (median)
-!! Return median value of XDONT
-!! If even number of data, average of the two "medians".
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (Kind=kdp), Dimension (:), Intent (In) :: XDONT
-      Real (Kind=kdp) :: median
+Function real64_median (XDONT) Result (median)
+      Real (Kind=real64), Dimension (:), Intent (In) :: XDONT
+      Real (Kind=real64) :: median
 ! __________________________________________________________
-      Real (Kind=kdp), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
-      Real (Kind=kdp) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
+      Real (Kind=real64), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+      Real (Kind=real64) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !!
       Logical :: IFODD
       Integer :: NDON, JHIG, JLOW, IHIG, NORD
@@ -558,28 +557,13 @@ Function D_median (XDONT) Result (median)
       endif
       Return
 !
-End Function D_median
-
-Function R_median (XDONT) Result (median)
-!! Return median value of XDONT
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!_________________________________________________________
-      Real, Dimension (:), Intent (In) :: XDONT
-      Real :: median
+End Function real64_median
+Function real32_median (XDONT) Result (median)
+      Real (Kind=real32), Dimension (:), Intent (In) :: XDONT
+      Real (Kind=real32) :: median
 ! __________________________________________________________
-      Real, Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
-      Real :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
+      Real (Kind=real32), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+      Real (Kind=real32) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !!
       Logical :: IFODD
       Integer :: NDON, JHIG, JLOW, IHIG, NORD
@@ -1062,27 +1046,13 @@ Function R_median (XDONT) Result (median)
       endif
       Return
 !
-End Function R_median
-Function I_median (XDONT) Result (median)
-!! Return median value of XDONT
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In) :: XDONT
-      Integer :: median
+End Function real32_median
+Function int32_median (XDONT) Result (median)
+      Integer (Kind=int32), Dimension (:), Intent (In) :: XDONT
+      Integer (Kind=int32) :: median
 ! __________________________________________________________
-      Integer, Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
-      Integer :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
+      Integer (Kind=int32), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+      Integer (Kind=int32) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !!
       Logical :: IFODD
       Integer :: NDON, JHIG, JLOW, IHIG, NORD
@@ -1565,5 +1535,5 @@ Function I_median (XDONT) Result (median)
       endif
       Return
 !
-End Function I_median
+End Function int32_median
 end module M_median
