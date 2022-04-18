@@ -20,13 +20,13 @@ subroutine \mbox{\hyperlink{interfacem__refsor_1_1refsor_afc047c068d84a508f27509
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{297 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{298       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
-\DoxyCodeLine{299 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{300 \textcolor{comment}{!}}
-\DoxyCodeLine{301       \textcolor{keyword}{Call }int32\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
-\DoxyCodeLine{302       \textcolor{keyword}{Call }int32\_inssor (xdont)}
-\DoxyCodeLine{303 }
+\DoxyCodeLine{331 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{332       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{333 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{334 \textcolor{comment}{!}}
+\DoxyCodeLine{335       \textcolor{keyword}{Call }int32\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
+\DoxyCodeLine{336       \textcolor{keyword}{Call }int32\_inssor (xdont)}
+\DoxyCodeLine{337 }
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__refsor_1_1refsor_aa25b791e3d80a9a8c627ce9d5ea46443}\label{interfacem__refsor_1_1refsor_aa25b791e3d80a9a8c627ce9d5ea46443}} 
@@ -37,13 +37,13 @@ subroutine \mbox{\hyperlink{interfacem__refsor_1_1refsor_afc047c068d84a508f27509
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{183 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{184 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
-\DoxyCodeLine{185 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{186 \textcolor{comment}{!}}
-\DoxyCodeLine{187       \textcolor{keyword}{Call }real32\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
-\DoxyCodeLine{188       \textcolor{keyword}{Call }real32\_inssor (xdont)}
-\DoxyCodeLine{189 }
+\DoxyCodeLine{217 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{218 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{219 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{220 \textcolor{comment}{!}}
+\DoxyCodeLine{221       \textcolor{keyword}{Call }real32\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
+\DoxyCodeLine{222       \textcolor{keyword}{Call }real32\_inssor (xdont)}
+\DoxyCodeLine{223 }
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__refsor_1_1refsor_a714081c23f10e15a9a94101371604523}\label{interfacem__refsor_1_1refsor_a714081c23f10e15a9a94101371604523}} 
@@ -75,7 +75,7 @@ One then call recursively the program to sort each subset. When the size of the 
 X\+D\+O\+NT array to sort\hypertarget{namespacem__refsor_autotoc_md92}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__refsor_autotoc_md92}
 Sample program\+:
 
-program demo\+\_\+refsor use M\+\_\+refsor, only \+: refsor implicit none !x!call refsor(yyyyyy) end program demo\+\_\+refsor
+program demo\+\_\+refsor use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+refsor, only \+: refsor implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. real(kind=real32) \+:: valsr(2000) real(kind=real64) \+:: valsd(2000) integer \+:: valsi(2000) integer \+:: i call random\+\_\+seed() call random\+\_\+number(valsr) call random\+\_\+number(valsd) valsi=int(valsr$\ast$1000000.0) valsr=valsr$\ast$1000000.0-\/500000.\+0 valsd=valsd$\ast$1000000.0-\/500000.\+0 call refsor(valsi) do i=1,size(valsi)-\/1 if (valsi(i+1).lt.\+valsi(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 1 endif enddo call refsor(valsr) do i=1,size(valsr)-\/1 if (valsr(i+1).lt.\+valsr(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 2 endif enddo call refsor(valsd) do i=1,size(valsd)-\/1 if (valsd(i+1).lt.\+valsd(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 3 endif enddo write($\ast$,$\ast$)\textquotesingle{}random arrays are now sorted\textquotesingle{} end program demo\+\_\+refsor
 
 Results\+:\hypertarget{namespacem__refsor_autotoc_md93}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__refsor_autotoc_md93}
 Michel Olagnon -\/ Apr. 2000
@@ -83,13 +83,13 @@ Michel Olagnon -\/ Apr. 2000
 John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__refsor_autotoc_md94}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__refsor_autotoc_md94}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{69 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{70 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
-\DoxyCodeLine{71 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{72 \textcolor{comment}{!}}
-\DoxyCodeLine{73       \textcolor{keyword}{Call }real64\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
-\DoxyCodeLine{74       \textcolor{keyword}{Call }real64\_inssor (xdont)}
-\DoxyCodeLine{75 }
+\DoxyCodeLine{103 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{104 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{105 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{106 \textcolor{comment}{!}}
+\DoxyCodeLine{107       \textcolor{keyword}{Call }real64\_subsor (xdont, 1, \textcolor{keyword}{Size} (xdont))}
+\DoxyCodeLine{108       \textcolor{keyword}{Call }real64\_inssor (xdont)}
+\DoxyCodeLine{109 }
 
 \end{DoxyCode}
 

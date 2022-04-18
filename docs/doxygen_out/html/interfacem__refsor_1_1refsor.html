@@ -107,13 +107,13 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;      <span class="keywordtype">Integer (kind=int32)</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: XDONT</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;      <span class="keyword">Call </span>int32_subsor (xdont, 1, <span class="keyword">Size</span> (xdont))</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;      <span class="keyword">Call </span>int32_inssor (xdont)</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
+<div class="fragment"><div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;      <span class="keywordtype">Integer (kind=int32)</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: XDONT</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;<span class="comment">!</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;      <span class="keyword">Call </span>int32_subsor (xdont, 1, <span class="keyword">Size</span> (xdont))</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;      <span class="keyword">Call </span>int32_inssor (xdont)</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -140,13 +140,13 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;<span class="keywordtype">      Real</span> (kind=real32), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: xdont</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;      <span class="keyword">Call </span>real32_subsor (xdont, 1, <span class="keyword">Size</span> (xdont))</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;      <span class="keyword">Call </span>real32_inssor (xdont)</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="fragment"><div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;<span class="keywordtype">      Real</span> (kind=real32), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: xdont</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;<span class="comment">!</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keyword">Call </span>real32_subsor (xdont, 1, <span class="keyword">Size</span> (xdont))</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      <span class="keyword">Call </span>real32_inssor (xdont)</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -198,7 +198,7 @@ OPTIONS</h2>
 <h2><a class="anchor" id="autotoc_md92"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
-<p>program demo_refsor use M_refsor, only : refsor implicit none !x!call refsor(yyyyyy) end program demo_refsor</p>
+<p>program demo_refsor use,intrinsic :: iso_fortran_env, only : int32, real32, real64 use M_refsor, only : refsor implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. real(kind=real32) :: valsr(2000) real(kind=real64) :: valsd(2000) integer :: valsi(2000) integer :: i call random_seed() call random_number(valsr) call random_number(valsd) valsi=int(valsr*1000000.0) valsr=valsr*1000000.0-500000.0 valsd=valsd*1000000.0-500000.0 call refsor(valsi) do i=1,size(valsi)-1 if (valsi(i+1).lt.valsi(i))then write(*,*)'not sorted' stop 1 endif enddo call refsor(valsr) do i=1,size(valsr)-1 if (valsr(i+1).lt.valsr(i))then write(*,*)'not sorted' stop 2 endif enddo call refsor(valsd) do i=1,size(valsd)-1 if (valsd(i+1).lt.valsd(i))then write(*,*)'not sorted' stop 3 endif enddo write(*,*)'random arrays are now sorted' end program demo_refsor</p>
 <p>Results:</p>
 <h2><a class="anchor" id="autotoc_md93"></a>
 AUTHOR</h2>
@@ -207,13 +207,13 @@ AUTHOR</h2>
 <h2><a class="anchor" id="autotoc_md94"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
-<div class="fragment"><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: xdont</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="comment">!</span></div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      <span class="keyword">Call </span>real64_subsor (xdont, 1, <span class="keyword">Size</span> (xdont))</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <span class="keyword">Call </span>real64_inssor (xdont)</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="fragment"><div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: xdont</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">!</span></div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      <span class="keyword">Call </span>real64_subsor (xdont, 1, <span class="keyword">Size</span> (xdont))</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keyword">Call </span>real64_inssor (xdont)</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160; </div>
 </div><!-- fragment -->
 </div>
 </div>
