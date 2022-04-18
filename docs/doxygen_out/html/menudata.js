@@ -26,12 +26,9 @@ var menudata={children:[
 {text:"Modules List",url:"namespaces.html"},
 {text:"Module Members",url:"namespacemembers.html",children:[
 {text:"All",url:"namespacemembers.html",children:[
-{text:"d",url:"namespacemembers.html#index_d"},
 {text:"i",url:"namespacemembers.html#index_i"},
-{text:"k",url:"namespacemembers.html#index_k"},
 {text:"r",url:"namespacemembers.html#index_r"}]},
 {text:"Functions/Subroutines",url:"namespacemembers_func.html",children:[
-{text:"d",url:"namespacemembers_func.html#index_d"},
 {text:"i",url:"namespacemembers_func.html#index_i"},
 {text:"r",url:"namespacemembers_func.html#index_r"}]},
 {text:"Variables",url:"namespacemembers_vars.html"}]}]},
@@ -40,12 +37,13 @@ var menudata={children:[
 {text:"Data Types",url:"classes.html"},
 {text:"Data Fields",url:"functions.html",children:[
 {text:"All",url:"functions.html",children:[
-{text:"d",url:"functions.html#index_d"},
 {text:"i",url:"functions.html#index_i"},
 {text:"r",url:"functions.html#index_r"}]},
 {text:"Functions/Subroutines",url:"functions_func.html",children:[
-{text:"d",url:"functions_func.html#index_d"},
 {text:"i",url:"functions_func.html#index_i"},
 {text:"r",url:"functions_func.html#index_r"}]}]}]},
 {text:"Files",url:"files.html",children:[
-{text:"File List",url:"files.html"}]}]}
+{text:"File List",url:"files.html"},
+{text:"File Members",url:"globals.html",children:[
+{text:"All",url:"globals.html"},
+{text:"Functions/Subroutines",url:"globals_func.html"}]}]}]}

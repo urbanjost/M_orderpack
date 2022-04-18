@@ -17,7 +17,17 @@ Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
     date: 2000-2012
 ---
 ## Issues
-- UNIVAR returns non-unique values when less unique values in input than requested in output with gfortran,nvfortran; OK with ifort
+  These appear to be issues with the original code, but may have been introduced, 
+  but are being looked at:
+
+- UNIPAR returns non-unique values when less unique values in input than requested in output with gfortran,nvfortran; OK with ifort
+- UNIINV does not have a mechanism to tell how many values are unique and does not appear to sort correctly
+- INDMED has issues that may only manifest when debug options are used when compiling
+- UNIRNK does not return number of values when given an INTEGER array
+```text
+    At line 499 of file ./src/M_indmed.f90
+    Fortran runtime error: Array bound mismatch for dimension 1 of array 'iwrkt' (7/5)
+```
 
 ---
 

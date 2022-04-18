@@ -2,24 +2,23 @@ Module M_indnth
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: indnth
-private :: kdp
-private :: R_indnth, I_indnth, D_indnth
 interface indnth
-  module procedure d_indnth, r_indnth, i_indnth
+  module procedure real64_indnth, real32_indnth, int32_indnth
 end interface indnth
 contains
 !>
 !!##NAME
-!!    indnth(3f) - [orderpack:FRACTILE] do stuff
-!!                 (LICENSE:CC0-1.0)
+!!    indnth(3f) - [orderpack:FRACTILE] Return index of Nth value of
+!!                 array, i.e fractile of order N/SIZE(array).
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine indnth (yyyyyy)
+!!     Function ${KIND}_indnth (XDONT, NORD) Result (INDNTH)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+!!       Integer :: INDNTH
+!!       Integer, Intent (In) :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28,53 +27,86 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
+!!    Return index of NORDth value of XDONT, i.e fractile of order
+!!    NORD/SIZE(XDONT).
+!!
+!!    This routine uses a pivoting strategy such as the one of finding the
+!!    median based on the quicksort algorithm, but we skew the pivot choice
+!!    to try to bring it to NORD as fast as possible. It uses 2 temporary
+!!    arrays, where it stores the indices of the values smaller than the
+!!    pivot (ILOWT), and the indices of values larger than the pivot that
+!!    we might still need later on (IHIGT). It iterates until it can bring
+!!    the number of values in ILOWT to exactly NORD, and then finds the
+!!    maximum of this set.
 !!
 !!##OPTIONS
-!!     XXXXX      description
-!!     YYYYY      description
+!!     XDONT      array to search
+!!     NORD       Nth value to search for
+!!
+!!##RETURNS
+!!     INDNTH     the index of XDONT that contains the requested value
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_indnth
+!!    ! find Nth lowest value in an array without sorting entire array
 !!    use M_indnth, only : indnth
 !!    implicit none
-!!       !x!call indnth(yyyyyy)
+!!    integer,allocatable :: iarr(:)
+!!    character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))'
+!!    integer :: i
+!!       iarr=[80,70,30,40,50,60,20,10,0,-100]
+!!       print list, 'ORIGINAL:',iarr
+!!       ! like minloc() and maxloc()
+!!       print sp,'minloc',indnth(iarr,1),minloc(iarr)
+!!       print sp,'maxloc',indnth(iarr,size(iarr)),maxloc(iarr)
+!!       ! but more general so can find location of the Nth lowest value ...
+!!       call printme(3) ! find location of Nth lowest value
+!!       call printme(1)
+!!       call printme(7)
+!!       ! sort the hard way, one value at a time
+!!       do i=1,size(iarr)
+!!          write(*,sp,advance='no') iarr(indnth(iarr,i))
+!!       enddo
+!!       print *
+!!    contains
+!!    subroutine printme(n)
+!!    integer,intent(in) :: n
+!!    integer :: ii
+!!       !
+!!       ii=indnth(iarr,n)
+!!       !
+!!       print sp,'nord=',n,' index=',ii,' fractile=',iarr(ii)
+!!    end subroutine printme
 !!    end program demo_indnth
 !!
 !!   Results:
 !!
-!!##AUTHOR
-!!     Michel Olagnon, 2000-2012
+!!    ORIGINAL:, 80, 70, 30, 40, 50, 60, 20, 10, 0, -100
+!!    minloc 10 10
+!!    maxloc 1 1
+!!    nord= 3  index= 8  fractile= 10
+!!    nord= 1  index= 10  fractile= -100
+!!    nord= 7  index= 5  fractile= 50
+!!    -100 0 10 20 30 40 50 60 70 80
 !!
-!!     John Urban, 2022.04.16
-!!         o added man-page and reduced to a template using the
-!!           prep(1) preprocessor.
+!!##AUTHOR
+!!    Michel Olagnon - Aug. 2000
+!!
+!!    John Urban, 2022.04.16
+!!    o added man-page and reduced to a template using the
+!!      prep(1) preprocessor.
 !!
 !!##LICENSE
 !!    CC0-1.0
-
-Function D_indnth (XDONT, NORD) Result (INDNTH)
-!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
-      Integer :: INDNTH
+Function real64_indnth (XDONT, NORD) Result (INDNTH)
+      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
       Integer, Intent (In) :: NORD
+      Integer :: INDNTH
 ! __________________________________________________________
-      Real (kind=kdp) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
+      Real (kind=real64) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (NORD) :: IRNGT
       Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
@@ -561,28 +593,13 @@ Function D_indnth (XDONT, NORD) Result (INDNTH)
       Return
 !
 !
-End Function D_indnth
-
-Function R_indnth (XDONT, NORD) Result (INDNTH)
-!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!_________________________________________________________
-      Real, Dimension (:), Intent (In) :: XDONT
-      Integer :: INDNTH
+End Function real64_indnth
+Function real32_indnth (XDONT, NORD) Result (INDNTH)
+      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
       Integer, Intent (In) :: NORD
+      Integer :: INDNTH
 ! __________________________________________________________
-      Real :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
+      Real (kind=real32) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (NORD) :: IRNGT
       Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
@@ -1069,27 +1086,13 @@ Function R_indnth (XDONT, NORD) Result (INDNTH)
       Return
 !
 !
-End Function R_indnth
-Function I_indnth (XDONT, NORD) Result (INDNTH)
-!! Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
-!!__________________________________________________________
-!! This routine uses a pivoting strategy such as the one of
-!! finding the median based on the quicksort algorithm, but
-!! we skew the pivot choice to try to bring it to NORD as
-!! fast as possible. It uses 2 temporary arrays, where it
-!! stores the indices of the values smaller than the pivot
-!! (ILOWT), and the indices of values larger than the pivot
-!! that we might still need later on (IHIGT). It iterates
-!! until it can bring the number of values in ILOWT to
-!! exactly NORD, and then finds the maximum of this set.
-!! Michel Olagnon - Aug. 2000
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In)  :: XDONT
-      Integer :: INDNTH
+End Function real32_indnth
+Function int32_indnth (XDONT, NORD) Result (INDNTH)
+      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
       Integer, Intent (In) :: NORD
+      Integer :: INDNTH
 ! __________________________________________________________
-      Integer :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
+      Integer (kind=int32) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (NORD) :: IRNGT
       Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
@@ -1576,5 +1579,5 @@ Function I_indnth (XDONT, NORD) Result (INDNTH)
       Return
 !
 !
-End Function I_indnth
+End Function int32_indnth
 end module M_indnth

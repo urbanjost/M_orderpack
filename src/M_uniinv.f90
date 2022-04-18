@@ -2,28 +2,25 @@ Module M_uniinv
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: uniinv
-private :: kdp
-private :: R_uniinv, I_uniinv, D_uniinv
-private :: R_nearless, I_nearless, D_nearless, nearless
 interface uniinv
-  module procedure d_uniinv, r_uniinv, i_uniinv
+  module procedure real64_uniinv, real32_uniinv, int32_uniinv
 end interface uniinv
 interface nearless
-  module procedure D_nearless, R_nearless, I_nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless
 end interface nearless
 contains
 !>
 !!##NAME
-!!    uniinv(3f) - [orderpack:RANK_UNIQUE] do stuff
-!!                 (LICENSE:CC0-1.0)
+!!    uniinv(3f) - [orderpack:RANK_UNIQUE] a merge-sort inverse ranking of
+!!    an array, with removal of duplicate entries.
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine uniinv (yyyyyy)
+!!     Subroutine ${KIND}_uniinv (XDONT, IGOEST)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+!!       Integer, Dimension (:), Intent (Out) :: IGOEST
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -33,9 +30,19 @@ contains
 !!
 !!##DESCRIPTION
 !!
+!!    UNIINV(3f) is a merge-sort inverse ranking of an array, with removal
+!!    of duplicate entries.
+!!
+!!    The routine is similar to pure merge-sort ranking, but on the last
+!!    pass, it sets indices in IGOEST to the rank of the value in the ordered
+!!    set with duplicates removed.  For performance reasons, the first 2
+!!    passes are taken out of the standard loop, and use dedicated coding.
+!!
+!!    !BUG! SO HOW DO YOU KNOW HOW MANY WERE REMOVED AS DUPLICATES???
+!!
 !!##OPTIONS
-!!     XXXXX      description
-!!     YYYYY      description
+!!     XDONT      array to rank
+!!     IGOEST     rank array
 !!
 !!##EXAMPLES
 !!
@@ -44,7 +51,26 @@ contains
 !!    program demo_uniinv
 !!    use M_uniinv, only : uniinv
 !!    implicit none
-!!       !x!call uniinv(yyyyyy)
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    real,allocatable :: xdont(:)
+!!       !
+!!       xdont=[10.0, 5.0, 7.0, 1.0, 4.0, 5.0, 6.0, 8.0, 9.0, 10.0, 1.0]
+!!       call printme()
+!!       !
+!!       xdont=[-1.0, 0.0, -1.0, 0.0, -1.0, 0.0, -1.0]
+!!       call printme()
+!!    contains
+!!    subroutine printme()
+!!    integer,allocatable :: igoest(:)
+!!       write(*,g)'ORIGINAL:',xdont
+!!       write(*,g)'NUMBER OF INDICES TO SORT:',size(xdont)
+!!       if(allocated(igoest))deallocate(igoest)
+!!       allocate(igoest(size(xdont)))
+!!       call uniinv(xdont,igoest)
+!!       write(*,g)'NUMBER OF INDICES RETURNED: ????'
+!!       write(*,g)'RETURNED INDICES:',igoest(:)
+!!       write(*,g)'SORTED VALUES:?????',xdont(igoest)
+!!    end subroutine
 !!    end program demo_uniinv
 !!
 !!   Results:
@@ -58,22 +84,11 @@ contains
 !!
 !!##LICENSE
 !!    CC0-1.0
-
-Subroutine D_uniinv (XDONT, IGOEST)
-!!__________________________________________________________
-!!  UNIINV = Merge-sort inverse ranking of an array, with removal of
-!!  duplicate entries.
-!!  The routine is similar to pure merge-sort ranking, but on
-!!  the last pass, it sets indices in IGOEST to the rank
-!!  of the value in the ordered set with duplicates removed.
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (kind=kdp), Dimension (:), Intent (In) :: XDONT
+Subroutine real64_uniinv (XDONT, IGOEST)
+      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
-      Real (kind=kdp) :: XTST, XDONA, XDONB
+      Real (kind=real64) :: XTST, XDONA, XDONB
 !
 ! __________________________________________________________
       Integer, Dimension (SIZE(IGOEST)) :: JWRKT, IRNGT
@@ -302,25 +317,21 @@ Subroutine D_uniinv (XDONT, IGOEST)
 !
       End Do
 !
-      Return
+End Subroutine real64_uniinv
+Function real64_nearless (XVAL) result (real64_nl)
+!! Nearest value less than given value
+! __________________________________________________________
+      Real (kind=real64), Intent (In) :: XVAL
+      Real (kind=real64) :: real64_nl
+! __________________________________________________________
+      real64_nl = nearest (XVAL, -1.0_real64)
 !
-End Subroutine D_uniinv
-
-Subroutine R_uniinv (XDONT, IGOEST)
-!!__________________________________________________________
-!!  UNIINV = Merge-sort inverse ranking of an array, with removal of
-!!  duplicate entries.
-!!  The routine is similar to pure merge-sort ranking, but on
-!!  the last pass, it sets indices in IGOEST to the rank
-!!  of the value in the ordered set with duplicates removed.
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!_________________________________________________________
-      Real, Dimension (:), Intent (In) :: XDONT
+End Function real64_nearless
+Subroutine real32_uniinv (XDONT, IGOEST)
+      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
-      Real    :: XTST, XDONA, XDONB
+      Real (kind=real32) :: XTST, XDONA, XDONB
 !
 ! __________________________________________________________
       Integer, Dimension (SIZE(IGOEST)) :: JWRKT, IRNGT
@@ -549,24 +560,21 @@ Subroutine R_uniinv (XDONT, IGOEST)
 !
       End Do
 !
-      Return
+End Subroutine real32_uniinv
+Function real32_nearless (XVAL) result (real32_nl)
+!! Nearest value less than given value
+! __________________________________________________________
+      Real (kind=real32), Intent (In) :: XVAL
+      Real (kind=real32) :: real32_nl
+! __________________________________________________________
+      real32_nl = nearest (XVAL, -1.0_real32)
 !
-End Subroutine R_uniinv
-Subroutine I_uniinv (XDONT, IGOEST)
-!!__________________________________________________________
-!!  UNIINV = Merge-sort inverse ranking of an array, with removal of
-!!  duplicate entries.
-!!  The routine is similar to pure merge-sort ranking, but on
-!!  the last pass, it sets indices in IGOEST to the rank
-!!  of the value in the ordered set with duplicates removed.
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In)  :: XDONT
+End Function real32_nearless
+Subroutine int32_uniinv (XDONT, IGOEST)
+      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
-      Integer :: XTST, XDONA, XDONB
+      Integer (kind=int32) :: XTST, XDONA, XDONB
 !
 ! __________________________________________________________
       Integer, Dimension (SIZE(IGOEST)) :: JWRKT, IRNGT
@@ -795,39 +803,15 @@ Subroutine I_uniinv (XDONT, IGOEST)
 !
       End Do
 !
-      Return
-!
-End Subroutine I_uniinv
-
-Function D_nearless (XVAL) result (D_nl)
+End Subroutine int32_uniinv
+Function int32_nearless (XVAL) result (int32_nl)
 !! Nearest value less than given value
 ! __________________________________________________________
-      Real (kind=kdp), Intent (In) :: XVAL
-      Real (kind=kdp) :: D_nl
+      Integer (kind=int32), Intent (In) :: XVAL
+      Integer (kind=int32) :: int32_nl
 ! __________________________________________________________
-      D_nl = nearest (XVAL, -1.0_kdp)
-      return
+      int32_nl = XVAL -1_int32
 !
-End Function D_nearless
-Function R_nearless (XVAL) result (R_nl)
-!! Nearest value less than given value
-! __________________________________________________________
-      Real, Intent (In) :: XVAL
-      Real :: R_nl
-! __________________________________________________________
-      R_nl = nearest (XVAL, -1.0)
-      return
-!
-End Function R_nearless
-Function I_nearless (XVAL) result (I_nl)
-!! Nearest value less than given value
-! __________________________________________________________
-      Integer, Intent (In) :: XVAL
-      Integer :: I_nl
-! __________________________________________________________
-      I_nl = XVAL - 1
-      return
-!
-End Function I_nearless
+End Function int32_nearless
 
 end module M_uniinv

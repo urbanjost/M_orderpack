@@ -25,109 +25,109 @@ subroutine \mbox{\hyperlink{namespacem__refpar_a7d338849c7ddc74aa18605ae1506e3f8
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{279       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
-\DoxyCodeLine{280       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
-\DoxyCodeLine{281       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
-\DoxyCodeLine{282 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{283       \textcolor{keywordtype}{Integer (kind=int32)} :: XPIV, XWRK}
-\DoxyCodeLine{284 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{285 \textcolor{comment}{!}}
-\DoxyCodeLine{286       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: IWRKT}
-\DoxyCodeLine{287       \textcolor{keywordtype}{Integer} :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK}
-\DoxyCodeLine{288 \textcolor{comment}{!}}
-\DoxyCodeLine{289       ndon = \textcolor{keyword}{SIZE} (xdont)}
-\DoxyCodeLine{290 \textcolor{comment}{!}}
-\DoxyCodeLine{291       \textcolor{keywordflow}{Do} icrs = 1, ndon}
-\DoxyCodeLine{292          iwrkt(icrs) = icrs}
-\DoxyCodeLine{293 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{294       ideb = 1}
-\DoxyCodeLine{295       ifin = ndon}
-\DoxyCodeLine{296       \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{297          \textcolor{keywordflow}{If} (ideb >= ifin) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{298          imil = (ideb+ifin) / 2}
-\DoxyCodeLine{299 \textcolor{comment}{!}}
-\DoxyCodeLine{300 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
-\DoxyCodeLine{301 \textcolor{comment}{!}}
-\DoxyCodeLine{302          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{303             iwrk = iwrkt(ideb)}
-\DoxyCodeLine{304             iwrkt(ideb) = iwrkt(imil)}
-\DoxyCodeLine{305             iwrkt(imil) = iwrk}
-\DoxyCodeLine{306 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{307          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) > xdont(iwrkt(ifin))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{308             iwrk = iwrkt(ifin)}
-\DoxyCodeLine{309             iwrkt(ifin) = iwrkt(imil)}
-\DoxyCodeLine{310             iwrkt(imil) = iwrk}
-\DoxyCodeLine{311             \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{312                iwrk = iwrkt(ideb)}
-\DoxyCodeLine{313                iwrkt(ideb) = iwrkt(imil)}
-\DoxyCodeLine{314                iwrkt(imil) = iwrk}
-\DoxyCodeLine{315 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{316 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{317          \textcolor{keywordflow}{If} ((ifin-\/ideb) < 3) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{318          xpiv = xdont(iwrkt(imil))}
-\DoxyCodeLine{319 \textcolor{comment}{!}}
-\DoxyCodeLine{320 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
-\DoxyCodeLine{321 \textcolor{comment}{!  those <= pivot at the beginning}}
-\DoxyCodeLine{322 \textcolor{comment}{!}}
-\DoxyCodeLine{323          icrs = ideb}
-\DoxyCodeLine{324          idcr = ifin}
-\DoxyCodeLine{325          ech2: \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{326             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{327                icrs = icrs + 1}
-\DoxyCodeLine{328                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{329 \textcolor{comment}{!}}
-\DoxyCodeLine{330 \textcolor{comment}{!  the first  >  pivot is IWRKT(IDCR)}}
-\DoxyCodeLine{331 \textcolor{comment}{!  the last   <= pivot is IWRKT(ICRS-\/1)}}
-\DoxyCodeLine{332 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
-\DoxyCodeLine{333 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
-\DoxyCodeLine{334 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
-\DoxyCodeLine{335 \textcolor{comment}{!        as if XDONT (IWRKT(IFIN)) > XPIV}}
-\DoxyCodeLine{336 \textcolor{comment}{!}}
-\DoxyCodeLine{337                   \textcolor{keywordflow}{Exit} ech2}
-\DoxyCodeLine{338 \textcolor{comment}{!}}
-\DoxyCodeLine{339 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{340                \textcolor{keywordflow}{If} (xdont(iwrkt(icrs)) > xpiv) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{341 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{342             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{343                \textcolor{keywordflow}{If} (xdont(iwrkt(idcr)) <= xpiv) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{344                idcr = idcr -\/ 1}
-\DoxyCodeLine{345                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{346 \textcolor{comment}{!}}
-\DoxyCodeLine{347 \textcolor{comment}{!  The last value < pivot is always IWRKT(ICRS-\/1)}}
-\DoxyCodeLine{348 \textcolor{comment}{!}}
-\DoxyCodeLine{349                   \textcolor{keywordflow}{Exit} ech2}
-\DoxyCodeLine{350 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{351 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{352 \textcolor{comment}{!}}
-\DoxyCodeLine{353             iwrk = iwrkt(idcr)}
-\DoxyCodeLine{354             iwrkt(idcr) = iwrkt(icrs)}
-\DoxyCodeLine{355             iwrkt(icrs) = iwrk}
-\DoxyCodeLine{356 \textcolor{keywordflow}{         End Do} ech2}
-\DoxyCodeLine{357 \textcolor{comment}{!}}
-\DoxyCodeLine{358 \textcolor{comment}{!  One restricts further processing to find the fractile value}}
-\DoxyCodeLine{359 \textcolor{comment}{!}}
-\DoxyCodeLine{360          \textcolor{keywordflow}{If} (icrs <= nord) ideb = icrs}
-\DoxyCodeLine{361          \textcolor{keywordflow}{If} (icrs > nord) ifin = icrs -\/ 1}
-\DoxyCodeLine{362 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{363 \textcolor{comment}{!}}
-\DoxyCodeLine{364 \textcolor{comment}{!  Now, we only need to complete ranking of the 1:NORD set}}
-\DoxyCodeLine{365 \textcolor{comment}{!  Assuming NORD is small, we use a simple insertion sort}}
-\DoxyCodeLine{366 \textcolor{comment}{!}}
-\DoxyCodeLine{367       \textcolor{keywordflow}{Do} icrs = 2, nord}
-\DoxyCodeLine{368          iwrk = iwrkt(icrs)}
-\DoxyCodeLine{369          xwrk = xdont(iwrk)}
-\DoxyCodeLine{370          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{371             \textcolor{keywordflow}{If} (xwrk <= xdont(iwrkt(idcr))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{372                iwrkt(idcr+1) = iwrkt(idcr)}
-\DoxyCodeLine{373             \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{374                \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{375 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{376 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{377          iwrkt(idcr+1) = iwrk}
-\DoxyCodeLine{378 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{379       irngt(1:nord) = iwrkt(1:nord)}
-\DoxyCodeLine{380       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{381 \textcolor{comment}{!}}
+\DoxyCodeLine{278       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{279       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
+\DoxyCodeLine{280       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{281 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{282       \textcolor{keywordtype}{Integer (kind=int32)} :: XPIV, XWRK}
+\DoxyCodeLine{283 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{284 \textcolor{comment}{!}}
+\DoxyCodeLine{285       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: IWRKT}
+\DoxyCodeLine{286       \textcolor{keywordtype}{Integer} :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK}
+\DoxyCodeLine{287 \textcolor{comment}{!}}
+\DoxyCodeLine{288       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{289 \textcolor{comment}{!}}
+\DoxyCodeLine{290       \textcolor{keywordflow}{Do} icrs = 1, ndon}
+\DoxyCodeLine{291          iwrkt(icrs) = icrs}
+\DoxyCodeLine{292 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{293       ideb = 1}
+\DoxyCodeLine{294       ifin = ndon}
+\DoxyCodeLine{295       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{296          \textcolor{keywordflow}{If} (ideb >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{297          imil = (ideb+ifin) / 2}
+\DoxyCodeLine{298 \textcolor{comment}{!}}
+\DoxyCodeLine{299 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
+\DoxyCodeLine{300 \textcolor{comment}{!}}
+\DoxyCodeLine{301          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{302             iwrk = iwrkt(ideb)}
+\DoxyCodeLine{303             iwrkt(ideb) = iwrkt(imil)}
+\DoxyCodeLine{304             iwrkt(imil) = iwrk}
+\DoxyCodeLine{305 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{306          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) > xdont(iwrkt(ifin))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{307             iwrk = iwrkt(ifin)}
+\DoxyCodeLine{308             iwrkt(ifin) = iwrkt(imil)}
+\DoxyCodeLine{309             iwrkt(imil) = iwrk}
+\DoxyCodeLine{310             \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{311                iwrk = iwrkt(ideb)}
+\DoxyCodeLine{312                iwrkt(ideb) = iwrkt(imil)}
+\DoxyCodeLine{313                iwrkt(imil) = iwrk}
+\DoxyCodeLine{314 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{315 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{316          \textcolor{keywordflow}{If} ((ifin-\/ideb) < 3) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{317          xpiv = xdont(iwrkt(imil))}
+\DoxyCodeLine{318 \textcolor{comment}{!}}
+\DoxyCodeLine{319 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
+\DoxyCodeLine{320 \textcolor{comment}{!  those <= pivot at the beginning}}
+\DoxyCodeLine{321 \textcolor{comment}{!}}
+\DoxyCodeLine{322          icrs = ideb}
+\DoxyCodeLine{323          idcr = ifin}
+\DoxyCodeLine{324          ech2: \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{325             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{326                icrs = icrs + 1}
+\DoxyCodeLine{327                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{328 \textcolor{comment}{!}}
+\DoxyCodeLine{329 \textcolor{comment}{!  the first  >  pivot is IWRKT(IDCR)}}
+\DoxyCodeLine{330 \textcolor{comment}{!  the last   <= pivot is IWRKT(ICRS-\/1)}}
+\DoxyCodeLine{331 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
+\DoxyCodeLine{332 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
+\DoxyCodeLine{333 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
+\DoxyCodeLine{334 \textcolor{comment}{!        as if XDONT (IWRKT(IFIN)) > XPIV}}
+\DoxyCodeLine{335 \textcolor{comment}{!}}
+\DoxyCodeLine{336                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{337 \textcolor{comment}{!}}
+\DoxyCodeLine{338 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{339                \textcolor{keywordflow}{If} (xdont(iwrkt(icrs)) > xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{340 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{341             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{342                \textcolor{keywordflow}{If} (xdont(iwrkt(idcr)) <= xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{343                idcr = idcr -\/ 1}
+\DoxyCodeLine{344                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{345 \textcolor{comment}{!}}
+\DoxyCodeLine{346 \textcolor{comment}{!  The last value < pivot is always IWRKT(ICRS-\/1)}}
+\DoxyCodeLine{347 \textcolor{comment}{!}}
+\DoxyCodeLine{348                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{349 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{350 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{351 \textcolor{comment}{!}}
+\DoxyCodeLine{352             iwrk = iwrkt(idcr)}
+\DoxyCodeLine{353             iwrkt(idcr) = iwrkt(icrs)}
+\DoxyCodeLine{354             iwrkt(icrs) = iwrk}
+\DoxyCodeLine{355 \textcolor{keywordflow}{         End Do} ech2}
+\DoxyCodeLine{356 \textcolor{comment}{!}}
+\DoxyCodeLine{357 \textcolor{comment}{!  One restricts further processing to find the fractile value}}
+\DoxyCodeLine{358 \textcolor{comment}{!}}
+\DoxyCodeLine{359          \textcolor{keywordflow}{If} (icrs <= nord) ideb = icrs}
+\DoxyCodeLine{360          \textcolor{keywordflow}{If} (icrs > nord) ifin = icrs -\/ 1}
+\DoxyCodeLine{361 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{362 \textcolor{comment}{!}}
+\DoxyCodeLine{363 \textcolor{comment}{!  Now, we only need to complete ranking of the 1:NORD set}}
+\DoxyCodeLine{364 \textcolor{comment}{!  Assuming NORD is small, we use a simple insertion sort}}
+\DoxyCodeLine{365 \textcolor{comment}{!}}
+\DoxyCodeLine{366       \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{367          iwrk = iwrkt(icrs)}
+\DoxyCodeLine{368          xwrk = xdont(iwrk)}
+\DoxyCodeLine{369          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{370             \textcolor{keywordflow}{If} (xwrk <= xdont(iwrkt(idcr))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{371                iwrkt(idcr+1) = iwrkt(idcr)}
+\DoxyCodeLine{372             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{373                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{374 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{375 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{376          iwrkt(idcr+1) = iwrk}
+\DoxyCodeLine{377 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{378       irngt(1:nord) = iwrkt(1:nord)}
+\DoxyCodeLine{379       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{380 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{namespacem__refpar_a97a274e4062bfe9156ec14d953650991}\label{namespacem__refpar_a97a274e4062bfe9156ec14d953650991}} 
@@ -138,109 +138,109 @@ subroutine \mbox{\hyperlink{namespacem__refpar_a7d338849c7ddc74aa18605ae1506e3f8
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{173 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
-\DoxyCodeLine{174       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
-\DoxyCodeLine{175       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
-\DoxyCodeLine{176 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{177 \textcolor{keywordtype}{      Real} (kind=real32) :: xpiv, xwrk}
-\DoxyCodeLine{178 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{179 \textcolor{comment}{!}}
-\DoxyCodeLine{180       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: IWRKT}
-\DoxyCodeLine{181       \textcolor{keywordtype}{Integer} :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK}
-\DoxyCodeLine{182 \textcolor{comment}{!}}
-\DoxyCodeLine{183       ndon = \textcolor{keyword}{SIZE} (xdont)}
-\DoxyCodeLine{184 \textcolor{comment}{!}}
-\DoxyCodeLine{185       \textcolor{keywordflow}{Do} icrs = 1, ndon}
-\DoxyCodeLine{186          iwrkt(icrs) = icrs}
-\DoxyCodeLine{187 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{188       ideb = 1}
-\DoxyCodeLine{189       ifin = ndon}
-\DoxyCodeLine{190       \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{191          \textcolor{keywordflow}{If} (ideb >= ifin) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{192          imil = (ideb+ifin) / 2}
-\DoxyCodeLine{193 \textcolor{comment}{!}}
-\DoxyCodeLine{194 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
-\DoxyCodeLine{195 \textcolor{comment}{!}}
-\DoxyCodeLine{196          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{197             iwrk = iwrkt(ideb)}
-\DoxyCodeLine{198             iwrkt(ideb) = iwrkt(imil)}
-\DoxyCodeLine{199             iwrkt(imil) = iwrk}
-\DoxyCodeLine{200 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{201          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) > xdont(iwrkt(ifin))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{202             iwrk = iwrkt(ifin)}
-\DoxyCodeLine{203             iwrkt(ifin) = iwrkt(imil)}
-\DoxyCodeLine{204             iwrkt(imil) = iwrk}
-\DoxyCodeLine{205             \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{206                iwrk = iwrkt(ideb)}
-\DoxyCodeLine{207                iwrkt(ideb) = iwrkt(imil)}
-\DoxyCodeLine{208                iwrkt(imil) = iwrk}
-\DoxyCodeLine{209 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{210 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{211          \textcolor{keywordflow}{If} ((ifin-\/ideb) < 3) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{212          xpiv = xdont(iwrkt(imil))}
-\DoxyCodeLine{213 \textcolor{comment}{!}}
-\DoxyCodeLine{214 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
-\DoxyCodeLine{215 \textcolor{comment}{!  those <= pivot at the beginning}}
-\DoxyCodeLine{216 \textcolor{comment}{!}}
-\DoxyCodeLine{217          icrs = ideb}
-\DoxyCodeLine{218          idcr = ifin}
-\DoxyCodeLine{219          ech2: \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{220             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{221                icrs = icrs + 1}
-\DoxyCodeLine{222                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{223 \textcolor{comment}{!}}
-\DoxyCodeLine{224 \textcolor{comment}{!  the first  >  pivot is IWRKT(IDCR)}}
-\DoxyCodeLine{225 \textcolor{comment}{!  the last   <= pivot is IWRKT(ICRS-\/1)}}
-\DoxyCodeLine{226 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
-\DoxyCodeLine{227 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
-\DoxyCodeLine{228 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
-\DoxyCodeLine{229 \textcolor{comment}{!        as if XDONT (IWRKT(IFIN)) > XPIV}}
-\DoxyCodeLine{230 \textcolor{comment}{!}}
-\DoxyCodeLine{231                   \textcolor{keywordflow}{Exit} ech2}
-\DoxyCodeLine{232 \textcolor{comment}{!}}
-\DoxyCodeLine{233 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{234                \textcolor{keywordflow}{If} (xdont(iwrkt(icrs)) > xpiv) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{235 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{236             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{237                \textcolor{keywordflow}{If} (xdont(iwrkt(idcr)) <= xpiv) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{238                idcr = idcr -\/ 1}
-\DoxyCodeLine{239                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{240 \textcolor{comment}{!}}
-\DoxyCodeLine{241 \textcolor{comment}{!  The last value < pivot is always IWRKT(ICRS-\/1)}}
-\DoxyCodeLine{242 \textcolor{comment}{!}}
-\DoxyCodeLine{243                   \textcolor{keywordflow}{Exit} ech2}
-\DoxyCodeLine{244 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{245 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{246 \textcolor{comment}{!}}
-\DoxyCodeLine{247             iwrk = iwrkt(idcr)}
-\DoxyCodeLine{248             iwrkt(idcr) = iwrkt(icrs)}
-\DoxyCodeLine{249             iwrkt(icrs) = iwrk}
-\DoxyCodeLine{250 \textcolor{keywordflow}{         End Do} ech2}
-\DoxyCodeLine{251 \textcolor{comment}{!}}
-\DoxyCodeLine{252 \textcolor{comment}{!  One restricts further processing to find the fractile value}}
-\DoxyCodeLine{253 \textcolor{comment}{!}}
-\DoxyCodeLine{254          \textcolor{keywordflow}{If} (icrs <= nord) ideb = icrs}
-\DoxyCodeLine{255          \textcolor{keywordflow}{If} (icrs > nord) ifin = icrs -\/ 1}
-\DoxyCodeLine{256 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{257 \textcolor{comment}{!}}
-\DoxyCodeLine{258 \textcolor{comment}{!  Now, we only need to complete ranking of the 1:NORD set}}
-\DoxyCodeLine{259 \textcolor{comment}{!  Assuming NORD is small, we use a simple insertion sort}}
-\DoxyCodeLine{260 \textcolor{comment}{!}}
-\DoxyCodeLine{261       \textcolor{keywordflow}{Do} icrs = 2, nord}
-\DoxyCodeLine{262          iwrk = iwrkt(icrs)}
-\DoxyCodeLine{263          xwrk = xdont(iwrk)}
-\DoxyCodeLine{264          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{265             \textcolor{keywordflow}{If} (xwrk <= xdont(iwrkt(idcr))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{266                iwrkt(idcr+1) = iwrkt(idcr)}
-\DoxyCodeLine{267             \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{268                \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{269 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{270 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{271          iwrkt(idcr+1) = iwrk}
-\DoxyCodeLine{272 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{273       irngt(1:nord) = iwrkt(1:nord)}
-\DoxyCodeLine{274       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{275 \textcolor{comment}{!}}
+\DoxyCodeLine{172 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{173       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
+\DoxyCodeLine{174       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{175 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{176 \textcolor{keywordtype}{      Real} (kind=real32) :: xpiv, xwrk}
+\DoxyCodeLine{177 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{178 \textcolor{comment}{!}}
+\DoxyCodeLine{179       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: IWRKT}
+\DoxyCodeLine{180       \textcolor{keywordtype}{Integer} :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK}
+\DoxyCodeLine{181 \textcolor{comment}{!}}
+\DoxyCodeLine{182       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{183 \textcolor{comment}{!}}
+\DoxyCodeLine{184       \textcolor{keywordflow}{Do} icrs = 1, ndon}
+\DoxyCodeLine{185          iwrkt(icrs) = icrs}
+\DoxyCodeLine{186 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{187       ideb = 1}
+\DoxyCodeLine{188       ifin = ndon}
+\DoxyCodeLine{189       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{190          \textcolor{keywordflow}{If} (ideb >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{191          imil = (ideb+ifin) / 2}
+\DoxyCodeLine{192 \textcolor{comment}{!}}
+\DoxyCodeLine{193 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
+\DoxyCodeLine{194 \textcolor{comment}{!}}
+\DoxyCodeLine{195          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{196             iwrk = iwrkt(ideb)}
+\DoxyCodeLine{197             iwrkt(ideb) = iwrkt(imil)}
+\DoxyCodeLine{198             iwrkt(imil) = iwrk}
+\DoxyCodeLine{199 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{200          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) > xdont(iwrkt(ifin))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{201             iwrk = iwrkt(ifin)}
+\DoxyCodeLine{202             iwrkt(ifin) = iwrkt(imil)}
+\DoxyCodeLine{203             iwrkt(imil) = iwrk}
+\DoxyCodeLine{204             \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{205                iwrk = iwrkt(ideb)}
+\DoxyCodeLine{206                iwrkt(ideb) = iwrkt(imil)}
+\DoxyCodeLine{207                iwrkt(imil) = iwrk}
+\DoxyCodeLine{208 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{209 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{210          \textcolor{keywordflow}{If} ((ifin-\/ideb) < 3) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{211          xpiv = xdont(iwrkt(imil))}
+\DoxyCodeLine{212 \textcolor{comment}{!}}
+\DoxyCodeLine{213 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
+\DoxyCodeLine{214 \textcolor{comment}{!  those <= pivot at the beginning}}
+\DoxyCodeLine{215 \textcolor{comment}{!}}
+\DoxyCodeLine{216          icrs = ideb}
+\DoxyCodeLine{217          idcr = ifin}
+\DoxyCodeLine{218          ech2: \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{219             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{220                icrs = icrs + 1}
+\DoxyCodeLine{221                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{222 \textcolor{comment}{!}}
+\DoxyCodeLine{223 \textcolor{comment}{!  the first  >  pivot is IWRKT(IDCR)}}
+\DoxyCodeLine{224 \textcolor{comment}{!  the last   <= pivot is IWRKT(ICRS-\/1)}}
+\DoxyCodeLine{225 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
+\DoxyCodeLine{226 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
+\DoxyCodeLine{227 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
+\DoxyCodeLine{228 \textcolor{comment}{!        as if XDONT (IWRKT(IFIN)) > XPIV}}
+\DoxyCodeLine{229 \textcolor{comment}{!}}
+\DoxyCodeLine{230                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{231 \textcolor{comment}{!}}
+\DoxyCodeLine{232 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{233                \textcolor{keywordflow}{If} (xdont(iwrkt(icrs)) > xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{234 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{235             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{236                \textcolor{keywordflow}{If} (xdont(iwrkt(idcr)) <= xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{237                idcr = idcr -\/ 1}
+\DoxyCodeLine{238                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{239 \textcolor{comment}{!}}
+\DoxyCodeLine{240 \textcolor{comment}{!  The last value < pivot is always IWRKT(ICRS-\/1)}}
+\DoxyCodeLine{241 \textcolor{comment}{!}}
+\DoxyCodeLine{242                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{243 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{244 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{245 \textcolor{comment}{!}}
+\DoxyCodeLine{246             iwrk = iwrkt(idcr)}
+\DoxyCodeLine{247             iwrkt(idcr) = iwrkt(icrs)}
+\DoxyCodeLine{248             iwrkt(icrs) = iwrk}
+\DoxyCodeLine{249 \textcolor{keywordflow}{         End Do} ech2}
+\DoxyCodeLine{250 \textcolor{comment}{!}}
+\DoxyCodeLine{251 \textcolor{comment}{!  One restricts further processing to find the fractile value}}
+\DoxyCodeLine{252 \textcolor{comment}{!}}
+\DoxyCodeLine{253          \textcolor{keywordflow}{If} (icrs <= nord) ideb = icrs}
+\DoxyCodeLine{254          \textcolor{keywordflow}{If} (icrs > nord) ifin = icrs -\/ 1}
+\DoxyCodeLine{255 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{256 \textcolor{comment}{!}}
+\DoxyCodeLine{257 \textcolor{comment}{!  Now, we only need to complete ranking of the 1:NORD set}}
+\DoxyCodeLine{258 \textcolor{comment}{!  Assuming NORD is small, we use a simple insertion sort}}
+\DoxyCodeLine{259 \textcolor{comment}{!}}
+\DoxyCodeLine{260       \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{261          iwrk = iwrkt(icrs)}
+\DoxyCodeLine{262          xwrk = xdont(iwrk)}
+\DoxyCodeLine{263          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{264             \textcolor{keywordflow}{If} (xwrk <= xdont(iwrkt(idcr))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{265                iwrkt(idcr+1) = iwrkt(idcr)}
+\DoxyCodeLine{266             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{267                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{268 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{269 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{270          iwrkt(idcr+1) = iwrk}
+\DoxyCodeLine{271 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{272       irngt(1:nord) = iwrkt(1:nord)}
+\DoxyCodeLine{273       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{274 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{namespacem__refpar_aebee11e53f338957bf2a0505bd942e8f}\label{namespacem__refpar_aebee11e53f338957bf2a0505bd942e8f}} 
@@ -250,7 +250,7 @@ subroutine \mbox{\hyperlink{namespacem__refpar_a7d338849c7ddc74aa18605ae1506e3f8
 {\footnotesize\ttfamily subroutine m\+\_\+refpar\+::real64\+\_\+refpar (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 \hypertarget{namespacem__refpar_autotoc_md81}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__refpar_autotoc_md81}
-refpar(3f) -\/ \mbox{[}orderpack\+:P\+A\+R\+T\+I\+A\+L\+\_\+\+R\+A\+NK\mbox{]} partially ranks any array up to specified number of elements (L\+I\+C\+E\+N\+SE\+:C\+C0-\/1.\+0)\hypertarget{namespacem__refpar_autotoc_md82}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__refpar_autotoc_md82}
+refpar(3f) -\/ \mbox{[}orderpack\+:P\+A\+R\+T\+I\+A\+L\+\_\+\+R\+A\+NK\mbox{]} partially ranks any array up to specified number of elements\hypertarget{namespacem__refpar_autotoc_md82}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__refpar_autotoc_md82}
 \begin{DoxyVerb} Subroutine ${KIND}_refpar (XDONT, IRNGT, NORD)
 
    ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
@@ -278,108 +278,108 @@ Michel Olagnon -\/ Feb. 2000
 John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__refpar_autotoc_md87}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__refpar_autotoc_md87}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{67 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
-\DoxyCodeLine{68       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
-\DoxyCodeLine{69       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
-\DoxyCodeLine{70 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{71 \textcolor{keywordtype}{      Real} (kind=real64) :: xpiv, xwrk}
-\DoxyCodeLine{72 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{73 \textcolor{comment}{!}}
-\DoxyCodeLine{74       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: IWRKT}
-\DoxyCodeLine{75       \textcolor{keywordtype}{Integer} :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK}
-\DoxyCodeLine{76 \textcolor{comment}{!}}
-\DoxyCodeLine{77       ndon = \textcolor{keyword}{SIZE} (xdont)}
-\DoxyCodeLine{78 \textcolor{comment}{!}}
-\DoxyCodeLine{79       \textcolor{keywordflow}{Do} icrs = 1, ndon}
-\DoxyCodeLine{80          iwrkt(icrs) = icrs}
-\DoxyCodeLine{81 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{82       ideb = 1}
-\DoxyCodeLine{83       ifin = ndon}
-\DoxyCodeLine{84       \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{85          \textcolor{keywordflow}{If} (ideb >= ifin) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{86          imil = (ideb+ifin) / 2}
-\DoxyCodeLine{87 \textcolor{comment}{!}}
-\DoxyCodeLine{88 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
-\DoxyCodeLine{89 \textcolor{comment}{!}}
-\DoxyCodeLine{90          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{91             iwrk = iwrkt(ideb)}
-\DoxyCodeLine{92             iwrkt(ideb) = iwrkt(imil)}
-\DoxyCodeLine{93             iwrkt(imil) = iwrk}
-\DoxyCodeLine{94 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{95          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) > xdont(iwrkt(ifin))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{96             iwrk = iwrkt(ifin)}
-\DoxyCodeLine{97             iwrkt(ifin) = iwrkt(imil)}
-\DoxyCodeLine{98             iwrkt(imil) = iwrk}
-\DoxyCodeLine{99             \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{100                iwrk = iwrkt(ideb)}
-\DoxyCodeLine{101                iwrkt(ideb) = iwrkt(imil)}
-\DoxyCodeLine{102                iwrkt(imil) = iwrk}
-\DoxyCodeLine{103 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{104 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{105          \textcolor{keywordflow}{If} ((ifin-\/ideb) < 3) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{106          xpiv = xdont(iwrkt(imil))}
-\DoxyCodeLine{107 \textcolor{comment}{!}}
-\DoxyCodeLine{108 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
-\DoxyCodeLine{109 \textcolor{comment}{!  those <= pivot at the beginning}}
-\DoxyCodeLine{110 \textcolor{comment}{!}}
-\DoxyCodeLine{111          icrs = ideb}
-\DoxyCodeLine{112          idcr = ifin}
-\DoxyCodeLine{113          ech2: \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{114             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{115                icrs = icrs + 1}
-\DoxyCodeLine{116                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{117 \textcolor{comment}{!}}
-\DoxyCodeLine{118 \textcolor{comment}{!  the first  >  pivot is IWRKT(IDCR)}}
-\DoxyCodeLine{119 \textcolor{comment}{!  the last   <= pivot is IWRKT(ICRS-\/1)}}
-\DoxyCodeLine{120 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
-\DoxyCodeLine{121 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
-\DoxyCodeLine{122 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
-\DoxyCodeLine{123 \textcolor{comment}{!        as if XDONT (IWRKT(IFIN)) > XPIV}}
-\DoxyCodeLine{124 \textcolor{comment}{!}}
-\DoxyCodeLine{125                   \textcolor{keywordflow}{Exit} ech2}
-\DoxyCodeLine{126 \textcolor{comment}{!}}
-\DoxyCodeLine{127 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{128                \textcolor{keywordflow}{If} (xdont(iwrkt(icrs)) > xpiv) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{129 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{130             \textcolor{keywordflow}{Do}}
-\DoxyCodeLine{131                \textcolor{keywordflow}{If} (xdont(iwrkt(idcr)) <= xpiv) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{132                idcr = idcr -\/ 1}
-\DoxyCodeLine{133                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{134 \textcolor{comment}{!}}
-\DoxyCodeLine{135 \textcolor{comment}{!  The last value < pivot is always IWRKT(ICRS-\/1)}}
-\DoxyCodeLine{136 \textcolor{comment}{!}}
-\DoxyCodeLine{137                   \textcolor{keywordflow}{Exit} ech2}
-\DoxyCodeLine{138 \textcolor{keywordflow}{               End If}}
-\DoxyCodeLine{139 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{140 \textcolor{comment}{!}}
-\DoxyCodeLine{141             iwrk = iwrkt(idcr)}
-\DoxyCodeLine{142             iwrkt(idcr) = iwrkt(icrs)}
-\DoxyCodeLine{143             iwrkt(icrs) = iwrk}
-\DoxyCodeLine{144 \textcolor{keywordflow}{         End Do} ech2}
-\DoxyCodeLine{145 \textcolor{comment}{!}}
-\DoxyCodeLine{146 \textcolor{comment}{!  One restricts further processing to find the fractile value}}
-\DoxyCodeLine{147 \textcolor{comment}{!}}
-\DoxyCodeLine{148          \textcolor{keywordflow}{If} (icrs <= nord) ideb = icrs}
-\DoxyCodeLine{149          \textcolor{keywordflow}{If} (icrs > nord) ifin = icrs -\/ 1}
-\DoxyCodeLine{150 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{151 \textcolor{comment}{!}}
-\DoxyCodeLine{152 \textcolor{comment}{!  Now, we only need to complete ranking of the 1:NORD set}}
-\DoxyCodeLine{153 \textcolor{comment}{!  Assuming NORD is small, we use a simple insertion sort}}
-\DoxyCodeLine{154 \textcolor{comment}{!}}
-\DoxyCodeLine{155       \textcolor{keywordflow}{Do} icrs = 2, nord}
-\DoxyCodeLine{156          iwrk = iwrkt(icrs)}
-\DoxyCodeLine{157          xwrk = xdont(iwrk)}
-\DoxyCodeLine{158          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{159             \textcolor{keywordflow}{If} (xwrk <= xdont(iwrkt(idcr))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{160                iwrkt(idcr+1) = iwrkt(idcr)}
-\DoxyCodeLine{161             \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{162                \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{163 \textcolor{keywordflow}{            End If}}
-\DoxyCodeLine{164 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{165          iwrkt(idcr+1) = iwrk}
-\DoxyCodeLine{166 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{167       irngt(1:nord) = iwrkt(1:nord)}
-\DoxyCodeLine{168       \textcolor{keywordflow}{Return}}
-\DoxyCodeLine{169 \textcolor{comment}{!}}
+\DoxyCodeLine{66 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{67       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
+\DoxyCodeLine{68       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{69 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{70 \textcolor{keywordtype}{      Real} (kind=real64) :: xpiv, xwrk}
+\DoxyCodeLine{71 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{72 \textcolor{comment}{!}}
+\DoxyCodeLine{73       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (SIZE(XDONT))} :: IWRKT}
+\DoxyCodeLine{74       \textcolor{keywordtype}{Integer} :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK}
+\DoxyCodeLine{75 \textcolor{comment}{!}}
+\DoxyCodeLine{76       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{77 \textcolor{comment}{!}}
+\DoxyCodeLine{78       \textcolor{keywordflow}{Do} icrs = 1, ndon}
+\DoxyCodeLine{79          iwrkt(icrs) = icrs}
+\DoxyCodeLine{80 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{81       ideb = 1}
+\DoxyCodeLine{82       ifin = ndon}
+\DoxyCodeLine{83       \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{84          \textcolor{keywordflow}{If} (ideb >= ifin) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{85          imil = (ideb+ifin) / 2}
+\DoxyCodeLine{86 \textcolor{comment}{!}}
+\DoxyCodeLine{87 \textcolor{comment}{!  One chooses a pivot, median of 1st, last, and middle values}}
+\DoxyCodeLine{88 \textcolor{comment}{!}}
+\DoxyCodeLine{89          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{90             iwrk = iwrkt(ideb)}
+\DoxyCodeLine{91             iwrkt(ideb) = iwrkt(imil)}
+\DoxyCodeLine{92             iwrkt(imil) = iwrk}
+\DoxyCodeLine{93 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{94          \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) > xdont(iwrkt(ifin))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{95             iwrk = iwrkt(ifin)}
+\DoxyCodeLine{96             iwrkt(ifin) = iwrkt(imil)}
+\DoxyCodeLine{97             iwrkt(imil) = iwrk}
+\DoxyCodeLine{98             \textcolor{keywordflow}{If} (xdont(iwrkt(imil)) < xdont(iwrkt(ideb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{99                iwrk = iwrkt(ideb)}
+\DoxyCodeLine{100                iwrkt(ideb) = iwrkt(imil)}
+\DoxyCodeLine{101                iwrkt(imil) = iwrk}
+\DoxyCodeLine{102 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{103 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{104          \textcolor{keywordflow}{If} ((ifin-\/ideb) < 3) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{105          xpiv = xdont(iwrkt(imil))}
+\DoxyCodeLine{106 \textcolor{comment}{!}}
+\DoxyCodeLine{107 \textcolor{comment}{!  One exchanges values to put those > pivot in the end and}}
+\DoxyCodeLine{108 \textcolor{comment}{!  those <= pivot at the beginning}}
+\DoxyCodeLine{109 \textcolor{comment}{!}}
+\DoxyCodeLine{110          icrs = ideb}
+\DoxyCodeLine{111          idcr = ifin}
+\DoxyCodeLine{112          ech2: \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{113             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{114                icrs = icrs + 1}
+\DoxyCodeLine{115                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{116 \textcolor{comment}{!}}
+\DoxyCodeLine{117 \textcolor{comment}{!  the first  >  pivot is IWRKT(IDCR)}}
+\DoxyCodeLine{118 \textcolor{comment}{!  the last   <= pivot is IWRKT(ICRS-\/1)}}
+\DoxyCodeLine{119 \textcolor{comment}{!  Note: If one arrives here on the first iteration, then}}
+\DoxyCodeLine{120 \textcolor{comment}{!        the pivot is the maximum of the set, the last value is equal}}
+\DoxyCodeLine{121 \textcolor{comment}{!        to it, and one can reduce by one the size of the set to process,}}
+\DoxyCodeLine{122 \textcolor{comment}{!        as if XDONT (IWRKT(IFIN)) > XPIV}}
+\DoxyCodeLine{123 \textcolor{comment}{!}}
+\DoxyCodeLine{124                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{125 \textcolor{comment}{!}}
+\DoxyCodeLine{126 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{127                \textcolor{keywordflow}{If} (xdont(iwrkt(icrs)) > xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{128 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{129             \textcolor{keywordflow}{Do}}
+\DoxyCodeLine{130                \textcolor{keywordflow}{If} (xdont(iwrkt(idcr)) <= xpiv) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{131                idcr = idcr -\/ 1}
+\DoxyCodeLine{132                \textcolor{keywordflow}{If} (icrs >= idcr) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{133 \textcolor{comment}{!}}
+\DoxyCodeLine{134 \textcolor{comment}{!  The last value < pivot is always IWRKT(ICRS-\/1)}}
+\DoxyCodeLine{135 \textcolor{comment}{!}}
+\DoxyCodeLine{136                   \textcolor{keywordflow}{Exit} ech2}
+\DoxyCodeLine{137 \textcolor{keywordflow}{               End If}}
+\DoxyCodeLine{138 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{139 \textcolor{comment}{!}}
+\DoxyCodeLine{140             iwrk = iwrkt(idcr)}
+\DoxyCodeLine{141             iwrkt(idcr) = iwrkt(icrs)}
+\DoxyCodeLine{142             iwrkt(icrs) = iwrk}
+\DoxyCodeLine{143 \textcolor{keywordflow}{         End Do} ech2}
+\DoxyCodeLine{144 \textcolor{comment}{!}}
+\DoxyCodeLine{145 \textcolor{comment}{!  One restricts further processing to find the fractile value}}
+\DoxyCodeLine{146 \textcolor{comment}{!}}
+\DoxyCodeLine{147          \textcolor{keywordflow}{If} (icrs <= nord) ideb = icrs}
+\DoxyCodeLine{148          \textcolor{keywordflow}{If} (icrs > nord) ifin = icrs -\/ 1}
+\DoxyCodeLine{149 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{150 \textcolor{comment}{!}}
+\DoxyCodeLine{151 \textcolor{comment}{!  Now, we only need to complete ranking of the 1:NORD set}}
+\DoxyCodeLine{152 \textcolor{comment}{!  Assuming NORD is small, we use a simple insertion sort}}
+\DoxyCodeLine{153 \textcolor{comment}{!}}
+\DoxyCodeLine{154       \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{155          iwrk = iwrkt(icrs)}
+\DoxyCodeLine{156          xwrk = xdont(iwrk)}
+\DoxyCodeLine{157          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{158             \textcolor{keywordflow}{If} (xwrk <= xdont(iwrkt(idcr))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{159                iwrkt(idcr+1) = iwrkt(idcr)}
+\DoxyCodeLine{160             \textcolor{keywordflow}{Else}}
+\DoxyCodeLine{161                \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{162 \textcolor{keywordflow}{            End If}}
+\DoxyCodeLine{163 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{164          iwrkt(idcr+1) = iwrk}
+\DoxyCodeLine{165 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{166       irngt(1:nord) = iwrkt(1:nord)}
+\DoxyCodeLine{167       \textcolor{keywordflow}{Return}}
+\DoxyCodeLine{168 \textcolor{comment}{!}}
 
 \end{DoxyCode}

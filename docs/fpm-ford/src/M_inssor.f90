@@ -9,8 +9,8 @@ end interface inssor
 contains
 !>
 !!##NAME
-!!    inssor(3f) - [orderpack:SORT] Sorts XDONT into increasing order (Insertion sort)
-!!                 (LICENSE:CC0-1.0)
+!!    inssor(3f) - [orderpack:SORT] Sorts XDONT into increasing order
+!!                 (Insertion sort)
 !!
 !!##SYNOPSIS
 !!

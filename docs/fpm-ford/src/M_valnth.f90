@@ -11,7 +11,6 @@ contains
 !!##NAME
 !!    valnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array, i.e
 !!                 fractile of order NORD/SIZE(XDONT).
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!
@@ -52,9 +51,20 @@ contains
 !!    use M_valnth, only : valnth
 !!    implicit none
 !!    character(len=*),parameter :: list= '(*(g0:,", "))'
+!!    character(len=*),parameter :: sp='(*(g0,1x))'
 !!    real,parameter ::  xdont(*)=[1.1,20.20,3.3,10.10,5.5,4.4,2.2]
 !!    integer :: i
+!!    integer :: imiddle
 !!       write(*,list) 'ORIGINAL:',xdont
+!!       ! can return the same values as intrinsics minval() and maxval()
+!!       print sp, 'minval',valnth(xdont,1),          minval(xdont)
+!!       print sp, 'maxval',valnth(xdont,size(xdont)), maxval(xdont)
+!!       ! but more generally it can return the Nth lowest value.
+!!       print sp,'nord=',4, ' fractile=',valnth(xdont,4)
+!!       ! so a value at the middle would be
+!!       imiddle=(size(xdont)+1)/2
+!!       print sp,'median=',valnth(xdont,imiddle)
+!!       ! sorting the hard way
 !!       do i=1,size(xdont)
 !!          write(*,list)i,valnth(xdont,i)
 !!       enddo
@@ -62,21 +72,25 @@ contains
 !!
 !!   Results:
 !!
-!!    ORIGINAL:, 1.100, 20.20, 3.300, 10.10, 5.500, 4.400, 2.200
-!!    1, 1.100000
-!!    2, 2.200000
-!!    3, 3.300000
-!!    4, 4.400000
-!!    5, 5.500000
-!!    6, 10.10000
-!!    7, 20.20000
+!!    ORIGINAL:, 1.1000, 20.200, 3.300, 10.100, 5.500, 4.400, 2.200
+!!    minval 1.100 1.100
+!!    maxval 20.200 20.200
+!!    nord= 4  fractile= 4.400
+!!    median= 4.400
+!!    1, 1.100
+!!    2, 2.200
+!!    3, 3.300
+!!    4, 4.400
+!!    5, 5.500
+!!    6, 10.100
+!!    7, 20.200
 !!
 !!##AUTHOR
-!!     Michel Olagnon - Aug. 2000
+!!    Michel Olagnon - Aug. 2000
 !!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
+!!    John Urban, 2022.04.16
+!!    o added man-page and reduced to a template using the
+!!      prep(1) preprocessor.
 !!
 !!##LICENSE
 !!    CC0-1.0

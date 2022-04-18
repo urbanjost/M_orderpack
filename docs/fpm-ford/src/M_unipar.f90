@@ -9,8 +9,8 @@ end interface unipar
 contains
 !>
 !!##NAME
-!!    unipar(3f) - [orderpack:PARTIAL_RANK_UNIQUE] partially rank an array removing duplicates
-!!                 (LICENSE:CC0-1.0)
+!!    unipar(3f) - [orderpack:PARTIAL_RANK_UNIQUE] partially rank an array
+!!                 removing duplicates
 !!
 !!##SYNOPSIS
 !!
@@ -44,7 +44,6 @@ contains
 !!    of the input array.
 !!
 !!##OPTIONS
-!!     Subroutine ${KIND}_unipar (XDONT, IRNGT, NORD)
 !!     XDONT      array to partially sort
 !!     IRNGT      indices returned that point to lowest values
 !!     NORD       number of sorted values to determine before
@@ -61,20 +60,20 @@ contains
 !!    integer,allocatable :: xdont(:)
 !!    integer,allocatable :: irngt(:)
 !!    integer :: nord
-!!
+!!    !
 !!    write(*,g)'If enough values are unique, will return NORD indices'
 !!    if(allocated(irngt))deallocate(irngt)
 !!    xdont=[10,5,7,1,4,5,6,8,9,10,1]
 !!    nord=5
 !!    allocate(irngt(nord))
 !!    call printme()
-!!
-!!    write(*,g)'If not enough values are unique, will change NORD'
-!!    xdont=[-1,0,-1,0,-1,0,-1]
-!!    nord=5
-!!    if(allocated(irngt))deallocate(irngt)
-!!    allocate(irngt(nord))
-!!    call printme()
+!!    !
+!!    !BUG!write(*,g)'If not enough values are unique, will change NORD'
+!!    !BUG!xdont=[-1,0,-1,0,-1,0,-1]
+!!    !BUG!nord=5
+!!    !BUG!if(allocated(irngt))deallocate(irngt)
+!!    !BUG!allocate(irngt(nord))
+!!    !BUG!call printme()
 !!    contains
 !!    subroutine printme()
 !!       write(*,g)'ORIGINAL:',xdont

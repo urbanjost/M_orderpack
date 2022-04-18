@@ -11,7 +11,6 @@ contains
 !!##NAME
 !!    mrgref(3f) - [orderpack:RANK] Ranks array XVALT into index array IRNGT,
 !!                 using basic merge-sort
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!

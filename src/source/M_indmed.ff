@@ -13,7 +13,6 @@ $BLOCK COMMENT --file indmed.3orderpack.man
 NAME
    indmed(3f) - [orderpack:MEDIAN] Returns index of median value of
                 an array.
-                (LICENSE:CC0-1.0)
 
 SYNOPSIS
     Subroutine ${KIND}_indmed (XDONT, INDM)
@@ -45,17 +44,34 @@ EXAMPLES
    program demo_indmed
    use M_indmed, only : indmed
    implicit none
-      !x!call indmed(yyyyyy)
+   real,allocatable :: xdont(:)
+   integer :: ii
+      xdont=[80.0,70.0,20.0,10.0,1000.0]
+      call indmed(xdont,ii)
+      write(*,*) ii,xdont(ii)
+      !
+      xdont=[11, 22, 33, 44, 55, 66, 77, 88]
+      call indmed(xdont,ii)
+      write(*,*) ii,xdont(ii)
+      !
+      xdont=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]
+      call indmed(xdont,ii)
+      write(*,*) ii,xdont(ii)
+      !
    end program demo_indmed
 
   Results:
+
+    > 2   70.0000000    
+    > 4   44.0000000    
+    > 5   33.0000000    
 
 AUTHOR
     Michel Olagnon, 2000-2012
 
     John Urban, 2022.04.16
-        o added man-page and reduced to a template using the
-          prep(1) preprocessor.
+    o added man-page and reduced to a template using the
+      prep(1) preprocessor.
 
 LICENSE
    CC0-1.0

@@ -13,7 +13,6 @@ contains
 !!##NAME
 !!    ctrper(3f) - [orderpack:PERMUTATION] generate a random permutation
 !!                 of an array leaving elements close to initial locations
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!

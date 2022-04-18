@@ -11,7 +11,6 @@ contains
 !!##NAME
 !!    indnth(3f) - [orderpack:FRACTILE] Return index of Nth value of
 !!                 array, i.e fractile of order N/SIZE(array).
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!

@@ -9,8 +9,8 @@ end interface valmed
 contains
 !>
 !!##NAME
-!!    valmed(3f) - [orderpack:MEDIAN] finds the median of an array
-!!                 (LICENSE:CC0-1.0)
+!!    valmed(3f) - [orderpack:MEDIAN] finds the median of an array, averaging
+!!                 the two central values when size of array is even.
 !!
 !!##SYNOPSIS
 !!
@@ -27,13 +27,12 @@ contains
 !!
 !!##DESCRIPTION
 !!
-!!    Finds the median of XDONT using the recursive procedure
-!!    described in Knuth, The Art of Computer Programming,
-!!    vol. 3, 5.3.3 - This procedure is linear in time, and
-!!    does not require to be able to interpolate in the
-!!    set as the one used in INDNTH. It also has better worst
-!!    case behavior than INDNTH, but is about 30% slower on
-!!    average for random uniformly distributed values.
+!!    Finds the median of XDONT using the recursive procedure described in
+!!    Knuth, The Art of Computer Programming, vol. 3, 5.3.3 - This procedure
+!!    is linear in time, and does not require to be able to interpolate
+!!    in the set as the one used in INDNTH. It also has better worst case
+!!    behavior than INDNTH, but is about 30% slower on average for random
+!!    uniformly distributed values.
 !!
 !!##OPTIONS
 !!     XDONT      input array
@@ -65,8 +64,8 @@ contains
 !!     Michel Olagnon, 2000-2012
 !!
 !!     John Urban, 2022.04.16
-!!         o added man-page and reduced to a template using the
-!!           prep(1) preprocessor.
+!!     o added man-page and reduced to a template using the
+!!       prep(1) preprocessor.
 !!
 !!##LICENSE
 !!    CC0-1.0

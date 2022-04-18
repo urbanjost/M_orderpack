@@ -12,7 +12,6 @@ $BLOCK COMMENT --file median.3orderpack.man
 NAME
    median(3f) - [orderpack:MEDIAN] Return median value of array. If even
                 number of data, average of the two "medians".
-                (LICENSE:CC0-1.0)
 
 SYNOPSIS
     Function ${KIND}_median (XDONT) Result (median)
@@ -27,18 +26,17 @@ SYNOPSIS
       o Integer(kind=int32)
 
 DESCRIPTION
-   Return median value of XDONT.
-   If even number of data, average of the two "medians".
+   Return median value of XDONT.  If even number of data, average of
+   the two "medians".
 
-   This routine uses a pivoting strategy such as the one of
-   finding the median based on the quicksort algorithm, but
-   we skew the pivot choice to try to bring it to NORD as
-   fast as possible. It uses 2 temporary arrays, where it
-   stores the indices of the values smaller than the pivot
-   (ILOWT), and the indices of values larger than the pivot
-   that we might still need later on (IHIGT). It iterates
-   until it can bring the number of values in ILOWT to
-   exactly NORD, and then finds the maximum of this set.
+   This routine uses a pivoting strategy such as the one of finding the
+   median based on the quicksort algorithm, but we skew the pivot choice
+   to try to bring it to NORD as fast as possible. It uses 2 temporary
+   arrays, where it stores the indices of the values smaller than the
+   pivot (ILOWT), and the indices of values larger than the pivot that
+   we might still need later on (IHIGT). It iterates until it can bring
+   the number of values in ILOWT to exactly NORD, and then finds the
+   maximum of this set.
 
 OPTIONS
     XDONT      array to determine the median value of.
@@ -54,17 +52,31 @@ EXAMPLES
    program demo_median
    use M_median, only : median
    implicit none
-      !x!call median(yyyyyy)
+   real,allocatable :: xdont(:)
+   integer :: ii
+      xdont=[80.0,70.0,20.0,10.0,1000.0]
+      write(*,*) median(xdont)
+      !
+      xdont=[11, 22, 33, 44, 55, 66, 77, 88]
+      write(*,*) median(xdont)
+      !
+      xdont=[11.0d0,22.0d0,33.0d0,66.0d0,77.0d0,88.0d0]
+      write(*,*) median(xdont)
+      !
    end program demo_median
 
   Results:
+
+   > 70.00000    
+   > 49.50000    
+   > 49.50000    
 
 AUTHOR
     Michel Olagnon - Aug. 2000
 
     John Urban, 2022.04.16
-        o added man-page and reduced to a template using the
-          prep(1) preprocessor.
+    o added man-page and reduced to a template using the
+      prep(1) preprocessor.
 
 LICENSE
    CC0-1.0

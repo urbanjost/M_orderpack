@@ -11,9 +11,8 @@ end interface mulcnt
 contains
 !>
 !!##NAME
-!!    mulcnt(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each array value
-!!                 (number of times that it appears in the array)
-!!                 (LICENSE:CC0-1.0)
+!!    mulcnt(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each
+!!                 array value (number of times that it appears in the array)
 !!
 !!##SYNOPSIS
 !!

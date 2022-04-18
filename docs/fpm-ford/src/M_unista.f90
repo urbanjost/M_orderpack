@@ -13,7 +13,6 @@ contains
 !!##NAME
 !!    unista(3f) - [orderpack:UNIQUE] (Stable unique) Removes duplicates from an
 !!                 array otherwise retaining original order
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!

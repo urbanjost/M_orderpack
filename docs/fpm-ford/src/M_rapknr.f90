@@ -10,8 +10,8 @@ contains
 !>
 !!##NAME
 !!    rapknr(3f) - [orderpack:PARTIAL_RANK] Ranks partially XDONT by IRNGT,
-!!                 up to order NORD, in decreasing order.  rapknr = (rnkpar backwards)
-!!                 (LICENSE:CC0-1.0)
+!!                 up to order NORD, in decreasing order.
+!!                 rapknr = (rnkpar backwards)
 !!
 !!##SYNOPSIS
 !!

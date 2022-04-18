@@ -2,29 +2,27 @@ Module M_unirnk
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
-Integer, Parameter :: kdp = selected_real_kind(15)
 public :: unirnk
-private :: kdp
-private :: R_unirnk, I_unirnk, D_unirnk
-private :: R_nearless, I_nearless, D_nearless, nearless
 interface unirnk
-  module procedure D_unirnk, R_unirnk, I_unirnk
+  module procedure real64_unirnk, real32_unirnk, int32_unirnk
 end interface unirnk
 interface nearless
-  module procedure D_nearless, R_nearless, I_nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless
 end interface nearless
 
 contains
 !>
 !!##NAME
-!!    unirnk(3f) - [orderpack:RANK_UNIQUE] do stuff
-!!                 (LICENSE:CC0-1.0)
+!!    unirnk(3f) - [orderpack:RANK_UNIQUE] performs a Merge-sort ranking
+!!                 of an array, with removal of duplicate entries.
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine unirnk (yyyyyy)
+!!     Subroutine ${KIND}_unirnk (XVALT, IRNGT, NUNI)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: yyyyyy(:)
+!!       ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XVALT
+!!       Integer, Dimension (:), Intent (Out) :: IRNGT
+!!       Integer, Intent (Out) :: NUNI
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -34,9 +32,20 @@ contains
 !!
 !!##DESCRIPTION
 !!
+!!    UNIRNK performs a Merge-sort ranking of an array, with removal of
+!!    duplicate entries.
+!!
+!!    The routine is similar to pure merge-sort ranking, but on
+!!    the last pass, it discards indices that correspond to
+!!    duplicate entries.
+!!
+!!    For performance reasons, the first 2 passes are taken
+!!    out of the standard loop, and use dedicated coding.
+!!
 !!##OPTIONS
-!!     XXXXX      description
-!!     YYYYY      description
+!!     XVALT      array to index
+!!     IRNGT      rank index returned pointing to unique values
+!!     NUNI       the number of unique values found
 !!
 !!##EXAMPLES
 !!
@@ -45,7 +54,25 @@ contains
 !!    program demo_unirnk
 !!    use M_unirnk, only : unirnk
 !!    implicit none
-!!       !x!call unirnk(yyyyyy)
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    integer,allocatable :: xvalt(:)
+!!    !
+!!    xvalt=[10,5,7,1,4,5,6,8,9,10,1]
+!!    call printme()
+!!    xvalt=[-1,0,-2,0,-3,0,-4]
+!!    call printme()
+!!    contains
+!!    subroutine printme()
+!!    integer,allocatable :: irngt(:)
+!!    integer :: nuni
+!!       if(allocated(irngt))deallocate(irngt)
+!!       allocate(irngt(size(xvalt)))
+!!       write(*,g)'ORIGINAL:',xvalt
+!!       call unirnk(xvalt,irngt,nuni)
+!!       write(*,g)'NUMBER OF UNIQUE INDICES:',nuni
+!!       write(*,g)'RETURNED INDICES:',irngt(:nuni)
+!!       write(*,g)'SORTED DATA:',xvalt(irngt(:nuni))
+!!    end subroutine
 !!    end program demo_unirnk
 !!
 !!   Results:
@@ -59,26 +86,15 @@ contains
 !!
 !!##LICENSE
 !!    CC0-1.0
-
-Subroutine D_unirnk (XVALT, IRNGT, NUNI)
-!!__________________________________________________________
-!!  UNIRNK = Merge-sort ranking of an array, with removal of
-!!  duplicate entries.
-!!  The routine is similar to pure merge-sort ranking, but on
-!!  the last pass, it discards indices that correspond to
-!!  duplicate entries.
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!__________________________________________________________
-      Real (Kind=kdp), Dimension (:), Intent (In) :: XVALT
+Subroutine real64_unirnk (XVALT, IRNGT, NUNI)
+      Real (Kind=real64), Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (Out) :: NUNI
 ! __________________________________________________________
       Integer, Dimension (SIZE(IRNGT)) :: JWRKT
       Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
-      Real (Kind=kdp) :: XTST, XVALA, XVALB
+      Real (Kind=real64) :: XTST, XVALA, XVALB
 !
 !
       NVAL = Min (SIZE(XVALT), SIZE(IRNGT))
@@ -306,27 +322,25 @@ Subroutine D_unirnk (XVALT, IRNGT, NUNI)
 !
       Return
 !
-End Subroutine D_unirnk
-
-Subroutine R_unirnk (XVALT, IRNGT, NUNI)
-!!__________________________________________________________
-!!  UNIRNK = Merge-sort ranking of an array, with removal of
-!!  duplicate entries.
-!!  The routine is similar to pure merge-sort ranking, but on
-!!  the last pass, it discards indices that correspond to
-!!  duplicate entries.
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!__________________________________________________________
-      Real, Dimension (:), Intent (In) :: XVALT
+End Subroutine real64_unirnk
+Function real64_nearless (XVAL) result (real64_nl)
+!! Nearest value less than given value
+! __________________________________________________________
+      Real (kind=real64), Intent (In) :: XVAL
+      Real (kind=real64) :: real64_nl
+! __________________________________________________________
+      real64_nl = nearest (XVAL, -1.0_real64)
+!
+End Function real64_nearless
+Subroutine real32_unirnk (XVALT, IRNGT, NUNI)
+      Real (Kind=real32), Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (Out) :: NUNI
 ! __________________________________________________________
       Integer, Dimension (SIZE(IRNGT)) :: JWRKT
       Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
-      Real :: XTST, XVALA, XVALB
+      Real (Kind=real32) :: XTST, XVALA, XVALB
 !
 !
       NVAL = Min (SIZE(XVALT), SIZE(IRNGT))
@@ -554,26 +568,25 @@ Subroutine R_unirnk (XVALT, IRNGT, NUNI)
 !
       Return
 !
-End Subroutine R_unirnk
-Subroutine I_unirnk (XVALT, IRNGT, NUNI)
-!!__________________________________________________________
-!!  UNIRNK = Merge-sort ranking of an array, with removal of
-!!  duplicate entries.
-!!  The routine is similar to pure merge-sort ranking, but on
-!!  the last pass, it discards indices that correspond to
-!!  duplicate entries.
-!!  For performance reasons, the first 2 passes are taken
-!!  out of the standard loop, and use dedicated coding.
-!!__________________________________________________________
-!!__________________________________________________________
-      Integer, Dimension (:), Intent (In) :: XVALT
+End Subroutine real32_unirnk
+Function real32_nearless (XVAL) result (real32_nl)
+!! Nearest value less than given value
+! __________________________________________________________
+      Real (kind=real32), Intent (In) :: XVAL
+      Real (kind=real32) :: real32_nl
+! __________________________________________________________
+      real32_nl = nearest (XVAL, -1.0_real32)
+!
+End Function real32_nearless
+Subroutine int32_unirnk (XVALT, IRNGT, NUNI)
+      Integer (Kind=int32), Dimension (:), Intent (In) :: XVALT
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (Out) :: NUNI
 ! __________________________________________________________
       Integer, Dimension (SIZE(IRNGT)) :: JWRKT
       Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
-      Integer :: XTST, XVALA, XVALB
+      Integer (Kind=int32) :: XTST, XVALA, XVALB
 !
 !
       NVAL = Min (SIZE(XVALT), SIZE(IRNGT))
@@ -801,37 +814,15 @@ Subroutine I_unirnk (XVALT, IRNGT, NUNI)
 !
       Return
 !
-End Subroutine I_unirnk
-
-Function D_nearless (XVAL) result (D_nl)
+End Subroutine int32_unirnk
+Function int32_nearless (XVAL) result (int32_nl)
 !! Nearest value less than given value
 ! __________________________________________________________
-      Real (kind=kdp), Intent (In) :: XVAL
-      Real (kind=kdp) :: D_nl
+      Integer (kind=int32), Intent (In) :: XVAL
+      Integer (kind=int32) :: int32_nl
 ! __________________________________________________________
-      D_nl = nearest (XVAL, -1.0_kdp)
-      return
+      int32_nl = XVAL -1_int32
 !
-End Function D_nearless
-Function R_nearless (XVAL) result (R_nl)
-!! Nearest value less than given value
-! __________________________________________________________
-      Real, Intent (In) :: XVAL
-      Real :: R_nl
-! __________________________________________________________
-      R_nl = nearest (XVAL, -1.0)
-      return
-!
-End Function R_nearless
-Function I_nearless (XVAL) result (I_nl)
-!! Nearest value less than given value
-! __________________________________________________________
-      Integer, Intent (In) :: XVAL
-      Integer :: I_nl
-! __________________________________________________________
-      I_nl = XVAL - 1
-      return
-!
-End Function I_nearless
+End Function int32_nearless
 
 end module M_unirnk

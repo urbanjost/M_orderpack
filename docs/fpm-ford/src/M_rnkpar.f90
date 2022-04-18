@@ -10,7 +10,6 @@ contains
 !>
 !!##NAME
 !!    rnkpar(3f) - [orderpack:PARTIAL_RANK] Ranks partially XDONT by IRNGT, up to order NORD
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!

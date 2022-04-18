@@ -11,7 +11,6 @@ contains
 !!##NAME
 !!    refpar(3f) - [orderpack:PARTIAL_RANK] partially ranks any array up
 !!                 to specified number of elements
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!

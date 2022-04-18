@@ -13,7 +13,6 @@ contains
 !>
 !!##NAME
 !!    refsor(3f) - [orderpack:SORT] Sorts array into ascending order - Quicksort
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!

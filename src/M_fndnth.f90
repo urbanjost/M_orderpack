@@ -12,7 +12,6 @@ contains
 !!##NAME
 !!    fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array,
 !!                 i.e. return fractile of order NORD/SIZE(XDONT).
-!!                 (LICENSE:CC0-1.0)
 !!
 !!##SYNOPSIS
 !!
