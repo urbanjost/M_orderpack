@@ -1,17 +1,18 @@
 Module M_indnth
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
 public :: indnth
 interface indnth
-  module procedure real64_indnth, real32_indnth, int32_indnth
+  module procedure real64_indnth, real32_indnth, int32_indnth !, f_char_indnth
 end interface indnth
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file indnth.3orderpack.man
 NAME
    indnth(3f) - [orderpack:FRACTILE] Return index of Nth value of
-                array, i.e fractile of order N/SIZE(array).
+                array, i.e fractile of order N/SIZE(array) (QuickSort-like)
 
 SYNOPSIS
     Function ${KIND}_indnth (XDONT, NORD) Result (INDNTH)
@@ -25,6 +26,7 @@ SYNOPSIS
       o Real(kind=real32)
       o Real(kind=real64)
       o Integer(kind=int32)
+      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
    Return index of NORDth value of XDONT, i.e fractile of order
@@ -104,11 +106,19 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL INDNTH
 Function ${KIND}_indnth (XDONT, NORD) Result (INDNTH)
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (In) :: XDONT
+$ELSE
       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+$ENDIF
       Integer, Intent (In) :: NORD
       Integer :: INDNTH
 ! __________________________________________________________
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=len(XDONT)) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
+$ELSE
       ${TYPE} (kind=${KIND}) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
+$ENDIF
 !
       Integer, Dimension (NORD) :: IRNGT
       Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
@@ -598,6 +608,7 @@ Function ${KIND}_indnth (XDONT, NORD) Result (INDNTH)
 End Function ${KIND}_indnth
 $ENDPARCEL
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$UNDEFINE CHARACTER INTEGER
 $SET KIND real64
 $SET TYPE Real
 $POST Indnth
@@ -609,5 +620,11 @@ $
 $SET KIND int32
 $SET TYPE Integer
 $POST Indnth
+$
+$!$DEFINE CHARACTER
+$!$SET KIND f_char
+$!$SET TYPE character
+$!$POST INDNTH
+$!$UNDEFINE CHARACTER
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 end module M_indnth

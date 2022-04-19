@@ -1,18 +1,18 @@
 Module M_fndnth
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
 public :: fndnth
-private :: real64_fndnth, real32_fndnth, int32_fndnth
 interface fndnth
-  module procedure real64_fndnth, real32_fndnth, int32_fndnth
+  module procedure real64_fndnth, real32_fndnth, int32_fndnth !, f_char_fndnth
 end interface fndnth
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file fndnth.3orderpack.man
 NAME
    fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array,
-                i.e. return fractile of order NORD/SIZE(XDONT).
+                i.e. return fractile of order NORD/SIZE(XDONT) (InsertSort-like)
 
 SYNOPSIS
     Function fndnth (XDONT, NORD) Result (FNDNTH)
@@ -26,6 +26,7 @@ SYNOPSIS
    o Real(kind=real32)
    o Real(kind=real64)
    o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
    Return NORDth lowest value of XDONT, i.e. fractile of order
@@ -93,13 +94,23 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL FNDNTH
 Function ${KIND}_fndnth (XDONT, NORD) Result (FNDNTH)
-!!__________________________________________________________
+$IFDEF CHARACTER
+! __________________________________________________________
+      ${TYPE} (Kind=${KIND},len=*), Dimension (:), Intent (In) :: XDONT
+      ${TYPE} (Kind=${KIND},len=len(XDONT)) :: FNDNTH
+      Integer, Intent (In) :: NORD
+! __________________________________________________________
+      ${TYPE} (Kind=${KIND},len=len(XDONT)), Dimension (NORD) :: XWRKT
+      ${TYPE} (Kind=${KIND},len=len(XDONT)) :: XWRK, XWRK1
+$ELSE
+! __________________________________________________________
       ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
       ${TYPE} (Kind=${KIND}) :: FNDNTH
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
       ${TYPE} (Kind=${KIND}), Dimension (NORD) :: XWRKT
       ${TYPE} (Kind=${KIND}) :: XWRK, XWRK1
+$ENDIF
 !
       Integer :: ICRS, IDCR, ILOW, NDON
 !
@@ -133,6 +144,7 @@ Function ${KIND}_fndnth (XDONT, NORD) Result (FNDNTH)
 End Function ${KIND}_fndnth
 $ENDPARCEL
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$UNDEFINE CHARACTER INTEGER
 $SET KIND real64
 $SET TYPE Real
 $POST FNDNTH
@@ -144,6 +156,12 @@ $
 $SET KIND int32
 $SET TYPE Integer
 $POST FNDNTH
+$
+$!$DEFINE CHARACTER
+$!$SET KIND f_char
+$!$SET TYPE character
+$!$POST FNDNTH
+$!$UNDEFINE CHARACTER
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 end module M_fndnth

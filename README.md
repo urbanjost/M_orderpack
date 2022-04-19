@@ -15,10 +15,23 @@ Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
 
     Authors: Michel Olagnon
     date: 2000-2012
+
+Suggestions, testing, test cases, feedback, and assistance welcome for
+the update.
 ---
-## Issues
-  These appear to be issues with the original code, but may have been introduced, 
-  but are being looked at:
+## Recent Events and Issues (See Also : CHANGELOG)
+
+###2022-04-18
+   - Main sorting routines inssor(), mrgref(), mrgrnk(), refsor() can now take a CHARACTER array as an argument.
+     Ongoing support of CHARACTER types continues.
+   - All routines now have a **preliminary** man-page containing an example program, which is also rendered into HTML
+   - All the example programs from the man-pages are also available as demo programs in the example directory.
+   - A (preliminary, but functional)  make(1) file has been added
+   - Developer Note: all routines are now using the prep(1) preprocessor and have been converted to templates to simplify 
+     maintaining code that allows multiple input types.
+
+  There appear to be issues with the original code, but may have been introduced
+  (but are being looked at):
 
 - UNIPAR returns non-unique values when less unique values in input than requested in output with gfortran,nvfortran; OK with ifort
 - UNIINV does not have a mechanism to tell how many values are unique and does not appear to sort correctly
@@ -28,7 +41,6 @@ Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
     At line 499 of file ./src/M_indmed.f90
     Fortran runtime error: Array bound mismatch for dimension 1 of array 'iwrkt' (7/5)
 ```
-
 ---
 
 ## Building the module using make![gmake](docs/images/gnu.gif)

@@ -1,16 +1,17 @@
 Module M_inssor
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
 public :: inssor
 interface inssor
-  module procedure real64_inssor, real32_inssor, int32_inssor
+  module procedure real64_inssor, real32_inssor, int32_inssor, f_char_inssor
 end interface inssor
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file inssor.3orderpack.man
 NAME
-   inssor(3f) - [orderpack:SORT] Sorts array into increasing order
+   inssor(3f) - [orderpack:SORT] Sorts array into ascending order
                 (Insertion sort)
 
 SYNOPSIS
@@ -23,9 +24,10 @@ SYNOPSIS
       o Real(kind=real32)
       o Real(kind=real64)
       o Integer(kind=int32)
+      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
-   Sorts XDONT into increasing order (Insertion sort)
+   Sorts XDONT into ascending order (Insertion sort)
 
    This subroutine uses an insertion sort. It does not use any work array
    and is faster when XDONT is of very small size (< 20), or already
@@ -97,8 +99,13 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL INSSOR
 Subroutine ${KIND}_inssor (XDONT)
 ! __________________________________________________________
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (InOut) :: XDONT
+      ${TYPE} (Kind=${KIND},len=len(XDONT)) :: XWRK, XMIN
+$ELSE
       ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
       ${TYPE} (Kind=${KIND}) :: XWRK, XMIN
+$ENDIF
 ! __________________________________________________________
       Integer :: ICRS, IDCR, NDON
 !
@@ -147,6 +154,7 @@ Subroutine ${KIND}_inssor (XDONT)
 End Subroutine ${KIND}_inssor
 $ENDPARCEL
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$UNDEFINE CHARACTER INTEGER
 $SET KIND real64
 $SET TYPE Real
 $POST inssor
@@ -158,5 +166,11 @@ $
 $SET KIND int32
 $SET TYPE Integer
 $POST inssor
+$
+$DEFINE CHARACTER
+$SET KIND f_char
+$SET TYPE character
+$POST inssor
+$UNDEFINE CHARACTER
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 end module M_inssor

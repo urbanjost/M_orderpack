@@ -8,117 +8,122 @@ interface \mbox{\hyperlink{interfacem__fndnth_1_1fndnth}{fndnth}}
 \doxysubsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-real(kind=real64) function, private \mbox{\hyperlink{namespacem__fndnth_aa4fdb1a2801af375daa013db4e191f7c}{real64\+\_\+fndnth}} (X\+D\+O\+NT, N\+O\+RD)
+real(kind=real64) function \mbox{\hyperlink{namespacem__fndnth_a42702e140beb939b18af78964110112b}{real64\+\_\+fndnth}} (X\+D\+O\+NT, N\+O\+RD)
 \item 
-real(kind=real32) function, private \mbox{\hyperlink{namespacem__fndnth_a5fe9735dfd9a971a06700213702504af}{real32\+\_\+fndnth}} (X\+D\+O\+NT, N\+O\+RD)
+real(kind=real32) function \mbox{\hyperlink{namespacem__fndnth_acfddd9ba431bd7db5513f8a1c98651e6}{real32\+\_\+fndnth}} (X\+D\+O\+NT, N\+O\+RD)
 \item 
-integer(kind=int32) function, private \mbox{\hyperlink{namespacem__fndnth_a642d12f3b3ce826634899f18fc2ce40a}{int32\+\_\+fndnth}} (X\+D\+O\+NT, N\+O\+RD)
+integer(kind=int32) function \mbox{\hyperlink{namespacem__fndnth_a8ef1ca46a5ad490423b16fcd4c568689}{int32\+\_\+fndnth}} (X\+D\+O\+NT, N\+O\+RD)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer, parameter \mbox{\hyperlink{namespacem__fndnth_acc337af7d3cc48fa0c83181f3c578ad0}{f\+\_\+char}} =selected\+\_\+char\+\_\+kind(\char`\"{}D\+E\+F\+A\+U\+LT\char`\"{})
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function/\+Subroutine Documentation}
-\mbox{\Hypertarget{namespacem__fndnth_a642d12f3b3ce826634899f18fc2ce40a}\label{namespacem__fndnth_a642d12f3b3ce826634899f18fc2ce40a}} 
+\mbox{\Hypertarget{namespacem__fndnth_a8ef1ca46a5ad490423b16fcd4c568689}\label{namespacem__fndnth_a8ef1ca46a5ad490423b16fcd4c568689}} 
 \index{m\_fndnth@{m\_fndnth}!int32\_fndnth@{int32\_fndnth}}
 \index{int32\_fndnth@{int32\_fndnth}!m\_fndnth@{m\_fndnth}}
 \doxysubsubsection{\texorpdfstring{int32\_fndnth()}{int32\_fndnth()}}
-{\footnotesize\ttfamily integer (kind=int32) function, private m\+\_\+fndnth\+::int32\+\_\+fndnth (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily integer (kind=int32) function m\+\_\+fndnth\+::int32\+\_\+fndnth (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{172 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{173       \textcolor{keywordtype}{Integer (Kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
-\DoxyCodeLine{174       \textcolor{keywordtype}{Integer (Kind=int32)} :: FNDNTH}
-\DoxyCodeLine{175       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
-\DoxyCodeLine{176 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{177       \textcolor{keywordtype}{Integer (Kind=int32)}, \textcolor{keywordtype}{Dimension (NORD)} :: XWRKT}
-\DoxyCodeLine{178       \textcolor{keywordtype}{Integer (Kind=int32)} :: XWRK, XWRK1}
-\DoxyCodeLine{179 \textcolor{comment}{!}}
-\DoxyCodeLine{180       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
-\DoxyCodeLine{181 \textcolor{comment}{!}}
-\DoxyCodeLine{182       xwrkt(1) = xdont(1)}
-\DoxyCodeLine{183       \textcolor{keywordflow}{Do} icrs = 2, nord}
-\DoxyCodeLine{184          xwrk = xdont(icrs)}
-\DoxyCodeLine{185          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{186             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{187             xwrkt(idcr+1) = xwrkt(idcr)}
-\DoxyCodeLine{188 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{189          xwrkt(idcr+1) = xwrk}
-\DoxyCodeLine{190 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{191 \textcolor{comment}{!}}
-\DoxyCodeLine{192       ndon = \textcolor{keyword}{SIZE} (xdont)}
-\DoxyCodeLine{193       xwrk1 = xwrkt(nord)}
-\DoxyCodeLine{194       ilow = 2*nord -\/ ndon}
-\DoxyCodeLine{195       \textcolor{keywordflow}{Do} icrs = nord + 1, ndon}
-\DoxyCodeLine{196          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{197             xwrk = xdont(icrs)}
-\DoxyCodeLine{198             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, max(1, ilow) , -\/ 1}
-\DoxyCodeLine{199                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{200                xwrkt(idcr+1) = xwrkt(idcr)}
-\DoxyCodeLine{201 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{202             xwrkt(idcr+1) = xwrk}
-\DoxyCodeLine{203             xwrk1 = xwrkt(nord)}
-\DoxyCodeLine{204 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{205          ilow = ilow + 1}
-\DoxyCodeLine{206 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{207       fndnth = xwrk1}
-\DoxyCodeLine{208 \textcolor{comment}{!}}
+\DoxyCodeLine{173 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{174       \textcolor{keywordtype}{Integer (Kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{175       \textcolor{keywordtype}{Integer (Kind=int32)} :: FNDNTH}
+\DoxyCodeLine{176       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{177 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{178       \textcolor{keywordtype}{Integer (Kind=int32)}, \textcolor{keywordtype}{Dimension (NORD)} :: XWRKT}
+\DoxyCodeLine{179       \textcolor{keywordtype}{Integer (Kind=int32)} :: XWRK, XWRK1}
+\DoxyCodeLine{180 \textcolor{comment}{!}}
+\DoxyCodeLine{181       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
+\DoxyCodeLine{182 \textcolor{comment}{!}}
+\DoxyCodeLine{183       xwrkt(1) = xdont(1)}
+\DoxyCodeLine{184       \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{185          xwrk = xdont(icrs)}
+\DoxyCodeLine{186          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{187             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{188             xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{189 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{190          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{191 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{192 \textcolor{comment}{!}}
+\DoxyCodeLine{193       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{194       xwrk1 = xwrkt(nord)}
+\DoxyCodeLine{195       ilow = 2*nord -\/ ndon}
+\DoxyCodeLine{196       \textcolor{keywordflow}{Do} icrs = nord + 1, ndon}
+\DoxyCodeLine{197          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{198             xwrk = xdont(icrs)}
+\DoxyCodeLine{199             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, max(1, ilow) , -\/ 1}
+\DoxyCodeLine{200                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{201                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{202 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{203             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{204             xwrk1 = xwrkt(nord)}
+\DoxyCodeLine{205 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{206          ilow = ilow + 1}
+\DoxyCodeLine{207 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{208       fndnth = xwrk1}
+\DoxyCodeLine{209 \textcolor{comment}{!}}
 
 \end{DoxyCode}
-\mbox{\Hypertarget{namespacem__fndnth_a5fe9735dfd9a971a06700213702504af}\label{namespacem__fndnth_a5fe9735dfd9a971a06700213702504af}} 
+\mbox{\Hypertarget{namespacem__fndnth_acfddd9ba431bd7db5513f8a1c98651e6}\label{namespacem__fndnth_acfddd9ba431bd7db5513f8a1c98651e6}} 
 \index{m\_fndnth@{m\_fndnth}!real32\_fndnth@{real32\_fndnth}}
 \index{real32\_fndnth@{real32\_fndnth}!m\_fndnth@{m\_fndnth}}
 \doxysubsubsection{\texorpdfstring{real32\_fndnth()}{real32\_fndnth()}}
-{\footnotesize\ttfamily real (kind=real32) function, private m\+\_\+fndnth\+::real32\+\_\+fndnth (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily real (kind=real32) function m\+\_\+fndnth\+::real32\+\_\+fndnth (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{133 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{134 \textcolor{keywordtype}{      Real} (Kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
-\DoxyCodeLine{135 \textcolor{keywordtype}{      Real} (Kind=real32) :: fndnth}
-\DoxyCodeLine{136       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
-\DoxyCodeLine{137 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{138 \textcolor{keywordtype}{      Real} (Kind=real32), \textcolor{keywordtype}{Dimension (NORD)} :: xwrkt}
-\DoxyCodeLine{139 \textcolor{keywordtype}{      Real} (Kind=real32) :: xwrk, xwrk1}
-\DoxyCodeLine{140 \textcolor{comment}{!}}
-\DoxyCodeLine{141       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
-\DoxyCodeLine{142 \textcolor{comment}{!}}
-\DoxyCodeLine{143       xwrkt(1) = xdont(1)}
-\DoxyCodeLine{144       \textcolor{keywordflow}{Do} icrs = 2, nord}
-\DoxyCodeLine{145          xwrk = xdont(icrs)}
-\DoxyCodeLine{146          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{147             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{148             xwrkt(idcr+1) = xwrkt(idcr)}
-\DoxyCodeLine{149 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{150          xwrkt(idcr+1) = xwrk}
-\DoxyCodeLine{151 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{152 \textcolor{comment}{!}}
-\DoxyCodeLine{153       ndon = \textcolor{keyword}{SIZE} (xdont)}
-\DoxyCodeLine{154       xwrk1 = xwrkt(nord)}
-\DoxyCodeLine{155       ilow = 2*nord -\/ ndon}
-\DoxyCodeLine{156       \textcolor{keywordflow}{Do} icrs = nord + 1, ndon}
-\DoxyCodeLine{157          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{158             xwrk = xdont(icrs)}
-\DoxyCodeLine{159             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, max(1, ilow) , -\/ 1}
-\DoxyCodeLine{160                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{161                xwrkt(idcr+1) = xwrkt(idcr)}
-\DoxyCodeLine{162 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{163             xwrkt(idcr+1) = xwrk}
-\DoxyCodeLine{164             xwrk1 = xwrkt(nord)}
-\DoxyCodeLine{165 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{166          ilow = ilow + 1}
-\DoxyCodeLine{167 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{168       fndnth = xwrk1}
-\DoxyCodeLine{169 \textcolor{comment}{!}}
+\DoxyCodeLine{134 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{135 \textcolor{keywordtype}{      Real} (Kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{136 \textcolor{keywordtype}{      Real} (Kind=real32) :: fndnth}
+\DoxyCodeLine{137       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{138 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{139 \textcolor{keywordtype}{      Real} (Kind=real32), \textcolor{keywordtype}{Dimension (NORD)} :: xwrkt}
+\DoxyCodeLine{140 \textcolor{keywordtype}{      Real} (Kind=real32) :: xwrk, xwrk1}
+\DoxyCodeLine{141 \textcolor{comment}{!}}
+\DoxyCodeLine{142       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
+\DoxyCodeLine{143 \textcolor{comment}{!}}
+\DoxyCodeLine{144       xwrkt(1) = xdont(1)}
+\DoxyCodeLine{145       \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{146          xwrk = xdont(icrs)}
+\DoxyCodeLine{147          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{148             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{149             xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{150 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{151          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{152 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{153 \textcolor{comment}{!}}
+\DoxyCodeLine{154       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{155       xwrk1 = xwrkt(nord)}
+\DoxyCodeLine{156       ilow = 2*nord -\/ ndon}
+\DoxyCodeLine{157       \textcolor{keywordflow}{Do} icrs = nord + 1, ndon}
+\DoxyCodeLine{158          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{159             xwrk = xdont(icrs)}
+\DoxyCodeLine{160             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, max(1, ilow) , -\/ 1}
+\DoxyCodeLine{161                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{162                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{163 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{164             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{165             xwrk1 = xwrkt(nord)}
+\DoxyCodeLine{166 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{167          ilow = ilow + 1}
+\DoxyCodeLine{168 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{169       fndnth = xwrk1}
+\DoxyCodeLine{170 \textcolor{comment}{!}}
 
 \end{DoxyCode}
-\mbox{\Hypertarget{namespacem__fndnth_aa4fdb1a2801af375daa013db4e191f7c}\label{namespacem__fndnth_aa4fdb1a2801af375daa013db4e191f7c}} 
+\mbox{\Hypertarget{namespacem__fndnth_a42702e140beb939b18af78964110112b}\label{namespacem__fndnth_a42702e140beb939b18af78964110112b}} 
 \index{m\_fndnth@{m\_fndnth}!real64\_fndnth@{real64\_fndnth}}
 \index{real64\_fndnth@{real64\_fndnth}!m\_fndnth@{m\_fndnth}}
 \doxysubsubsection{\texorpdfstring{real64\_fndnth()}{real64\_fndnth()}}
-{\footnotesize\ttfamily real (kind=real64) function, private m\+\_\+fndnth\+::real64\+\_\+fndnth (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily real (kind=real64) function m\+\_\+fndnth\+::real64\+\_\+fndnth (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 \hypertarget{namespacem__fndnth_autotoc_md7}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__fndnth_autotoc_md7}
-fndnth(3f) -\/ \mbox{[}orderpack\+:F\+R\+A\+C\+T\+I\+LE\mbox{]} Return Nth lowest value of an array, i.\+e. return fractile of order N\+O\+R\+D/\+S\+I\+ZE(X\+D\+O\+NT).\hypertarget{namespacem__fndnth_autotoc_md8}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__fndnth_autotoc_md8}
+fndnth(3f) -\/ \mbox{[}orderpack\+:F\+R\+A\+C\+T\+I\+LE\mbox{]} Return Nth lowest value of an array, i.\+e. return fractile of order N\+O\+R\+D/\+S\+I\+ZE(X\+D\+O\+NT) (Insert\+Sort-\/like)\hypertarget{namespacem__fndnth_autotoc_md8}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__fndnth_autotoc_md8}
 \begin{DoxyVerb} Function fndnth (XDONT, NORD) Result (FNDNTH)
 
   ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
@@ -130,6 +135,7 @@ Where ${TYPE}(kind=${KIND}) may be
 o Real(kind=real32)
 o Real(kind=real64)
 o Integer(kind=int32)
+o Character(kind=selected_char_kind("DEFAULT"),len=*)
 \end{DoxyVerb}
 \hypertarget{namespacem__fndnth_autotoc_md9}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__fndnth_autotoc_md9}
 Return N\+O\+R\+Dth lowest value of X\+D\+O\+NT, i.\+e. fractile of order N\+O\+R\+D/\+S\+I\+ZE(X\+D\+O\+NT).
@@ -154,42 +160,56 @@ Michel Olagnon -\/ Aug. 2000
 John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__fndnth_autotoc_md15}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__fndnth_autotoc_md15}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{94 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{95 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
-\DoxyCodeLine{96 \textcolor{keywordtype}{      Real} (Kind=real64) :: fndnth}
-\DoxyCodeLine{97       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
-\DoxyCodeLine{98 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{99 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (NORD)} :: xwrkt}
-\DoxyCodeLine{100 \textcolor{keywordtype}{      Real} (Kind=real64) :: xwrk, xwrk1}
-\DoxyCodeLine{101 \textcolor{comment}{!}}
-\DoxyCodeLine{102       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
-\DoxyCodeLine{103 \textcolor{comment}{!}}
-\DoxyCodeLine{104       xwrkt(1) = xdont(1)}
-\DoxyCodeLine{105       \textcolor{keywordflow}{Do} icrs = 2, nord}
-\DoxyCodeLine{106          xwrk = xdont(icrs)}
-\DoxyCodeLine{107          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
-\DoxyCodeLine{108             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{109             xwrkt(idcr+1) = xwrkt(idcr)}
-\DoxyCodeLine{110 \textcolor{keywordflow}{         End Do}}
-\DoxyCodeLine{111          xwrkt(idcr+1) = xwrk}
-\DoxyCodeLine{112 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{113 \textcolor{comment}{!}}
-\DoxyCodeLine{114       ndon = \textcolor{keyword}{SIZE} (xdont)}
-\DoxyCodeLine{115       xwrk1 = xwrkt(nord)}
-\DoxyCodeLine{116       ilow = 2*nord -\/ ndon}
-\DoxyCodeLine{117       \textcolor{keywordflow}{Do} icrs = nord + 1, ndon}
-\DoxyCodeLine{118          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{119             xwrk = xdont(icrs)}
-\DoxyCodeLine{120             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, max(1, ilow) , -\/ 1}
-\DoxyCodeLine{121                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
-\DoxyCodeLine{122                xwrkt(idcr+1) = xwrkt(idcr)}
-\DoxyCodeLine{123 \textcolor{keywordflow}{            End Do}}
-\DoxyCodeLine{124             xwrkt(idcr+1) = xwrk}
-\DoxyCodeLine{125             xwrk1 = xwrkt(nord)}
-\DoxyCodeLine{126 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{127          ilow = ilow + 1}
-\DoxyCodeLine{128 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{129       fndnth = xwrk1}
-\DoxyCodeLine{130 \textcolor{comment}{!}}
+\DoxyCodeLine{95 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{96 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{97 \textcolor{keywordtype}{      Real} (Kind=real64) :: fndnth}
+\DoxyCodeLine{98       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{99 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{100 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (NORD)} :: xwrkt}
+\DoxyCodeLine{101 \textcolor{keywordtype}{      Real} (Kind=real64) :: xwrk, xwrk1}
+\DoxyCodeLine{102 \textcolor{comment}{!}}
+\DoxyCodeLine{103       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
+\DoxyCodeLine{104 \textcolor{comment}{!}}
+\DoxyCodeLine{105       xwrkt(1) = xdont(1)}
+\DoxyCodeLine{106       \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{107          xwrk = xdont(icrs)}
+\DoxyCodeLine{108          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{109             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{110             xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{111 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{112          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{113 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{114 \textcolor{comment}{!}}
+\DoxyCodeLine{115       ndon = \textcolor{keyword}{SIZE} (xdont)}
+\DoxyCodeLine{116       xwrk1 = xwrkt(nord)}
+\DoxyCodeLine{117       ilow = 2*nord -\/ ndon}
+\DoxyCodeLine{118       \textcolor{keywordflow}{Do} icrs = nord + 1, ndon}
+\DoxyCodeLine{119          \textcolor{keywordflow}{If} (xdont(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{120             xwrk = xdont(icrs)}
+\DoxyCodeLine{121             \textcolor{keywordflow}{Do} idcr = nord -\/ 1, max(1, ilow) , -\/ 1}
+\DoxyCodeLine{122                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{123                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{124 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{125             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{126             xwrk1 = xwrkt(nord)}
+\DoxyCodeLine{127 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{128          ilow = ilow + 1}
+\DoxyCodeLine{129 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{130       fndnth = xwrk1}
+\DoxyCodeLine{131 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacem__fndnth_acc337af7d3cc48fa0c83181f3c578ad0}\label{namespacem__fndnth_acc337af7d3cc48fa0c83181f3c578ad0}} 
+\index{m\_fndnth@{m\_fndnth}!f\_char@{f\_char}}
+\index{f\_char@{f\_char}!m\_fndnth@{m\_fndnth}}
+\doxysubsubsection{\texorpdfstring{f\_char}{f\_char}}
+{\footnotesize\ttfamily integer, parameter m\+\_\+fndnth\+::f\+\_\+char =selected\+\_\+char\+\_\+kind(\char`\"{}D\+E\+F\+A\+U\+LT\char`\"{})}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{4 \textcolor{keywordtype}{integer},\textcolor{keywordtype}{parameter} :: f\_char=selected\_char\_kind(\textcolor{stringliteral}{"DEFAULT"})}
 
 \end{DoxyCode}

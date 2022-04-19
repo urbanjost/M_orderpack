@@ -1,16 +1,17 @@
 Module M_valnth
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
 public :: valnth
 interface valnth
-  module procedure real64_valnth, real32_valnth, int32_valnth
+  module procedure real64_valnth, real32_valnth, int32_valnth !, f_char_valnth
 end interface valnth
 contains
 !>
 !!##NAME
 !!    valnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array, i.e
-!!                 fractile of order NORD/SIZE(XDONT).
+!!                 fractile of order NORD/SIZE(XDONT) (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!
@@ -25,6 +26,7 @@ contains
 !!       o Real(kind=real32)
 !!       o Real(kind=real64)
 !!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).

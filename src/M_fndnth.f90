@@ -1,17 +1,17 @@
 Module M_fndnth
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
 public :: fndnth
-private :: real64_fndnth, real32_fndnth, int32_fndnth
 interface fndnth
-  module procedure real64_fndnth, real32_fndnth, int32_fndnth
+  module procedure real64_fndnth, real32_fndnth, int32_fndnth !, f_char_fndnth
 end interface fndnth
 contains
 !>
 !!##NAME
 !!    fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array,
-!!                 i.e. return fractile of order NORD/SIZE(XDONT).
+!!                 i.e. return fractile of order NORD/SIZE(XDONT) (InsertSort-like)
 !!
 !!##SYNOPSIS
 !!
@@ -26,6 +26,7 @@ contains
 !!    o Real(kind=real32)
 !!    o Real(kind=real64)
 !!    o Integer(kind=int32)
+!!    o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!    Return NORDth lowest value of XDONT, i.e. fractile of order
@@ -91,7 +92,7 @@ contains
 !!##LICENSE
 !!    CC0-1.0
 Function real64_fndnth (XDONT, NORD) Result (FNDNTH)
-!!__________________________________________________________
+! __________________________________________________________
       Real (Kind=real64), Dimension (:), Intent (In) :: XDONT
       Real (Kind=real64) :: FNDNTH
       Integer, Intent (In) :: NORD
@@ -130,7 +131,7 @@ Function real64_fndnth (XDONT, NORD) Result (FNDNTH)
 !
 End Function real64_fndnth
 Function real32_fndnth (XDONT, NORD) Result (FNDNTH)
-!!__________________________________________________________
+! __________________________________________________________
       Real (Kind=real32), Dimension (:), Intent (In) :: XDONT
       Real (Kind=real32) :: FNDNTH
       Integer, Intent (In) :: NORD
@@ -169,7 +170,7 @@ Function real32_fndnth (XDONT, NORD) Result (FNDNTH)
 !
 End Function real32_fndnth
 Function int32_fndnth (XDONT, NORD) Result (FNDNTH)
-!!__________________________________________________________
+! __________________________________________________________
       Integer (Kind=int32), Dimension (:), Intent (In) :: XDONT
       Integer (Kind=int32) :: FNDNTH
       Integer, Intent (In) :: NORD
