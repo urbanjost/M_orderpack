@@ -2,10 +2,11 @@ Module M_indmed
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: indmed
 Integer, Allocatable, Dimension(:), Private, Save :: IDONT
 interface indmed
-  module procedure real64_indmed, real32_indmed, int32_indmed
+  module procedure real64_indmed, real32_indmed, int32_indmed, f_char_indmed
 end interface indmed
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -25,6 +26,7 @@ SYNOPSIS
       o Real(kind=real32)
       o Real(kind=real64)
       o Integer(kind=int32)
+      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
    Finds the index of the median of XDONT using the recursive procedure
@@ -45,6 +47,7 @@ EXAMPLES
    use M_indmed, only : indmed
    implicit none
    real,allocatable :: xdont(:)
+   character(len=:),allocatable :: cdont(:)
    integer :: ii
       xdont=[80.0,70.0,20.0,10.0,1000.0]
       call indmed(xdont,ii)
@@ -58,13 +61,17 @@ EXAMPLES
       call indmed(xdont,ii)
       write(*,*) ii,xdont(ii)
       !
+      cdont=[character(len=20) :: 'apple','bee','cherry','duck','elephant','finger','goose','h','insect','j']
+      call indmed(cdont,ii)
+      write(*,*) ii,cdont(ii)
+      !
    end program demo_indmed
 
   Results:
-
     > 2   70.0000000    
     > 4   44.0000000    
     > 5   33.0000000    
+    > 5   elephant
 
 AUTHOR
     Michel Olagnon, 2000-2012
@@ -79,7 +86,11 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL INDMED
 Subroutine ${KIND}_indmed (XDONT, INDM)
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (In) :: XDONT
+$ELSE
       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+$ENDIF
       Integer, Intent (Out) :: INDM
 ! __________________________________________________________
       Integer :: IDON
@@ -95,13 +106,22 @@ Subroutine ${KIND}_indmed (XDONT, INDM)
 End Subroutine ${KIND}_indmed
 
 Recursive Subroutine ${KIND}_med (XDATT, IDATT, ires_med)
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (In) :: XDATT
+$ELSE
       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDATT
+$ENDIF
       Integer, Dimension (:), Intent (In) :: IDATT
       Integer, Intent (Out):: ires_med
 ! __________________________________________________________
 !
-      ${TYPE} (kind=${KIND}), Parameter :: XHUGE = HUGE (XDATT)
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=len(XDATT)) :: XHUGE
+      ${TYPE} (kind=${KIND},len=len(XDATT)) :: XWRK, XWRK1, XMED7, XMAX, XMIN
+$ELSE
+      ${TYPE} (kind=${KIND}), Parameter :: XHUGE = -HUGE (XDATT)
       ${TYPE} (kind=${KIND}) :: XWRK, XWRK1, XMED7, XMAX, XMIN
+$ENDIF
 !
       Integer, Dimension (7*(((Size (IDATT)+6)/7+6)/7)) :: ISTRT, IENDT, IMEDT
       Integer, Dimension (7*((Size(IDATT)+6)/7)) :: IWRKT
@@ -109,9 +129,12 @@ Recursive Subroutine ${KIND}_med (XDATT, IDATT, ires_med)
       Integer :: IDEB, ITMP, IDCR, ICRS, ICRS1, ICRS2, IMAX, IMIN
       Integer :: IWRK, IWRK1, IMED1, IMED7, NDAT
 !
+$IFDEF CHARACTER
+      XHUGE=repeat(char(0),len(xdatt))
+$ENDIF
       NDAT = Size (IDATT)
       NMED = (NDAT+1) / 2
-      IWRKT = IDATT
+      IWRKT(:size(idatt)) = IDATT
 !
 !  If the number of values is small, then use insertion sort
 !
@@ -412,7 +435,7 @@ Recursive Subroutine ${KIND}_med (XDATT, IDATT, ires_med)
             End If
          Else                       !      If (NLEQ > NMED)
 !                                          Not enough high values
-                XWRK1 = -XHUGE
+                XWRK1 = XHUGE
                 NORD = NLEQ - NEQU - NMED + 1
                 IDON1 = 0
                 ICRS1 = 1
@@ -467,6 +490,7 @@ Recursive Subroutine ${KIND}_med (XDATT, IDATT, ires_med)
 END Subroutine ${KIND}_med
 $ENDPARCEL
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$UNDEFINE CHARACTER INTEGER
 $SET KIND real64
 $SET TYPE Real
 $POST indmed
@@ -478,5 +502,11 @@ $
 $SET KIND int32
 $SET TYPE Integer
 $POST indmed
+$
+$DEFINE CHARACTER
+$SET KIND f_char
+$SET TYPE character
+$POST indmed
+$UNDEFINE CHARACTER
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 end module M_indmed
