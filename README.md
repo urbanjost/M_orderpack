@@ -21,7 +21,7 @@ the update.
 ---
 ## Recent Events and Issues (See Also : CHANGELOG)
 
-###2022-04-18
+### 2022-04-18
    - Main sorting routines inssor(), mrgref(), mrgrnk(), refsor() can now take a CHARACTER array as an argument.
      Ongoing support of CHARACTER types continues.
    - All routines now have a **preliminary** man-page containing an example program, which is also rendered into HTML
@@ -86,9 +86,10 @@ This will compile the Fortran module and basic example programs that exercise th
 ## Documentation ![docs](docs/images/docs.gif)
 
 ### User
-   - documentation derived from the original [procedure documentation](https://urbanjost.github.io/orderpack/).
-   - **UNDER CONSTRUCTION** a simple index to the man-pages in HTML form for the
-   [routines](https://urbanjost.github.io/orderpack/man3.html)
+   - **UNDER CONSTRUCTION** an index to man-pages in HTML form for all the
+     [routines](https://urbanjost.github.io/orderpack/man3.html)
+   - documentation derived from the original [procedure documentation](https://urbanjost.github.io/orderpack/),
+     which will gradually be replaced by the above.
 <!--
    and [programs](https://urbanjost.github.io/orderpack/man1.html)
 
