@@ -10,8 +10,8 @@ end interface valnth
 contains
 !>
 !!##NAME
-!!    valnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array, i.e
-!!                 fractile of order NORD/SIZE(XDONT) (QuickSort-like)
+!!    valnth(3f) - [orderpack:FRACTILE] Return VALUE of Nth value of
+!!                 array, i.e fractile of order N/SIZE(array) (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!

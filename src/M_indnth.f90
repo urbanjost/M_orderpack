@@ -10,7 +10,7 @@ end interface indnth
 contains
 !>
 !!##NAME
-!!    indnth(3f) - [orderpack:FRACTILE] Return index of Nth value of
+!!    indnth(3f) - [orderpack:FRACTILE] Return INDEX of Nth value of
 !!                 array, i.e fractile of order N/SIZE(array) (QuickSort-like)
 !!
 !!##SYNOPSIS

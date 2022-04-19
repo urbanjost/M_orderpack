@@ -8,10 +8,39 @@ subroutine \mbox{\hyperlink{interfacem__mulcnt_1_1mulcnt_a09e6cd37d06f1549b05661
 subroutine \mbox{\hyperlink{interfacem__mulcnt_1_1mulcnt_aff24055ac5cb2fafa6912b45852776bb}{real32\+\_\+mulcnt}} (X\+D\+O\+NT, I\+M\+U\+LT)
 \item 
 subroutine \mbox{\hyperlink{interfacem__mulcnt_1_1mulcnt_ae7d205b8e275832712d7671da58a8183}{int32\+\_\+mulcnt}} (X\+D\+O\+NT, I\+M\+U\+LT)
+\item 
+subroutine \mbox{\hyperlink{interfacem__mulcnt_1_1mulcnt_a0a16dc2a7425b8c70a1201eff0b20ce7}{f\+\_\+char\+\_\+mulcnt}} (X\+D\+O\+NT, I\+M\+U\+LT)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__mulcnt_1_1mulcnt_a0a16dc2a7425b8c70a1201eff0b20ce7}\label{interfacem__mulcnt_1_1mulcnt_a0a16dc2a7425b8c70a1201eff0b20ce7}} 
+\index{m\_mulcnt::mulcnt@{m\_mulcnt::mulcnt}!f\_char\_mulcnt@{f\_char\_mulcnt}}
+\index{f\_char\_mulcnt@{f\_char\_mulcnt}!m\_mulcnt::mulcnt@{m\_mulcnt::mulcnt}}
+\doxysubsubsection{\texorpdfstring{f\_char\_mulcnt()}{f\_char\_mulcnt()}}
+{\footnotesize\ttfamily subroutine m\+\_\+mulcnt\+::mulcnt\+::f\+\_\+char\+\_\+mulcnt (\begin{DoxyParamCaption}\item[{character (kind=\mbox{\hyperlink{namespacem__mulcnt_a0e9d864236495fc623b113be0a4083b0}{f\+\_\+char}},len=$\ast$), dimension (\+:), intent(in)}]{X\+D\+O\+NT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+M\+U\+LT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{164 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{165       \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{166       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
+\DoxyCodeLine{167 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{168       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
+\DoxyCodeLine{169       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: ICNTT}
+\DoxyCodeLine{170       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{171 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{172       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
+\DoxyCodeLine{173       icntt = 0}
+\DoxyCodeLine{174       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{175             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
+\DoxyCodeLine{176 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{177       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{178             imult(icrs) = icntt(iwrkt(icrs))}
+\DoxyCodeLine{179 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{180 \textcolor{comment}{!}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{interfacem__mulcnt_1_1mulcnt_ae7d205b8e275832712d7671da58a8183}\label{interfacem__mulcnt_1_1mulcnt_ae7d205b8e275832712d7671da58a8183}} 
 \index{m\_mulcnt::mulcnt@{m\_mulcnt::mulcnt}!int32\_mulcnt@{int32\_mulcnt}}
 \index{int32\_mulcnt@{int32\_mulcnt}!m\_mulcnt::mulcnt@{m\_mulcnt::mulcnt}}
@@ -20,23 +49,23 @@ subroutine \mbox{\hyperlink{interfacem__mulcnt_1_1mulcnt_ae7d205b8e275832712d767
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{106 \textcolor{comment}{!j\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{107       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
-\DoxyCodeLine{108       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
-\DoxyCodeLine{109 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{110       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
-\DoxyCodeLine{111       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: ICNTT}
-\DoxyCodeLine{112       \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{113 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{114       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
-\DoxyCodeLine{115       icntt = 0}
-\DoxyCodeLine{116       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{117             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
-\DoxyCodeLine{118 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{119       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{120             imult(icrs) = icntt(iwrkt(icrs))}
-\DoxyCodeLine{121 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{122 \textcolor{comment}{!}}
+\DoxyCodeLine{145 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{146       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XDONT}
+\DoxyCodeLine{147       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
+\DoxyCodeLine{148 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{149       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
+\DoxyCodeLine{150       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: ICNTT}
+\DoxyCodeLine{151       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{152 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{153       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
+\DoxyCodeLine{154       icntt = 0}
+\DoxyCodeLine{155       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{156             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
+\DoxyCodeLine{157 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{158       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{159             imult(icrs) = icntt(iwrkt(icrs))}
+\DoxyCodeLine{160 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{161 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__mulcnt_1_1mulcnt_aff24055ac5cb2fafa6912b45852776bb}\label{interfacem__mulcnt_1_1mulcnt_aff24055ac5cb2fafa6912b45852776bb}} 
@@ -47,23 +76,23 @@ subroutine \mbox{\hyperlink{interfacem__mulcnt_1_1mulcnt_ae7d205b8e275832712d767
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{87 \textcolor{comment}{!j\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{88 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
-\DoxyCodeLine{89       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
-\DoxyCodeLine{90 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{91       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
-\DoxyCodeLine{92       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: ICNTT}
-\DoxyCodeLine{93       \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{94 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{95       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
-\DoxyCodeLine{96       icntt = 0}
-\DoxyCodeLine{97       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{98             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
-\DoxyCodeLine{99 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{100       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{101             imult(icrs) = icntt(iwrkt(icrs))}
-\DoxyCodeLine{102 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{103 \textcolor{comment}{!}}
+\DoxyCodeLine{126 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{127 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{128       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
+\DoxyCodeLine{129 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{130       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
+\DoxyCodeLine{131       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: ICNTT}
+\DoxyCodeLine{132       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{133 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{134       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
+\DoxyCodeLine{135       icntt = 0}
+\DoxyCodeLine{136       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{137             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
+\DoxyCodeLine{138 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{139       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{140             imult(icrs) = icntt(iwrkt(icrs))}
+\DoxyCodeLine{141 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{142 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__mulcnt_1_1mulcnt_a09e6cd37d06f1549b056615529bd7fa5}\label{interfacem__mulcnt_1_1mulcnt_a09e6cd37d06f1549b056615529bd7fa5}} 
@@ -84,39 +113,42 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real32)
    o Real(kind=real64)
    o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
 \end{DoxyVerb}
 \hypertarget{namespacem__mulcnt_autotoc_md69}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__mulcnt_autotoc_md69}
 M\+U\+L\+C\+NT = Give for each array value its multiplicity (number of times that it appears in the array)\hypertarget{namespacem__mulcnt_autotoc_md70}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__mulcnt_autotoc_md70}
 X\+D\+O\+NT input array I\+M\+U\+LT array containing how often the value in X\+D\+O\+NT appears in X\+D\+O\+NT\hypertarget{namespacem__mulcnt_autotoc_md71}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__mulcnt_autotoc_md71}
 Sample program\+:
 
-program demo\+\_\+mulcnt use M\+\_\+mulcnt, only \+: mulcnt implicit none real,parameter \+:: xdont($\ast$)=\mbox{[}1,2,3,4,5,6,7,4,5,6,6,2\mbox{]} integer, dimension(size(xdont)) \+:: imult call mulcnt(xdont,imult) write($\ast$,$\ast$)xdont write($\ast$,$\ast$)imult end program demo\+\_\+mulcnt
+program demo\+\_\+mulcnt use M\+\_\+mulcnt, only \+: mulcnt implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} real,parameter \+:: xdont($\ast$)=\mbox{[}1,2,3,4,5,6,7,4,5,6,6,2\mbox{]} integer, dimension(size(xdont)) \+:: imult character(len=20),allocatable \+:: strings(\+:) ! call mulcnt(xdont,imult) write($\ast$,$\ast$)xdont write($\ast$,g)imult ! strings= \mbox{[} character(len=20) \+:: \& \& \textquotesingle{}red\textquotesingle{}, \textquotesingle{}green\textquotesingle{}, \textquotesingle{}blue\textquotesingle{}, \textquotesingle{}yellow\textquotesingle{}, \textquotesingle{}orange\textquotesingle{}, \textquotesingle{}black\textquotesingle{}\mbox{]} call printme() ! strings= \mbox{[} character(len=20) \+:: \& \& \textquotesingle{}two \textquotesingle{}, \textquotesingle{}four \textquotesingle{}, \textquotesingle{}three\textquotesingle{}, \textquotesingle{}five\textquotesingle{}, \textquotesingle{}five\textquotesingle{}, \& \& \textquotesingle{}two \textquotesingle{}, \textquotesingle{}four \textquotesingle{}, \textquotesingle{}three\textquotesingle{}, \textquotesingle{}five\textquotesingle{}, \textquotesingle{}five\textquotesingle{}, \& \& \textquotesingle{}four \textquotesingle{}, \textquotesingle{}four \textquotesingle{}, \textquotesingle{}three\textquotesingle{}, \textquotesingle{}one \textquotesingle{}, \textquotesingle{}five\textquotesingle{}\mbox{]} call printme() ! strings=\mbox{[}\textquotesingle{}purple\textquotesingle{}, \textquotesingle{}purple\textquotesingle{}, \textquotesingle{}purple\textquotesingle{}, \textquotesingle{}purple\textquotesingle{}\mbox{]} call printme() contains subroutine printme() integer,allocatable \+:: cindx(\+:) integer \+:: csz integer \+:: i csz=size(strings) if(allocated(cindx))deallocate(cindx) allocate(cindx(csz)) call mulcnt(strings,cindx) write($\ast$,g)(trim(strings(i)),i=1,csz) write($\ast$,g)cindx end subroutine printme end program demo\+\_\+mulcnt
 
-Results\+:
-
-1.\+00 2.\+00 3.\+00 4.\+00 5.\+00 6.\+00 7.\+00 4.\+00 5.\+00 6.\+00 6.\+00 2.\+00 1 2 1 2 2 3 1 2 2 3 3 2\hypertarget{namespacem__mulcnt_autotoc_md72}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__mulcnt_autotoc_md72}
+Results\+: \begin{DoxyVerb}1.000000   2.000000   3.000000   4.000000   5.000000
+6.000000   7.000000   4.000000   5.000000   6.000000
+6.000000   2.000000
+\end{DoxyVerb}
+ 1 2 1 2 2 3 1 2 2 3 3 2 red green blue yellow orange black 1 1 1 1 1 1 two four three five five two four three five five four four three one five 2 4 3 5 5 2 4 3 5 5 4 4 3 1 5 purple purple purple purple 4 4 4 4\hypertarget{namespacem__mulcnt_autotoc_md72}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__mulcnt_autotoc_md72}
 Michel Olagnon, Mar 2000
 
 John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__mulcnt_autotoc_md73}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__mulcnt_autotoc_md73}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{68 \textcolor{comment}{!j\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{69 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
-\DoxyCodeLine{70       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
-\DoxyCodeLine{71 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{72       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
-\DoxyCodeLine{73       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: ICNTT}
-\DoxyCodeLine{74       \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{75 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{76       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
-\DoxyCodeLine{77       icntt = 0}
-\DoxyCodeLine{78       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{79             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
-\DoxyCodeLine{80 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{81       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
-\DoxyCodeLine{82             imult(icrs) = icntt(iwrkt(icrs))}
-\DoxyCodeLine{83 \textcolor{keywordflow}{      End Do}}
-\DoxyCodeLine{84 \textcolor{comment}{!}}
+\DoxyCodeLine{107 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{108 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}
+\DoxyCodeLine{109       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
+\DoxyCodeLine{110 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{111       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: IWRKT}
+\DoxyCodeLine{112       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: ICNTT}
+\DoxyCodeLine{113       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{114 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{115       \textcolor{keyword}{Call }uniinv (xdont, iwrkt)}
+\DoxyCodeLine{116       icntt = 0}
+\DoxyCodeLine{117       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{118             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
+\DoxyCodeLine{119 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{120       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(xdont)}
+\DoxyCodeLine{121             imult(icrs) = icntt(iwrkt(icrs))}
+\DoxyCodeLine{122 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{123 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 

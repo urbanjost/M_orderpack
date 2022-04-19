@@ -19,6 +19,11 @@ and usage changes.
    - [ ] registered in fpm(1) repository
 
 ---
+**2022-04-19**  John S. Urban  <https://github.com/urbanjost>
+
+### :green_circle: ADD:
+   - uniinv, mulcnt now support CHARACTER variables
+---
 **2022-04-18**  John S. Urban  <https://github.com/urbanjost>
 
 ### :green_circle: ADD:

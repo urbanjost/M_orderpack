@@ -11,7 +11,7 @@ contains
 !>
 !!##NAME
 !!    fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array,
-!!                 i.e. return fractile of order NORD/SIZE(XDONT) (InsertSort-like)
+!!                 i.e. return fractile of order N/SIZE(array) (InsertSort-like)
 !!
 !!##SYNOPSIS
 !!

@@ -21,8 +21,12 @@ the update.
 ---
 ## Recent Events and Issues (See Also : CHANGELOG)
 
+### 2022-04-19
+   - uniinv, mulcnt now support CHARACTER variables
+
 ### 2022-04-18
    - Main sorting routines inssor(), mrgref(), mrgrnk(), refsor() can now take a CHARACTER array as an argument.
+
      Ongoing support of CHARACTER types continues.
    - All routines now have a **preliminary** man-page containing an example program, which is also rendered into HTML
    - All the example programs from the man-pages are also available as demo programs in the example directory.
@@ -34,9 +38,7 @@ the update.
   (but are being looked at):
 
 - UNIPAR returns non-unique values when less unique values in input than requested in output with gfortran,nvfortran; OK with ifort
-- UNIINV does not have a mechanism to tell how many values are unique and does not appear to sort correctly
 - INDMED has issues that may only manifest when debug options are used when compiling
-- UNIRNK does not return number of values when given an INTEGER array
 ```text
     At line 499 of file ./src/M_indmed.f90
     Fortran runtime error: Array bound mismatch for dimension 1 of array 'iwrkt' (7/5)

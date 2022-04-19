@@ -41,7 +41,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </style> 
 </head>
 <BODY bgcolor=#F0F0F0 text=#000000 link=#0000ff vlink=#C000C0 alink=#ff0000><A NAME=top></A>
-<h5><a href="https://github.com/urbanjost/M_valnth">[UP]</a></h5>
+<h5><a href="https://github.com/urbanjost/M_mulcnt">[UP]</a></h5>
 <div id="Container">
 <div id="Content">
 <CENTER>
@@ -54,7 +54,7 @@ a.existingWikiWord[title]{ //border: 1px dashed #BBB; }
 </A>
 <BLOCKQUOTE>
 <B>uniinv</B>(3f) - [orderpack:RANK_UNIQUE] a merge-sort inverse ranking of
-an array, with removal of duplicate entries.
+an array, with duplicate entries assigned the same rank.
 <P>
 </BLOCKQUOTE>
 <A name=contents></A><H3>CONTENTS</H3></A>
@@ -100,6 +100,11 @@ o
 </TD><TD>
 <B>Integer</B>(kind=int32)
 </TD></TR>
+<TR valign=top><TD width=3%>
+o
+</TD><TD>
+<B>Character</B>(kind=selected_char_kind("DEFAULT"),len=*)
+</TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=2>
 
@@ -108,8 +113,8 @@ o
 </A>
 <BLOCKQUOTE>
 <P>
-<B>UNIINV</B>(3f) is a merge-sort inverse ranking of an array, with removal
-of duplicate entries.
+<B>UNIINV</B>(3f) is a merge-sort inverse ranking of an array, but with
+duplicate entries receiving the same rank.
 <P>
 The routine is similar to pure merge-sort ranking, but on the last
 pass, it sets indices in <I>IGOEST</I> to the rank of the value in the ordered
@@ -117,12 +122,11 @@ pass, it sets indices in <I>IGOEST</I> to the rank of the value in the ordered
  -->
 <TR></TR><TR></TR>
 <TR valign=top><TD colspan=2>
-<B>set with duplicates removed.</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
+<B>set with duplicates ignored.</B> </TD></TR><TR valign=top><TD width=6%>&nbsp;</TD><TD>
 For performance reasons, the first 2
 passes are taken out of the standard loop, and use dedicated coding.
 </TD></TR>
-<TR></TR></TABLE>!BUG! SO HOW DO YOU KNOW HOW MANY WERE REMOVED AS DUPLICATES???
-</BLOCKQUOTE>
+<TR></TR></TABLE></BLOCKQUOTE>
 <A name=3>
 
      <H3>OPTIONS</H3>
@@ -136,7 +140,7 @@ array to rank
 </TD></TR>
 <TR valign=top><TD width=6% nowrap>
 <B></B><I>IGOEST</I> </TD><TD valign=bottom>
-rank array
+returned rank array
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
 <A name=4>
@@ -152,29 +156,71 @@ Sample program:
    use M_uniinv, only : uniinv
    implicit none
    character(len=*),parameter :: g=&#146;(*(g0,1x))&#146;
-   real,allocatable :: xdont(:)
-      !
+   integer,allocatable :: xdont(:)
+      ! all values unique
+      xdont=[0,11,22,33,44,55,66,77,88,99]
+      xdont=xdont(size(xdont):1:-1) ! reverse it
+      call printme()
+      ! duplicate values
+      xdont=[-1.0, 0.0, -1.0, 0.0, -1.0, 0.0, -1.0]
+      call printme()
       xdont=[10.0, 5.0, 7.0, 1.0, 4.0, 5.0, 6.0, 8.0, 9.0, 10.0, 1.0]
       call printme()
-      !
-      xdont=[-1.0, 0.0, -1.0, 0.0, -1.0, 0.0, -1.0]
+      xdont=[10.0,20.0,30.0,10.0,20.0,30.0,10.0,20.0,30.0]
       call printme()
    contains
    subroutine printme()
    integer,allocatable :: igoest(:)
-      write(*,g)&#146;ORIGINAL:&#146;,xdont
-      write(*,g)&#146;NUMBER OF INDICES TO SORT:&#146;,size(xdont)
+   integer,allocatable :: out(:)
+   integer :: imx
+   integer :: i
+      write(*,g)&#146;Original:                 &#146;,xdont
+      write(*,g)&#146;Number of indices to sort:&#146;,size(xdont)
       if(allocated(igoest))deallocate(igoest)
       allocate(igoest(size(xdont)))
       call uniinv(xdont,igoest)
-      write(*,g)&#146;NUMBER OF INDICES RETURNED: ????&#146;
-      write(*,g)&#146;RETURNED INDICES:&#146;,igoest(:)
-      write(*,g)&#146;SORTED VALUES:?????&#146;,xdont(igoest)
+      imx=maxval(igoest)
+      write(*,g)&#146;Returned Indices:         &#146;,igoest(:)
+      write(*,g)&#146;Number of unique indices :&#146;,imx
+      if(allocated(out))deallocate(out)
+      allocate(out(imx))
+      do i=1,size(xdont)
+         out(igoest(i))=xdont(i)
+      enddo
+      write(*,g)&#146;Sorted unique values:     &#146;,out
+      write(*,g)
    end subroutine
    end program demo_uniinv
 <P>
 </PRE>
 Results:
+<P>
+<PRE>
+   Original:                  99 88 77 66 55 44 33 22 11 0
+   Number of indices to sort: 10
+   Returned Indices:          10 9 8 7 6 5 4 3 2 1
+   Number of unique indices : 10
+   Sorted unique values:      0 11 22 33 44 55 66 77 88 99
+<P>
+   Original:                  -1 0 -1 0 -1 0 -1
+   Number of indices to sort: 7
+   Returned Indices:          1 2 1 2 1 2 1
+   Number of unique indices : 2
+   Sorted unique values:      -1 0
+<P>
+   Original:                  10 5 7 1 4 5 6 8 9 10 1
+   Number of indices to sort: 11
+   Returned Indices:          8 3 5 1 2 3 4 6 7 8 1
+   Number of unique indices : 8
+   Sorted unique values:      1 4 5 6 7 8 9 10
+<P>
+   Original:                  10 20 30 10 20 30 10 20 30
+   Number of indices to sort: 9
+   Returned Indices:          1 2 3 1 2 3 1 2 3
+   Number of unique indices : 3
+   Sorted unique values:      10 20 30
+<P>
+</PRE>
 </BLOCKQUOTE>
 <A name=5>
 
@@ -185,7 +231,6 @@ Results:
 Michel Olagnon, 2000-2012
 <P>
 John Urban, 2022.04.16
-<BLOCKQUOTE>
 <TABLE cellpadding=3><!-- tsb: John Urban, 2022.04.16
  -->
 <TR></TR><TR></TR>
@@ -196,7 +241,6 @@ added man-page and reduced to a template using the
 <B>prep</B>(1) preprocessor.
 </TD></TR>
 <TR></TR></TABLE></BLOCKQUOTE>
-</BLOCKQUOTE>
 <A name=6>
 
      <H3>LICENSE</H3>
@@ -206,7 +250,7 @@ added man-page and reduced to a template using the
 CC0-1.0
 </BLOCKQUOTE>
 <P><HR>
-<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>uniinv (3orderpack)</TD> <TD align=right width=33%><I>April 18, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 6ed9cd0e-63b5-4295-b86c-6eb807ab8d2b using man macros.</FONT>
+<TABLE width=100%><TR> <TD width=33%><I>Nemo Release 3.1</I></TD> <TD width=33% align=center>uniinv (3orderpack)</TD> <TD align=right width=33%><I>April 19, 2022</I></TD> </TR></TABLE><FONT SIZE=-1>Generated by <A HREF="http://www.squarebox.co.uk/download/manServer.shtml">manServer 1.08</A> from 767868bb-597d-4dac-8a7f-2df33b221987 using man macros.</FONT>
 <br><br><center><img src="images/uniinv.gif"></center>
 </div>
 </div>

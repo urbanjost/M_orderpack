@@ -82,8 +82,63 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:aff24055ac5cb2fafa6912b45852776bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7d205b8e275832712d7671da58a8183"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacem__mulcnt_1_1mulcnt.html#ae7d205b8e275832712d7671da58a8183">int32_mulcnt</a> (XDONT, IMULT)</td></tr>
 <tr class="separator:ae7d205b8e275832712d7671da58a8183"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a16dc2a7425b8c70a1201eff0b20ce7"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacem__mulcnt_1_1mulcnt.html#a0a16dc2a7425b8c70a1201eff0b20ce7">f_char_mulcnt</a> (XDONT, IMULT)</td></tr>
+<tr class="separator:a0a16dc2a7425b8c70a1201eff0b20ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function/Subroutine Documentation</h2>
+<a id="a0a16dc2a7425b8c70a1201eff0b20ce7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a16dc2a7425b8c70a1201eff0b20ce7">&#9670;&nbsp;</a></span>f_char_mulcnt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">subroutine m_mulcnt::mulcnt::f_char_mulcnt </td>
+          <td>(</td>
+          <td class="paramtype">character (kind=<a class="el" href="namespacem__mulcnt.html#a0e9d864236495fc623b113be0a4083b0">f_char</a>,len=*), dimension (:), intent(in)&#160;</td>
+          <td class="paramname"><em>XDONT</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">integer, dimension (:), intent(out)&#160;</td>
+          <td class="paramname"><em>IMULT</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;      <span class="keywordtype">character (kind=f_char,len=*)</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: XDONT</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IMULT</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: IWRKT</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: ICNTT</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;      <span class="keywordtype">Integer</span> :: ICRS</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;      <span class="keyword">Call </span>uniinv (xdont, iwrkt)</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;      icntt = 0</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;            icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;<span class="keywordflow">      End Do</span></div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;            imult(icrs) = icntt(iwrkt(icrs))</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="keywordflow">      End Do</span></div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="comment">!</span></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="ae7d205b8e275832712d7671da58a8183"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7d205b8e275832712d7671da58a8183">&#9670;&nbsp;</a></span>int32_mulcnt()</h2>
 
@@ -117,23 +172,23 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;<span class="comment">!j__________________________________________________________</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      <span class="keywordtype">Integer (kind=int32)</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: XDONT</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IMULT</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: IWRKT</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: ICNTT</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <span class="keywordtype">Integer</span> :: ICRS</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;      <span class="keyword">Call </span>uniinv (xdont, iwrkt)</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      icntt = 0</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keywordflow">      End Do</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            imult(icrs) = icntt(iwrkt(icrs))</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keywordflow">      End Do</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">!</span></div>
+<div class="fragment"><div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;      <span class="keywordtype">Integer (kind=int32)</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: XDONT</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IMULT</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: IWRKT</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: ICNTT</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;      <span class="keywordtype">Integer</span> :: ICRS</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;      <span class="keyword">Call </span>uniinv (xdont, iwrkt)</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;      icntt = 0</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;<span class="keywordflow">      End Do</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            imult(icrs) = icntt(iwrkt(icrs))</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="keywordflow">      End Do</span></div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">!</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -170,23 +225,23 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">!j__________________________________________________________</span></div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">      Real</span> (kind=real32), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: xdont</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IMULT</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: IWRKT</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: ICNTT</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;      <span class="keywordtype">Integer</span> :: ICRS</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keyword">Call </span>uniinv (xdont, iwrkt)</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;      icntt = 0</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keywordflow">      End Do</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;            imult(icrs) = icntt(iwrkt(icrs))</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="keywordflow">      End Do</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="comment">!</span></div>
+<div class="fragment"><div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="keywordtype">      Real</span> (kind=real32), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: xdont</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IMULT</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: IWRKT</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: ICNTT</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;      <span class="keywordtype">Integer</span> :: ICRS</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;      <span class="keyword">Call </span>uniinv (xdont, iwrkt)</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;      icntt = 0</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="keywordflow">      End Do</span></div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;            imult(icrs) = icntt(iwrkt(icrs))</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="keywordflow">      End Do</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment">!</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -238,6 +293,7 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real32)
    o Real(kind=real64)
    o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
 </pre><h2><a class="anchor" id="autotoc_md69"></a>
 DESCRIPTION</h2>
 <p>MULCNT = Give for each array value its multiplicity (number of times that it appears in the array)</p>
@@ -247,9 +303,11 @@ OPTIONS</h2>
 <h2><a class="anchor" id="autotoc_md71"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
-<p>program demo_mulcnt use M_mulcnt, only : mulcnt implicit none real,parameter :: xdont(*)=[1,2,3,4,5,6,7,4,5,6,6,2] integer, dimension(size(xdont)) :: imult call mulcnt(xdont,imult) write(*,*)xdont write(*,*)imult end program demo_mulcnt</p>
-<p>Results:</p>
-<p>1.00 2.00 3.00 4.00 5.00 6.00 7.00 4.00 5.00 6.00 6.00 2.00 1 2 1 2 2 3 1 2 2 3 3 2</p>
+<p>program demo_mulcnt use M_mulcnt, only : mulcnt implicit none character(len=*),parameter :: g='(*(g0,1x))' real,parameter :: xdont(*)=[1,2,3,4,5,6,7,4,5,6,6,2] integer, dimension(size(xdont)) :: imult character(len=20),allocatable :: strings(:) ! call mulcnt(xdont,imult) write(*,*)xdont write(*,g)imult ! strings= [ character(len=20) :: &amp; &amp; 'red', 'green', 'blue', 'yellow', 'orange', 'black'] call printme() ! strings= [ character(len=20) :: &amp; &amp; 'two ', 'four ', 'three', 'five', 'five', &amp; &amp; 'two ', 'four ', 'three', 'five', 'five', &amp; &amp; 'four ', 'four ', 'three', 'one ', 'five'] call printme() ! strings=['purple', 'purple', 'purple', 'purple'] call printme() contains subroutine printme() integer,allocatable :: cindx(:) integer :: csz integer :: i csz=size(strings) if(allocated(cindx))deallocate(cindx) allocate(cindx(csz)) call mulcnt(strings,cindx) write(*,g)(trim(strings(i)),i=1,csz) write(*,g)cindx end subroutine printme end program demo_mulcnt</p>
+<p>Results: </p><pre class="fragment">1.000000   2.000000   3.000000   4.000000   5.000000
+6.000000   7.000000   4.000000   5.000000   6.000000
+6.000000   2.000000
+</pre><p> 1 2 1 2 2 3 1 2 2 3 3 2 red green blue yellow orange black 1 1 1 1 1 1 two four three five five two four three five five four four three one five 2 4 3 5 5 2 4 3 5 5 4 4 3 1 5 purple purple purple purple 4 4 4 4</p>
 <h2><a class="anchor" id="autotoc_md72"></a>
 AUTHOR</h2>
 <p>Michel Olagnon, Mar 2000</p>
@@ -257,23 +315,23 @@ AUTHOR</h2>
 <h2><a class="anchor" id="autotoc_md73"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
-<div class="fragment"><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="comment">!j__________________________________________________________</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: xdont</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IMULT</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: IWRKT</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: ICNTT</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;      <span class="keywordtype">Integer</span> :: ICRS</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">! __________________________________________________________</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <span class="keyword">Call </span>uniinv (xdont, iwrkt)</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;      icntt = 0</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keywordflow">      End Do</span></div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            imult(icrs) = icntt(iwrkt(icrs))</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="keywordflow">      End Do</span></div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="comment">!</span></div>
+<div class="fragment"><div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: xdont</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IMULT</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: IWRKT</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (Size(XDONT))</span> :: ICNTT</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;      <span class="keywordtype">Integer</span> :: ICRS</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">! __________________________________________________________</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;      <span class="keyword">Call </span>uniinv (xdont, iwrkt)</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;      icntt = 0</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keywordflow">      End Do</span></div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;      <span class="keywordflow">Do</span> icrs = 1, <span class="keyword">Size</span>(xdont)</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            imult(icrs) = icntt(iwrkt(icrs))</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keywordflow">      End Do</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">!</span></div>
 </div><!-- fragment -->
 </div>
 </div>
