@@ -126,19 +126,19 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.0% of total for programs.">22 statements</a>
+    title=" 1.8% of total for programs.">22 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/xx.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/demo_unirnk.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/xx.f90.html'>xx.f90</a></li>
+     <li><a href='../sourcefile/demo_unirnk.f90.html'>demo_unirnk.f90</a></li>
     
   
      <li class="active">demo_unirnk</li>
@@ -169,9 +169,9 @@
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../program/demo_unirnk.html#variable-g~2">g</a>
+      <a class="list-group-item" href="../program/demo_unirnk.html#variable-g~3">g</a>
       
-      <a class="list-group-item" href="../program/demo_unirnk.html#variable-xvalt">xvalt</a>
+      <a class="list-group-item" href="../program/demo_unirnk.html#variable-xvalt~3">xvalt</a>
       
     </div>
   </div>
@@ -260,9 +260,9 @@
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../program/demo_unirnk.html#variable-g~2">g</a>
+      <a class="list-group-item" href="../program/demo_unirnk.html#variable-g~3">g</a>
       
-      <a class="list-group-item" href="../program/demo_unirnk.html#variable-xvalt">xvalt</a>
+      <a class="list-group-item" href="../program/demo_unirnk.html#variable-xvalt~3">xvalt</a>
       
     </div>
   </div>
@@ -332,7 +332,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-g~2"></span>character(len=*),</td>
+  <td><span class="anchor" id="variable-g~3"></span>character(len=*),</td>
   
   
   <td>parameter</td><td>::</td>
@@ -346,7 +346,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-xvalt"></span>real,</td>
+  <td><span class="anchor" id="variable-xvalt~3"></span>integer,</td>
   
   
   <td>allocatable</td><td>::</td>
@@ -404,29 +404,29 @@ subroutine <a href='../proc/printme~2.html'>printme</a>()
     
     <section>
     <h2 id="src">Source Code</h2>
-    <div class="highlight"><pre><span></span>   <span class="k">program </span><span class="n">demo_unirnk</span>
-   <span class="k">use </span><span class="n">M_unirnk</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">unirnk</span>
-   <span class="k">implicit none</span>
-<span class="k">   </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">g</span><span class="o">=</span><span class="s1">&#39;(*(g0,1x))&#39;</span>
-   <span class="kt">real</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">xvalt</span><span class="p">(:)</span>
-   <span class="c">!</span>
-   <span class="n">xvalt</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-   <span class="k">call </span><span class="n">printme</span><span class="p">()</span>
-   <span class="n">xvalt</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
-   <span class="k">call </span><span class="n">printme</span><span class="p">()</span>
-   <span class="k">contains</span>
-<span class="k">   subroutine </span><span class="n">printme</span><span class="p">()</span>
-   <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">irngt</span><span class="p">(:)</span>
-   <span class="kt">integer</span> <span class="kd">::</span> <span class="n">nuni</span>
-      <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">irngt</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">)</span>
-      <span class="k">allocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">xvalt</span><span class="p">)))</span>
-      <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">xvalt</span>
-      <span class="k">call </span><span class="n">unirnk</span><span class="p">(</span><span class="n">xvalt</span><span class="p">,</span><span class="n">irngt</span><span class="p">,</span><span class="n">nuni</span><span class="p">)</span>
-      <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;NUMBER OF UNIQUE INDICES:&#39;</span><span class="p">,</span><span class="n">nuni</span>
-      <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;RETURNED INDICES:&#39;</span><span class="p">,</span><span class="n">irngt</span><span class="p">(:</span><span class="n">nuni</span><span class="p">)</span>
-      <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;SORTED DATA:&#39;</span><span class="p">,</span><span class="n">xvalt</span><span class="p">(</span><span class="n">irngt</span><span class="p">(:</span><span class="n">nuni</span><span class="p">))</span>
-   <span class="k">end subroutine</span>
-<span class="k">   end program </span><span class="n">demo_unirnk</span>
+    <div class="highlight"><pre><span></span>     <span class="k">program </span><span class="n">demo_unirnk</span>
+     <span class="k">use </span><span class="n">M_unirnk</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">unirnk</span>
+     <span class="k">implicit none</span>
+<span class="k">     </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">g</span><span class="o">=</span><span class="s1">&#39;(*(g0,1x))&#39;</span>
+     <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">xvalt</span><span class="p">(:)</span>
+     <span class="c">!</span>
+     <span class="n">xvalt</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+     <span class="k">call </span><span class="n">printme</span><span class="p">()</span>
+     <span class="n">xvalt</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+     <span class="k">call </span><span class="n">printme</span><span class="p">()</span>
+     <span class="k">contains</span>
+<span class="k">     subroutine </span><span class="n">printme</span><span class="p">()</span>
+     <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">irngt</span><span class="p">(:)</span>
+     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">nuni</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">irngt</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">)</span>
+        <span class="k">allocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">xvalt</span><span class="p">)))</span>
+        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">xvalt</span>
+        <span class="k">call </span><span class="n">unirnk</span><span class="p">(</span><span class="n">xvalt</span><span class="p">,</span><span class="n">irngt</span><span class="p">,</span><span class="n">nuni</span><span class="p">)</span>
+        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;NUMBER OF UNIQUE INDICES:&#39;</span><span class="p">,</span><span class="n">nuni</span>
+        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;RETURNED INDICES:&#39;</span><span class="p">,</span><span class="n">irngt</span><span class="p">(:</span><span class="n">nuni</span><span class="p">)</span>
+        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;SORTED DATA:&#39;</span><span class="p">,</span><span class="n">xvalt</span><span class="p">(</span><span class="n">irngt</span><span class="p">(:</span><span class="n">nuni</span><span class="p">))</span>
+     <span class="k">end subroutine</span>
+<span class="k">     end program </span><span class="n">demo_unirnk</span>
 </pre></div>
 
     </section>
@@ -447,7 +447,7 @@ subroutine <a href='../proc/printme~2.html'>printme</a>()
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-17 22:57  
+             on 2022-04-19 11:14  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

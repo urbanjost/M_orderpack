@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.3% of total for source files.">34 statements</a>
+    title=" 0.4% of total for source files.">48 statements</a>
      </li> 
      
      
@@ -169,7 +169,7 @@
   <div id="progs-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../program/demo_mrgref.html">demo_mrgref</a>
+      <a class="list-group-item" href="../program/demo_mrgref~2.html">demo_mrgref</a>
       
     </div>
   </div>
@@ -225,7 +225,7 @@
   <div id="progs-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../program/demo_mrgref.html">demo_mrgref</a>
+      <a class="list-group-item" href="../program/demo_mrgref~2.html">demo_mrgref</a>
       
     </div>
   </div>
@@ -271,35 +271,59 @@
 <a name="ln-8"></a>     <span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">dp</span><span class="p">)</span>                 <span class="kd">::</span> <span class="n">pp</span>
 <a name="ln-9"></a>     <span class="kt">integer</span>                       <span class="kd">::</span> <span class="n">indx</span><span class="p">(</span><span class="n">isz</span><span class="p">)</span>
 <a name="ln-10"></a>     <span class="kt">integer</span>                       <span class="kd">::</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span>
-<a name="ln-11"></a>        <span class="c">! make some random numbers</span>
-<a name="ln-12"></a>        <span class="k">call </span><span class="nb">random_seed</span><span class="p">()</span>
-<a name="ln-13"></a>        <span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
-<a name="ln-14"></a>        <span class="n">dd</span><span class="o">=</span><span class="n">dd</span><span class="o">-</span><span class="mf">0.50_dp</span>
-<a name="ln-15"></a>        <span class="n">k</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="nb">log</span><span class="p">(</span><span class="nb">huge</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">))</span><span class="o">/</span><span class="nb">log</span><span class="p">(</span><span class="mf">2.0_dp</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span>
-<a name="ln-16"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">isz</span>
-<a name="ln-17"></a>           <span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span>
-<a name="ln-18"></a>           <span class="n">j</span><span class="o">=</span><span class="nb">floor</span><span class="p">((</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">pp</span><span class="p">)</span>
-<a name="ln-19"></a>           <span class="n">dd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">dd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0_dp</span><span class="o">**</span><span class="n">j</span><span class="p">)</span>
-<a name="ln-20"></a>        <span class="k">enddo</span>
-<a name="ln-21"></a>        <span class="c">! rank data</span>
-<a name="ln-22"></a>        <span class="k">call </span><span class="n">mrgref</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span><span class="n">indx</span><span class="p">)</span>
-<a name="ln-23"></a>        <span class="c">! check order</span>
-<a name="ln-24"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">isz</span><span class="o">-</span><span class="mi">1</span>
-<a name="ln-25"></a>           <span class="k">if</span><span class="p">(</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="p">)).</span><span class="n">gt</span><span class="p">.</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span><span class="k">then</span>
-<a name="ln-26"></a><span class="k">              write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;ERROR: data not sorted i=&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;index=&#39;</span><span class="p">,</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="p">&amp;</span>
-<a name="ln-27"></a>              <span class="p">&amp;</span> <span class="s1">&#39;values &#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-<a name="ln-28"></a>              <span class="k">stop </span><span class="mi">1</span>
-<a name="ln-29"></a>           <span class="k">endif</span>
-<a name="ln-30"></a><span class="k">        enddo</span>
-<a name="ln-31"></a>        <span class="c">! sort data using rank values</span>
-<a name="ln-32"></a>        <span class="n">dd</span><span class="o">=</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">)</span>
-<a name="ln-33"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;sorted &#39;</span><span class="p">,</span><span class="n">isz</span><span class="p">,</span><span class="s1">&#39;values&#39;</span>
-<a name="ln-34"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;from&#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="s1">&#39;to&#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="n">isz</span><span class="p">)</span>
-<a name="ln-35"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">minval</span><span class="p">(</span><span class="n">dd</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">dd</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-36"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">maxval</span><span class="p">(</span><span class="n">dd</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">dd</span><span class="p">(</span><span class="n">isz</span><span class="p">)</span>
-<a name="ln-37"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">minloc</span><span class="p">(</span><span class="n">dd</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="mi">1</span>
-<a name="ln-38"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">maxloc</span><span class="p">(</span><span class="n">dd</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">isz</span>
-<a name="ln-39"></a>     <span class="k">end program </span><span class="n">demo_mrgref</span>
+<a name="ln-11"></a>     <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span>  <span class="kd">::</span> <span class="n">strings</span><span class="p">(:)</span>
+<a name="ln-12"></a>     <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span>           <span class="kd">::</span> <span class="n">cindx</span><span class="p">(:)</span>
+<a name="ln-13"></a>        <span class="c">! make some random numbers</span>
+<a name="ln-14"></a>        <span class="k">call </span><span class="nb">random_seed</span><span class="p">()</span>
+<a name="ln-15"></a>        <span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
+<a name="ln-16"></a>        <span class="n">dd</span><span class="o">=</span><span class="n">dd</span><span class="o">-</span><span class="mf">0.50_dp</span>
+<a name="ln-17"></a>        <span class="n">k</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="nb">log</span><span class="p">(</span><span class="nb">huge</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">))</span><span class="o">/</span><span class="nb">log</span><span class="p">(</span><span class="mf">2.0_dp</span><span class="p">))</span><span class="o">-</span><span class="mi">1</span>
+<a name="ln-18"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">isz</span>
+<a name="ln-19"></a>           <span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">pp</span><span class="p">)</span>
+<a name="ln-20"></a>           <span class="n">j</span><span class="o">=</span><span class="nb">floor</span><span class="p">((</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">pp</span><span class="p">)</span>
+<a name="ln-21"></a>           <span class="n">dd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">dd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0_dp</span><span class="o">**</span><span class="n">j</span><span class="p">)</span>
+<a name="ln-22"></a>        <span class="k">enddo</span>
+<a name="ln-23"></a>        <span class="c">! rank the numeric data</span>
+<a name="ln-24"></a>        <span class="k">call </span><span class="n">mrgref</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span><span class="n">indx</span><span class="p">)</span>
+<a name="ln-25"></a>        <span class="c">! check order</span>
+<a name="ln-26"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">isz</span><span class="o">-</span><span class="mi">1</span>
+<a name="ln-27"></a>           <span class="k">if</span><span class="p">(</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="p">)).</span><span class="n">gt</span><span class="p">.</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span><span class="k">then</span>
+<a name="ln-28"></a><span class="k">              write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;ERROR: data not sorted i=&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;index=&#39;</span><span class="p">,</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="p">&amp;</span>
+<a name="ln-29"></a>              <span class="p">&amp;</span> <span class="s1">&#39;values &#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+<a name="ln-30"></a>              <span class="k">stop </span><span class="mi">1</span>
+<a name="ln-31"></a>           <span class="k">endif</span>
+<a name="ln-32"></a><span class="k">        enddo</span>
+<a name="ln-33"></a>        <span class="c">! sort data using rank values</span>
+<a name="ln-34"></a>        <span class="n">dd</span><span class="o">=</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">)</span>
+<a name="ln-35"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;sorted &#39;</span><span class="p">,</span><span class="n">isz</span><span class="p">,</span><span class="s1">&#39;values&#39;</span>
+<a name="ln-36"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;from&#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="s1">&#39;to&#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="n">isz</span><span class="p">)</span>
+<a name="ln-37"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">minval</span><span class="p">(</span><span class="n">dd</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">dd</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-38"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">maxval</span><span class="p">(</span><span class="n">dd</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">dd</span><span class="p">(</span><span class="n">isz</span><span class="p">)</span>
+<a name="ln-39"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">minloc</span><span class="p">(</span><span class="n">dd</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="mi">1</span>
+<a name="ln-40"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="nb">maxloc</span><span class="p">(</span><span class="n">dd</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">isz</span>
+<a name="ln-41"></a>        <span class="c">! do a character sort</span>
+<a name="ln-42"></a>        <span class="n">strings</span><span class="o">=</span> <span class="p">[</span> <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> <span class="kd">::</span>                               <span class="p">&amp;</span>
+<a name="ln-43"></a>        <span class="p">&amp;</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>    <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span>   <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="p">&amp;</span>
+<a name="ln-44"></a>        <span class="p">&amp;</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span>  <span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">,</span>   <span class="s1">&#39;magenta&#39;</span><span class="p">,</span>           <span class="p">&amp;</span>
+<a name="ln-45"></a>        <span class="p">&amp;</span> <span class="s1">&#39;purple&#39;</span><span class="p">]</span>
+<a name="ln-46"></a>        <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">cindx</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">cindx</span><span class="p">);</span><span class="k">allocate</span><span class="p">(</span><span class="n">cindx</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">strings</span><span class="p">)))</span>
+<a name="ln-47"></a>
+<a name="ln-48"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a,8(a:,&quot;,&quot;))&#39;</span><span class="p">)</span><span class="s1">&#39;BEFORE &#39;</span><span class="p">,&amp;</span>
+<a name="ln-49"></a>                <span class="p">&amp;</span> <span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">strings</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">strings</span><span class="p">))</span>
+<a name="ln-50"></a>
+<a name="ln-51"></a>        <span class="k">call </span><span class="n">mrgref</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span><span class="n">cindx</span><span class="p">)</span>
+<a name="ln-52"></a>
+<a name="ln-53"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a,8(a:,&quot;,&quot;))&#39;</span><span class="p">)</span><span class="s1">&#39;SORTED &#39;</span><span class="p">,&amp;</span>
+<a name="ln-54"></a>                <span class="p">&amp;</span> <span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">strings</span><span class="p">(</span><span class="n">cindx</span><span class="p">(</span><span class="n">i</span><span class="p">))),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">strings</span><span class="p">))</span>
+<a name="ln-55"></a>
+<a name="ln-56"></a>        <span class="n">strings</span><span class="o">=</span><span class="n">strings</span><span class="p">(</span><span class="n">cindx</span><span class="p">)</span> <span class="c">! sort the array using the rank index</span>
+<a name="ln-57"></a>
+<a name="ln-58"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+<a name="ln-59"></a>           <span class="k">if</span><span class="p">(</span><span class="n">strings</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">gt</span><span class="p">.</span><span class="n">strings</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="k">then</span>
+<a name="ln-60"></a><span class="k">              write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;Error in sorting strings a-z&#39;</span>
+<a name="ln-61"></a>           <span class="k">endif</span>
+<a name="ln-62"></a><span class="k">        enddo</span>
+<a name="ln-63"></a><span class="k">     end program </span><span class="n">demo_mrgref</span>
 </pre></div>
 
     </section>
@@ -318,7 +342,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-17 22:57  
+             on 2022-04-19 11:14  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>
