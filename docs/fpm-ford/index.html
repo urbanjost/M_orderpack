@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="sorting and ordering procedures in Fortran">
+    <meta name="author" content="Michel Olagnon" >
+    <link rel="icon" href="./favicon.png">
+
+    <title> orderpack </title>
+
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/pygments.css" rel="stylesheet">
+    <link href="./css/font-awesome.min.css" rel="stylesheet">
+    <link href="./css/local.css" rel="stylesheet">
+    <link  href="./tipuesearch/tipuesearch.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="./js/jquery-2.1.3.min.js"></script>
+    <script src="./js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./index.html">orderpack </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <li><a href="./lists/files.html">Source Files</a></li>
+            <li><a href="./lists/modules.html">Modules</a></li>
+            <li><a href="./lists/procedures.html">Procedures</a></li>
+                   <li><a href="./lists/programs.html">Programs</a></li>
+       
+            </ul>
+        
+            </li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/files.html">Source Files</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/modules.html">Modules</a></li>
+<li class="visible-xs hidden-sm visible-lg"><a href="./lists/procedures.html">Procedures</a></li>
+                             <li class="visible-xs hidden-sm visible-lg"><a href="./lists/programs.html">Programs</a></li>
+          </ul>
+        <form action="./search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <p>sorting and ordering procedures in Fortran</p>
+	<p> Find us on&hellip;</p>
+        <p>
+          <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/orderpack" role="button">GitHub</a>
+        </p>
+      </div>
+
+      <div class="row" id='text'>
+        <div class="col-md-8">
+          <h1>orderpack</h1>
+          <p><img alt="ORDERPACK" src="docs/images/orderpack.gif"></p>
+<h2 id="name">Name</h2>
+<p>orderpack(3f) - general and specialized ranking and sorting routines
+   (LICENSE:CC0-1.0)</p>
+<h2 id="description">Description</h2>
+<p>This repository is a derivative of ORDERPACK 2.0 from Michel Olagnon that</p>
+<ul>
+<li>supports CHARACTER variables as well as numeric variables on many (but not all)
+   of the procedures.</li>
+<li>has been restructured so as to be useable as an fpm(1) package</li>
+<li>been placed in a git(1) repository for version control</li>
+<li>had man-pages and working demonstration programs of each procedure added </li>
+<li>has a growing set of unit tests.</li>
+</ul>
+<p>Like the original, ORDERPACK 2.1 provides Fortran procedures for General
+and Specialized Ranking and Sorting Routines.  It includes Fortran 90
+source code for Unconditional, Unique, and Partial Ranking, Sorting,
+and Permutation.</p>
+<p><strong>Authors</strong>: 
+     - Michel Olagnon date: 2000-2012 wrote the original ORDERPACK 2.0
+     - John S. Urban, date: 2022 derived ORDERPACK 2.1 from ORDERPACK 2.0</p>
+<p>Suggestions, testing, test cases, feedback, and assistance welcome for
+the update.</p>
+<hr>
+<h2 id="recent-events-and-issues-see-also-changelog">Recent Events and Issues (See Also : CHANGELOG)</h2>
+<h3 id="2022-04-19">2022-04-19</h3>
+<ul>
+<li>uniinv, mulcnt now support CHARACTER variables</li>
+</ul>
+<h3 id="2022-04-18">2022-04-18</h3>
+<ul>
+<li>
+<p>Main sorting routines inssor(), mrgref(), mrgrnk(), refsor() can now take a CHARACTER array as an argument.</p>
+<p>Ongoing support of CHARACTER types continues.
+   - All routines now have a <strong>preliminary</strong> man-page containing an example program, which is also rendered into HTML
+   - All the example programs from the man-pages are also available as demo programs in the example directory.
+   - A (preliminary, but functional)  make(1) file has been added
+   - Developer Note: all routines are now using the prep(1) preprocessor and have been converted to templates to simplify 
+ maintaining code that allows multiple input types.</p>
+</li>
+</ul>
+<p>There appear to be issues with the original code, but may have been introduced
+  (but are being looked at):</p>
+<ul>
+<li>UNIPAR returns non-unique values when less unique values in input than requested in output with gfortran,nvfortran; OK with ifort</li>
+<li>INDMED has issues that may only manifest when debug options are used when compiling</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>    At line 499 of file ./src/M_indmed.f90
+    Fortran runtime error: Array bound mismatch for dimension 1 of array &#39;iwrkt&#39; (7/5)
+</code></pre></div>
+
+<hr>
+<h2 id="building-the-module-using-make">Building the module using make<img alt="gmake" src="docs/images/gnu.gif"></h2>
+<p>This will compile the Fortran module and basic example programs that exercise the routines:</p>
+<div class="codehilite"><pre><span></span><code>     git clone https://github.com/urbanjost/orderpack.git
+     <span class="nb">cd</span> orderpack/src
+     <span class="c1"># change Makefile if not using one of the listed compilers</span>
+
+     <span class="c1"># for gfortran</span>
+     make clean
+     make gfortran
+
+     <span class="c1"># for ifort</span>
+     make clean
+     make ifort
+
+     <span class="c1"># for nvfortran</span>
+     make clean
+     make nvfortran
+</code></pre></div>
+
+<hr>
+<h2 id="build-and-test-with">Build and test with<img alt="fpm" src="docs/images/fpm_logo.gif"></h2>
+<p>Download the github repository and build it with
+   fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> )</p>
+<div class="codehilite"><pre><span></span><code>        git clone https://github.com/urbanjost/orderpack.git
+        <span class="nb">cd</span> orderpack
+        fpm build
+</code></pre></div>
+
+<p>or just list it as a dependency in your fpm.toml project file.</p>
+<div class="codehilite"><pre><span></span><code><span class="w">        </span><span class="k">[dependencies]</span><span class="w"></span>
+<span class="w">        </span><span class="n">orderpack</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://github.com/urbanjost/orderpack.git&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+<hr>
+<h2 id="documentation">Documentation <img alt="docs" src="docs/images/docs.gif"></h2>
+<h3 id="user">User</h3>
+<ul>
+<li><strong>UNDER CONSTRUCTION</strong> an index to man-pages in HTML form for all the
+     <a href="https://urbanjost.github.io/orderpack/man3.html">routines</a></li>
+<li>documentation derived from the original <a href="https://urbanjost.github.io/orderpack/">procedure documentation</a>,
+     which will gradually be replaced by the above.</li>
+</ul>
+<!--
+   and [programs](https://urbanjost.github.io/orderpack/man1.html)
+
+   - A single page that uses javascript to combine all the HTML
+     descriptions of the man-pages is at
+     [BOOK_orderpack](https://urbanjost.github.io/orderpack/BOOK_orderpack.html).
+
+   - There are man-pages in the repository download in the docs/ directory
+     that may be installed on ULS (Unix-Like Systems).
+
+   - ![man-pages](docs/images/manpages.gif)
+      + [manpages.zip](https://urbanjost.github.io/orderpack/manpages.zip)
+      + [manpages.tgz](https://urbanjost.github.io/orderpack/manpages.tgz)
+-->
+<h2 id="-changelog-provides-a-history-of-significant-changes">- <a href="docs/CHANGELOG.md">CHANGELOG</a> provides a history of significant changes</h2>
+<h3 id="developer">Developer</h3>
+<ul>
+<li><a href="https://urbanjost.github.io/orderpack/fpm-ford/index.html">ford(1) output</a>.</li>
+<li><a href="https://urbanjost.github.io/orderpack/doxygen_out/html/index.html">doxygen(1) output</a>.</li>
+<li><a href="docs/STATUS.md">github action status</a></li>
+</ul>
+<hr>
+<h2 id="see-also">See also <img alt="-" src="docs/images/demos.gif"></h2>
+<h2 id="parallel-mrgrnk">* <a href="https://github.com/cphyc/Fortran-parallel-sort">parallel mrgrnk</a></h2>
+<h2 id="references">References <img alt="-" src="docs/images/ref.gif"></h2>
+<ul>
+<li><a href="http://www.fortran-2000.com/rank/">ORDERPACK2.0</a></li>
+<li><a href="https://forge-dga.jouy.inra.fr/svn/qtlmap/trunk/lib/orderpack-2.0/index.html">ORDERPACK2.0</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Sorting_algorithm">Wikipedia</a></li>
+</ul>
+<hr>
+        </div>
+        <div class="col-md-4">
+	  <div class="well">
+          <h2>Developer Info</h2>
+          <h4>Michel Olagnon</h4>
+          
+            <div class="text-center"><div class="btn-group" role="group">
+              <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/orderpack"><i class="fa fa-github fa-lg"></i></a>
+            </div></div>
+       </div>
+       </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-4">
+              <h3>Source Files</h3>
+              <ul>                    <li><a href='./sourcefile/demo_ctrper.f90.html'>demo_ctrper.f90</a></li>
+                    <li><a href='./sourcefile/demo_fndnth.f90.html'>demo_fndnth.f90</a></li>
+                    <li><a href='./sourcefile/demo_indmed.f90.html'>demo_indmed.f90</a></li>
+                    <li><a href='./sourcefile/demo_indnth.f90.html'>demo_indnth.f90</a></li>
+                    <li><a href='./sourcefile/demo_inssor.f90.html'>demo_inssor.f90</a></li>
+                    <li><a href='./sourcefile/demo_median.f90.html'>demo_median.f90</a></li>
+                    <li><a href='./sourcefile/demo_mrgref.f90.html'>demo_mrgref.f90</a></li>
+                    <li><a href='./sourcefile/demo_mrgrnk.f90.html'>demo_mrgrnk.f90</a></li>
+                    <li><a href='./sourcefile/demo_mulcnt.f90.html'>demo_mulcnt.f90</a></li>
+                    <li><a href='./sourcefile/demo_rapknr.f90.html'>demo_rapknr.f90</a></li>
+</ul>
+          </div>
+		  <div class="col-xs-6 col-sm-4">
+              <h3>Modules</h3>
+              <ul>                    <li><a href='./module/m_ctrper.html'>M_ctrper</a></li>
+                    <li><a href='./module/m_fndnth.html'>M_fndnth</a></li>
+                    <li><a href='./module/m_indmed.html'>M_indmed</a></li>
+                    <li><a href='./module/m_indnth.html'>M_indnth</a></li>
+                    <li><a href='./module/m_inspar.html'>M_inspar</a></li>
+                    <li><a href='./module/m_inssor.html'>M_inssor</a></li>
+                    <li><a href='./module/m_median.html'>M_median</a></li>
+                    <li><a href='./module/m_mrgref.html'>M_mrgref</a></li>
+                    <li><a href='./module/m_mrgrnk.html'>M_mrgrnk</a></li>
+                    <li><a href='./module/m_mulcnt.html'>M_mulcnt</a></li>
+</ul>
+          </div>
+		  <div class="col-xs-6 col-sm-4">
+              <h3>Procedures</h3>
+              <ul>                    <li><a href='./interface/ctrper.html'>ctrper</a></li>
+                    <li><a href='./interface/fndnth.html'>fndnth</a></li>
+                    <li><a href='./interface/indmed.html'>indmed</a></li>
+                    <li><a href='./interface/indnth.html'>indnth</a></li>
+                    <li><a href='./interface/inspar.html'>inspar</a></li>
+                    <li><a href='./interface/inssor.html'>inssor</a></li>
+                    <li><a href='./interface/median.html'>median</a></li>
+                    <li><a href='./interface/mrgref.html'>mrgref</a></li>
+                    <li><a href='./interface/mrgrnk.html'>mrgrnk</a></li>
+                    <li><a href='./proc/mrgrnk.html'>MRGRNK</a></li>
+</ul>
+          </div>
+      </div>
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-6"><p>orderpack was developed by Michel Olagnon<br>&copy; 2022 
+</p>
+        </div>
+        <div class="col-xs-6 col-md-6">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2022-04-20 11:28            </p>
+        </div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="./js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script src="./tipuesearch/tipuesearch_content.js"></script>
+    <script src="./tipuesearch/tipuesearch_set.js"></script>
+    <script src="./tipuesearch/tipuesearch.js"></script>
+    
+  </body>
+</html>
