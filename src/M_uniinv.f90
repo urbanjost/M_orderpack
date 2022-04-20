@@ -1,8 +1,8 @@
 Module M_uniinv
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
-integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: uniinv
 interface uniinv
   module procedure real64_uniinv, real32_uniinv, int32_uniinv, f_char_uniinv
@@ -13,7 +13,7 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    uniinv(3f) - [orderpack:RANK_UNIQUE] a merge-sort inverse ranking of
+!!    uniinv(3f) - [orderpack:RANK:COMPLETE:UNIQUE] a MergeSort inverse ranking of
 !!    an array, with duplicate entries assigned the same rank.
 !!
 !!##SYNOPSIS

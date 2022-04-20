@@ -2,14 +2,15 @@ Module M_unipar
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unipar
 interface unipar
-   module procedure real64_unipar, real32_unipar, int32_unipar
+   module procedure real64_unipar, real32_unipar, int32_unipar !, f_char_unipar
 end interface unipar
 contains
 !>
 !!##NAME
-!!    unipar(3f) - [orderpack:PARTIAL_RANK_UNIQUE] partially rank an array
+!!    unipar(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially rank an array
 !!                 removing duplicates
 !!
 !!##SYNOPSIS
@@ -111,16 +112,16 @@ contains
 !!    CC0-1.0
 Subroutine real64_unipar (XDONT, IRNGT, NORD)
 ! __________________________________________________________
-Real (kind=real64), Dimension (:), Intent (In) :: XDONT
-      Integer, Dimension (:), Intent (Out) :: IRNGT
-      Integer, Intent (InOut) :: NORD
+   Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+   Integer, Dimension (:), Intent (Out) :: IRNGT
+   Integer, Intent (InOut) :: NORD
 ! __________________________________________________________
-Real (kind=real64) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
-!
-      Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
-      Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
-      Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
-      Integer :: JLM2, JLM1, JHM2, JHM1
+   Real (kind=real64) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
+! __________________________________________________________
+   Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+   Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
+   Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
+   Integer :: JLM2, JLM1, JHM2, JHM1
 !
       NDON = SIZE (XDONT)
 !
@@ -694,16 +695,16 @@ Real (kind=real64) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
 End Subroutine real64_unipar
 Subroutine real32_unipar (XDONT, IRNGT, NORD)
 ! __________________________________________________________
-Real (kind=real32), Dimension (:), Intent (In) :: XDONT
-      Integer, Dimension (:), Intent (Out) :: IRNGT
-      Integer, Intent (InOut) :: NORD
+   Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+   Integer, Dimension (:), Intent (Out) :: IRNGT
+   Integer, Intent (InOut) :: NORD
 ! __________________________________________________________
-Real (kind=real32) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
-!
-      Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
-      Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
-      Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
-      Integer :: JLM2, JLM1, JHM2, JHM1
+   Real (kind=real32) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
+! __________________________________________________________
+   Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+   Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
+   Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
+   Integer :: JLM2, JLM1, JHM2, JHM1
 !
       NDON = SIZE (XDONT)
 !
@@ -1277,16 +1278,16 @@ Real (kind=real32) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
 End Subroutine real32_unipar
 Subroutine int32_unipar (XDONT, IRNGT, NORD)
 ! __________________________________________________________
-Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
-      Integer, Dimension (:), Intent (Out) :: IRNGT
-      Integer, Intent (InOut) :: NORD
+   Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+   Integer, Dimension (:), Intent (Out) :: IRNGT
+   Integer, Intent (InOut) :: NORD
 ! __________________________________________________________
-Integer (kind=int32) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
-!
-      Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
-      Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
-      Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
-      Integer :: JLM2, JLM1, JHM2, JHM1
+   Integer (kind=int32) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
+! __________________________________________________________
+   Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+   Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
+   Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
+   Integer :: JLM2, JLM1, JHM2, JHM1
 !
       NDON = SIZE (XDONT)
 !

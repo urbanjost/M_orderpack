@@ -2,6 +2,7 @@ Module M_refpar
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refpar
 interface refpar
   module procedure real64_refpar, real32_refpar, int32_refpar
@@ -9,8 +10,9 @@ end interface refpar
 contains
 !>
 !!##NAME
-!!    refpar(3f) - [orderpack:PARTIAL_RANK] partially ranks any array up
-!!                 to specified number of elements
+!!    refpar(3f) - [orderpack:RANK:PARTIAL] partially ranks an array up
+!!                 to specified number of elements in ascending order
+!!                 (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!
@@ -25,6 +27,7 @@ contains
 !!       o Real(kind=real32)
 !!       o Real(kind=real64)
 !!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!    Ranks partially XDONT by IRNGT, up to order NORD
@@ -394,5 +397,111 @@ Subroutine int32_refpar (XDONT, IRNGT, NORD)
       Return
 !
 End Subroutine int32_refpar
+
+Subroutine f_char_refpar (XDONT, IRNGT, NORD)
+      character (kind=f_char,len=*), Dimension (:), Intent (In) :: XDONT
+      Integer, Dimension (:), Intent (Out) :: IRNGT
+      Integer, Intent (In) :: NORD
+! __________________________________________________________
+      character (kind=f_char,len=len(XDONT)) :: XPIV, XWRK
+! __________________________________________________________
+!
+      Integer, Dimension (SIZE(XDONT)) :: IWRKT
+      Integer :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK
+!
+      NDON = SIZE (XDONT)
+!
+      Do ICRS = 1, NDON
+         IWRKT (ICRS) = ICRS
+      End Do
+      IDEB = 1
+      IFIN = NDON
+      Do
+         If (IDEB >= IFIN) Exit
+         IMIL = (IDEB+IFIN) / 2
+!
+!  One chooses a pivot, median of 1st, last, and middle values
+!
+         If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+            IWRK = IWRKT (IDEB)
+            IWRKT (IDEB) = IWRKT (IMIL)
+            IWRKT (IMIL) = IWRK
+         End If
+         If (XDONT(IWRKT(IMIL)) > XDONT(IWRKT(IFIN))) Then
+            IWRK = IWRKT (IFIN)
+            IWRKT (IFIN) = IWRKT (IMIL)
+            IWRKT (IMIL) = IWRK
+            If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+               IWRK = IWRKT (IDEB)
+               IWRKT (IDEB) = IWRKT (IMIL)
+               IWRKT (IMIL) = IWRK
+            End If
+         End If
+         If ((IFIN-IDEB) < 3) Exit
+         XPIV = XDONT (IWRKT(IMIL))
+!
+!  One exchanges values to put those > pivot in the end and
+!  those <= pivot at the beginning
+!
+         ICRS = IDEB
+         IDCR = IFIN
+         ECH2: Do
+            Do
+               ICRS = ICRS + 1
+               If (ICRS >= IDCR) Then
+!
+!  the first  >  pivot is IWRKT(IDCR)
+!  the last   <= pivot is IWRKT(ICRS-1)
+!  Note: If one arrives here on the first iteration, then
+!        the pivot is the maximum of the set, the last value is equal
+!        to it, and one can reduce by one the size of the set to process,
+!        as if XDONT (IWRKT(IFIN)) > XPIV
+!
+                  Exit ECH2
+!
+               End If
+               If (XDONT(IWRKT(ICRS)) > XPIV) Exit
+            End Do
+            Do
+               If (XDONT(IWRKT(IDCR)) <= XPIV) Exit
+               IDCR = IDCR - 1
+               If (ICRS >= IDCR) Then
+!
+!  The last value < pivot is always IWRKT(ICRS-1)
+!
+                  Exit ECH2
+               End If
+            End Do
+!
+            IWRK = IWRKT (IDCR)
+            IWRKT (IDCR) = IWRKT (ICRS)
+            IWRKT (ICRS) = IWRK
+         End Do ECH2
+!
+!  One restricts further processing to find the fractile value
+!
+         If (ICRS <= NORD) IDEB = ICRS
+         If (ICRS > NORD) IFIN = ICRS - 1
+      End Do
+!
+!  Now, we only need to complete ranking of the 1:NORD set
+!  Assuming NORD is small, we use a simple insertion sort
+!
+      Do ICRS = 2, NORD
+         IWRK = IWRKT (ICRS)
+         XWRK = XDONT (IWRK)
+         Do IDCR = ICRS - 1, 1, - 1
+            If (XWRK <= XDONT(IWRKT(IDCR))) Then
+               IWRKT (IDCR+1) = IWRKT (IDCR)
+            Else
+               Exit
+            End If
+         End Do
+         IWRKT (IDCR+1) = IWRK
+      End Do
+      IRNGT (1:NORD) = IWRKT (1:NORD)
+      Return
+!
+End Subroutine f_char_refpar
 
 end module M_refpar

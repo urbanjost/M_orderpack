@@ -2,6 +2,7 @@ Module M_rinpar
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rinpar
 interface rinpar
    module procedure real64_rinpar, real32_rinpar, int32_rinpar
@@ -9,7 +10,7 @@ end interface rinpar
 contains
 !>
 !!##NAME
-!!    rinpar(3f) - [orderpack:PARTIAL_RANK] creates partial rank index of
+!!    rinpar(3f) - [orderpack:RANK:PARTIAL] creates partial rank index of
 !!                 N lowest values in an array
 !!
 !!##SYNOPSIS
@@ -24,6 +25,7 @@ contains
 !!    o Real(kind=real32)
 !!    o Real(kind=real64)
 !!    o Integer(kind=int32)
+!!    o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!    Returns IRNGT(1:NORD) filled with the indices of the lowest values
@@ -83,12 +85,12 @@ contains
 !!    CC0-1.0
 Subroutine real64_rinpar (XDONT, IRNGT, NORD)
 !!__________________________________________________________
-Real (kind=real64), Dimension (:), Intent (In) :: XDONT
-Integer, Dimension (:), Intent (Out) :: IRNGT
-Integer, Intent (In) :: NORD
+   Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+   Integer, Dimension (:), Intent (Out) :: IRNGT
+   Integer, Intent (In) :: NORD
 ! __________________________________________________________
-Real (kind=real64) :: XWRK, XWRK1
-Integer :: ICRS, IDCR
+   Real (kind=real64) :: XWRK, XWRK1
+   Integer :: ICRS, IDCR
 !
     IRNGT (1) = 1
     Do ICRS = 2, NORD
@@ -116,12 +118,12 @@ Integer :: ICRS, IDCR
 End Subroutine real64_rinpar
 Subroutine real32_rinpar (XDONT, IRNGT, NORD)
 !!__________________________________________________________
-Real (kind=real32), Dimension (:), Intent (In) :: XDONT
-Integer, Dimension (:), Intent (Out) :: IRNGT
-Integer, Intent (In) :: NORD
+   Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+   Integer, Dimension (:), Intent (Out) :: IRNGT
+   Integer, Intent (In) :: NORD
 ! __________________________________________________________
-Real (kind=real32) :: XWRK, XWRK1
-Integer :: ICRS, IDCR
+   Real (kind=real32) :: XWRK, XWRK1
+   Integer :: ICRS, IDCR
 !
     IRNGT (1) = 1
     Do ICRS = 2, NORD
@@ -149,12 +151,12 @@ Integer :: ICRS, IDCR
 End Subroutine real32_rinpar
 Subroutine int32_rinpar (XDONT, IRNGT, NORD)
 !!__________________________________________________________
-Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
-Integer, Dimension (:), Intent (Out) :: IRNGT
-Integer, Intent (In) :: NORD
+   Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+   Integer, Dimension (:), Intent (Out) :: IRNGT
+   Integer, Intent (In) :: NORD
 ! __________________________________________________________
-Integer (kind=int32) :: XWRK, XWRK1
-Integer :: ICRS, IDCR
+   Integer (kind=int32) :: XWRK, XWRK1
+   Integer :: ICRS, IDCR
 !
     IRNGT (1) = 1
     Do ICRS = 2, NORD
@@ -180,5 +182,38 @@ Integer :: ICRS, IDCR
     End Do
 !
 End Subroutine int32_rinpar
+Subroutine f_char_rinpar (XDONT, IRNGT, NORD)
+!!__________________________________________________________
+   character (kind=f_char,len=*), Dimension (:), Intent (In) :: XDONT
+   Integer, Dimension (:), Intent (Out) :: IRNGT
+   Integer, Intent (In) :: NORD
+! __________________________________________________________
+   character (kind=f_char,len=len(xdont)) :: XWRK, XWRK1
+   Integer :: ICRS, IDCR
+!
+    IRNGT (1) = 1
+    Do ICRS = 2, NORD
+       XWRK = XDONT (ICRS)
+       Do IDCR = ICRS - 1, 1, -1
+          If (XWRK >= XDONT(IRNGT(IDCR))) Exit
+          IRNGT (IDCR+1) = IRNGT (IDCR)
+       End Do
+       IRNGT (IDCR+1) = ICRS
+    End Do
+!
+    XWRK1 = XDONT (IRNGT(NORD))
+    Do ICRS = NORD + 1, SIZE (XDONT)
+       If (XDONT(ICRS) < XWRK1) Then
+          XWRK = XDONT (ICRS)
+          Do IDCR = NORD - 1, 1, -1
+             If (XWRK >= XDONT(IRNGT(IDCR))) Exit
+             IRNGT (IDCR+1) = IRNGT (IDCR)
+          End Do
+          IRNGT (IDCR+1) = ICRS
+          XWRK1 = XDONT (IRNGT(NORD))
+       End If
+    End Do
+!
+End Subroutine f_char_rinpar
 
 end module M_rinpar

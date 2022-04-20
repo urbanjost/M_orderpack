@@ -2,6 +2,7 @@ Module M_median
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: median
 interface median
   module procedure real64_median, real32_median, int32_median
@@ -9,8 +10,9 @@ end interface median
 contains
 !>
 !!##NAME
-!!    median(3f) - [orderpack:MEDIAN] Return median value of array. If even
-!!                 number of data, average of the two "medians".
+!!    median(3f) - [orderpack:MEDIAN] Return median value of array. If
+!!                 number of data is even, return average of the two
+!!                 "medians".
 !!
 !!##SYNOPSIS
 !!

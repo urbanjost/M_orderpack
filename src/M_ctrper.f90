@@ -3,10 +3,10 @@ use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real
 Use M_mrgrnk
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: ctrper
-private :: real64_ctrper, real32_ctrper, int32_ctrper
 interface ctrper
-  module procedure real64_ctrper, real32_ctrper, int32_ctrper
+  module procedure real64_ctrper, real32_ctrper, int32_ctrper, f_char_ctrper
 end interface ctrper
 contains
 !>
@@ -26,6 +26,7 @@ contains
 !!       o Real(kind=real32)
 !!       o Real(kind=real64)
 !!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!   Permute array XDONT randomly, but leaving elements close to their
@@ -54,9 +55,10 @@ contains
 !!    program demo_ctrper
 !!    use M_ctrper, only : ctrper
 !!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    character(len=*),parameter :: list= '(*(g0:,", "))'
 !!    integer,allocatable :: xdont(:)
 !!    integer,allocatable :: xout(:,:)
-!!    real             :: pcls
 !!    integer          :: isz, i, j
 !!    isz=200
 !!       if(allocated(xout))deallocate(xout)
@@ -78,6 +80,16 @@ contains
 !!       do i=1,size(xdont)
 !!          write(*,'(*(i8,1x))')i,xout(:,i)
 !!       enddo
+!!
+!!    char: block
+!!     character(len=:),allocatable :: xdont(:)
+!!     xdont=[character(len=20) :: 'a','be','car','dam','fan','gas','egg']
+!!     isz=size(xdont)
+!!     write(*,g)'Original.................:',(trim(xdont(i)),i=1,isz)
+!!     call ctrper(xdont,1.0)
+!!     write(*,g)'Perturbed ...............:',(trim(xdont(i)),i=1,isz)
+!!     write(*,g)
+!!    endblock char
 !!
 !!    end program demo_ctrper
 !!
@@ -111,13 +123,15 @@ contains
 !!    >   198     1980     1940      990
 !!    >   199     1990     1950      470
 !!    >   200     2000     1980      200
+!!    > Original.................: a be car dam fan gas egg
+!!    > Perturbed ...............: a be gas dam fan car egg
 !!
 !!##AUTHOR
 !!     Michel Olagnon, 2000-2012
 !!
 !!     John Urban, 2022.04.16
-!!         o added man-page and reduced to a template using the
-!!           prep(1) preprocessor.
+!!     o added man-page and reduced to a template using the
+!!       prep(1) preprocessor.
 !!
 !!##LICENSE
 !!    CC0-1.0
@@ -178,4 +192,23 @@ Subroutine int32_ctrper (XDONT, PCLS)
       XDONT = XDONT (JWRKT)
 !
 End Subroutine int32_ctrper
+Subroutine f_char_ctrper (XDONT, PCLS)
+! _________________________________________________________
+      character (kind=f_char,len=*), Dimension (:), Intent (InOut) :: XDONT
+      Real, Intent (In) :: PCLS
+! __________________________________________________________
+!
+      Real, Dimension (Size(XDONT)) :: XINDT
+      Integer, Dimension (Size(XDONT)) :: JWRKT
+      Real :: PWRK
+      Integer :: I
+!
+      Call Random_Number (XINDT(:))
+      PWRK = Min (Max (0.0, PCLS), 1.0)
+      XINDT = Real(Size(XDONT)) * XINDT
+      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(XDONT)) ]
+      Call MRGRNK (XINDT, JWRKT)
+      XDONT = XDONT (JWRKT)
+!
+End Subroutine f_char_ctrper
 end module M_ctrper

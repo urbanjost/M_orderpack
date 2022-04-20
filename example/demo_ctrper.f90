@@ -1,9 +1,10 @@
      program demo_ctrper
      use M_ctrper, only : ctrper
      implicit none
+     character(len=*),parameter :: g='(*(g0,1x))'
+     character(len=*),parameter :: list= '(*(g0:,", "))'
      integer,allocatable :: xdont(:)
      integer,allocatable :: xout(:,:)
-     real             :: pcls
      integer          :: isz, i, j
      isz=200
         if(allocated(xout))deallocate(xout)
@@ -25,5 +26,15 @@
         do i=1,size(xdont)
            write(*,'(*(i8,1x))')i,xout(:,i)
         enddo
+
+     char: block
+      character(len=:),allocatable :: xdont(:)
+      xdont=[character(len=20) :: 'a','be','car','dam','fan','gas','egg']
+      isz=size(xdont)
+      write(*,g)'Original.................:',(trim(xdont(i)),i=1,isz)
+      call ctrper(xdont,1.0)
+      write(*,g)'Perturbed ...............:',(trim(xdont(i)),i=1,isz)
+      write(*,g)
+     endblock char
 
      end program demo_ctrper

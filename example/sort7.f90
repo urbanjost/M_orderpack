@@ -3,8 +3,7 @@ Program sort7
 ! This program is used to compare 2 algorithms for sorting
 ! every successive subset of 7 elements in an array.
 ! It shows how to call a subroutine with the correct interface
-! block in the main program. Interfaces for ORDERPACK routines
-! can be found in file interfaces.f90
+! block in the main program. 
 !
       Interface
          Subroutine oldsub7 (xdont, xwrkt)

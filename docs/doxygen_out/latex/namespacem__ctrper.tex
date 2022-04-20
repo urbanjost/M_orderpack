@@ -8,74 +8,108 @@ interface \mbox{\hyperlink{interfacem__ctrper_1_1ctrper}{ctrper}}
 \doxysubsection*{Functions/\+Subroutines}
 \begin{DoxyCompactItemize}
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__ctrper_a18c973de9dc34464ce69cd3a03428b3a}{real64\+\_\+ctrper}} (X\+D\+O\+NT, P\+C\+LS)
+subroutine \mbox{\hyperlink{namespacem__ctrper_a6bb8f053025c6b629251b4d84c22b290}{real64\+\_\+ctrper}} (X\+D\+O\+NT, P\+C\+LS)
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__ctrper_a9c552c42eed06299e94f7b1365b679bc}{real32\+\_\+ctrper}} (X\+D\+O\+NT, P\+C\+LS)
+subroutine \mbox{\hyperlink{namespacem__ctrper_a1aae6265ebcc4097adc1e7222973d889}{real32\+\_\+ctrper}} (X\+D\+O\+NT, P\+C\+LS)
 \item 
-subroutine, private \mbox{\hyperlink{namespacem__ctrper_a43f8d1b4420bd2b501cf716b8de5339b}{int32\+\_\+ctrper}} (X\+D\+O\+NT, P\+C\+LS)
+subroutine \mbox{\hyperlink{namespacem__ctrper_a4e72ba3a2743529d71d4a32c0dd7f8d0}{int32\+\_\+ctrper}} (X\+D\+O\+NT, P\+C\+LS)
+\item 
+subroutine \mbox{\hyperlink{namespacem__ctrper_a4f7cd12bf34134ba02cd01a83b13fe20}{f\+\_\+char\+\_\+ctrper}} (X\+D\+O\+NT, P\+C\+LS)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+integer, parameter \mbox{\hyperlink{namespacem__ctrper_a2549d1e9c7e73b3c0bcc27afe267ecef}{f\+\_\+char}} =selected\+\_\+char\+\_\+kind(\char`\"{}D\+E\+F\+A\+U\+LT\char`\"{})
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Function/\+Subroutine Documentation}
-\mbox{\Hypertarget{namespacem__ctrper_a43f8d1b4420bd2b501cf716b8de5339b}\label{namespacem__ctrper_a43f8d1b4420bd2b501cf716b8de5339b}} 
+\mbox{\Hypertarget{namespacem__ctrper_a4f7cd12bf34134ba02cd01a83b13fe20}\label{namespacem__ctrper_a4f7cd12bf34134ba02cd01a83b13fe20}} 
+\index{m\_ctrper@{m\_ctrper}!f\_char\_ctrper@{f\_char\_ctrper}}
+\index{f\_char\_ctrper@{f\_char\_ctrper}!m\_ctrper@{m\_ctrper}}
+\doxysubsubsection{\texorpdfstring{f\_char\_ctrper()}{f\_char\_ctrper()}}
+{\footnotesize\ttfamily subroutine m\+\_\+ctrper\+::f\+\_\+char\+\_\+ctrper (\begin{DoxyParamCaption}\item[{character (kind=\mbox{\hyperlink{namespacem__ctrper_a2549d1e9c7e73b3c0bcc27afe267ecef}{f\+\_\+char}},len=$\ast$), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{real, intent(in)}]{P\+C\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{196 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{197       \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{198 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: PCLS}
+\DoxyCodeLine{199 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{200 \textcolor{comment}{!}}
+\DoxyCodeLine{201 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: XINDT}
+\DoxyCodeLine{202       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: JWRKT}
+\DoxyCodeLine{203 \textcolor{keywordtype}{      Real} :: PWRK}
+\DoxyCodeLine{204       \textcolor{keywordtype}{Integer} :: I}
+\DoxyCodeLine{205 \textcolor{comment}{!}}
+\DoxyCodeLine{206       \textcolor{keyword}{Call }random\_number (xindt(:))}
+\DoxyCodeLine{207       pwrk = min(max(0.0, pcls), 1.0)}
+\DoxyCodeLine{208       xindt = real(\textcolor{keyword}{Size}(xdont)) * xindt}
+\DoxyCodeLine{209       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(xdont)) ]}
+\DoxyCodeLine{210       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
+\DoxyCodeLine{211       xdont = xdont(jwrkt)}
+\DoxyCodeLine{212 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacem__ctrper_a4e72ba3a2743529d71d4a32c0dd7f8d0}\label{namespacem__ctrper_a4e72ba3a2743529d71d4a32c0dd7f8d0}} 
 \index{m\_ctrper@{m\_ctrper}!int32\_ctrper@{int32\_ctrper}}
 \index{int32\_ctrper@{int32\_ctrper}!m\_ctrper@{m\_ctrper}}
 \doxysubsubsection{\texorpdfstring{int32\_ctrper()}{int32\_ctrper()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+ctrper\+::int32\+\_\+ctrper (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{real, intent(in)}]{P\+C\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily subroutine m\+\_\+ctrper\+::int32\+\_\+ctrper (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{real, intent(in)}]{P\+C\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{163 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{164       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
-\DoxyCodeLine{165 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: PCLS}
-\DoxyCodeLine{166 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{167 \textcolor{comment}{!}}
-\DoxyCodeLine{168 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: XINDT}
-\DoxyCodeLine{169       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: JWRKT}
-\DoxyCodeLine{170 \textcolor{keywordtype}{      Real} :: PWRK}
-\DoxyCodeLine{171       \textcolor{keywordtype}{Integer} :: I}
-\DoxyCodeLine{172 \textcolor{comment}{!}}
-\DoxyCodeLine{173       \textcolor{keyword}{Call }random\_number (xindt(:))}
-\DoxyCodeLine{174       pwrk = min(max(0.0, pcls), 1.0)}
-\DoxyCodeLine{175       xindt = real(\textcolor{keyword}{Size}(xdont)) * xindt}
-\DoxyCodeLine{176       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(xdont)) ]}
-\DoxyCodeLine{177       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
-\DoxyCodeLine{178       xdont = xdont(jwrkt)}
-\DoxyCodeLine{179 \textcolor{comment}{!}}
+\DoxyCodeLine{177 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{178       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: XDONT}
+\DoxyCodeLine{179 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: PCLS}
+\DoxyCodeLine{180 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{181 \textcolor{comment}{!}}
+\DoxyCodeLine{182 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: XINDT}
+\DoxyCodeLine{183       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: JWRKT}
+\DoxyCodeLine{184 \textcolor{keywordtype}{      Real} :: PWRK}
+\DoxyCodeLine{185       \textcolor{keywordtype}{Integer} :: I}
+\DoxyCodeLine{186 \textcolor{comment}{!}}
+\DoxyCodeLine{187       \textcolor{keyword}{Call }random\_number (xindt(:))}
+\DoxyCodeLine{188       pwrk = min(max(0.0, pcls), 1.0)}
+\DoxyCodeLine{189       xindt = real(\textcolor{keyword}{Size}(xdont)) * xindt}
+\DoxyCodeLine{190       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(xdont)) ]}
+\DoxyCodeLine{191       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
+\DoxyCodeLine{192       xdont = xdont(jwrkt)}
+\DoxyCodeLine{193 \textcolor{comment}{!}}
 
 \end{DoxyCode}
-\mbox{\Hypertarget{namespacem__ctrper_a9c552c42eed06299e94f7b1365b679bc}\label{namespacem__ctrper_a9c552c42eed06299e94f7b1365b679bc}} 
+\mbox{\Hypertarget{namespacem__ctrper_a1aae6265ebcc4097adc1e7222973d889}\label{namespacem__ctrper_a1aae6265ebcc4097adc1e7222973d889}} 
 \index{m\_ctrper@{m\_ctrper}!real32\_ctrper@{real32\_ctrper}}
 \index{real32\_ctrper@{real32\_ctrper}!m\_ctrper@{m\_ctrper}}
 \doxysubsubsection{\texorpdfstring{real32\_ctrper()}{real32\_ctrper()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+ctrper\+::real32\+\_\+ctrper (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{real, intent(in)}]{P\+C\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily subroutine m\+\_\+ctrper\+::real32\+\_\+ctrper (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{real, intent(in)}]{P\+C\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{144 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{145 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
-\DoxyCodeLine{146 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: PCLS}
-\DoxyCodeLine{147 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{148 \textcolor{comment}{!}}
-\DoxyCodeLine{149 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: XINDT}
-\DoxyCodeLine{150       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: JWRKT}
-\DoxyCodeLine{151 \textcolor{keywordtype}{      Real} :: PWRK}
-\DoxyCodeLine{152       \textcolor{keywordtype}{Integer} :: I}
-\DoxyCodeLine{153 \textcolor{comment}{!}}
-\DoxyCodeLine{154       \textcolor{keyword}{Call }random\_number (xindt(:))}
-\DoxyCodeLine{155       pwrk = min(max(0.0, pcls), 1.0)}
-\DoxyCodeLine{156       xindt = real(\textcolor{keyword}{Size}(xdont)) * xindt}
-\DoxyCodeLine{157       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(xdont)) ]}
-\DoxyCodeLine{158       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
-\DoxyCodeLine{159       xdont = xdont(jwrkt)}
-\DoxyCodeLine{160 \textcolor{comment}{!}}
+\DoxyCodeLine{158 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{159 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{160 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: PCLS}
+\DoxyCodeLine{161 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{162 \textcolor{comment}{!}}
+\DoxyCodeLine{163 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: XINDT}
+\DoxyCodeLine{164       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: JWRKT}
+\DoxyCodeLine{165 \textcolor{keywordtype}{      Real} :: PWRK}
+\DoxyCodeLine{166       \textcolor{keywordtype}{Integer} :: I}
+\DoxyCodeLine{167 \textcolor{comment}{!}}
+\DoxyCodeLine{168       \textcolor{keyword}{Call }random\_number (xindt(:))}
+\DoxyCodeLine{169       pwrk = min(max(0.0, pcls), 1.0)}
+\DoxyCodeLine{170       xindt = real(\textcolor{keyword}{Size}(xdont)) * xindt}
+\DoxyCodeLine{171       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(xdont)) ]}
+\DoxyCodeLine{172       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
+\DoxyCodeLine{173       xdont = xdont(jwrkt)}
+\DoxyCodeLine{174 \textcolor{comment}{!}}
 
 \end{DoxyCode}
-\mbox{\Hypertarget{namespacem__ctrper_a18c973de9dc34464ce69cd3a03428b3a}\label{namespacem__ctrper_a18c973de9dc34464ce69cd3a03428b3a}} 
+\mbox{\Hypertarget{namespacem__ctrper_a6bb8f053025c6b629251b4d84c22b290}\label{namespacem__ctrper_a6bb8f053025c6b629251b4d84c22b290}} 
 \index{m\_ctrper@{m\_ctrper}!real64\_ctrper@{real64\_ctrper}}
 \index{real64\_ctrper@{real64\_ctrper}!m\_ctrper@{m\_ctrper}}
 \doxysubsubsection{\texorpdfstring{real64\_ctrper()}{real64\_ctrper()}}
-{\footnotesize\ttfamily subroutine, private m\+\_\+ctrper\+::real64\+\_\+ctrper (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{real, intent(in)}]{P\+C\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily subroutine m\+\_\+ctrper\+::real64\+\_\+ctrper (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{X\+D\+O\+NT,  }\item[{real, intent(in)}]{P\+C\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 \hypertarget{namespacem__ctrper_autotoc_md0}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__ctrper_autotoc_md0}
 ctrper(3f) -\/ \mbox{[}orderpack\+:P\+E\+R\+M\+U\+T\+A\+T\+I\+ON\mbox{]} generate a random permutation of an array leaving elements close to initial locations\hypertarget{namespacem__ctrper_autotoc_md1}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__ctrper_autotoc_md1}
@@ -89,6 +123,7 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real32)
    o Real(kind=real64)
    o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
 \end{DoxyVerb}
 \hypertarget{namespacem__ctrper_autotoc_md2}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__ctrper_autotoc_md2}
 Permute array X\+D\+O\+NT randomly, but leaving elements close to their initial locations (nearbyness is controlled by P\+C\+LS).
@@ -101,7 +136,7 @@ Note this differs from adding random noise to the values. The original values re
 X\+D\+O\+NT Array of values to perturb. P\+C\+LS Proportion of closeness, constrained to the range 0.\+0(no change) to 1.\+0(fully random).\hypertarget{namespacem__ctrper_autotoc_md4}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__ctrper_autotoc_md4}
 Sample program\+:
 
-program demo\+\_\+ctrper use M\+\_\+ctrper, only \+: ctrper implicit none integer,allocatable \+:: xdont(\+:) integer,allocatable \+:: xout(\+:,\+:) real \+:: pcls integer \+:: isz, i, j isz=200 if(allocated(xout))deallocate(xout) allocate(xout(3,isz))
+program demo\+\_\+ctrper use M\+\_\+ctrper, only \+: ctrper implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{}, \char`\"{}))\textquotesingle{} integer,allocatable \+:: xdont(\+:) integer,allocatable \+:: xout(\+:,\+:) integer \+:: isz, i, j isz=200 if(allocated(xout))deallocate(xout) allocate(xout(3,isz))
 
 xdont=\mbox{[}(i,i=1,isz)\mbox{]}$\ast$10 call ctrper(xdont,0.\+0) xout(1,\+:)=xdont
 
@@ -111,32 +146,48 @@ xdont=\mbox{[}(i,i=1,isz)\mbox{]}$\ast$10 call ctrper(xdont,1.\+0) xout(3,\+:)=x
 
 write($\ast$,\textquotesingle{}(a)\textquotesingle{})\textquotesingle{}count unchanged perturbed random\textquotesingle{} do i=1,size(xdont) write($\ast$,\textquotesingle{}($\ast$(i8,1x))\textquotesingle{})i,xout(\+:,i) enddo
 
+char\+: block character(len=\+:),allocatable \+:: xdont(\+:) xdont=\mbox{[}character(len=20) \+:: \textquotesingle{}a\textquotesingle{},\textquotesingle{}be\textquotesingle{},\textquotesingle{}car\textquotesingle{},\textquotesingle{}dam\textquotesingle{},\textquotesingle{}fan\textquotesingle{},\textquotesingle{}gas\textquotesingle{},\textquotesingle{}egg\textquotesingle{}\mbox{]} isz=size(xdont) write($\ast$,g)\textquotesingle{}Original.................\+:\textquotesingle{},(trim(xdont(i)),i=1,isz) call ctrper(xdont,1.\+0) write($\ast$,g)\textquotesingle{}Perturbed ...............\+:\textquotesingle{},(trim(xdont(i)),i=1,isz) write($\ast$,g) endblock char
+
 end program demo\+\_\+ctrper
 
 Results\+:
 
-$>$ count unchanged perturbed random $>$ 1 10 30 1930 $>$ 2 20 20 1430 $>$ 3 30 120 320 $>$ 4 40 110 670 $>$ 5 50 90 750 $>$ 6 60 60 790 $>$ 7 70 130 1850 $>$ 8 80 50 390 $>$ 9 90 150 1470 $>$ 10 100 80 710 $>$ 11 110 70 820 $>$ 12 120 10 680 $>$ . . . . $>$ . . . . $>$ . . . . $>$ . . . . $>$ 190 1900 1860 1210 $>$ 191 1910 1890 580 $>$ 192 1920 1840 600 $>$ 193 1930 1870 1640 $>$ 194 1940 1920 290 $>$ 195 1950 2000 1180 $>$ 196 1960 1910 340 $>$ 197 1970 1990 1540 $>$ 198 1980 1940 990 $>$ 199 1990 1950 470 $>$ 200 2000 1980 200\hypertarget{namespacem__ctrper_autotoc_md5}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__ctrper_autotoc_md5}
+$>$ count unchanged perturbed random $>$ 1 10 30 1930 $>$ 2 20 20 1430 $>$ 3 30 120 320 $>$ 4 40 110 670 $>$ 5 50 90 750 $>$ 6 60 60 790 $>$ 7 70 130 1850 $>$ 8 80 50 390 $>$ 9 90 150 1470 $>$ 10 100 80 710 $>$ 11 110 70 820 $>$ 12 120 10 680 $>$ . . . . $>$ . . . . $>$ . . . . $>$ . . . . $>$ 190 1900 1860 1210 $>$ 191 1910 1890 580 $>$ 192 1920 1840 600 $>$ 193 1930 1870 1640 $>$ 194 1940 1920 290 $>$ 195 1950 2000 1180 $>$ 196 1960 1910 340 $>$ 197 1970 1990 1540 $>$ 198 1980 1940 990 $>$ 199 1990 1950 470 $>$ 200 2000 1980 200 $>$ Original.................\+: a be car dam fan gas egg $>$ Perturbed ...............\+: a be gas dam fan car egg\hypertarget{namespacem__ctrper_autotoc_md5}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__ctrper_autotoc_md5}
 Michel Olagnon, 2000-\/2012
 
 John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__ctrper_autotoc_md6}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__ctrper_autotoc_md6}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{125 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{126 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
-\DoxyCodeLine{127 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: PCLS}
-\DoxyCodeLine{128 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{129 \textcolor{comment}{!}}
-\DoxyCodeLine{130 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: XINDT}
-\DoxyCodeLine{131       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: JWRKT}
-\DoxyCodeLine{132 \textcolor{keywordtype}{      Real} :: PWRK}
-\DoxyCodeLine{133       \textcolor{keywordtype}{Integer} :: I}
-\DoxyCodeLine{134 \textcolor{comment}{!}}
-\DoxyCodeLine{135       \textcolor{keyword}{Call }random\_number (xindt(:))}
-\DoxyCodeLine{136       pwrk = min(max(0.0, pcls), 1.0)}
-\DoxyCodeLine{137       xindt = real(\textcolor{keyword}{Size}(xdont)) * xindt}
-\DoxyCodeLine{138       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(xdont)) ]}
-\DoxyCodeLine{139       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
-\DoxyCodeLine{140       xdont = xdont(jwrkt)}
-\DoxyCodeLine{141 \textcolor{comment}{!}}
+\DoxyCodeLine{139 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{140 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: xdont}
+\DoxyCodeLine{141 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: PCLS}
+\DoxyCodeLine{142 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{143 \textcolor{comment}{!}}
+\DoxyCodeLine{144 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: XINDT}
+\DoxyCodeLine{145       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(XDONT))} :: JWRKT}
+\DoxyCodeLine{146 \textcolor{keywordtype}{      Real} :: PWRK}
+\DoxyCodeLine{147       \textcolor{keywordtype}{Integer} :: I}
+\DoxyCodeLine{148 \textcolor{comment}{!}}
+\DoxyCodeLine{149       \textcolor{keyword}{Call }random\_number (xindt(:))}
+\DoxyCodeLine{150       pwrk = min(max(0.0, pcls), 1.0)}
+\DoxyCodeLine{151       xindt = real(\textcolor{keyword}{Size}(xdont)) * xindt}
+\DoxyCodeLine{152       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(xdont)) ]}
+\DoxyCodeLine{153       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
+\DoxyCodeLine{154       xdont = xdont(jwrkt)}
+\DoxyCodeLine{155 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacem__ctrper_a2549d1e9c7e73b3c0bcc27afe267ecef}\label{namespacem__ctrper_a2549d1e9c7e73b3c0bcc27afe267ecef}} 
+\index{m\_ctrper@{m\_ctrper}!f\_char@{f\_char}}
+\index{f\_char@{f\_char}!m\_ctrper@{m\_ctrper}}
+\doxysubsubsection{\texorpdfstring{f\_char}{f\_char}}
+{\footnotesize\ttfamily integer, parameter m\+\_\+ctrper\+::f\+\_\+char =selected\+\_\+char\+\_\+kind(\char`\"{}D\+E\+F\+A\+U\+LT\char`\"{})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{6 \textcolor{keywordtype}{integer},\textcolor{keywordtype}{parameter} :: f\_char=selected\_char\_kind(\textcolor{stringliteral}{"DEFAULT"})}
 
 \end{DoxyCode}

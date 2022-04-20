@@ -2,21 +2,22 @@ Module M_inspar
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: inspar
-private :: real64_inspar, real32_inspar, int32_inspar
 interface inspar
-  module procedure real64_inspar, real32_inspar, int32_inspar
+  module procedure real64_inspar, real32_inspar, int32_inspar, f_char_inspar
 end interface inspar
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file inspar.3orderpack.man
 NAME
-   inspar(3f) - [orderpack:PARTIAL_SORT] partially sorts an array,
+   inspar(3f) - [orderpack:SORT:PARTIAL] partially sorts an array,
                 bringing the N lowest values to the beginning of the array
 
 SYNOPSIS
 
     Subroutine inspar (XDONT, NORD)
+
      ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
      Integer, Intent (In) :: NORD
 
@@ -25,6 +26,7 @@ SYNOPSIS
       o Real(kind=real32)
       o Real(kind=real64)
       o Integer(kind=int32)
+      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
    INSPAR partially sorts XDONT, bringing the NORD lowest values to the
@@ -47,23 +49,45 @@ EXAMPLES
    use M_inspar, only : inspar
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   integer,allocatable :: xdont(:)
    integer :: nord
-   xdont=[10,5,7,1,4,5,6,8,9,10,1]
-   nord=5
-      write(*,g)'ORIGINAL:',xdont
-      call inspar(xdont,nord)
-      write(*,g)'NUMBER OF INDICES TO SORT:',nord
-      write(*,g)nord,'LOWEST VALUES:',xdont(:nord)
-      write(*,g)'ENTIRE ARRAY:',xdont
+
+   int: block 
+      integer,allocatable :: ia(:)
+      ia=[10,5,7,1,4,5,6,8,9,10,1]
+      nord=5
+      write(*,g)'Original.................:',ia
+      call inspar(ia,nord)
+      write(*,g)'Number of indices to sort:',nord
+      write(*,g)nord,'Lowest values..........:',ia(:nord)
+      write(*,g)'Entire array.............:',ia
+      write(*,g)
+   endblock int
+   char: block
+      character(len=:),allocatable :: ca(:)
+      integer :: i
+      ca=[character(len=20) :: 'fan','a','car','be','egg','dam','gas']
+      nord=3
+      write(*,g)'Original.................:',(trim(ca(i)),i=1,size(ca))
+      call inspar(ca,nord)
+      write(*,g)'Number of indices to sort:',nord
+      write(*,g)nord,'Lowest values..........:',(trim(ca(i)),i=1,nord)
+      write(*,g)'Entire array.............:',(trim(ca(i)),i=1,size(ca))
+      write(*,g)
+   endblock char
+
    end program demo_inspar
 
   Results:
 
-   ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
-   NUMBER OF INDICES TO SORT: 5
-   5 LOWEST VALUES: 1 1 4 5 5
-   ENTIRE ARRAY: 1 1 4 5 5 10 7 8 9 10 6
+   Original.................: 10 5 7 1 4 5 6 8 9 10 1
+   Number of indices to sort: 5
+   5 Lowest values..........: 1 1 4 5 5
+   Entire array.............: 1 1 4 5 5 10 7 8 9 10 6
+   
+   Original.................: fan a car be egg dam gas
+   Number of indices to sort: 3
+   3 Lowest values..........: a be car
+   Entire array.............: a be car fan egg dam gas
 
 AUTHOR
     Michel Olagnon - Feb. 2000
@@ -78,11 +102,19 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL INSPAR
 Subroutine ${KIND}_inspar (XDONT, NORD)
-${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
-Integer, Intent (In) :: NORD
+$IFDEF CHARACTER
+   ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (InOut) :: XDONT
+$ELSE
+   ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
+$ENDIF
+   Integer, Intent (In) :: NORD
 ! __________________________________________________________
-${TYPE} (kind=${KIND}) :: XWRK, XWRK1
-Integer :: ICRS, IDCR
+$IFDEF CHARACTER
+   ${TYPE} (kind=${KIND},len=len(XDONT)) :: XWRK, XWRK1
+$ELSE
+   ${TYPE} (kind=${KIND}) :: XWRK, XWRK1
+$ENDIF
+   Integer :: ICRS, IDCR
 !
    Do ICRS = 2, NORD
       XWRK = XDONT (ICRS)
@@ -110,6 +142,7 @@ Integer :: ICRS, IDCR
 End Subroutine ${KIND}_inspar
 $ENDPARCEL 
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$UNDEFINE INTEGER CHARACTER
 $SET KIND real64
 $SET TYPE Real
 $POST INSPAR
@@ -121,5 +154,11 @@ $
 $SET KIND int32
 $SET TYPE Integer
 $POST INSPAR
+$
+$DEFINE CHARACTER
+$SET KIND f_char
+$SET TYPE character
+$POST INSPAR
+$UNDEFINE CHARACTER
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 end module M_inspar

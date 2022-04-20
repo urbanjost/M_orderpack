@@ -2,19 +2,20 @@ Module M_unirnk
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unirnk
 interface unirnk
-  module procedure real64_unirnk, real32_unirnk, int32_unirnk
+  module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
 end interface unirnk
 interface nearless
-  module procedure real64_nearless, real32_nearless, int32_nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless !, f_char_nearless
 end interface nearless
 
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file unirnk.3orderpack.man
 NAME
-   unirnk(3f) - [orderpack:RANK_UNIQUE] performs a Merge-sort ranking
+   unirnk(3f) - [orderpack:RANK:UNIQUE] performs a MergeSort ranking
                 of an array, with removal of duplicate entries.
 
 SYNOPSIS
@@ -89,14 +90,22 @@ $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL UNIRNK
 Subroutine ${KIND}_unirnk (XVALT, IRNGT, NUNI)
+$IFDEF CHARACTER
+      ${TYPE} (Kind=${KIND},len=*), Dimension (:), Intent (In) :: XVALT
+$ELSE
       ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XVALT
+$ENDIF
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (Out) :: NUNI
 ! __________________________________________________________
       Integer, Dimension (SIZE(IRNGT)) :: JWRKT
       Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
+$IFDEF CHARACTER
+      ${TYPE} (Kind=${KIND},len=len(XVALT)) :: XTST, XVALA, XVALB
+$ELSE
       ${TYPE} (Kind=${KIND}) :: XTST, XVALA, XVALB
+$ENDIF
 !
 !
       NVAL = Min (SIZE(XVALT), SIZE(IRNGT))
@@ -328,11 +337,18 @@ End Subroutine ${KIND}_unirnk
 Function ${KIND}_nearless (XVAL) result (${KIND}_nl)
 !! Nearest value less than given value
 ! __________________________________________________________
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=*), Intent (In) :: XVAL
+      ${TYPE} (kind=${KIND},len=len(XVAL)) :: ${KIND}_nl
+$ELSE
       ${TYPE} (kind=${KIND}), Intent (In) :: XVAL
       ${TYPE} (kind=${KIND}) :: ${KIND}_nl
+$ENDIF
 ! __________________________________________________________
-$IFDEF INTEGER
+$IF DEFINED(INTEGER)
       ${KIND}_nl = XVAL -1_${KIND}
+$ELSEIF DEFINED(CHARACTER)
+      ${KIND}_nl = XVAL
 $ELSE
       ${KIND}_nl = nearest (XVAL, -1.0_${KIND})
 $ENDIF
@@ -340,7 +356,8 @@ $ENDIF
 End Function ${KIND}_nearless
 $ENDPARCEL
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$UNDEFINE INTEGER ! make sure conditional for IFDEF INTEGER is not taken
+$UNDEFINE INTEGER CHARACTER ! make sure conditional for IFDEF is not taken inadvertently
+$
 $SET KIND real64
 $SET TYPE Real
 $POST UNIRNK
@@ -354,6 +371,12 @@ $SET KIND int32
 $SET TYPE Integer
 $POST UNIRNK
 $UNDEFINE INTEGER ! make sure conditional for IFDEF INTEGER is not taken
+$
+$!$DEFINE CHARACTER
+$!$SET KIND f_char
+$!$SET TYPE character
+$!$POST UNIRNK
+$!$UNDEFINE CHARACTER
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 end module M_unirnk

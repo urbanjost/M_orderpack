@@ -1,8 +1,8 @@
 Module M_inssor
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
-integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: inssor
 interface inssor
   module procedure real64_inssor, real32_inssor, int32_inssor, f_char_inssor
@@ -11,7 +11,8 @@ contains
 !>
 !!##NAME
 !!    inssor(3f) - [orderpack:SORT] Sorts array into ascending order
-!!                 (Insertion sort)
+!!                 (Insertion sort, generally for small or nearly sorted
+!!                 arrays)
 !!
 !!##SYNOPSIS
 !!

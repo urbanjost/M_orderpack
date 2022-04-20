@@ -2,18 +2,19 @@ Module M_unirnk
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unirnk
 interface unirnk
-  module procedure real64_unirnk, real32_unirnk, int32_unirnk
+  module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
 end interface unirnk
 interface nearless
-  module procedure real64_nearless, real32_nearless, int32_nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless !, f_char_nearless
 end interface nearless
 
 contains
 !>
 !!##NAME
-!!    unirnk(3f) - [orderpack:RANK_UNIQUE] performs a Merge-sort ranking
+!!    unirnk(3f) - [orderpack:RANK:UNIQUE] performs a MergeSort ranking
 !!                 of an array, with removal of duplicate entries.
 !!
 !!##SYNOPSIS

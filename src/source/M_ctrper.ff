@@ -3,10 +3,10 @@ use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real
 Use M_mrgrnk
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: ctrper
-private :: real64_ctrper, real32_ctrper, int32_ctrper
 interface ctrper
-  module procedure real64_ctrper, real32_ctrper, int32_ctrper
+  module procedure real64_ctrper, real32_ctrper, int32_ctrper, f_char_ctrper
 end interface ctrper
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -26,6 +26,7 @@ SYNOPSIS
       o Real(kind=real32)
       o Real(kind=real64)
       o Integer(kind=int32)
+      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
   Permute array XDONT randomly, but leaving elements close to their
@@ -53,9 +54,10 @@ EXAMPLES
    program demo_ctrper
    use M_ctrper, only : ctrper
    implicit none
+   character(len=*),parameter :: g='(*(g0,1x))'
+   character(len=*),parameter :: list= '(*(g0:,", "))'
    integer,allocatable :: xdont(:)
    integer,allocatable :: xout(:,:)
-   real             :: pcls
    integer          :: isz, i, j
    isz=200
       if(allocated(xout))deallocate(xout)
@@ -77,6 +79,16 @@ EXAMPLES
       do i=1,size(xdont)
          write(*,'(*(i8,1x))')i,xout(:,i)
       enddo
+
+   char: block
+    character(len=:),allocatable :: xdont(:)
+    xdont=[character(len=20) :: 'a','be','car','dam','fan','gas','egg']
+    isz=size(xdont)
+    write(*,g)'Original.................:',(trim(xdont(i)),i=1,isz)
+    call ctrper(xdont,1.0)
+    write(*,g)'Perturbed ...............:',(trim(xdont(i)),i=1,isz)
+    write(*,g)
+   endblock char
 
    end program demo_ctrper
 
@@ -110,13 +122,15 @@ EXAMPLES
    >   198     1980     1940      990
    >   199     1990     1950      470
    >   200     2000     1980      200
+   > Original.................: a be car dam fan gas egg
+   > Perturbed ...............: a be gas dam fan car egg
 
 AUTHOR
     Michel Olagnon, 2000-2012
 
     John Urban, 2022.04.16
-        o added man-page and reduced to a template using the
-          prep(1) preprocessor.
+    o added man-page and reduced to a template using the
+      prep(1) preprocessor.
 
 LICENSE
    CC0-1.0
@@ -125,7 +139,11 @@ $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL CTRPER
 Subroutine ${KIND}_ctrper (XDONT, PCLS)
 ! _________________________________________________________
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (InOut) :: XDONT
+$ELSE
       ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
+$ENDIF
       Real, Intent (In) :: PCLS
 ! __________________________________________________________
 !
@@ -144,6 +162,7 @@ Subroutine ${KIND}_ctrper (XDONT, PCLS)
 End Subroutine ${KIND}_ctrper
 $ENDPARCEL
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+$UNDEFINE CHARACTER INTEGER
 $SET KIND real64
 $SET TYPE Real
 $POST CTRPER
@@ -155,6 +174,12 @@ $
 $SET KIND int32
 $SET TYPE Integer
 $POST CTRPER
+$
+$DEFINE CHARACTER
+$SET KIND f_char
+$SET TYPE character
+$POST CTRPER
+$UNDEFINE CHARACTER
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 end module M_ctrper
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

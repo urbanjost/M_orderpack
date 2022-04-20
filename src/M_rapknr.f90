@@ -2,15 +2,16 @@ Module M_rapknr
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rapknr
 interface rapknr
-  module procedure real64_rapknr, real32_rapknr, int32_rapknr
+  module procedure real64_rapknr, real32_rapknr, int32_rapknr !, f_char_rapknr
 end interface rapknr
 contains
 !>
 !!##NAME
-!!    rapknr(3f) - [orderpack:PARTIAL_RANK] Ranks partially XDONT by IRNGT,
-!!                 up to order NORD, in decreasing order.
+!!    rapknr(3f) - [orderpack:RANK:PARTIAL] partially Ranks an array up
+!!                 to a specified number of values, in decreasing order.
 !!                 rapknr = (rnkpar backwards)
 !!
 !!##SYNOPSIS
@@ -1590,5 +1591,4 @@ Subroutine int32_rapknr (XDONT, IRNGT, NORD)
      Return
 !
 End Subroutine int32_rapknr
-
 end module M_rapknr

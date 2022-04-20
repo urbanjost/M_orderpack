@@ -10,8 +10,8 @@ end interface mrgref
 contains
 !>
 !!##NAME
-!!    mrgref(3f) - [orderpack:RANK] produces a sorted ranking of input array
-!!                 (basic merge-sort)
+!!    mrgref(3f) - [orderpack:RANK] produces a sorted ranking index array
+!!                 of input array (basic merge-sort)
 !!
 !!##SYNOPSIS
 !!

@@ -1,11 +1,10 @@
 Module M_refsor
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
-integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refsor
 private :: real64_inssor, real32_inssor, int32_inssor, f_char_inssor
-private :: real64_subsor, real32_subsor, int32_subsor, f_char_subsor
 interface refsor
   module procedure real64_refsor, real32_refsor, int32_refsor, f_char_refsor
 end interface refsor
