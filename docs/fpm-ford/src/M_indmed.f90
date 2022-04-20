@@ -11,7 +11,7 @@ end interface indmed
 contains
 !>
 !!##NAME
-!!    indmed(3f) - [orderpack:MEDIAN] Returns index of median value of
+!!    indmed(3f) - [orderpack:MEDIAN] Returns INDEX of median value of
 !!                 an array.
 !!
 !!##SYNOPSIS

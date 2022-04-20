@@ -10,8 +10,7 @@ end interface valmed
 contains
 !>
 !!##NAME
-!!    valmed(3f) - [orderpack:MEDIAN] finds the median of an array, averaging
-!!                 the two central values when size of array is even.
+!!    valmed(3f) - [orderpack:MEDIAN] finds the median of an array
 !!
 !!##SYNOPSIS
 !!

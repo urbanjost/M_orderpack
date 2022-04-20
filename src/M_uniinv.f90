@@ -13,7 +13,7 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    uniinv(3f) - [orderpack:RANK:COMPLETE:UNIQUE] a MergeSort inverse ranking of
+!!    uniinv(3f) - [orderpack:RANK:UNIQUE] a MergeSort inverse ranking of
 !!    an array, with duplicate entries assigned the same rank.
 !!
 !!##SYNOPSIS

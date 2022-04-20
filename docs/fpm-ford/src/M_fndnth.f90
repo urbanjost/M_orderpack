@@ -1,8 +1,8 @@
 Module M_fndnth
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
-integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: fndnth
 interface fndnth
   module procedure real64_fndnth, real32_fndnth, int32_fndnth !, f_char_fndnth
@@ -26,7 +26,6 @@ contains
 !!    o Real(kind=real32)
 !!    o Real(kind=real64)
 !!    o Integer(kind=int32)
-!!    o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
 !!    Return NORDth lowest value of XDONT, i.e. fractile of order

@@ -2,14 +2,17 @@ Module M_rnkpar
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rnkpar
 interface rnkpar
-  module procedure real64_rnkpar, real32_rnkpar, int32_rnkpar
+  module procedure real64_rnkpar, real32_rnkpar, int32_rnkpar !, f_char_rnkpar
 end interface rnkpar
 contains
 !>
 !!##NAME
-!!    rnkpar(3f) - [orderpack:PARTIAL_RANK] Ranks partially XDONT by IRNGT, up to order NORD
+!!    rnkpar(3f) - [orderpack:RANK:PARTIAL] partially rank array, up to order
+!!                 N (ie. N is the number of sorted elements to return)
+!!                 (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!
@@ -26,18 +29,18 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    Ranks partially XDONT by IRNGT, up to order NORD
+!!    Ranks partially ranks array XDONT, returning indices of requested
+!!    number of elements in index arrayIRNGT, up to order NORD, where NORD
+!!    is the number of sorted elements required.
 !!
-!!    This routine uses a pivoting strategy such as the one of
-!!    finding the median based on the quicksort algorithm, but
-!!    we skew the pivot choice to try to bring it to NORD as
-!!    fast as possible. It uses 2 temporary arrays, where it
-!!    stores the indices of the values smaller than the pivot
-!!    (ILOWT), and the indices of values larger than the pivot
-!!    that we might still need later on (IHIGT). It iterates
-!!    until it can bring the number of values in ILOWT to
-!!    exactly NORD, and then uses an insertion sort to rank
-!!    this set, since it is supposedly small.
+!!    This routine uses a pivoting strategy such as the one of finding the
+!!    median based on the quicksort algorithm, but we skew the pivot choice
+!!    to try to bring it to NORD as fast as possible. It uses 2 temporary
+!!    arrays, where it stores the indices of the values smaller than the
+!!    pivot (ILOWT), and the indices of values larger than the pivot that we
+!!    might still need later on (IHIGT). It iterates until it can bring the
+!!    number of values in ILOWT to exactly NORD, and then uses an insertion
+!!    sort to rank this set, since it is supposedly small.
 !!
 !!##OPTIONS
 !!     XDONT      array to rank the elements of
@@ -1597,4 +1600,9 @@ Subroutine int32_rnkpar (XDONT, IRNGT, NORD)
 !
 !
 End Subroutine int32_rnkpar
+!$DEFINE CHARACTER
+!$SET KIND f_char
+!$SET TYPE character
+!$POST rnkpar
+!$UNDEFINE CHARACTER
 end module M_rnkpar

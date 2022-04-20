@@ -2,10 +2,9 @@ Module M_mulcnt
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 Use M_uniinv
 implicit none
-integer,parameter :: f_char=selected_char_kind("DEFAULT")
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: mulcnt
-private :: real64_mulcnt, real32_mulcnt, int32_mulcnt
 interface mulcnt
   module procedure real64_mulcnt, real32_mulcnt, int32_mulcnt, f_char_mulcnt
 end interface mulcnt

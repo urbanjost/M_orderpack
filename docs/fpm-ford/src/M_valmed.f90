@@ -2,6 +2,7 @@ Module M_valmed
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
+integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: valmed
 interface valmed
   module procedure real64_valmed, real32_valmed, int32_valmed
@@ -9,8 +10,7 @@ end interface valmed
 contains
 !>
 !!##NAME
-!!    valmed(3f) - [orderpack:MEDIAN] finds the median of an array, averaging
-!!                 the two central values when size of array is even.
+!!    valmed(3f) - [orderpack:MEDIAN] finds the median of an array
 !!
 !!##SYNOPSIS
 !!

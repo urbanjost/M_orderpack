@@ -29,7 +29,7 @@ use M_rnkpar, only : rnkpar
 use M_inspar, only : inspar
 use M_rapknr, only : rapknr
 use M_unipar, only : unipar
-use M_mulcnt
+use M_mulcnt, only : mulcnt
 use M_uniinv
 use M_unirnk
 use M_unista
@@ -58,6 +58,7 @@ integer,parameter          :: dp=kind(0.0d0)
    call test_rapknr()
    call test_inspar()
    call test_unipar()
+   call test_mulcnt()
 
    call unit_check_stop()
 
@@ -398,6 +399,29 @@ integer :: nord
 
    call unit_check_done('unipar',msg='test completed')
 end subroutine test_unipar
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_mulcnt()
+real,parameter :: xdont(*)=[1,2,3,4,5,6,7,4,5,6,6,2]
+integer, dimension(size(xdont)) :: imult
+character(len=20),allocatable :: strings(:)
+integer,allocatable :: cindx(:)
+integer :: csz
+integer :: i
+   call unit_check_start('mulcnt', '-library orderpack') ! start tests
+   !
+   strings= [ character(len=20) ::                   &
+    & 'two  ',  'four ', 'three', 'five',   'five',  &
+    & 'two  ',  'four ', 'three', 'five',   'five',  &
+    & 'four ',  'four ', 'three', 'one  ',  'five']
+   csz=size(strings)
+   if(allocated(cindx))deallocate(cindx)
+   allocate(cindx(csz))
+   call mulcnt(strings,cindx)
+
+   write(*,g)(trim(strings(i)),i=1,csz)
+   write(*,g)cindx
+   call unit_check_done('mulcnt',msg='test completed')
+end subroutine test_mulcnt
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 function random_string(chars,length) result(out)
 

@@ -7,20 +7,21 @@
 
 This repository is a derivative of ORDERPACK 2.0 from Michel Olagnon that
 
- o has been restructured so as to be useable as an fpm(1) package
- o been placed in a git(1) repository for version control
- o had man-pages and working demonstration programs of each procedure added 
- o has a growing set of unit tests.
- o supports CHARACTER variables as well as numeric variables on many (but not all)
+ - supports CHARACTER variables as well as numeric variables on many (but not all)
    of the procedures.
+ - has been restructured so as to be useable as an fpm(1) package
+ - been placed in a git(1) repository for version control
+ - had man-pages and working demonstration programs of each procedure added 
+ - has a growing set of unit tests.
 
-Like the original, ORDERPACK 2.1 provides Fortran procedures for General and Specialized
-Ranking and Sorting Routines.  It includes Fortran 90 source code for
-Unconditional, Unique, and Partial Ranking, Sorting, and Permutation.
+Like the original, ORDERPACK 2.1 provides Fortran procedures for General
+and Specialized Ranking and Sorting Routines.  It includes Fortran 90
+source code for Unconditional, Unique, and Partial Ranking, Sorting,
+and Permutation.
 
-    Authors: 
-     o Michel Olagnon date: 2000-2012 wrote the original ORDERPACK 2.0
-     o John S. Urban, date: 2022 derived ORDERPACK 2.1 from ORDERPACK 2.0
+**Authors**: 
+     - Michel Olagnon date: 2000-2012 wrote the original ORDERPACK 2.0
+     - John S. Urban, date: 2022 derived ORDERPACK 2.1 from ORDERPACK 2.0
 
 Suggestions, testing, test cases, feedback, and assistance welcome for
 the update.

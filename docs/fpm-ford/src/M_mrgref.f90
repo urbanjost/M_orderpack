@@ -10,8 +10,8 @@ end interface mrgref
 contains
 !>
 !!##NAME
-!!    mrgref(3f) - [orderpack:RANK] produces a sorted ranking of input array
-!!                 (basic merge-sort)
+!!    mrgref(3f) - [orderpack:RANK] produces a sorted ranking index array
+!!                 of input array (basic merge-sort)
 !!
 !!##SYNOPSIS
 !!
@@ -88,7 +88,8 @@ contains
 !!       & 'red',    'green', 'blue', 'yellow', 'orange',   'black', &
 !!       & 'white',  'brown', 'gray', 'cyan',   'magenta',           &
 !!       & 'purple']
-!!       if(allocated(cindx))deallocate(cindx);allocate(cindx(size(strings)))
+!!       if(allocated(cindx))deallocate(cindx)
+!!       allocate(cindx(size(strings)))
 !!
 !!       write(*,'(a,8(a:,","))')'BEFORE ',&
 !!               & (trim(strings(i)),i=1,size(strings))
