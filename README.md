@@ -10,7 +10,7 @@ This repository is a derivative of ORDERPACK 2.0 from Michel Olagnon that additi
  - supports CHARACTER variables as well as numeric variables on many (but not all)
    of the procedures.
  - has been restructured so as to be useable as an fpm(1) package
- - been placed in a git(1) repository for version control
+ - is placed in a git(1) repository for version control
  - had man-pages and working demonstration programs of each procedure added 
  - has a growing set of unit tests.
 
