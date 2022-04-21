@@ -15,7 +15,6 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!
 !!     Subroutine inspar (XDONT, NORD)
 !!
 !!      ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT

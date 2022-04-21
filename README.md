@@ -5,7 +5,7 @@
 
 ## Description
 
-This repository is a derivative of ORDERPACK 2.0 from Michel Olagnon that
+This repository is a derivative of ORDERPACK 2.0 from Michel Olagnon that additionally
 
  - supports CHARACTER variables as well as numeric variables on many (but not all)
    of the procedures.
