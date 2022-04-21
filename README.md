@@ -111,5 +111,7 @@ This will compile the Fortran module and basic example programs that exercise th
 
    * [ORDERPACK2.0](http://www.fortran-2000.com/rank/)
    * [ORDERPACK2.0](https://forge-dga.jouy.inra.fr/svn/qtlmap/trunk/lib/orderpack-2.0/index.html)
-   * [Wikipedia](https://en.m.wikipedia.org/wiki/Sorting_algorithm)
+   * [sorting(Wikipedia)](https://en.m.wikipedia.org/wiki/Sorting_algorithm)
+   * [median(Rosetta Code)](http://www.rosettacode.org/wiki/Averages/Median)
+   * [median(Wikipedia)](https://en.wikipedia.org/wiki/Median)
 ---

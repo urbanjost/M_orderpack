@@ -10,8 +10,8 @@ end interface mrgrnk
 contains
 !>
 !!##NAME
-!!    mrgrnk(3f) - [orderpack:RANK] produces a sorted ranking index array
-!!                 of input array (optimized merge-sort)
+!!    mrgrnk(3f) - [orderpack:RANK] produces an INDEX that sorts an input
+!!                 array (optimized merge-sort)
 !!
 !!##SYNOPSIS
 !!

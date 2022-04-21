@@ -69,6 +69,11 @@ contains
 !!
 !!   Results:
 !!
+!!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
+!!    NUMBER OF INDICES TO RETURN: 5
+!!    RETURNED INDICES: 1 10 9 8 7
+!!    5 MAXIMUM VALUES: 10 10 9 8 6
+!!
 !!##AUTHOR
 !!    Michel Olagnon - Feb. 2011
 !!

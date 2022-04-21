@@ -68,23 +68,34 @@ contains
 !!    endblock float
 !!
 !!    char: block
-!!     character(len=:),allocatable :: xdont(:)
+!!     character(len=:),allocatable :: ar(:)
 !!     integer :: i
 !!     integer :: isz
 !!     ! make an array of strings with lots of duplicates
-!!     xdont=[character(len=20) :: 'fan','a','car','be','egg','dam','gas']
-!!     isz=size(xdont)
-!!     xdont=[xdont(5),xdont(isz:1:-2),xdont(isz-1:2:-2),xdont,xdont(1:2),xdont(1)]
-!!     isz=size(xdont)
-!!     write(*,g)'Original.................:',(trim(xdont(i)),i=1,isz)
-!!     call unista(xdont,nuni)
-!!     write(*,g)nuni,'Unique values..........:',(trim(xdont(i)),i=1,nuni)
-!!     write(*,g)'Entire array.............:',(trim(xdont(i)),i=1,isz)
+!!     ar=[character(len=20) :: 'fan','a','car','be','egg','dam','gas']
+!!     isz=size(ar)
+!!     ar=[ar(5),ar(isz:1:-2),ar(isz-1:2:-2),ar,ar(1:2),ar(1)]
+!!     isz=size(ar)
+!!     write(*,g)'Original.................:',(trim(ar(i)),i=1,isz)
+!!     call unista(ar,nuni)
+!!     write(*,g)nuni,'Unique values..........:',(trim(ar(i)),i=1,nuni)
+!!     write(*,g)'Entire array.............:',(trim(ar(i)),i=1,isz)
 !!     write(*,g)
 !!    endblock char
 !!    end program demo_unista
 !!
 !!   Results:
+!!
+!!    ORIGINAL:, 44, 33, 33, 33, 22, 11, 33, 44, 55, 33
+!!    UNIQUE:, 44, 33, 22, 11, 55
+!!    ORIGINAL:, 4.400000, 3.300000, 3.300000, 3.300000, 2.200000,
+!!    1.100000, 3.300000, 4.400000, 5.500000, 3.300000
+!!    UNIQUE:, 4.400000, 3.300000, 2.200000, 1.100000, 5.500000
+!!    Original.................: egg gas egg car fan dam be a fan
+!!    a car be egg dam gas fan a fan
+!!    7 Unique values..........: egg gas car fan dam be a
+!!    Entire array.............: egg gas car fan dam be a
+!!    a fan a car be egg dam gas fan a fan
 !!
 !!##AUTHOR
 !!   Michel Olagnon - Feb. 2000

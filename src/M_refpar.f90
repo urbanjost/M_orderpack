@@ -55,14 +55,19 @@ contains
 !!    real(kind=real32) :: valsr(2000)
 !!    integer           :: indx(2000)
 !!    integer           :: i
+!!    real,allocatable  :: results(:)
+!!       ! create some random data
 !!       call random_seed()
 !!       call random_number(valsr)
 !!       valsr=valsr*1000000.0-500000.0
+!!       ! get 300 lowest values sorted
 !!       call refpar(valsr,indx,300)
-!!       valsr(:300)=valsr(indx(:300))
+!!       !
+!!       results=valsr(indx(:300))
+!!       ! check if sorted
 !!       do i=1,300-1
-!!          if (valsr(i+1).lt.valsr(i))then
-!!             write(*,*)'not sorted'
+!!          if (results(i+1).lt.results(i))then
+!!             write(*,*)'ERROR: not sorted'
 !!             stop 1
 !!          endif
 !!       enddo
@@ -70,6 +75,8 @@ contains
 !!    end program demo_refpar
 !!
 !!   Results:
+!!
+!!     random array now sorted
 !!
 !!##AUTHOR
 !!     Michel Olagnon - Feb. 2000

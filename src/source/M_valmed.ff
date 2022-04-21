@@ -11,7 +11,7 @@ contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file valmed.3orderpack.man
 NAME
-   valmed(3f) - [orderpack:MEDIAN] finds the median of an array
+   valmed(3f) - [orderpack:MEDIAN] finds the median VALUE of an array
 
 SYNOPSIS
     Recursive Function ${KIND}_valmed (XDONT) Result (res_med)
@@ -30,7 +30,7 @@ DESCRIPTION
    Finds the median of XDONT using the recursive procedure described in
    Knuth, The Art of Computer Programming, vol. 3, 5.3.3 - This procedure
    is linear in time, and does not require to be able to interpolate
-   in the set as the one used in INDNTH. It also has better worst case
+   in the set as the one used in INDNTH. It also has better worst-case
    behavior than INDNTH, but is about 30% slower on average for random
    uniformly distributed values.
 
@@ -44,20 +44,23 @@ EXAMPLES
   Sample program:
 
    program demo_valmed
+   ! return median value
    use M_valmed, only : valmed
    implicit none
-   real,parameter :: xdont(*)=[80.0,70.0,20.0,10.0,1000.0]
-   real res_med
-      write(*,*)valmed(xdont)
-      write(*, *)valmed([11, 22, 33, 44, 55, 66, 77, 88])
-      write(*, *)valmed([11.0d0, 22.0d0, 33.0d0, 66.0d0, 77.0d0, 88.0d0])
+   character(len=*),parameter :: g='(*(g0,1x))'
+      write(*,g)'real   ',&
+      valmed( [80.0,70.0,20.0,10.0,1000.0] )
+      write(*,g)'integer',&
+      valmed( [11, 22, 33, 44, 55, 66, 77, 88] )
+      write(*,g)'double ',&
+      valmed( [11.0d0, 22.0d0, 33.0d0, 66.0d0, 77.0d0, 88.0d0] )
    end program demo_valmed
 
   Results:
 
-   > 70.00000    
-   >        44
-   > 33.0000000000000     
+   real    70.00000
+   integer 44
+   double  33.00000000000000
 
 AUTHOR
     Michel Olagnon, 2000-2012

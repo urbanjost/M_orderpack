@@ -14,7 +14,7 @@
         print sp,'nord=',4, ' fractile=',valnth(xdont,4)
         ! so a value at the middle would be
         imiddle=(size(xdont)+1)/2
-        print sp,'median=',valnth(xdont,imiddle)
+        print sp,'median',valnth(xdont,imiddle)
         ! sorting the hard way
         do i=1,size(xdont)
            write(*,list)i,valnth(xdont,i)

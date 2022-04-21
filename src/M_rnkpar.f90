@@ -76,6 +76,8 @@ contains
 !!
 !!   Results:
 !!
+!!     random array now sorted
+!!
 !!##AUTHOR
 !!     Michel Olagnon - Feb. 2000
 !!

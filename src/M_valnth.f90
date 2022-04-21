@@ -10,7 +10,7 @@ end interface valnth
 contains
 !>
 !!##NAME
-!!    valnth(3f) - [orderpack:FRACTILE] Return VALUE of Nth lowest value of
+!!    valnth(3f) - [orderpack:FRACTILE] Return VALUE of Nth lowest ordered value of
 !!                 array, i.e fractile of order N/SIZE(array) (QuickSort-like)
 !!
 !!##SYNOPSIS
@@ -28,10 +28,11 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!   Return NORDth value of XDONT, i.e fractile of order NORD/SIZE(XDONT).
+!!   VALNTH(3f) returns the  NORDth ordered value of XDONT, i.e. fractile
+!!   of order NORD/SIZE(XDONT).
 !!
 !!   This routine uses a pivoting strategy such as the one of finding the
-!!   median based on the quicksort algorithm, but we skew the pivot choice
+!!   median based on the QuickSort algorithm, but we skew the pivot choice
 !!   to try to bring it to NORD as fast as possible. It uses 2 temporary
 !!   arrays, where it stores the indices of the values smaller than the
 !!   pivot (ILOWT), and the indices of values larger than the pivot that we
@@ -64,7 +65,7 @@ contains
 !!       print sp,'nord=',4, ' fractile=',valnth(xdont,4)
 !!       ! so a value at the middle would be
 !!       imiddle=(size(xdont)+1)/2
-!!       print sp,'median=',valnth(xdont,imiddle)
+!!       print sp,'median',valnth(xdont,imiddle)
 !!       ! sorting the hard way
 !!       do i=1,size(xdont)
 !!          write(*,list)i,valnth(xdont,i)
@@ -77,7 +78,7 @@ contains
 !!    minval 1.100 1.100
 !!    maxval 20.200 20.200
 !!    nord= 4  fractile= 4.400
-!!    median= 4.400
+!!    median 4.400
 !!    1, 1.100
 !!    2, 2.200
 !!    3, 3.300

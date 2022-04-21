@@ -10,7 +10,7 @@ end interface median
 contains
 !>
 !!##NAME
-!!    median(3f) - [orderpack:MEDIAN] Return median value of array. If
+!!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE of array. If
 !!                 number of data is even, return average of the two
 !!                 "medians".
 !!
@@ -28,17 +28,17 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    Return median value of XDONT.  If even number of data, average of
-!!    the two "medians".
+!!    MEDIAN() returns the median value of the array XDONT.  If an even
+!!    number of elements, it returns the average of the two "medians".
 !!
-!!    This routine uses a pivoting strategy such as the one of finding the
-!!    median based on the quicksort algorithm, but we skew the pivot choice
-!!    to try to bring it to NORD as fast as possible. It uses 2 temporary
-!!    arrays, where it stores the indices of the values smaller than the
-!!    pivot (ILOWT), and the indices of values larger than the pivot that
-!!    we might still need later on (IHIGT). It iterates until it can bring
-!!    the number of values in ILOWT to exactly NORD, and then finds the
-!!    maximum of this set.
+!!    This routine uses a pivoting strategy similar to the method  of finding
+!!    the median based on the quicksort algorithm, but we skew the pivot
+!!    choice to try to bring it to NORD as fast as possible. It uses two
+!!    temporary arrays, where it stores the indices of the values smaller
+!!    than the pivot (ILOWT), and the indices of values larger than the
+!!    pivot that we might still need later on (IHIGT). It iterates until
+!!    it can bring the number of values in ILOWT to exactly NORD, and then
+!!    finds the maximum of this set.
 !!
 !!##OPTIONS
 !!     XDONT      array to determine the median value of.
@@ -53,26 +53,27 @@ contains
 !!   Sample program:
 !!
 !!    program demo_median
+!!    ! calculate median value
 !!    use M_median, only : median
 !!    implicit none
-!!    real,allocatable :: xdont(:)
-!!    integer :: ii
-!!       xdont=[80.0,70.0,20.0,10.0,1000.0]
-!!       write(*,*) median(xdont)
-!!       !
-!!       xdont=[11, 22, 33, 44, 55, 66, 77, 88]
-!!       write(*,*) median(xdont)
-!!       !
-!!       xdont=[11.0d0,22.0d0,33.0d0,66.0d0,77.0d0,88.0d0]
-!!       write(*,*) median(xdont)
-!!       !
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!
+!!       write(*,g) 'real   ',median(&
+!!       [80.0,70.0,20.0,10.0,1000.0] )
+!!
+!!       write(*,g) 'integer',median(&
+!!       [11, 22, 33, 44, 55, 66, 77, 88] )
+!!
+!!       write(*,g) 'double ',median(&
+!!       [11.0d0,22.0d0,33.0d0,66.0d0,77.0d0,88.0d0])
+!!
 !!    end program demo_median
 !!
 !!   Results:
 !!
-!!    > 70.00000
-!!    > 49.50000
-!!    > 49.50000
+!!    real    70.00000
+!!    integer 49
+!!    double  49.50000000000000
 !!
 !!##AUTHOR
 !!     Michel Olagnon - Aug. 2000
@@ -345,7 +346,7 @@ Function real64_median (XDONT) Result (median)
 !
 !  One chooses a pivot from the 2 first values and the last one.
 !  This should ensure sufficient renewal between iterations to
-!  avoid worst case behavior effects.
+!  avoid worst-case behavior effects.
 !
                XWRK1 = XHIGT (1)
                XWRK2 = XHIGT (2)
@@ -834,7 +835,7 @@ Function real32_median (XDONT) Result (median)
 !
 !  One chooses a pivot from the 2 first values and the last one.
 !  This should ensure sufficient renewal between iterations to
-!  avoid worst case behavior effects.
+!  avoid worst-case behavior effects.
 !
                XWRK1 = XHIGT (1)
                XWRK2 = XHIGT (2)
@@ -1323,7 +1324,7 @@ Function int32_median (XDONT) Result (median)
 !
 !  One chooses a pivot from the 2 first values and the last one.
 !  This should ensure sufficient renewal between iterations to
-!  avoid worst case behavior effects.
+!  avoid worst-case behavior effects.
 !
                XWRK1 = XHIGT (1)
                XWRK2 = XHIGT (2)

@@ -10,8 +10,8 @@ end interface mrgref
 contains
 !>
 !!##NAME
-!!    mrgref(3f) - [orderpack:RANK] produces a sorted ranking index array
-!!                 of input array (basic merge-sort)
+!!    mrgref(3f) - [orderpack:RANK] create an INDEX that defines the
+!!                 order of array sorted in ascending order (basic merge-sort)
 !!
 !!##SYNOPSIS
 !!
@@ -45,6 +45,7 @@ contains
 !!
 !!    program demo_mrgref
 !!    use M_mrgref, only : mrgref
+!!    ! create an index that orders an array in ascending order
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
 !!    integer,parameter             :: dp=kind(0.0d0)

@@ -11,7 +11,7 @@ contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file fndnth.3orderpack.man
 NAME
-   fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest value of an array,
+   fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest ordered VALUE of array,
                 i.e. return fractile of order N/SIZE(array) (InsertSort-like)
 
 SYNOPSIS
@@ -29,17 +29,20 @@ SYNOPSIS
 $!   o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
-   Return NORDth lowest value of XDONT, i.e. fractile of order
-   NORD/SIZE(XDONT).
+   FNDNTH(3) returns the NORDth lowest value of XDONT(), i.e. the fractile
+   of order NORD/SIZE(XDONT).
 
    This subroutine uses an insertion sort, limiting insertion to the
-   first NORD values. It is very fast when NORD is very small (2-5), and
-   it requires only a work array of size NORD and type of XDONT, but
-   worst case behavior can happen fairly probably (initially inverse
-   sorted). In many cases, the refined quicksort method is faster.
+   first NORD values. An insertion sort is very fast when NORD is very
+   small (2-5).  Additionally, internally it requires only a work array
+   of size NORD (and type of XDONT),
 
-   So this should be used when NORD is small and XDONT is likely to be
-   a random array, otherwise consider using 
+   But worst case behavior can happen fairly probably (e.g., initially
+   inverse sorted). Therefore, in many cases, the refined QuickSort
+   method is faster.
+
+   so FNDNTH() should be used when NORD is small and XDONT is likely to
+   be a random array, otherwise consider using INDNTH(3) or VALNTH(3).
 
 OPTIONS
     XDONT     input array of values
@@ -52,31 +55,47 @@ EXAMPLES
   Sample program:
 
    program demo_fndnth
+   ! return Nth ordered value of an array
    use M_fndnth, only : fndnth
+   use M_valmed, only : valmed
    implicit none
-   character(len=*),parameter :: sp='(*(g0,1x))'
+   character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))'
    integer,allocatable :: iarr(:)
-   integer :: imiddle
-      iarr=[80,70,30,40,50,60,20,10]
+   integer :: i
+      iarr=[80,70,30,40,-50,60,20,10]
       print sp, 'ORIGINAL:',iarr
       ! can return the same values as intrinsics minval() and maxval()
       print sp, 'minval',fndnth(iarr,1),          minval(iarr)
       print sp, 'maxval',fndnth(iarr,size(iarr)), maxval(iarr)
       ! but more generally it can return the Nth lowest value.
-      print sp,'nord=',4, ' fractile=',fndnth(iarr,4)
-      ! so a value at the middle would be
-      imiddle=(size(iarr)+1)/2
-      print sp,'median=',fndnth(iarr,imiddle)
+      print sp, 'median',fndnth(iarr,(size(iarr+1))/2), valmed(iarr)
+      ! so only Nth ordered value can be found
+      print sp,'nord=',3, ' fractile=',fndnth(iarr,3)
+      ! sorting the hard way
+      print sp, 'ORIGINAL:',iarr
+      do i=1,size(iarr)
+         write(*,list)i,fndnth(iarr,i)
+      enddo
+      print *
    end program demo_fndnth
 
   Results:
 
-   ORIGINAL: 80 70 30 40 50 60 20 10
-   minval 10 10
+   ORIGINAL: 80 70 30 40 -50 60 20 10
+   minval -50 -50
    maxval 80 80
-   nord= 4 fractile= 40
-   median= 40
-
+   median 30 30
+   nord= 3  fractile= 20
+   ORIGINAL: 80 70 30 40 -50 60 20 10
+   1, -50
+   2, 10
+   3, 20
+   4, 30
+   5, 40
+   6, 60
+   7, 70
+   8, 80
+    
 SEE ALSO
 
    indnth(3), valnth(3)

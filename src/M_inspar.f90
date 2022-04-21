@@ -47,6 +47,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_inspar
+!!    ! partially sort an array
 !!    use M_inspar, only : inspar
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'

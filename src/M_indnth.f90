@@ -10,7 +10,7 @@ end interface indnth
 contains
 !>
 !!##NAME
-!!    indnth(3f) - [orderpack:FRACTILE] Return INDEX of Nth value of
+!!    indnth(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of
 !!                 array, i.e fractile of order N/SIZE(array) (QuickSort-like)
 !!
 !!##SYNOPSIS
@@ -28,46 +28,53 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    Return index of NORDth value of XDONT, i.e fractile of order
-!!    NORD/SIZE(XDONT).
+!!    INDNTH(3) returns the index of NORDth value of XDONT, i.e. the fractile
+!!    of order NORD/SIZE(XDONT).
 !!
-!!    This routine uses a pivoting strategy such as the one of finding the
-!!    median based on the quicksort algorithm, but we skew the pivot choice
-!!    to try to bring it to NORD as fast as possible. It uses 2 temporary
-!!    arrays, where it stores the indices of the values smaller than the
-!!    pivot (ILOWT), and the indices of values larger than the pivot that
-!!    we might still need later on (IHIGT). It iterates until it can bring
-!!    the number of values in ILOWT to exactly NORD, and then finds the
-!!    maximum of this set.
+!!    That is, it is the same as sorting the array first and then returning
+!!    the value XDONT(NORD); but should be much more efficient than that
+!!    method.
+!!
+!!    Internally INDNTH(3f) uses a pivoting strategy such as the one of
+!!    finding the median based on the quicksort algorithm, but we skew the
+!!    pivot choice to try to bring it to NORD as fast as possible. It uses
+!!    2 temporary arrays, where it stores the indices of the values smaller
+!!    than the pivot (ILOWT), and the indices of values larger than the
+!!    pivot that we might still need later on (IHIGT). It iterates until
+!!    it can bring the number of values in ILOWT to exactly NORD, and then
+!!    finds the maximum of this set.
 !!
 !!##OPTIONS
 !!     XDONT      array to search
-!!     NORD       Nth value to search for
+!!     NORD       indicates the Nth ordered value to search for
 !!
 !!##RETURNS
-!!     INDNTH     the index of XDONT that contains the requested value
+!!     INDNTH     the index of XDONT() that contains the requested value
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
 !!    program demo_indnth
-!!    ! find Nth lowest value in an array without sorting entire array
+!!    ! find Nth lowest ordered value in an array without sorting entire array
 !!    use M_indnth, only : indnth
+!!    use M_indmed, only : indmed
 !!    implicit none
 !!    integer,allocatable :: iarr(:)
 !!    character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))'
 !!    integer :: i
+!!    integer :: indx
 !!       iarr=[80,70,30,40,50,60,20,10,0,-100]
 !!       print list, 'ORIGINAL:',iarr
 !!       ! like minloc() and maxloc()
-!!       print sp,'minloc',indnth(iarr,1),minloc(iarr)
-!!       print sp,'maxloc',indnth(iarr,size(iarr)),maxloc(iarr)
+!!       print sp,'minloc',indnth(iarr,1),                minloc(iarr)
+!!       print sp,'maxloc',indnth(iarr,size(iarr)),       maxloc(iarr)
+!!       ! can find median
+!!       call indmed(iarr,indx)
+!!       print sp,'median',indnth(iarr,(size(iarr)+1)/2), indx
 !!       ! but more general so can find location of the Nth lowest value ...
-!!       call printme(3) ! find location of Nth lowest value
-!!       call printme(1)
-!!       call printme(7)
-!!       ! sort the hard way, one value at a time
+!!       !
+!!       ! sort the hard way, finding location of Nth value one at a time
 !!       do i=1,size(iarr)
 !!          write(*,sp,advance='no') iarr(indnth(iarr,i))
 !!       enddo
@@ -76,9 +83,7 @@ contains
 !!    subroutine printme(n)
 !!    integer,intent(in) :: n
 !!    integer :: ii
-!!       !
 !!       ii=indnth(iarr,n)
-!!       !
 !!       print sp,'nord=',n,' index=',ii,' fractile=',iarr(ii)
 !!    end subroutine printme
 !!    end program demo_indnth
@@ -88,9 +93,7 @@ contains
 !!    ORIGINAL:, 80, 70, 30, 40, 50, 60, 20, 10, 0, -100
 !!    minloc 10 10
 !!    maxloc 1 1
-!!    nord= 3  index= 8  fractile= 10
-!!    nord= 1  index= 10  fractile= -100
-!!    nord= 7  index= 5  fractile= 50
+!!    median 3 3
 !!    -100 0 10 20 30 40 50 60 70 80
 !!
 !!##AUTHOR

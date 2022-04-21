@@ -1,4 +1,5 @@
      program demo_indmed
+     ! return index of median value
      use M_indmed, only : indmed
      implicit none
      real,allocatable :: xdont(:)
@@ -16,7 +17,8 @@
         call indmed(xdont,ii)
         write(*,*) ii,xdont(ii)
         !
-        cdont=[character(len=20) :: 'apple','bee','cherry','duck','elephant','finger','goose','h','insect','j']
+        cdont=[character(len=20) :: 'apple','bee','cherry','duck',&
+                'elephant','finger','goose','h','insect','j']
         call indmed(cdont,ii)
         write(*,*) ii,cdont(ii)
         !

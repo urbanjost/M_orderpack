@@ -44,6 +44,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_inssor
+!!    ! sort an array using insertion sort
 !!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
 !!    use M_inssor, only : inssor
 !!    implicit none
