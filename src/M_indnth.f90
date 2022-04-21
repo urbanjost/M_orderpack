@@ -15,11 +15,11 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Function ${KIND}_indnth (XDONT, NORD) Result (INDNTH)
+!!     Function indnth (XDONT, NORD) Result (INDNTH)
 !!
-!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!       Integer :: INDNTH
-!!       Integer, Intent (In) :: NORD
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       Integer                             :: INDNTH
+!!       Integer, Intent (In)                :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!

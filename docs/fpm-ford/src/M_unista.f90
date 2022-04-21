@@ -18,8 +18,8 @@ contains
 !!
 !!     Subroutine unista (XDONT, NUNI)
 !!
-!!      ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
-!!      Integer, Intent (Out) :: NUNI
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
+!!      Integer, Intent (Out)                  :: NUNI
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -43,6 +43,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_unista
+!!    ! remove duplicates with remaining elements remaining in initial order
 !!    use M_unista, only : unista
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'

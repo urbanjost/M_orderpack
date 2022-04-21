@@ -1,4 +1,5 @@
      program demo_unirnk
+     ! rank an array, with removal of duplicate entries.
      use M_unirnk, only : unirnk
      implicit none
      character(len=*),parameter :: g='(*(g0,1x))'

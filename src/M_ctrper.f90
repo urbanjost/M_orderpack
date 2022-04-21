@@ -19,7 +19,7 @@ contains
 !!     Subroutine ctrper (XDONT, PCLS)
 !!
 !!      ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
-!!      Real, Intent (In) :: PCLS
+!!      Real, Intent (In)                      :: PCLS
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -60,7 +60,6 @@ contains
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
 !!    character(len=*),parameter :: list= '(*(g0:,", "))'
-!!    integer,allocatable :: xdont(:)
 !!    integer,allocatable :: xout(:,:)
 !!    integer          :: isz, i, j
 !!    isz=200
@@ -69,17 +68,16 @@ contains
 !!       ! make an array with three identical rows
 !!       if(allocated(xout))deallocate(xout)
 !!       allocate(xout(3,isz))
-!!       xdont=[(i,i=isz,1,-1)]*10
-!!       xout(1,:)=xdont
-!!       xout(2,:)=xdont
-!!       xout(3,:)=xdont
+!!       xout(1,:)=[(i,i=isz,1,-1)]*10
+!!       xout(2,:)=xout(1,:)
+!!       xout(3,:)=xout(1,:)
 !!       ! pertube each row a different amount
 !!       call ctrper(xout(1,:),0.0)
 !!       call ctrper(xout(2,:),0.1)
 !!       call ctrper(xout(3,:),1.0)
 !!       ! show values
 !!       write(*,'(a)')'count    unchanged  perturbed  random'
-!!       do i=1,size(xdont)
+!!       do i=1,size(xout,dim=2)
 !!          write(*,'(*(i8,1x))')i,xout(:,i)
 !!       enddo
 !!    char: block
@@ -106,6 +104,8 @@ contains
 !!           7     1940     1880      160
 !!           8     1930     1960     1620
 !!           9     1920     1860      540
+!!          10     1910     1930     1300
+!!          11     1900     1940     1190
 !!           .        .        .        .
 !!           .        .        .        .
 !!           .        .        .        .
@@ -124,6 +124,12 @@ contains
 !!         200       10       30     1810
 !!    Original.................: a be car dam fan gas egg
 !!    Perturbed ...............: a be gas dam fan car egg
+!!
+!! ================================================================================
+!! ```
+!!
+!!   Results:
+!!
 !!
 !!##AUTHOR
 !!     Michel Olagnon, 2000-2012

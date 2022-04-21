@@ -16,11 +16,11 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_rnkpar (XDONT, IRNGT, NORD)
+!!     Subroutine rnkpar (XDONT, IRNGT, NORD)
 !!
-!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!       Integer, Dimension (:), Intent (Out) :: IRNGT
-!!       Integer, Intent (In) :: NORD
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       Integer, Intent (Out)               :: IRNGT(:)
+!!       Integer, Intent (In)                :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -52,6 +52,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_rnkpar
+!!    ! partially rank array
 !!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
 !!    use M_rnkpar, only : rnkpar
 !!    implicit none

@@ -262,36 +262,37 @@
     <section>
       <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl"><pre><span></span><a name="ln-1"></a>     <span class="k">program </span><span class="n">demo_unipar</span>
-<a name="ln-2"></a>     <span class="k">use </span><span class="n">M_unipar</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">unipar</span>
-<a name="ln-3"></a>     <span class="k">implicit none</span>
-<a name="ln-4"></a><span class="k">     </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">g</span><span class="o">=</span><span class="s1">&#39;(*(g0,1x))&#39;</span>
-<a name="ln-5"></a>     <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">xdont</span><span class="p">(:)</span>
-<a name="ln-6"></a>     <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">irngt</span><span class="p">(:)</span>
-<a name="ln-7"></a>     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">nord</span>
-<a name="ln-8"></a>     <span class="c">!</span>
-<a name="ln-9"></a>     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;If enough values are unique, will return NORD indices&#39;</span>
-<a name="ln-10"></a>     <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">irngt</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">)</span>
-<a name="ln-11"></a>     <span class="n">xdont</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-<a name="ln-12"></a>     <span class="n">nord</span><span class="o">=</span><span class="mi">5</span>
-<a name="ln-13"></a>     <span class="k">allocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">(</span><span class="n">nord</span><span class="p">))</span>
-<a name="ln-14"></a>     <span class="k">call </span><span class="n">printme</span><span class="p">()</span>
-<a name="ln-15"></a>     <span class="c">!</span>
-<a name="ln-16"></a>     <span class="c">!BUG!write(*,g)&#39;If not enough values are unique, will change NORD&#39;</span>
-<a name="ln-17"></a>     <span class="c">!BUG!xdont=[-1,0,-1,0,-1,0,-1]</span>
-<a name="ln-18"></a>     <span class="c">!BUG!nord=5</span>
-<a name="ln-19"></a>     <span class="c">!BUG!if(allocated(irngt))deallocate(irngt)</span>
-<a name="ln-20"></a>     <span class="c">!BUG!allocate(irngt(nord))</span>
-<a name="ln-21"></a>     <span class="c">!BUG!call printme()</span>
-<a name="ln-22"></a>     <span class="k">contains</span>
-<a name="ln-23"></a><span class="k">     subroutine </span><span class="n">printme</span><span class="p">()</span>
-<a name="ln-24"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">xdont</span>
-<a name="ln-25"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;NUMBER OF INDICES TO SORT:&#39;</span><span class="p">,</span><span class="n">nord</span>
-<a name="ln-26"></a>        <span class="k">call </span><span class="n">unipar</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">irngt</span><span class="p">,</span><span class="n">nord</span><span class="p">)</span>
-<a name="ln-27"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;NUMBER OF INDICES RETURNED:&#39;</span><span class="p">,</span><span class="n">nord</span>
-<a name="ln-28"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;RETURNED INDICES:&#39;</span><span class="p">,</span><span class="n">irngt</span><span class="p">(:</span><span class="n">nord</span><span class="p">)</span>
-<a name="ln-29"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">nord</span><span class="p">,</span><span class="s1">&#39;SMALLEST UNIQUE VALUES:&#39;</span><span class="p">,</span><span class="n">xdont</span><span class="p">(</span><span class="n">irngt</span><span class="p">(:</span><span class="n">nord</span><span class="p">))</span>
-<a name="ln-30"></a>     <span class="k">end subroutine</span>
-<a name="ln-31"></a><span class="k">     end program </span><span class="n">demo_unipar</span>
+<a name="ln-2"></a>     <span class="c">! ranks array, removing duplicates</span>
+<a name="ln-3"></a>     <span class="k">use </span><span class="n">M_unipar</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">unipar</span>
+<a name="ln-4"></a>     <span class="k">implicit none</span>
+<a name="ln-5"></a><span class="k">     </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">g</span><span class="o">=</span><span class="s1">&#39;(*(g0,1x))&#39;</span>
+<a name="ln-6"></a>     <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">xdont</span><span class="p">(:)</span>
+<a name="ln-7"></a>     <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">irngt</span><span class="p">(:)</span>
+<a name="ln-8"></a>     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">nord</span>
+<a name="ln-9"></a>     <span class="c">!</span>
+<a name="ln-10"></a>     <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;If enough values are unique, will return NORD indices&#39;</span>
+<a name="ln-11"></a>     <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">irngt</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">)</span>
+<a name="ln-12"></a>     <span class="n">xdont</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<a name="ln-13"></a>     <span class="n">nord</span><span class="o">=</span><span class="mi">5</span>
+<a name="ln-14"></a>     <span class="k">allocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">(</span><span class="n">nord</span><span class="p">))</span>
+<a name="ln-15"></a>     <span class="k">call </span><span class="n">printme</span><span class="p">()</span>
+<a name="ln-16"></a>     <span class="c">!</span>
+<a name="ln-17"></a>     <span class="c">!BUG!write(*,g)&#39;If not enough values are unique, will change NORD&#39;</span>
+<a name="ln-18"></a>     <span class="c">!BUG!xdont=[-1,0,-1,0,-1,0,-1]</span>
+<a name="ln-19"></a>     <span class="c">!BUG!nord=5</span>
+<a name="ln-20"></a>     <span class="c">!BUG!if(allocated(irngt))deallocate(irngt)</span>
+<a name="ln-21"></a>     <span class="c">!BUG!allocate(irngt(nord))</span>
+<a name="ln-22"></a>     <span class="c">!BUG!call printme()</span>
+<a name="ln-23"></a>     <span class="k">contains</span>
+<a name="ln-24"></a><span class="k">     subroutine </span><span class="n">printme</span><span class="p">()</span>
+<a name="ln-25"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">xdont</span>
+<a name="ln-26"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;NUMBER OF INDICES TO SORT:&#39;</span><span class="p">,</span><span class="n">nord</span>
+<a name="ln-27"></a>        <span class="k">call </span><span class="n">unipar</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">irngt</span><span class="p">,</span><span class="n">nord</span><span class="p">)</span>
+<a name="ln-28"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;NUMBER OF INDICES RETURNED:&#39;</span><span class="p">,</span><span class="n">nord</span>
+<a name="ln-29"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="s1">&#39;RETURNED INDICES:&#39;</span><span class="p">,</span><span class="n">irngt</span><span class="p">(:</span><span class="n">nord</span><span class="p">)</span>
+<a name="ln-30"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">nord</span><span class="p">,</span><span class="s1">&#39;SMALLEST UNIQUE VALUES:&#39;</span><span class="p">,</span><span class="n">xdont</span><span class="p">(</span><span class="n">irngt</span><span class="p">(:</span><span class="n">nord</span><span class="p">))</span>
+<a name="ln-31"></a>     <span class="k">end subroutine</span>
+<a name="ln-32"></a><span class="k">     end program </span><span class="n">demo_unipar</span>
 </pre></div>
 
     </section>
@@ -310,7 +311,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 08:34  
+             on 2022-04-21 19:18  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

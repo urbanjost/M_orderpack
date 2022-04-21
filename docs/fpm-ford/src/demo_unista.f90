@@ -1,4 +1,5 @@
      program demo_unista
+     ! remove duplicates with remaining elements remaining in initial order
      use M_unista, only : unista
      implicit none
      character(len=*),parameter :: g='(*(g0,1x))'

@@ -29,8 +29,8 @@ Program follow
 !
    do ipnt = 1, nmax
      t = 6.28318 * real (ipnt) / real (nmax)
-     xtmpt (ipnt) = (5.+ 2 * cos (4.*t))*cos(t)
-     ytmpt (ipnt) = -(5.+ 2 * cos (4.*t))*sin(t)
+     xtmpt (ipnt) =  (5.0 + 2 * cos(4.*t) ) * cos(t)
+     ytmpt (ipnt) = -(5.0 + 2 * cos(4.*t) ) * sin(t)
    enddo
    xptst = xtmpt (irndt)
    yptst = ytmpt (irndt)

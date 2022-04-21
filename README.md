@@ -33,7 +33,8 @@ Suggestions, testing, test cases, feedback, and assistance welcome!
   There appear to be issues with the original code, but may have been introduced
   (but are being looked at):
 
-- UNIPAR returns non-unique values when less unique values in input than requested in output with gfortran,nvfortran; OK with ifort
+- UNIPAR returns non-unique values when less unique values in input than
+  requested in output with gfortran,nvfortran; OK with ifort
 ---
 
 ## Building the module using make![gmake](docs/images/gnu.gif)
@@ -114,4 +115,5 @@ This will compile the Fortran module and basic example programs that exercise th
    * [sorting(Wikipedia)](https://en.m.wikipedia.org/wiki/Sorting_algorithm)
    * [median(Rosetta Code)](http://www.rosettacode.org/wiki/Averages/Median)
    * [median(Wikipedia)](https://en.wikipedia.org/wiki/Median)
+   * [quartile(Wikipedia)](https://en.wikipedia.org/wiki/Quartile)
 ---

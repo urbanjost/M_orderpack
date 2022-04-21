@@ -1,4 +1,5 @@
      program demo_valnth
+     !  Return value of Nth lowest value of array
      use M_valnth, only : valnth
      implicit none
      character(len=*),parameter :: list= '(*(g0:,", "))'

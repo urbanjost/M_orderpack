@@ -1022,12 +1022,12 @@ integer, parameter \mbox{\hyperlink{namespacem__median_acca4a05ec62254b97c5c792a
 \doxysubsubsection{\texorpdfstring{real64\_median()}{real64\_median()}}
 {\footnotesize\ttfamily real (kind=real64) function m\+\_\+median\+::real64\+\_\+median (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__median_autotoc_md45}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__median_autotoc_md45}
-median(3f) -\/ \mbox{[}orderpack\+:M\+E\+D\+I\+AN\mbox{]} Calculates median V\+A\+L\+UE of array. If number of data is even, return average of the two \char`\"{}medians\char`\"{}.\hypertarget{namespacem__median_autotoc_md46}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__median_autotoc_md46}
-\begin{DoxyVerb} Function ${KIND}_median (XDONT) Result (median)
+\hypertarget{namespacem__median_autotoc_md46}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__median_autotoc_md46}
+median(3f) -\/ \mbox{[}orderpack\+:M\+E\+D\+I\+AN\mbox{]} Calculates median V\+A\+L\+UE of array. If number of data is even, return average of the two \char`\"{}medians\char`\"{}.\hypertarget{namespacem__median_autotoc_md47}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__median_autotoc_md47}
+\begin{DoxyVerb} Function median (XDONT) Result (MEDIAN)
 
-  ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-  ${TYPE} (Kind=${KIND}) :: median
+  ${TYPE} (Kind=${KIND}), Intent (In) :: XDONT(:)
+  ${TYPE} (Kind=${KIND})              :: MEDIAN
 
 Where ${TYPE}(kind=${KIND}) may be
 
@@ -1035,12 +1035,12 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
 \end{DoxyVerb}
-\hypertarget{namespacem__median_autotoc_md47}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__median_autotoc_md47}
+\hypertarget{namespacem__median_autotoc_md48}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__median_autotoc_md48}
 M\+E\+D\+I\+A\+N() returns the median value of the array X\+D\+O\+NT. If an even number of elements, it returns the average of the two \char`\"{}medians\char`\"{}.
 
-This routine uses a pivoting strategy similar to the method of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (I\+L\+O\+WT), and the indices of values larger than the pivot that we might still need later on (I\+H\+I\+GT). It iterates until it can bring the number of values in I\+L\+O\+WT to exactly N\+O\+RD, and then finds the maximum of this set.\hypertarget{namespacem__median_autotoc_md48}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__median_autotoc_md48}
-X\+D\+O\+NT array to determine the median value of.\hypertarget{namespacem__median_autotoc_md49}{}\doxysubsubsection{R\+E\+T\+U\+R\+NS}\label{namespacem__median_autotoc_md49}
-M\+E\+D\+I\+AN median value. If X\+D\+O\+NT contains an even number of elements the value is the average of the two \char`\"{}medians\char`\"{}.\hypertarget{namespacem__median_autotoc_md50}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__median_autotoc_md50}
+This routine uses a pivoting strategy similar to the method of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (I\+L\+O\+WT), and the indices of values larger than the pivot that we might still need later on (I\+H\+I\+GT). It iterates until it can bring the number of values in I\+L\+O\+WT to exactly N\+O\+RD, and then finds the maximum of this set.\hypertarget{namespacem__median_autotoc_md49}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__median_autotoc_md49}
+X\+D\+O\+NT array to determine the median value of.\hypertarget{namespacem__median_autotoc_md50}{}\doxysubsubsection{R\+E\+T\+U\+R\+NS}\label{namespacem__median_autotoc_md50}
+M\+E\+D\+I\+AN median value. If X\+D\+O\+NT contains an even number of elements the value is the average of the two \char`\"{}medians\char`\"{}.\hypertarget{namespacem__median_autotoc_md51}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__median_autotoc_md51}
 Sample program\+:
 
 program demo\+\_\+median ! calculate median value use M\+\_\+median, only \+: median implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{}
@@ -1055,10 +1055,10 @@ end program demo\+\_\+median
 
 Results\+:
 
-real 70.\+00000 integer 49 double 49.\+50000000000000\hypertarget{namespacem__median_autotoc_md51}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__median_autotoc_md51}
+real 70.\+00000 integer 49 double 49.\+50000000000000\hypertarget{namespacem__median_autotoc_md52}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__median_autotoc_md52}
 Michel Olagnon -\/ Aug. 2000
 
-John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__median_autotoc_md52}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__median_autotoc_md52}
+John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__median_autotoc_md53}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__median_autotoc_md53}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{88 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xdont}

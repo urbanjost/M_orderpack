@@ -15,11 +15,11 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Function ${KIND}_valnth (XDONT, NORD) Result (valnth)
+!!     Function valnth (XDONT, NORD) Result (VALNTH)
 !!
-!!      ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!      ${TYPE} (Kind=${KIND}) :: valnth
-!!      Integer, Intent (In) :: NORD
+!!      ${TYPE} (Kind=${KIND}), Intent (In) :: XDONT(:)
+!!      ${TYPE} (Kind=${KIND})              :: VALNTH
+!!      Integer, Intent (In)                :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -50,6 +50,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_valnth
+!!    !  Return value of Nth lowest value of array
 !!    use M_valnth, only : valnth
 !!    implicit none
 !!    character(len=*),parameter :: list= '(*(g0:,", "))'

@@ -17,9 +17,9 @@ contains
 !!
 !!     Function fndnth (XDONT, NORD) Result (FNDNTH)
 !!
-!!      ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!      Integer, Intent (In) :: NORD
-!!      ${TYPE} (Kind=${KIND}) :: FNDNTH
+!!      ${TYPE} (Kind=${KIND}), Intent (In) :: XDONT(:)
+!!      Integer, Intent (In)                :: NORD
+!!      ${TYPE} (Kind=${KIND})              :: FNDNTH
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!

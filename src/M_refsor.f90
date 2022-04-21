@@ -16,9 +16,9 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_refsor (XDONT)
+!!     Subroutine refsor (XDONT)
 !!
-!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
+!!       ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -50,6 +50,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_refsor
+!!    ! sort array in ascending order
 !!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
 !!    use M_refsor, only : refsor
 !!    implicit none

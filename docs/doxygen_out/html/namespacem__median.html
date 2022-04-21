@@ -1140,32 +1140,32 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md45"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 NAME</h2>
 <p>median(3f) - [orderpack:MEDIAN] Calculates median VALUE of array. If number of data is even, return average of the two "medians".</p>
-<h2><a class="anchor" id="autotoc_md46"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 SYNOPSIS</h2>
-<pre class="fragment"> Function ${KIND}_median (XDONT) Result (median)
+<pre class="fragment"> Function median (XDONT) Result (MEDIAN)
 
-  ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-  ${TYPE} (Kind=${KIND}) :: median
+  ${TYPE} (Kind=${KIND}), Intent (In) :: XDONT(:)
+  ${TYPE} (Kind=${KIND})              :: MEDIAN
 
 Where ${TYPE}(kind=${KIND}) may be
 
    o Real(kind=real32)
    o Real(kind=real64)
    o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md47"></a>
+</pre><h2><a class="anchor" id="autotoc_md48"></a>
 DESCRIPTION</h2>
 <p>MEDIAN() returns the median value of the array XDONT. If an even number of elements, it returns the average of the two "medians".</p>
 <p>This routine uses a pivoting strategy similar to the method of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to NORD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (ILOWT), and the indices of values larger than the pivot that we might still need later on (IHIGT). It iterates until it can bring the number of values in ILOWT to exactly NORD, and then finds the maximum of this set.</p>
-<h2><a class="anchor" id="autotoc_md48"></a>
+<h2><a class="anchor" id="autotoc_md49"></a>
 OPTIONS</h2>
 <p>XDONT array to determine the median value of.</p>
-<h2><a class="anchor" id="autotoc_md49"></a>
+<h2><a class="anchor" id="autotoc_md50"></a>
 RETURNS</h2>
 <p>MEDIAN median value. If XDONT contains an even number of elements the value is the average of the two "medians".</p>
-<h2><a class="anchor" id="autotoc_md50"></a>
+<h2><a class="anchor" id="autotoc_md51"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
 <p>program demo_median ! calculate median value use M_median, only : median implicit none character(len=*),parameter :: g='(*(g0,1x))'</p>
@@ -1175,11 +1175,11 @@ EXAMPLES</h2>
 <p>end program demo_median</p>
 <p>Results:</p>
 <p>real 70.00000 integer 49 double 49.50000000000000</p>
-<h2><a class="anchor" id="autotoc_md51"></a>
+<h2><a class="anchor" id="autotoc_md52"></a>
 AUTHOR</h2>
 <p>Michel Olagnon - Aug. 2000</p>
 <p>John Urban, 2022.04.16 o added man-page and reduced to a template using the prep(1) preprocessor.</p>
-<h2><a class="anchor" id="autotoc_md52"></a>
+<h2><a class="anchor" id="autotoc_md53"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">      Real</span> (Kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: xdont</div>

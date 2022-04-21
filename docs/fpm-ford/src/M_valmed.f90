@@ -14,10 +14,10 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Recursive Function ${KIND}_valmed (XDONT) Result (res_med)
+!!     Recursive Function valmed (XDONT) Result (RES_MED)
 !!
-!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!       ${TYPE} (kind=${KIND}) :: res_med
+!!       ${TYPE} (kind=${KIND}),  Intent (In) :: XDONT(:)
+!!       ${TYPE} (kind=${KIND})               :: RES_MED
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!

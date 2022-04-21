@@ -1,4 +1,5 @@
      program demo_rapknr
+     ! create index to lowest N values in input array in decreasing order
      use M_rapknr, only : rapknr
      implicit none
      character(len=*),parameter :: g='(*(g0,1x))'

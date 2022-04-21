@@ -18,10 +18,10 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_uniinv (XDONT, IGOEST)
+!!     Subroutine uniinv (XDONT, IGOEST)
 !!
-!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!       Integer, Dimension (:), Intent (Out) :: IGOEST
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       Integer, Intent (Out)               :: IGOEST(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -33,11 +33,11 @@ contains
 !!##DESCRIPTION
 !!
 !!    UNIINV(3f) is a merge-sort inverse ranking of an array, but with
-!!    duplicate entries receiving the same rank.
+!!    duplicate entries assigned the same rank.
 !!
 !!    The routine is similar to pure merge-sort ranking, but on the last
 !!    pass, it sets indices in IGOEST to the rank of the value in the ordered
-!!    set with duplicates ignored.  For performance reasons, the first 2
+!!    set with duplicates ignored.  For performance reasons, the first two
 !!    passes are taken out of the standard loop, and use dedicated coding.
 !!
 !!##OPTIONS
@@ -49,128 +49,46 @@ contains
 !!   Sample program:
 !!
 !!    program demo_uniinv
+!!    ! rank input array ranking duplicates the same
 !!    use M_uniinv, only : uniinv
 !!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    integer,allocatable :: xdont(:)
-!!    character(len=20),allocatable :: strings(:)
-!!    integer,allocatable :: cindx(:)
-!!       ! all values unique
-!!       xdont=[0,11,22,33,44,55,66,77,88,99]
-!!       xdont=xdont(size(xdont):1:-1) ! reverse it
-!!       call printme()
-!!       ! duplicate values
-!!       xdont=[-1.0, 0.0, -1.0, 0.0, -1.0, 0.0, -1.0]
-!!       call printme()
-!!       xdont=[10.0, 5.0, 7.0, 1.0, 4.0, 5.0, 6.0, 8.0, 9.0, 10.0, 1.0]
-!!       call printme()
-!!       xdont=[10.0,20.0,30.0,10.0,20.0,30.0,10.0,20.0,30.0]
-!!       call printme()
-!!
-!!       strings= [ character(len=20) ::                             &
-!!       & 'red',    'green', 'blue', 'yellow', 'orange',   'black']
-!!       call printme_char()
-!!       strings= [ character(len=20) ::                             &
-!!       & 'white',  'brown', 'gray', 'cyan',   'magenta',           &
-!!       & 'white',  'brown', 'gray', 'cyan',   'magenta',           &
-!!       & 'brown',  'brown', 'gray', 'green',  'magenta']
-!!       call printme_char()
-!!       strings=['purple', 'purple', 'purple', 'purple']
-!!       call printme_char()
-!!    contains
-!!
-!!    subroutine printme_char()
-!!    integer,allocatable :: igoest(:)
-!!    character(len=20),allocatable :: out(:)
-!!    integer :: imx
-!!    integer :: i
-!!    integer :: isz
-!!       isz=size(strings)
-!!       write(*,g)'Original:                 ',(trim(strings(i)),i=1,isz)
-!!       write(*,g)'Number of indices to sort:',isz
-!!       if(allocated(igoest))deallocate(igoest)
-!!       allocate(igoest(size(strings)))
-!!       call uniinv(strings,igoest)
-!!       imx=maxval(igoest)
-!!       write(*,g)'Returned Indices:         ',igoest(:)
-!!       write(*,g)'Number of unique indices :',imx
-!!       if(allocated(out))deallocate(out)
-!!       allocate(out(imx))
-!!       do i=1,size(strings)
-!!          out(igoest(i))=strings(i)
-!!       enddo
-!!       write(*,g)'Sorted unique values:     ',(trim(out(i)),i=1,size(out))
-!!       write(*,g)
-!!    end subroutine printme_char
-!!
-!!    subroutine printme()
-!!    integer,allocatable :: igoest(:)
-!!    integer,allocatable :: out(:)
-!!    integer :: imx
-!!    integer :: i
-!!       write(*,g)'Original:                 ',xdont
-!!       write(*,g)'Number of indices to sort:',size(xdont)
+!!    character(len=*),parameter :: fmt='(a,*(g3.3,1x))'
+!!    integer,allocatable,dimension(:) :: xdont, igoest, distinct, count
+!!    integer :: imx, i
+!!       ! create an input array
+!!       xdont=[11, 11, 22, 11, 33, 33, 22, 33, 33]
+!!       ! make an index array of the same size
 !!       if(allocated(igoest))deallocate(igoest)
 !!       allocate(igoest(size(xdont)))
+!!       print fmt, 'Original:                 ',xdont
+!!       print fmt, 'Number of indices to sort:',size(xdont)
+!!       ! rank input array ranking duplicates the same
 !!       call uniinv(xdont,igoest)
+!!       print fmt, 'Returned Indices:         ',igoest(:)
+!!       !
+!!       ! interrogate the results
+!!       !
 !!       imx=maxval(igoest)
-!!       write(*,g)'Returned Indices:         ',igoest(:)
-!!       write(*,g)'Number of unique indices :',imx
-!!       if(allocated(out))deallocate(out)
-!!       allocate(out(imx))
+!!       print fmt, 'Number of unique indices :',imx
+!!       ! squeeze it down to just IMX unique values
+!!       count=[(0,i=1,imx)] ! count how many times a value occurs
+!!       distinct=count      ! array to set of unique values
 !!       do i=1,size(xdont)
-!!          out(igoest(i))=xdont(i)
+!!          distinct(igoest(i))=xdont(i)
+!!          count(igoest(i))= count(igoest(i))+1
 !!       enddo
-!!       write(*,g)'Sorted unique values:     ',out
-!!       write(*,g)
-!!    end subroutine printme
-!!
+!!       print fmt, 'Sorted unique values:     ',distinct
+!!       print fmt, 'count of occurrences:     ',count
 !!    end program demo_uniinv
 !!
 !!   Results:
 !!
-!!    Original:                  99 88 77 66 55 44 33 22 11 0
-!!    Number of indices to sort: 10
-!!    Returned Indices:          10 9 8 7 6 5 4 3 2 1
-!!    Number of unique indices : 10
-!!    Sorted unique values:      0 11 22 33 44 55 66 77 88 99
-!!
-!!    Original:                  -1 0 -1 0 -1 0 -1
-!!    Number of indices to sort: 7
-!!    Returned Indices:          1 2 1 2 1 2 1
-!!    Number of unique indices : 2
-!!    Sorted unique values:      -1 0
-!!
-!!    Original:                  10 5 7 1 4 5 6 8 9 10 1
-!!    Number of indices to sort: 11
-!!    Returned Indices:          8 3 5 1 2 3 4 6 7 8 1
-!!    Number of unique indices : 8
-!!    Sorted unique values:      1 4 5 6 7 8 9 10
-!!
-!!    Original:                  10 20 30 10 20 30 10 20 30
-!!    Number of indices to sort: 9
-!!    Returned Indices:          1 2 3 1 2 3 1 2 3
-!!    Number of unique indices : 3
-!!    Sorted unique values:      10 20 30
-!!
-!!    Original:                  red green blue yellow orange black
-!!    Number of indices to sort: 6
-!!    Returned Indices:          5 3 2 6 4 1
-!!    Number of unique indices : 6
-!!    Sorted unique values:      black blue green orange red yellow
-!!
-!!    Original:                  white brown gray cyan magenta white brown
-!!                        gray cyan magenta brown brown gray green magenta
-!!    Number of indices to sort: 15
-!!    Returned Indices:          6 1 3 2 5 6 1 3 2 5 1 1 3 4 5
-!!    Number of unique indices : 6
-!!    Sorted unique values:      brown cyan gray green magenta white
-!!
-!!    Original:                  purple purple purple purple
-!!    Number of indices to sort: 4
-!!    Returned Indices:          1 1 1 1
-!!    Number of unique indices : 1
-!!    Sorted unique values:      purple
+!!    Original:                  11  11  22  11  33  33  22  33  33
+!!    Number of indices to sort:  9
+!!    Returned Indices:           1   1   2   1   3   3   2   3   3
+!!    Number of unique indices :  3
+!!    Sorted unique values:      11  22  33
+!!    count of occurrences:       3   2   4
 !!
 !!##AUTHOR
 !!     Michel Olagnon, 2000-2012

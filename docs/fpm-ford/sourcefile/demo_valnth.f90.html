@@ -262,27 +262,28 @@
     <section>
       <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="hl"><pre><span></span><a name="ln-1"></a>     <span class="k">program </span><span class="n">demo_valnth</span>
-<a name="ln-2"></a>     <span class="k">use </span><span class="n">M_valnth</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">valnth</span>
-<a name="ln-3"></a>     <span class="k">implicit none</span>
-<a name="ln-4"></a><span class="k">     </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">list</span><span class="o">=</span> <span class="s1">&#39;(*(g0:,&quot;, &quot;))&#39;</span>
-<a name="ln-5"></a>     <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">sp</span><span class="o">=</span><span class="s1">&#39;(*(g0,1x))&#39;</span>
-<a name="ln-6"></a>     <span class="kt">real</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span>  <span class="n">xdont</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">=</span><span class="p">[</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">2</span><span class="mf">0.20</span><span class="p">,</span><span class="mf">3.3</span><span class="p">,</span><span class="mi">1</span><span class="mf">0.10</span><span class="p">,</span><span class="mf">5.5</span><span class="p">,</span><span class="mf">4.4</span><span class="p">,</span><span class="mf">2.2</span><span class="p">]</span>
-<a name="ln-7"></a>     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span>
-<a name="ln-8"></a>     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">imiddle</span>
-<a name="ln-9"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">list</span><span class="p">)</span> <span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">xdont</span>
-<a name="ln-10"></a>        <span class="c">! can return the same values as intrinsics minval() and maxval()</span>
-<a name="ln-11"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;minval&#39;</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>          <span class="nb">minval</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span>
-<a name="ln-12"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;maxval&#39;</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)),</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span>
-<a name="ln-13"></a>        <span class="c">! but more generally it can return the Nth lowest value.</span>
-<a name="ln-14"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span><span class="s1">&#39;nord=&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39; fractile=&#39;</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
-<a name="ln-15"></a>        <span class="c">! so a value at the middle would be</span>
-<a name="ln-16"></a>        <span class="n">imiddle</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
-<a name="ln-17"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span><span class="s1">&#39;median&#39;</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">imiddle</span><span class="p">)</span>
-<a name="ln-18"></a>        <span class="c">! sorting the hard way</span>
-<a name="ln-19"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span>
-<a name="ln-20"></a>           <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">list</span><span class="p">)</span><span class="n">i</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-<a name="ln-21"></a>        <span class="k">enddo</span>
-<a name="ln-22"></a><span class="k">     end program </span><span class="n">demo_valnth</span>
+<a name="ln-2"></a>     <span class="c">!  Return value of Nth lowest value of array</span>
+<a name="ln-3"></a>     <span class="k">use </span><span class="n">M_valnth</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">valnth</span>
+<a name="ln-4"></a>     <span class="k">implicit none</span>
+<a name="ln-5"></a><span class="k">     </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">list</span><span class="o">=</span> <span class="s1">&#39;(*(g0:,&quot;, &quot;))&#39;</span>
+<a name="ln-6"></a>     <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">sp</span><span class="o">=</span><span class="s1">&#39;(*(g0,1x))&#39;</span>
+<a name="ln-7"></a>     <span class="kt">real</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span>  <span class="n">xdont</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">=</span><span class="p">[</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">2</span><span class="mf">0.20</span><span class="p">,</span><span class="mf">3.3</span><span class="p">,</span><span class="mi">1</span><span class="mf">0.10</span><span class="p">,</span><span class="mf">5.5</span><span class="p">,</span><span class="mf">4.4</span><span class="p">,</span><span class="mf">2.2</span><span class="p">]</span>
+<a name="ln-8"></a>     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span>
+<a name="ln-9"></a>     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">imiddle</span>
+<a name="ln-10"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">list</span><span class="p">)</span> <span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">xdont</span>
+<a name="ln-11"></a>        <span class="c">! can return the same values as intrinsics minval() and maxval()</span>
+<a name="ln-12"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;minval&#39;</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>          <span class="nb">minval</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span>
+<a name="ln-13"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;maxval&#39;</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)),</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span>
+<a name="ln-14"></a>        <span class="c">! but more generally it can return the Nth lowest value.</span>
+<a name="ln-15"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span><span class="s1">&#39;nord=&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39; fractile=&#39;</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<a name="ln-16"></a>        <span class="c">! so a value at the middle would be</span>
+<a name="ln-17"></a>        <span class="n">imiddle</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+<a name="ln-18"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span><span class="s1">&#39;median&#39;</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">imiddle</span><span class="p">)</span>
+<a name="ln-19"></a>        <span class="c">! sorting the hard way</span>
+<a name="ln-20"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span>
+<a name="ln-21"></a>           <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">list</span><span class="p">)</span><span class="n">i</span><span class="p">,</span><span class="n">valnth</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<a name="ln-22"></a>        <span class="k">enddo</span>
+<a name="ln-23"></a><span class="k">     end program </span><span class="n">demo_valnth</span>
 </pre></div>
 
     </section>
@@ -301,7 +302,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 08:34  
+             on 2022-04-21 19:18  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

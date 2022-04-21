@@ -816,22 +816,22 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md138"></a>
+<h2><a class="anchor" id="autotoc_md139"></a>
 NAME</h2>
 <p>valmed(3f) - [orderpack:MEDIAN] finds the median VALUE of an array</p>
-<h2><a class="anchor" id="autotoc_md139"></a>
+<h2><a class="anchor" id="autotoc_md140"></a>
 SYNOPSIS</h2>
-<pre class="fragment"> Recursive Function ${KIND}_valmed (XDONT) Result (res_med)
+<pre class="fragment"> Recursive Function valmed (XDONT) Result (RES_MED)
 
-   ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-   ${TYPE} (kind=${KIND}) :: res_med
+   ${TYPE} (kind=${KIND}),  Intent (In) :: XDONT(:)
+   ${TYPE} (kind=${KIND})               :: RES_MED
 
 Where ${TYPE}(kind=${KIND}) may be
 
    o Real(kind=real32)
    o Real(kind=real64)
    o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md140"></a>
+</pre><h2><a class="anchor" id="autotoc_md141"></a>
 DESCRIPTION</h2>
 <pre class="fragment">Finds the median of XDONT using the recursive procedure described in
 Knuth, The Art of Computer Programming, vol. 3, 5.3.3 - This procedure
@@ -839,23 +839,23 @@ is linear in time, and does not require to be able to interpolate
 in the set as the one used in INDNTH. It also has better worst-case
 behavior than INDNTH, but is about 30% slower on average for random
 uniformly distributed values.
-</pre><h2><a class="anchor" id="autotoc_md141"></a>
+</pre><h2><a class="anchor" id="autotoc_md142"></a>
 OPTIONS</h2>
 <p>XDONT input array</p>
-<h2><a class="anchor" id="autotoc_md142"></a>
+<h2><a class="anchor" id="autotoc_md143"></a>
 RETURNS</h2>
 <p>RES_MED the median value of the array XDONT</p>
-<h2><a class="anchor" id="autotoc_md143"></a>
+<h2><a class="anchor" id="autotoc_md144"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
 <p>program demo_valmed ! return median value use M_valmed, only : valmed implicit none character(len=*),parameter :: g='(*(g0,1x))' write(*,g)'real ',&amp; valmed( [80.0,70.0,20.0,10.0,1000.0] ) write(*,g)'integer',&amp; valmed( [11, 22, 33, 44, 55, 66, 77, 88] ) write(*,g)'double ',&amp; valmed( [11.0d0, 22.0d0, 33.0d0, 66.0d0, 77.0d0, 88.0d0] ) end program demo_valmed</p>
 <p>Results:</p>
 <p>real 70.00000 integer 44 double 33.00000000000000</p>
-<h2><a class="anchor" id="autotoc_md144"></a>
+<h2><a class="anchor" id="autotoc_md145"></a>
 AUTHOR</h2>
 <p>Michel Olagnon, 2000-2012</p>
 <p>John Urban, 2022.04.16 o added man-page and reduced to a template using the prep(1) preprocessor.</p>
-<h2><a class="anchor" id="autotoc_md145"></a>
+<h2><a class="anchor" id="autotoc_md146"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="comment">!!__________________________________________________________</span></div>

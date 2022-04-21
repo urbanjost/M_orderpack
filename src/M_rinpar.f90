@@ -15,11 +15,11 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_rinpar (XDONT, IRNGT, NORD)
+!!     Subroutine rinpar (XDONT, IRNGT, NORD)
 !!
-!!      ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!      Integer, Dimension (:), Intent (Out) :: IRNGT
-!!      Integer, Intent (In) :: NORD
+!!      ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!      Integer, Intent (Out)               :: IRNGT(:)
+!!      Integer, Intent (In)                :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!    o Real(kind=real32)
@@ -51,6 +51,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_rinpar
+!!    ! partially rank N lowest values in an array
 !!    use M_rinpar, only : rinpar
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'

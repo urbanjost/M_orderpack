@@ -16,11 +16,11 @@ NAME
                 (QuickSort-like)
 
 SYNOPSIS
-    Subroutine ${KIND}_refpar (XDONT, IRNGT, NORD)
+    Subroutine refpar (XDONT, IRNGT, NORD)
 
-      ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-      Integer, Dimension (:), Intent (Out) :: IRNGT
-      Integer, Intent (In) :: NORD
+      ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+      Integer, Intent (Out)               :: IRNGT(:)
+      Integer, Intent (In)                :: NORD
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -30,14 +30,15 @@ SYNOPSIS
       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
-   Ranks partially XDONT by IRNGT, up to order NORD
+   creates index IRNGT() which partially ranks input array XDONT(),
+   up to order NORD.
 
-   This routine uses a pivoting strategy such as the one used in
-   finding the median based on the quicksort algorithm. It uses
-   a temporary array, where it stores the partially ranked indices
-   of the values. It iterates until it can bring the number of
-   values lower than the pivot to exactly NORD, and then uses an
-   insertion sort to rank this set, since it is supposedly small.
+   Internally this routine uses a pivoting strategy such as the one used
+   in finding the median based on the quicksort algorithm. It uses a
+   temporary array, where it stores the partially ranked indices of the
+   values. It iterates until it can bring the number of values lower
+   than the pivot to exactly NORD, and then uses an insertion sort to
+   rank this set, since it is supposedly small.
 
 OPTIONS
     XDONT      array to partially rank
@@ -48,6 +49,7 @@ EXAMPLES
   Sample program:
 
    program demo_refpar
+   ! create index to lowest N values in input array in ascending order
    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
    use M_refpar, only : refpar
    implicit none

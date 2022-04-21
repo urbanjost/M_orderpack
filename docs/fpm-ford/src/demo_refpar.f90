@@ -1,4 +1,5 @@
      program demo_refpar
+     ! create index to lowest N values in input array in ascending order
      use,intrinsic :: iso_fortran_env, only : int32, real32, real64
      use M_refpar, only : refpar
      implicit none

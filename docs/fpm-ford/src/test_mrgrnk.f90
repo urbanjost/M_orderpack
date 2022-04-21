@@ -1,12 +1,18 @@
 program test_mrgrnk
+! depending on the compiler and options you might have to unlimit stacksize
+! to avoid segmentation faults when using large arrays, or specify on 
+! compiler to put arrays on heap.
+!
+!    ulimit -s unlimited # bash shell
 use M_mrgrnk, only : mrgrnk
 implicit none
 integer,parameter            :: dp=kind(0.0d0)
-integer,parameter            :: isz=1000000
+integer,parameter            :: isz=10000000
 real(kind=dp),allocatable    :: dd(:)
 real(kind=dp)                :: pp
 integer,allocatable          :: indx(:)
 integer                      :: i,j,k,m
+real(kind=dp) :: start, finish
    !
    ! set up storage
    !
@@ -26,10 +32,16 @@ integer                      :: i,j,k,m
       j=floor((k+1)*pp)
       dd(i)=dd(i)*(2.0_dp**j)
    enddo
-   !
+   !do i=1,isz
+   !   write(*,*)i,indx(i),dd(indx(i))
+   !enddo
+   write(*,*)'for MRGRNK(3f):         '
+   write(*,*)'number of values to sort',isz
    ! sort data
-   !
+   call cpu_time(start)
    call mrgrnk(dd,indx)
+   call cpu_time(finish)
+   write(*,*)"Processor Time (random)=              ",finish-start," seconds."
    !
    ! do some checks
    !
@@ -41,16 +53,26 @@ integer                      :: i,j,k,m
          m=m+1
       endif
    enddo
-   !do i=1,isz
-   !   write(*,*)i,indx(i),dd(indx(i))
-   !enddo
+   ! time if already sorted
+   dd=dd(indx)
+   call cpu_time(start)
+   call mrgrnk(dd,indx)
+   call cpu_time(finish)
+   write(*,*)"Processor Time (already sorted)=      ",finish-start," seconds."
+   ! time if initially reverse sorted
+   dd=dd(isz:1:-1)
+   call cpu_time(start)
+   call mrgrnk(dd,indx)
+   call cpu_time(finish)
+   write(*,*)"Processor Time (input reverse sorted)=",finish-start," seconds."
    write(*,*)'lowest                  ',dd(indx(1)),minval(dd),&
                                       & dd(indx(1)).eq.minval(dd)
    write(*,*)'highest                 ',dd(indx(size(indx))),maxval(dd),&
                                       & dd(indx(size(indx))).eq.maxval(dd)
    write(*,*)'smallest absolute value ',minval(abs(dd))
-   write(*,*)'huge                    ',huge(0.0_dp)
-   write(*,*)'tiny                    ',tiny(0.0_dp)
+   write(*,*)'for reference huge is   ',huge(0.0_dp)
+   write(*,*)'              tiny is   ',tiny(0.0_dp)
+   write(*,*)'              epsilon is',epsilon(0.0_dp)
    if(m.eq.0)then
       write(*,*)'sort passed'
    else

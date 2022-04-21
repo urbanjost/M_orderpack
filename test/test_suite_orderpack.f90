@@ -417,9 +417,8 @@ integer :: i
    if(allocated(cindx))deallocate(cindx)
    allocate(cindx(csz))
    call mulcnt(strings,cindx)
-
-   write(*,g)(trim(strings(i)),i=1,csz)
-   write(*,g)cindx
+   !write(*,g)(trim(strings(i)),i=1,csz)
+   !write(*,g)cindx
    call unit_check_done('mulcnt',msg='test completed')
 end subroutine test_mulcnt
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT

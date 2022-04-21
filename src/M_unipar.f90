@@ -15,11 +15,11 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_unipar (XDONT, IRNGT, NORD)
+!!     Subroutine unipar (XDONT, IRNGT, NORD)
 !!
-!!      ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!      Integer, Dimension (:), Intent (Out) :: IRNGT
-!!      Integer, Intent (InOut) :: NORD
+!!      ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!      Integer, Intent (Out)               :: IRNGT(:)
+!!      Integer, Intent (InOut)             :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -55,6 +55,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_unipar
+!!    ! ranks array, removing duplicates
 !!    use M_unipar, only : unipar
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'

@@ -266,15 +266,15 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md16"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 NAME</h2>
 <p>indmed(3f) - [orderpack:MEDIAN] Returns INDEX of median value of an array.</p>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 SYNOPSIS</h2>
-<pre class="fragment"> Subroutine ${KIND}_indmed (XDONT, INDM)
+<pre class="fragment"> Subroutine indmed (XDONT, INDM)
 
-   ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-   Integer, Intent (Out) :: INDM
+   ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+   Integer, Intent (Out)               :: INDM
 
 Where ${TYPE}(kind=${KIND}) may be
 
@@ -282,23 +282,23 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
-</pre><h2><a class="anchor" id="autotoc_md18"></a>
+</pre><h2><a class="anchor" id="autotoc_md19"></a>
 DESCRIPTION</h2>
 <p>INDMED() Finds the index of the median of the array XDONT() using the recursive procedure described in Knuth, The Art of Computer Programming, vol. 3, 5.3.3.</p>
 <p>This procedure is linear in time, and does not require to be able to interpolate in the set as the one used in INDNTH(), which can also be used to calculate a median. It also has better worst-case behavior than INDNTH(), but is about 30% slower on average for random uniformly distributed values.</p>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md20"></a>
 OPTIONS</h2>
 <p>XDONT array to find the median value of. INDM index of the median value.</p>
-<h2><a class="anchor" id="autotoc_md20"></a>
+<h2><a class="anchor" id="autotoc_md21"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
 <p>program demo_indmed ! return index of median value use M_indmed, only : indmed implicit none real,allocatable :: xdont(:) character(len=:),allocatable :: cdont(:) integer :: ii xdont=[80.0,70.0,20.0,10.0,1000.0] call indmed(xdont,ii) write(*,*) ii,xdont(ii) ! xdont=[11, 22, 33, 44, 55, 66, 77, 88] call indmed(xdont,ii) write(*,*) ii,xdont(ii) ! xdont=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0] call indmed(xdont,ii) write(*,*) ii,xdont(ii) ! cdont=[character(len=20) :: 'apple','bee','cherry','duck',&amp; 'elephant','finger','goose','h','insect','j'] call indmed(cdont,ii) write(*,*) ii,cdont(ii) ! end program demo_indmed</p>
 <p>Results: &gt; 2 70.0000000 &gt; 4 44.0000000 &gt; 5 33.0000000 &gt; 5 elephant</p>
-<h2><a class="anchor" id="autotoc_md21"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 AUTHOR</h2>
 <p>Michel Olagnon, 2000-2012</p>
 <p>John Urban, 2022.04.16 o added man-page and reduced to a template using the prep(1) preprocessor.</p>
-<h2><a class="anchor" id="autotoc_md22"></a>
+<h2><a class="anchor" id="autotoc_md23"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: xdont</div>

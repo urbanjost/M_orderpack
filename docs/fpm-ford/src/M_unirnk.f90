@@ -19,11 +19,11 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_unirnk (XVALT, IRNGT, NUNI)
+!!     Subroutine unirnk (XVALT, IRNGT, NUNI)
 !!
-!!       ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: XVALT
-!!       Integer, Dimension (:), Intent (Out) :: IRNGT
-!!       Integer, Intent (Out) :: NUNI
+!!       ${TYPE} (Kind=${KIND}), Intent (In) :: XVALT(:)
+!!       Integer, Intent (Out)               :: IRNGT(:)
+!!       Integer, Intent (Out)               :: NUNI
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -52,6 +52,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_unirnk
+!!    ! rank an array, with removal of duplicate entries.
 !!    use M_unirnk, only : unirnk
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'

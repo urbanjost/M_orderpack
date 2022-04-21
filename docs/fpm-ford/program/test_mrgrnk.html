@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 3.0% of total for programs.">41 statements</a>
+    title=" 4.0% of total for programs.">58 statements</a>
      </li> 
      
      
@@ -173,19 +173,23 @@
       
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-dp~4">dp</a>
       
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-finish">finish</a>
+      
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-i~26">i</a>
       
-      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-indx~11">indx</a>
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-indx~12">indx</a>
       
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-isz~7">isz</a>
       
-      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-j~5">j</a>
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-j~6">j</a>
       
-      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-k~3">k</a>
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-k~4">k</a>
       
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-m">m</a>
       
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-pp~3">pp</a>
+      
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-start">start</a>
       
     </div>
   </div>
@@ -266,19 +270,23 @@
       
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-dp~4">dp</a>
       
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-finish">finish</a>
+      
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-i~26">i</a>
       
-      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-indx~11">indx</a>
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-indx~12">indx</a>
       
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-isz~7">isz</a>
       
-      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-j~5">j</a>
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-j~6">j</a>
       
-      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-k~3">k</a>
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-k~4">k</a>
       
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-m">m</a>
       
       <a class="list-group-item" href="../program/test_mrgrnk.html#variable-pp~3">pp</a>
+      
+      <a class="list-group-item" href="../program/test_mrgrnk.html#variable-start">start</a>
       
     </div>
   </div>
@@ -364,6 +372,20 @@
   
 <tr>
   
+  <td><span class="anchor" id="variable-finish"></span>real(kind=dp)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>finish</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
   <td><span class="anchor" id="variable-i~26"></span>integer</td>
   
   
@@ -378,7 +400,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-indx~11"></span>integer,</td>
+  <td><span class="anchor" id="variable-indx~12"></span>integer,</td>
   
   
   <td>allocatable</td><td>::</td>
@@ -396,7 +418,7 @@
   
   
   <td>parameter</td><td>::</td>
-  <td><strong>isz</strong></td><td> =</td><td>1000000</td><td></td>
+  <td><strong>isz</strong></td><td> =</td><td>10000000</td><td></td>
   
 </tr>
 
@@ -406,7 +428,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-j~5"></span>integer</td>
+  <td><span class="anchor" id="variable-j~6"></span>integer</td>
   
   
   <td></td><td>::</td>
@@ -420,7 +442,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-k~3"></span>integer</td>
+  <td><span class="anchor" id="variable-k~4"></span>integer</td>
   
   
   <td></td><td>::</td>
@@ -456,6 +478,20 @@
   
 </tr>
 
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-start"></span>real(kind=dp)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>start</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
 </tbody>
 </table>
 
@@ -480,14 +516,20 @@
     <section>
     <h2 id="src">Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">program </span><span class="n">test_mrgrnk</span>
+<span class="c">! depending on the compiler and options you might have to unlimit stacksize</span>
+<span class="c">! to avoid segmentation faults when using large arrays, or specify on </span>
+<span class="c">! compiler to put arrays on heap.</span>
+<span class="c">!</span>
+<span class="c">!    ulimit -s unlimited # bash shell</span>
 <span class="k">use </span><span class="n">M_mrgrnk</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">mrgrnk</span>
 <span class="k">implicit none</span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span>            <span class="kd">::</span> <span class="n">dp</span><span class="o">=</span><span class="nb">kind</span><span class="p">(</span><span class="mf">0.0d0</span><span class="p">)</span>
-<span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span>            <span class="kd">::</span> <span class="n">isz</span><span class="o">=</span><span class="mi">1000000</span>
+<span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span>            <span class="kd">::</span> <span class="n">isz</span><span class="o">=</span><span class="mi">10000000</span>
 <span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">dp</span><span class="p">),</span><span class="k">allocatable</span>    <span class="kd">::</span> <span class="n">dd</span><span class="p">(:)</span>
 <span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">dp</span><span class="p">)</span>                <span class="kd">::</span> <span class="n">pp</span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span>          <span class="kd">::</span> <span class="n">indx</span><span class="p">(:)</span>
 <span class="kt">integer</span>                      <span class="kd">::</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">m</span>
+<span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">dp</span><span class="p">)</span> <span class="kd">::</span> <span class="n">start</span><span class="p">,</span> <span class="n">finish</span>
    <span class="c">!</span>
    <span class="c">! set up storage</span>
    <span class="c">!</span>
@@ -507,10 +549,16 @@
       <span class="n">j</span><span class="o">=</span><span class="nb">floor</span><span class="p">((</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">pp</span><span class="p">)</span>
       <span class="n">dd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">=</span><span class="n">dd</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">2.0_dp</span><span class="o">**</span><span class="n">j</span><span class="p">)</span>
    <span class="k">enddo</span>
-   <span class="c">!</span>
+   <span class="c">!do i=1,isz</span>
+   <span class="c">!   write(*,*)i,indx(i),dd(indx(i))</span>
+   <span class="c">!enddo</span>
+   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;for MRGRNK(3f):         &#39;</span>
+   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;number of values to sort&#39;</span><span class="p">,</span><span class="n">isz</span>
    <span class="c">! sort data</span>
-   <span class="c">!</span>
+   <span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
    <span class="k">call </span><span class="n">mrgrnk</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span><span class="n">indx</span><span class="p">)</span>
+   <span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">finish</span><span class="p">)</span>
+   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s2">&quot;Processor Time (random)=              &quot;</span><span class="p">,</span><span class="n">finish</span><span class="o">-</span><span class="n">start</span><span class="p">,</span><span class="s2">&quot; seconds.&quot;</span>
    <span class="c">!</span>
    <span class="c">! do some checks</span>
    <span class="c">!</span>
@@ -522,16 +570,26 @@
          <span class="n">m</span><span class="o">=</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span>
       <span class="k">endif</span>
 <span class="k">   enddo</span>
-   <span class="c">!do i=1,isz</span>
-   <span class="c">!   write(*,*)i,indx(i),dd(indx(i))</span>
-   <span class="c">!enddo</span>
+   <span class="c">! time if already sorted</span>
+   <span class="n">dd</span><span class="o">=</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">)</span>
+   <span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+   <span class="k">call </span><span class="n">mrgrnk</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span><span class="n">indx</span><span class="p">)</span>
+   <span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">finish</span><span class="p">)</span>
+   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s2">&quot;Processor Time (already sorted)=      &quot;</span><span class="p">,</span><span class="n">finish</span><span class="o">-</span><span class="n">start</span><span class="p">,</span><span class="s2">&quot; seconds.&quot;</span>
+   <span class="c">! time if initially reverse sorted</span>
+   <span class="n">dd</span><span class="o">=</span><span class="n">dd</span><span class="p">(</span><span class="n">isz</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+   <span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+   <span class="k">call </span><span class="n">mrgrnk</span><span class="p">(</span><span class="n">dd</span><span class="p">,</span><span class="n">indx</span><span class="p">)</span>
+   <span class="k">call </span><span class="nb">cpu_time</span><span class="p">(</span><span class="n">finish</span><span class="p">)</span>
+   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s2">&quot;Processor Time (input reverse sorted)=&quot;</span><span class="p">,</span><span class="n">finish</span><span class="o">-</span><span class="n">start</span><span class="p">,</span><span class="s2">&quot; seconds.&quot;</span>
    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;lowest                  &#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="mi">1</span><span class="p">)),</span><span class="nb">minval</span><span class="p">(</span><span class="n">dd</span><span class="p">),&amp;</span>
                                       <span class="p">&amp;</span> <span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="n">eq</span><span class="p">.</span><span class="nb">minval</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;highest                 &#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">indx</span><span class="p">))),</span><span class="nb">maxval</span><span class="p">(</span><span class="n">dd</span><span class="p">),&amp;</span>
                                       <span class="p">&amp;</span> <span class="n">dd</span><span class="p">(</span><span class="n">indx</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">indx</span><span class="p">))).</span><span class="n">eq</span><span class="p">.</span><span class="nb">maxval</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
    <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;smallest absolute value &#39;</span><span class="p">,</span><span class="nb">minval</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">dd</span><span class="p">))</span>
-   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;huge                    &#39;</span><span class="p">,</span><span class="nb">huge</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">)</span>
-   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;tiny                    &#39;</span><span class="p">,</span><span class="nb">tiny</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">)</span>
+   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;for reference huge is   &#39;</span><span class="p">,</span><span class="nb">huge</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">)</span>
+   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;              tiny is   &#39;</span><span class="p">,</span><span class="nb">tiny</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">)</span>
+   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;              epsilon is&#39;</span><span class="p">,</span><span class="nb">epsilon</span><span class="p">(</span><span class="mf">0.0_dp</span><span class="p">)</span>
    <span class="k">if</span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
 <span class="k">      write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;sort passed&#39;</span>
    <span class="k">else</span>
@@ -559,7 +617,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 08:34  
+             on 2022-04-21 19:18  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

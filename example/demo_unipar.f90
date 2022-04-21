@@ -1,4 +1,5 @@
      program demo_unipar
+     ! ranks array, removing duplicates
      use M_unipar, only : unipar
      implicit none
      character(len=*),parameter :: g='(*(g0,1x))'

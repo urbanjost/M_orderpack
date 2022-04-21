@@ -126,21 +126,21 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 1.4% of total for procedures.">11 statements</a>
+    title=" 1.5% of total for procedures.">11 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/demo_mulcnt.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/demo_unirnk.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/demo_mulcnt.f90.html'>demo_mulcnt.f90</a></li>
+     <li><a href='../sourcefile/demo_unirnk.f90.html'>demo_unirnk.f90</a></li>
     
-     <li><a href='../program/demo_mulcnt.html'>demo_mulcnt</a></li>
+     <li><a href='../program/demo_unirnk.html'>demo_unirnk</a></li>
     
   
      <li class="active">printme</li>
@@ -171,11 +171,9 @@
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/printme.html#variable-cindx">cindx</a>
+      <a class="list-group-item" href="../proc/printme.html#variable-irngt">irngt</a>
       
-      <a class="list-group-item" href="../proc/printme.html#variable-csz">csz</a>
-      
-      <a class="list-group-item" href="../proc/printme.html#variable-i">i</a>
+      <a class="list-group-item" href="../proc/printme.html#variable-nuni">nuni</a>
       
     </div>
   </div>
@@ -198,14 +196,6 @@
 
 
 
-
-
-<div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-  <div class="list-group">
-    <a class="list-group-item" href="../proc/printme.html#src">printme</a>
-  </div>
-</div>
 
 
 
@@ -249,11 +239,9 @@ subroutine printme()
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/printme.html#variable-cindx">cindx</a>
+      <a class="list-group-item" href="../proc/printme.html#variable-irngt">irngt</a>
       
-      <a class="list-group-item" href="../proc/printme.html#variable-csz">csz</a>
-      
-      <a class="list-group-item" href="../proc/printme.html#variable-i">i</a>
+      <a class="list-group-item" href="../proc/printme.html#variable-nuni">nuni</a>
       
     </div>
   </div>
@@ -276,14 +264,6 @@ subroutine printme()
 
 
 
-
-
-<div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-  <div class="list-group">
-    <a class="list-group-item" href="../proc/printme.html#src">printme</a>
-  </div>
-</div>
 
 
 
@@ -311,11 +291,11 @@ subroutine printme()
   
 <tr>
   
-  <td><span class="anchor" id="variable-cindx"></span>integer,</td>
+  <td><span class="anchor" id="variable-irngt"></span>integer,</td>
   
   <td>public,</td>
   <td>allocatable</td><td>::</td>
-  <td><strong>cindx</strong>(:)</td><td></td><td></td><td></td>
+  <td><strong>irngt</strong>(:)</td><td></td><td></td><td></td>
   
 </tr>
 
@@ -325,25 +305,11 @@ subroutine printme()
   
 <tr>
   
-  <td><span class="anchor" id="variable-csz"></span>integer,</td>
+  <td><span class="anchor" id="variable-nuni"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>csz</strong></td><td></td><td></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-i"></span>integer,</td>
-  
-  <td>public</td>
-  <td></td><td>::</td>
-  <td><strong>i</strong></td><td></td><td></td><td></td>
+  <td><strong>nuni</strong></td><td></td><td></td><td></td>
   
 </tr>
 
@@ -368,24 +334,6 @@ subroutine printme()
     
     
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>        <span class="k">subroutine </span><span class="n">printme</span><span class="p">()</span>
-        <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">cindx</span><span class="p">(:)</span>
-        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">csz</span>
-        <span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span>
-           <span class="n">csz</span><span class="o">=</span><span class="n">size</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
-           <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">cindx</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">cindx</span><span class="p">)</span>
-           <span class="k">allocate</span><span class="p">(</span><span class="n">cindx</span><span class="p">(</span><span class="n">csz</span><span class="p">))</span>
-           <span class="k">call </span><span class="n">mulcnt</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span><span class="n">cindx</span><span class="p">)</span>
-           <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)(</span><span class="nb">trim</span><span class="p">(</span><span class="n">strings</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">csz</span><span class="p">)</span>
-           <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">cindx</span>
-        <span class="k">end subroutine </span><span class="n">printme</span>
-</pre></div>
-
-    </section>
-    <br>
-    
     
     </div>
   </div>
@@ -402,7 +350,7 @@ subroutine printme()
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 08:34  
+             on 2022-04-21 19:18  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

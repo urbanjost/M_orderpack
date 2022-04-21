@@ -1,6 +1,6 @@
      program demo_mrgref
+     ! create an index that can order an array in ascending order
      use M_mrgref, only : mrgref
-     ! create an index that orders an array in ascending order
      implicit none
      character(len=*),parameter :: g='(*(g0,1x))'
      integer,parameter             :: dp=kind(0.0d0)

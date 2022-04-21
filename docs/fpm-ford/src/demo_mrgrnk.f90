@@ -1,4 +1,5 @@
      program demo_mrgrnk
+     ! create an index that can order an array in ascending order
      use M_mrgrnk, only : mrgrnk
      implicit none
      character(len=*),parameter :: g='(*(g0,1x))'

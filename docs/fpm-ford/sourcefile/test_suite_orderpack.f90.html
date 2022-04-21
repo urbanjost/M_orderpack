@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.8% of total for source files.">382 statements</a>
+    title=" 2.7% of total for source files.">380 statements</a>
      </li> 
      
      
@@ -680,36 +680,35 @@
 <a name="ln-417"></a>   <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">cindx</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">cindx</span><span class="p">)</span>
 <a name="ln-418"></a>   <span class="k">allocate</span><span class="p">(</span><span class="n">cindx</span><span class="p">(</span><span class="n">csz</span><span class="p">))</span>
 <a name="ln-419"></a>   <span class="k">call </span><span class="n">mulcnt</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span><span class="n">cindx</span><span class="p">)</span>
-<a name="ln-420"></a>
-<a name="ln-421"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)(</span><span class="nb">trim</span><span class="p">(</span><span class="n">strings</span><span class="p">(</span><span class="n">i</span><span class="p">)),</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">csz</span><span class="p">)</span>
-<a name="ln-422"></a>   <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="n">cindx</span>
-<a name="ln-423"></a>   <span class="k">call </span><span class="n">unit_check_done</span><span class="p">(</span><span class="s1">&#39;mulcnt&#39;</span><span class="p">,</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;test completed&#39;</span><span class="p">)</span>
-<a name="ln-424"></a><span class="k">end subroutine </span><span class="n">test_mulcnt</span>
-<a name="ln-425"></a><span class="c">!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</span>
-<a name="ln-426"></a><span class="k">function </span><span class="n">random_string</span><span class="p">(</span><span class="n">chars</span><span class="p">,</span><span class="n">length</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-<a name="ln-427"></a>
-<a name="ln-428"></a><span class="c">!$@(#) M_random::random_string(3f): create random string composed of provided characters of specified length</span>
-<a name="ln-429"></a>
-<a name="ln-430"></a><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">chars</span>
-<a name="ln-431"></a><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>           <span class="kd">::</span> <span class="n">length</span>
-<a name="ln-432"></a><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">out</span>
-<a name="ln-433"></a><span class="kt">real</span>                         <span class="kd">::</span> <span class="n">x</span>
-<a name="ln-434"></a><span class="kt">integer</span>                      <span class="kd">::</span> <span class="n">ilen</span>   <span class="c">! length of list of characters</span>
-<a name="ln-435"></a><span class="kt">integer</span>                      <span class="kd">::</span> <span class="n">which</span>
-<a name="ln-436"></a><span class="kt">integer</span>                      <span class="kd">::</span> <span class="n">i</span>
-<a name="ln-437"></a>   <span class="n">ilen</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
-<a name="ln-438"></a>   <span class="n">out</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
-<a name="ln-439"></a>   <span class="k">if</span><span class="p">(</span><span class="n">ilen</span><span class="p">.</span><span class="n">gt</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
-<a name="ln-440"></a><span class="k">      do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">length</span>
-<a name="ln-441"></a>         <span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<a name="ln-442"></a>         <span class="n">which</span><span class="o">=</span><span class="nb">nint</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="n">ilen</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
-<a name="ln-443"></a>         <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="o">//</span><span class="n">chars</span><span class="p">(</span><span class="n">which</span><span class="p">:</span><span class="n">which</span><span class="p">)</span>
-<a name="ln-444"></a>      <span class="k">enddo</span>
-<a name="ln-445"></a><span class="k">   endif</span>
-<a name="ln-446"></a><span class="k">end function </span><span class="n">random_string</span>
-<a name="ln-447"></a><span class="c">!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</span>
-<a name="ln-448"></a><span class="k">end program </span><span class="n">runtest</span>
-<a name="ln-449"></a><span class="c">!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</span>
+<a name="ln-420"></a>   <span class="c">!write(*,g)(trim(strings(i)),i=1,csz)</span>
+<a name="ln-421"></a>   <span class="c">!write(*,g)cindx</span>
+<a name="ln-422"></a>   <span class="k">call </span><span class="n">unit_check_done</span><span class="p">(</span><span class="s1">&#39;mulcnt&#39;</span><span class="p">,</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;test completed&#39;</span><span class="p">)</span>
+<a name="ln-423"></a><span class="k">end subroutine </span><span class="n">test_mulcnt</span>
+<a name="ln-424"></a><span class="c">!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</span>
+<a name="ln-425"></a><span class="k">function </span><span class="n">random_string</span><span class="p">(</span><span class="n">chars</span><span class="p">,</span><span class="n">length</span><span class="p">)</span> <span class="k">result</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+<a name="ln-426"></a>
+<a name="ln-427"></a><span class="c">!$@(#) M_random::random_string(3f): create random string composed of provided characters of specified length</span>
+<a name="ln-428"></a>
+<a name="ln-429"></a><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>  <span class="kd">::</span> <span class="n">chars</span>
+<a name="ln-430"></a><span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span>           <span class="kd">::</span> <span class="n">length</span>
+<a name="ln-431"></a><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">out</span>
+<a name="ln-432"></a><span class="kt">real</span>                         <span class="kd">::</span> <span class="n">x</span>
+<a name="ln-433"></a><span class="kt">integer</span>                      <span class="kd">::</span> <span class="n">ilen</span>   <span class="c">! length of list of characters</span>
+<a name="ln-434"></a><span class="kt">integer</span>                      <span class="kd">::</span> <span class="n">which</span>
+<a name="ln-435"></a><span class="kt">integer</span>                      <span class="kd">::</span> <span class="n">i</span>
+<a name="ln-436"></a>   <span class="n">ilen</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)</span>
+<a name="ln-437"></a>   <span class="n">out</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+<a name="ln-438"></a>   <span class="k">if</span><span class="p">(</span><span class="n">ilen</span><span class="p">.</span><span class="n">gt</span><span class="p">.</span><span class="mi">0</span><span class="p">)</span><span class="k">then</span>
+<a name="ln-439"></a><span class="k">      do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">length</span>
+<a name="ln-440"></a>         <span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a name="ln-441"></a>         <span class="n">which</span><span class="o">=</span><span class="nb">nint</span><span class="p">(</span><span class="kt">real</span><span class="p">(</span><span class="n">ilen</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+<a name="ln-442"></a>         <span class="n">out</span><span class="o">=</span><span class="n">out</span><span class="o">//</span><span class="n">chars</span><span class="p">(</span><span class="n">which</span><span class="p">:</span><span class="n">which</span><span class="p">)</span>
+<a name="ln-443"></a>      <span class="k">enddo</span>
+<a name="ln-444"></a><span class="k">   endif</span>
+<a name="ln-445"></a><span class="k">end function </span><span class="n">random_string</span>
+<a name="ln-446"></a><span class="c">!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</span>
+<a name="ln-447"></a><span class="k">end program </span><span class="n">runtest</span>
+<a name="ln-448"></a><span class="c">!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT</span>
 </pre></div>
 
     </section>
@@ -728,7 +727,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 08:34  
+             on 2022-04-21 19:18  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

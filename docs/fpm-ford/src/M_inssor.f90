@@ -16,9 +16,9 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_inssor (XDONT)
+!!     Subroutine inssor (XDONT)
 !!
-!!             ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
+!!             ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!

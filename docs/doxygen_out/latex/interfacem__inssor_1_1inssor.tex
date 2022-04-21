@@ -194,11 +194,11 @@ subroutine \mbox{\hyperlink{interfacem__inssor_1_1inssor_a4ca7a2a1c51667511f8203
 \doxysubsubsection{\texorpdfstring{real64\_inssor()}{real64\_inssor()}}
 {\footnotesize\ttfamily subroutine m\+\_\+inssor\+::inssor\+::real64\+\_\+inssor (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{X\+D\+O\+NT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__inssor_autotoc_md38}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inssor_autotoc_md38}
-inssor(3f) -\/ \mbox{[}orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Insertion sort, generally for small or nearly sorted arrays)\hypertarget{namespacem__inssor_autotoc_md39}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inssor_autotoc_md39}
-\begin{DoxyVerb} Subroutine ${KIND}_inssor (XDONT)
+\hypertarget{namespacem__inssor_autotoc_md39}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inssor_autotoc_md39}
+inssor(3f) -\/ \mbox{[}orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Insertion sort, generally for small or nearly sorted arrays)\hypertarget{namespacem__inssor_autotoc_md40}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inssor_autotoc_md40}
+\begin{DoxyVerb} Subroutine inssor (XDONT)
 
-         ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
+         ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
 
 Where ${TYPE}(kind=${KIND}) may be
 
@@ -207,21 +207,21 @@ Where ${TYPE}(kind=${KIND}) may be
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
 \end{DoxyVerb}
-\hypertarget{namespacem__inssor_autotoc_md40}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inssor_autotoc_md40}
+\hypertarget{namespacem__inssor_autotoc_md41}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inssor_autotoc_md41}
 Sorts X\+D\+O\+NT into ascending order (Insertion sort)
 
-This subroutine uses an insertion sort. It does not use any work array and is faster when X\+D\+O\+NT is of very small size ($<$ 20), or already almost sorted, but worst case behavior can happen fairly probably (initially inverse sorted). In many cases, the quicksort or merge sort method is faster.\hypertarget{namespacem__inssor_autotoc_md41}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inssor_autotoc_md41}
-X\+D\+O\+NT array to sort\hypertarget{namespacem__inssor_autotoc_md42}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inssor_autotoc_md42}
+This subroutine uses an insertion sort. It does not use any work array and is faster when X\+D\+O\+NT is of very small size ($<$ 20), or already almost sorted, but worst case behavior can happen fairly probably (initially inverse sorted). In many cases, the quicksort or merge sort method is faster.\hypertarget{namespacem__inssor_autotoc_md42}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inssor_autotoc_md42}
+X\+D\+O\+NT array to sort\hypertarget{namespacem__inssor_autotoc_md43}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inssor_autotoc_md43}
 Sample program\+:
 
 program demo\+\_\+inssor ! sort an array using insertion sort use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+inssor, only \+: inssor implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. real(kind=real32) \+:: valsr(2000) real(kind=real64) \+:: valsd(2000) integer \+:: valsi(2000) integer \+:: i call random\+\_\+seed() call random\+\_\+number(valsr) call random\+\_\+number(valsd) valsi=int(valsr$\ast$1000000.0) valsr=valsr$\ast$1000000.0-\/500000.\+0 valsd=valsd$\ast$1000000.0-\/500000.\+0 call inssor(valsi) do i=1,size(valsi)-\/1 if (valsi(i+1).lt.\+valsi(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 1 endif enddo call inssor(valsr) do i=1,size(valsr)-\/1 if (valsr(i+1).lt.\+valsr(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 2 endif enddo call inssor(valsd) do i=1,size(valsd)-\/1 if (valsd(i+1).lt.\+valsd(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 3 endif enddo write($\ast$,$\ast$)\textquotesingle{}random arrays are now sorted\textquotesingle{} end program demo\+\_\+inssor
 
 Results\+:
 
-random arrays are now sorted\hypertarget{namespacem__inssor_autotoc_md43}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inssor_autotoc_md43}
+random arrays are now sorted\hypertarget{namespacem__inssor_autotoc_md44}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inssor_autotoc_md44}
 Michel Olagnon -\/ Apr. 2000
 
-John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__inssor_autotoc_md44}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inssor_autotoc_md44}
+John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__inssor_autotoc_md45}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inssor_autotoc_md45}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{101 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}

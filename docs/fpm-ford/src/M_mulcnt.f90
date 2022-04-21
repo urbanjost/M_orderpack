@@ -19,7 +19,7 @@ contains
 !!     Subroutine mulcnt (XDONT, IMULT)
 !!
 !!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
-!!       Integer, Dimension (:), Intent (Out) :: IMULT
+!!       Integer, Intent (Out)               :: IMULT(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -39,59 +39,34 @@ contains
 !!
 !!##EXAMPLES
 !!
-!!   Sample program:
+!! Sample program:
 !!
-!!    program demo_mulcnt
-!!    use M_mulcnt, only : mulcnt
-!!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    real,parameter :: xdont(*)=[1,2,3,4,5,6,7,4,5,6,6,2]
-!!    integer, dimension(size(xdont)) :: imult
-!!    character(len=20),allocatable :: strings(:)
-!!       !
-!!       call mulcnt(xdont,imult)
-!!       write(*,*)xdont
-!!       write(*,g)imult
-!!       !
-!!       strings= [ character(len=20) ::                           &
-!!       & 'red',    'green', 'blue', 'yellow', 'orange',   'black']
-!!       call printme()
-!!       !
-!!       strings= [ character(len=20) ::                           &
-!!       & 'two  ',  'four ', 'three', 'five',   'five',           &
-!!       & 'two  ',  'four ', 'three', 'five',   'five',           &
-!!       & 'four ',  'four ', 'three', 'one  ',  'five']
-!!       call printme()
-!!       !
-!!       strings=['purple', 'purple', 'purple', 'purple']
-!!       call printme()
-!!       contains
-!!       subroutine printme()
-!!       integer,allocatable :: cindx(:)
-!!       integer :: csz
-!!       integer :: i
-!!          csz=size(strings)
-!!          if(allocated(cindx))deallocate(cindx)
-!!          allocate(cindx(csz))
-!!          call mulcnt(strings,cindx)
-!!          write(*,g)(trim(strings(i)),i=1,csz)
-!!          write(*,g)cindx
-!!       end subroutine printme
-!!    end program demo_mulcnt
+!!      program demo_mulcnt
+!!      use M_mulcnt, only : mulcnt
+!!      ! determine how many times each value appears in an input array
+!!      implicit none
+!!      character(len=*),parameter    :: g='(*(g0,1x))'
+!!      character(len=20),allocatable :: strings(:)
+!!      integer,allocatable           :: cindx(:)
+!!      integer                       :: csz
+!!      integer                       :: i
+!!         ! each name appears the number of times its name represents
+!!         strings= [ character(len=20) ::                           &
+!!         & 'two  ',  'four ', 'three', 'five',   'five',           &
+!!         & 'two  ',  'four ', 'three', 'five',   'five',           &
+!!         & 'four ',  'four ', 'three', 'one  ',  'five']
+!!         csz=size(strings)
+!!         if(allocated(cindx))deallocate(cindx)
+!!         allocate(cindx(csz))
+!!         call mulcnt(strings,cindx)
+!!         write(*,g)(trim(strings(i)),i=1,csz)
+!!         write(*,g)cindx
+!!      end program demo_mulcnt
 !!
-!!   Results:
+!! Results:
 !!
-!!       1.000000   2.000000   3.000000   4.000000   5.000000
-!!       6.000000   7.000000   4.000000   5.000000   6.000000
-!!       6.000000   2.000000
-!!    1 2 1 2 2 3 1 2 2 3 3 2
-!!    red green blue yellow orange black
-!!    1 1 1 1 1 1
-!!    two four three five five two four three five five four four three one five
-!!    2 4 3 5 5 2 4 3 5 5 4 4 3 1 5
-!!    purple purple purple purple
-!!    4 4 4 4
-!!
+!!  two four three five five two four three five five four four three one five
+!!  2   4    3     5    5    2   4    3     5    5    4    4    3     1   5
 !!
 !!##AUTHOR
 !!     Michel Olagnon, Mar 2000

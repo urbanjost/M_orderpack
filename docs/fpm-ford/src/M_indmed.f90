@@ -16,10 +16,10 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_indmed (XDONT, INDM)
+!!     Subroutine indmed (XDONT, INDM)
 !!
-!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!       Integer, Intent (Out) :: INDM
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       Integer, Intent (Out)               :: INDM
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!

@@ -15,11 +15,10 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!
 !!     Subroutine inspar (XDONT, NORD)
 !!
-!!      ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
-!!      Integer, Intent (In) :: NORD
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
+!!      Integer, Intent (In)                   :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!

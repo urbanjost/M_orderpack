@@ -314,15 +314,15 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md31"></a>
+<h2><a class="anchor" id="autotoc_md32"></a>
 NAME</h2>
 <p>inspar(3f) - [orderpack:SORT:PARTIAL] partially sorts an array, bringing the N lowest values to the beginning of the array</p>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
 SYNOPSIS</h2>
 <pre class="fragment"> Subroutine inspar (XDONT, NORD)
 
-  ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
-  Integer, Intent (In) :: NORD
+  ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
+  Integer, Intent (In)                   :: NORD
 
 Where ${TYPE}(kind=${KIND}) may be
 
@@ -330,14 +330,14 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
-</pre><h2><a class="anchor" id="autotoc_md33"></a>
+</pre><h2><a class="anchor" id="autotoc_md34"></a>
 DESCRIPTION</h2>
 <p>INSPAR partially sorts XDONT, bringing the NORD lowest values to the beginning of the array.</p>
 <p>This subroutine uses an insertion sort, limiting insertion to the first NORD values. It does not use any work array and is faster when NORD is very small (2-5), but worst case behavior can happen fairly probably (initially inverse sorted). Therefore, in many cases, the refined quicksort method is faster.</p>
-<h2><a class="anchor" id="autotoc_md34"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 OPTIONS</h2>
 <p>XDONT The array to partially sort NORD number of sorted values to return.</p>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<h2><a class="anchor" id="autotoc_md36"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
 <p>program demo_inspar ! partially sort an array use M_inspar, only : inspar implicit none character(len=*),parameter :: g='(*(g0,1x))' integer :: nord</p>
@@ -346,11 +346,11 @@ EXAMPLES</h2>
 <p>Results:</p>
 <p>Original.................: 10 5 7 1 4 5 6 8 9 10 1 Number of indices to sort: 5 5 Lowest values..........: 1 1 4 5 5 Entire array.............: 1 1 4 5 5 10 7 8 9 10 6</p>
 <p>Original.................: fan a car be egg dam gas Number of indices to sort: 3 3 Lowest values..........: a be car Entire array.............: a be car fan egg dam gas</p>
-<h2><a class="anchor" id="autotoc_md36"></a>
+<h2><a class="anchor" id="autotoc_md37"></a>
 AUTHOR</h2>
 <p>Michel Olagnon - Feb. 2000</p>
 <p>John Urban, 2022.04.16 o added man-page and reduced to a template using the prep(1) preprocessor.</p>
-<h2><a class="anchor" id="autotoc_md37"></a>
+<h2><a class="anchor" id="autotoc_md38"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keywordtype">   Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: xdont</div>

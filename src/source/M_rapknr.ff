@@ -15,11 +15,11 @@ NAME
                 to a specified number of values, in DECREASING order.  
 
 SYNOPSIS
-    Subroutine ${KIND}_rapknr (XDONT, IRNGT, NORD)
+    Subroutine rapknr (XDONT, IRNGT, NORD)
 
-      ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-      Integer, Dimension (:), Intent (Out) :: IRNGT
-      Integer, Intent (In) :: NORD
+      ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+      Integer, Intent (Out)               :: IRNGT(:)
+      Integer, Intent (In)                :: NORD
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -29,13 +29,16 @@ SYNOPSIS
 $!      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
-   Ranks partially XDONT by IRNGT, up to order NORD, in decreasing order.
-   rapknr = (rnkpar backwards)
+   Partially ranks input array XDONT() in decreasing order up to order
+   NORD, placing the indices pointing to the selected values into IRNGT.
 
-   This routine uses a pivoting strategy such as the one of finding
-   the median based on the quicksort algorithm, but we skew the pivot
-   choice to try to bring it to NORD as fast as possible. It uses 2
-   temporary arrays, where it stores the indices of the values larger
+   It is the same as RNKPAR(3f) except for generating a decreasing instead
+   of ascending order ( "rapknr" = "rnkpar" backwards).
+
+   Internally this routine uses a pivoting strategy such as the one of
+   finding the median based on the quicksort algorithm, but we skew the
+   pivot choice to try to bring it to NORD as fast as possible. It uses
+   two temporary arrays, where it stores the indices of the values larger
    than the pivot (IHIGT), and the indices of values smaller than the
    pivot that we might still need later on (ILOWT). It iterates until
    it can bring the number of values in IHIGT to exactly NORD, and then
@@ -51,6 +54,7 @@ EXAMPLES
   Sample program:
 
    program demo_rapknr
+   ! create index to lowest N values in input array in decreasing order
    use M_rapknr, only : rapknr
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'

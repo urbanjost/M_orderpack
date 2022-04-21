@@ -1,4 +1,5 @@
      program demo_rinpar
+     ! partially rank N lowest values in an array
      use M_rinpar, only : rinpar
      implicit none
      character(len=*),parameter :: g='(*(g0,1x))'

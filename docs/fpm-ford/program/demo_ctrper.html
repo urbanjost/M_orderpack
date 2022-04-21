@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.3% of total for programs.">32 statements</a>
+    title=" 2.1% of total for programs.">30 statements</a>
      </li> 
      
      
@@ -171,15 +171,13 @@
       
       <a class="list-group-item" href="../program/demo_ctrper.html#variable-g~3">g</a>
       
-      <a class="list-group-item" href="../program/demo_ctrper.html#variable-i~19">i</a>
+      <a class="list-group-item" href="../program/demo_ctrper.html#variable-i~17">i</a>
       
-      <a class="list-group-item" href="../program/demo_ctrper.html#variable-isz~4">isz</a>
+      <a class="list-group-item" href="../program/demo_ctrper.html#variable-isz~3">isz</a>
       
       <a class="list-group-item" href="../program/demo_ctrper.html#variable-j~2">j</a>
       
       <a class="list-group-item" href="../program/demo_ctrper.html#variable-list~2">list</a>
-      
-      <a class="list-group-item" href="../program/demo_ctrper.html#variable-xdont~12">xdont</a>
       
       <a class="list-group-item" href="../program/demo_ctrper.html#variable-xout~2">xout</a>
       
@@ -260,15 +258,13 @@
       
       <a class="list-group-item" href="../program/demo_ctrper.html#variable-g~3">g</a>
       
-      <a class="list-group-item" href="../program/demo_ctrper.html#variable-i~19">i</a>
+      <a class="list-group-item" href="../program/demo_ctrper.html#variable-i~17">i</a>
       
-      <a class="list-group-item" href="../program/demo_ctrper.html#variable-isz~4">isz</a>
+      <a class="list-group-item" href="../program/demo_ctrper.html#variable-isz~3">isz</a>
       
       <a class="list-group-item" href="../program/demo_ctrper.html#variable-j~2">j</a>
       
       <a class="list-group-item" href="../program/demo_ctrper.html#variable-list~2">list</a>
-      
-      <a class="list-group-item" href="../program/demo_ctrper.html#variable-xdont~12">xdont</a>
       
       <a class="list-group-item" href="../program/demo_ctrper.html#variable-xout~2">xout</a>
       
@@ -342,7 +338,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-i~19"></span>integer</td>
+  <td><span class="anchor" id="variable-i~17"></span>integer</td>
   
   
   <td></td><td>::</td>
@@ -356,7 +352,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-isz~4"></span>integer</td>
+  <td><span class="anchor" id="variable-isz~3"></span>integer</td>
   
   
   <td></td><td>::</td>
@@ -389,20 +385,6 @@
   
   <td>parameter</td><td>::</td>
   <td><strong>list</strong></td><td> =</td><td>'(*(g0:,", "))'</td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-xdont~12"></span>integer,</td>
-  
-  
-  <td>allocatable</td><td>::</td>
-  <td><strong>xdont</strong>(:)</td><td></td><td></td><td></td>
   
 </tr>
 
@@ -449,7 +431,6 @@
      <span class="k">implicit none</span>
 <span class="k">     </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">g</span><span class="o">=</span><span class="s1">&#39;(*(g0,1x))&#39;</span>
      <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">list</span><span class="o">=</span> <span class="s1">&#39;(*(g0:,&quot;, &quot;))&#39;</span>
-     <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">xdont</span><span class="p">(:)</span>
      <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">xout</span><span class="p">(:,:)</span>
      <span class="kt">integer</span>          <span class="kd">::</span> <span class="n">isz</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span>
      <span class="n">isz</span><span class="o">=</span><span class="mi">200</span>
@@ -458,17 +439,16 @@
         <span class="c">! make an array with three identical rows</span>
         <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">xout</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">xout</span><span class="p">)</span>
         <span class="k">allocate</span><span class="p">(</span><span class="n">xout</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">isz</span><span class="p">))</span>
-        <span class="n">xdont</span><span class="o">=</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="n">isz</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">10</span>
-        <span class="n">xout</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span><span class="o">=</span><span class="n">xdont</span>
-        <span class="n">xout</span><span class="p">(</span><span class="mi">2</span><span class="p">,:)</span><span class="o">=</span><span class="n">xdont</span>
-        <span class="n">xout</span><span class="p">(</span><span class="mi">3</span><span class="p">,:)</span><span class="o">=</span><span class="n">xdont</span>
+        <span class="n">xout</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span><span class="o">=</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">=</span><span class="n">isz</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span><span class="o">*</span><span class="mi">10</span>
+        <span class="n">xout</span><span class="p">(</span><span class="mi">2</span><span class="p">,:)</span><span class="o">=</span><span class="n">xout</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span>
+        <span class="n">xout</span><span class="p">(</span><span class="mi">3</span><span class="p">,:)</span><span class="o">=</span><span class="n">xout</span><span class="p">(</span><span class="mi">1</span><span class="p">,:)</span>
         <span class="c">! pertube each row a different amount</span>
         <span class="k">call </span><span class="n">ctrper</span><span class="p">(</span><span class="n">xout</span><span class="p">(</span><span class="mi">1</span><span class="p">,:),</span><span class="mf">0.0</span><span class="p">)</span>
         <span class="k">call </span><span class="n">ctrper</span><span class="p">(</span><span class="n">xout</span><span class="p">(</span><span class="mi">2</span><span class="p">,:),</span><span class="mf">0.1</span><span class="p">)</span>
         <span class="k">call </span><span class="n">ctrper</span><span class="p">(</span><span class="n">xout</span><span class="p">(</span><span class="mi">3</span><span class="p">,:),</span><span class="mf">1.0</span><span class="p">)</span>
         <span class="c">! show values</span>
         <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(a)&#39;</span><span class="p">)</span><span class="s1">&#39;count    unchanged  perturbed  random&#39;</span>
-        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span>
+        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">xout</span><span class="p">,</span><span class="nb">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
            <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="s1">&#39;(*(i8,1x))&#39;</span><span class="p">)</span><span class="n">i</span><span class="p">,</span><span class="n">xout</span><span class="p">(:,</span><span class="n">i</span><span class="p">)</span>
         <span class="k">enddo</span>
 <span class="k">     </span><span class="nb">char</span><span class="p">:</span> <span class="k">block</span>
@@ -502,7 +482,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 08:34  
+             on 2022-04-21 19:18  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

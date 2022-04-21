@@ -410,12 +410,12 @@ subroutine \mbox{\hyperlink{interfacem__mrgref_1_1mrgref_a28f2276a486ce5eac76307
 \doxysubsubsection{\texorpdfstring{real64\_mrgref()}{real64\_mrgref()}}
 {\footnotesize\ttfamily subroutine m\+\_\+mrgref\+::mrgref\+::real64\+\_\+mrgref (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__mrgref_autotoc_md53}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__mrgref_autotoc_md53}
-mrgref(3f) -\/ \mbox{[}orderpack\+:R\+A\+NK\mbox{]} create an I\+N\+D\+EX that defines the order of array sorted in ascending order (basic merge-\/sort)\hypertarget{namespacem__mrgref_autotoc_md54}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__mrgref_autotoc_md54}
-\begin{DoxyVerb} Subroutine ${KIND}_mrgref (XVALT, IRNGT)
+\hypertarget{namespacem__mrgref_autotoc_md54}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__mrgref_autotoc_md54}
+mrgref(3f) -\/ \mbox{[}orderpack\+:R\+A\+NK\mbox{]} create an I\+N\+D\+EX that defines the order of array sorted in ascending order (basic merge-\/sort)\hypertarget{namespacem__mrgref_autotoc_md55}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__mrgref_autotoc_md55}
+\begin{DoxyVerb} Subroutine mrgref (XVALT, IRNGT)
 
-   ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XVALT
-   Integer, Dimension (:), Intent (Out) :: IRNGT
+   ${TYPE} (kind=${KIND}), Intent (In) :: XVALT(:)
+   Integer, Intent (Out)               :: IRNGT(:)
 
 Where ${TYPE}(kind=${KIND}) may be
 
@@ -424,16 +424,16 @@ Where ${TYPE}(kind=${KIND}) may be
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
 \end{DoxyVerb}
-\hypertarget{namespacem__mrgref_autotoc_md55}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__mrgref_autotoc_md55}
+\hypertarget{namespacem__mrgref_autotoc_md56}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__mrgref_autotoc_md56}
 Ranks array X\+V\+A\+LT, filling array I\+R\+N\+GT with sorted indices.
 
 It uses a basic merge-\/sort.
 
-This version is not optimized for performance, and is thus not as difficult to read as some other ones.\hypertarget{namespacem__mrgref_autotoc_md56}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__mrgref_autotoc_md56}
-X\+V\+A\+LT input array to rank I\+R\+N\+GT returned rank array\hypertarget{namespacem__mrgref_autotoc_md57}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__mrgref_autotoc_md57}
+This version is not optimized for performance, and is thus not as difficult to read as some other ones.\hypertarget{namespacem__mrgref_autotoc_md57}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__mrgref_autotoc_md57}
+X\+V\+A\+LT input array to rank I\+R\+N\+GT returned rank array\hypertarget{namespacem__mrgref_autotoc_md58}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__mrgref_autotoc_md58}
 Sample program\+:
 
-program demo\+\_\+mrgref use M\+\_\+mrgref, only \+: mrgref ! create an index that orders an array in ascending order implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,parameter \+:: dp=kind(0.\+0d0) integer,parameter \+:: isz=10000 real(kind=dp) \+:: dd(isz) real(kind=dp) \+:: pp integer \+:: indx(isz) integer \+:: i,j,k character(len=\+:),allocatable \+:: strings(\+:) integer,allocatable \+:: cindx(\+:) ! make some random numbers call random\+\_\+seed() call random\+\_\+number(dd) dd=dd-\/0.\+50\+\_\+dp k=int(log(huge(0.\+0\+\_\+dp))/log(2.\+0\+\_\+dp))-\/1 do i=1,isz call random\+\_\+number(pp) j=floor((k+1)$\ast$pp) dd(i)=dd(i)$\ast$(2.\+0\+\_\+dp$\ast$$\ast$j) enddo ! rank the numeric data call mrgref(dd,indx) ! check order do i=1,isz-\/1 if(dd(indx(i)).gt.\+dd(indx(i+1)))then write($\ast$,g)\textquotesingle{}E\+R\+R\+OR\+: data not sorted i=\textquotesingle{},i,\textquotesingle{}index=\textquotesingle{},indx(i), \& \& \textquotesingle{}values \textquotesingle{},dd(indx(i)),dd(indx(i+1)) stop 1 endif enddo ! sort data using rank values dd=dd(indx) write($\ast$,g)\textquotesingle{}sorted \textquotesingle{},isz,\textquotesingle{}values\textquotesingle{} write($\ast$,g)\textquotesingle{}from\textquotesingle{},dd(1),\textquotesingle{}to\textquotesingle{},dd(isz) write($\ast$,$\ast$)minval(dd).eq.\+dd(1) write($\ast$,$\ast$)maxval(dd).eq.\+dd(isz) write($\ast$,$\ast$)minloc(dd).eq.\+1 write($\ast$,$\ast$)maxloc(dd).eq.\+isz ! do a character sort strings= \mbox{[} character(len=20) \+:: \& \& \textquotesingle{}red\textquotesingle{}, \textquotesingle{}green\textquotesingle{}, \textquotesingle{}blue\textquotesingle{}, \textquotesingle{}yellow\textquotesingle{}, \textquotesingle{}orange\textquotesingle{}, \textquotesingle{}black\textquotesingle{}, \& \& \textquotesingle{}white\textquotesingle{}, \textquotesingle{}brown\textquotesingle{}, \textquotesingle{}gray\textquotesingle{}, \textquotesingle{}cyan\textquotesingle{}, \textquotesingle{}magenta\textquotesingle{}, \& \& \textquotesingle{}purple\textquotesingle{}\mbox{]} if(allocated(cindx))deallocate(cindx) allocate(cindx(size(strings)))
+program demo\+\_\+mrgref ! create an index that can order an array in ascending order use M\+\_\+mrgref, only \+: mrgref implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,parameter \+:: dp=kind(0.\+0d0) integer,parameter \+:: isz=10000 real(kind=dp) \+:: dd(isz) real(kind=dp) \+:: pp integer \+:: indx(isz) integer \+:: i,j,k character(len=\+:),allocatable \+:: strings(\+:) integer,allocatable \+:: cindx(\+:) ! make some random numbers call random\+\_\+seed() call random\+\_\+number(dd) dd=dd-\/0.\+50\+\_\+dp k=int(log(huge(0.\+0\+\_\+dp))/log(2.\+0\+\_\+dp))-\/1 do i=1,isz call random\+\_\+number(pp) j=floor((k+1)$\ast$pp) dd(i)=dd(i)$\ast$(2.\+0\+\_\+dp$\ast$$\ast$j) enddo ! rank the numeric data call mrgref(dd,indx) ! check order do i=1,isz-\/1 if(dd(indx(i)).gt.\+dd(indx(i+1)))then write($\ast$,g)\textquotesingle{}E\+R\+R\+OR\+: data not sorted i=\textquotesingle{},i,\textquotesingle{}index=\textquotesingle{},indx(i), \& \& \textquotesingle{}values \textquotesingle{},dd(indx(i)),dd(indx(i+1)) stop 1 endif enddo ! sort data using rank values dd=dd(indx) write($\ast$,g)\textquotesingle{}sorted \textquotesingle{},isz,\textquotesingle{}values\textquotesingle{} write($\ast$,g)\textquotesingle{}from\textquotesingle{},dd(1),\textquotesingle{}to\textquotesingle{},dd(isz) write($\ast$,$\ast$)minval(dd).eq.\+dd(1) write($\ast$,$\ast$)maxval(dd).eq.\+dd(isz) write($\ast$,$\ast$)minloc(dd).eq.\+1 write($\ast$,$\ast$)maxloc(dd).eq.\+isz ! do a character sort strings= \mbox{[} character(len=20) \+:: \& \& \textquotesingle{}red\textquotesingle{}, \textquotesingle{}green\textquotesingle{}, \textquotesingle{}blue\textquotesingle{}, \textquotesingle{}yellow\textquotesingle{}, \textquotesingle{}orange\textquotesingle{}, \textquotesingle{}black\textquotesingle{}, \& \& \textquotesingle{}white\textquotesingle{}, \textquotesingle{}brown\textquotesingle{}, \textquotesingle{}gray\textquotesingle{}, \textquotesingle{}cyan\textquotesingle{}, \textquotesingle{}magenta\textquotesingle{}, \& \& \textquotesingle{}purple\textquotesingle{}\mbox{]} if(allocated(cindx))deallocate(cindx) allocate(cindx(size(strings)))
 
 write($\ast$,\textquotesingle{}(a,8(a\+:,\char`\"{},\char`\"{}))\textquotesingle{})\textquotesingle{}B\+E\+F\+O\+RE \textquotesingle{},\& \& (trim(strings(i)),i=1,size(strings))
 
@@ -447,10 +447,10 @@ do i=1,size(strings)-\/1 if(strings(i).gt.\+strings(i+1))then write($\ast$,$\ast
 
 Results\+:
 
-sorted 10000 values from -\/.\+3393216923767161E+308 to .4341912370205701E+308 T T T T B\+E\+F\+O\+RE red,green,blue,yellow,orange,black,white,brown, gray,cyan,magenta,purple S\+O\+R\+T\+ED black,blue,brown,cyan,gray,green,magenta,orange, purple,red,white,yellow\hypertarget{namespacem__mrgref_autotoc_md58}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__mrgref_autotoc_md58}
+sorted 10000 values from -\/.\+3393216923767161E+308 to .4341912370205701E+308 T T T T B\+E\+F\+O\+RE red,green,blue,yellow,orange,black,white,brown, gray,cyan,magenta,purple S\+O\+R\+T\+ED black,blue,brown,cyan,gray,green,magenta,orange, purple,red,white,yellow\hypertarget{namespacem__mrgref_autotoc_md59}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__mrgref_autotoc_md59}
 Michel Olagnon -\/ April 2000
 
-John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__mrgref_autotoc_md59}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__mrgref_autotoc_md59}
+John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__mrgref_autotoc_md60}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__mrgref_autotoc_md60}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{135 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}

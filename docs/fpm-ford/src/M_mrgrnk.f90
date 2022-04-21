@@ -15,10 +15,10 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ${KIND}_mrgrnk (XDONT, IRNGT)
+!!     Subroutine mrgrnk (XDONT, IRNGT)
 !!
-!!       ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
-!!       Integer, Dimension (:), Intent (Out) :: IRNGT
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       Integer, Intent (Out)               :: IRNGT(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28,10 +28,11 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!     MRGRNK produces a sorted ranking array of an input array, using an
-!!     optimized and modified version of merge-sort.
+!!     MRGRNK ranks an input array; i.e. it produces an index array that
+!!     can order an input array in ascending order .
 !!
-!!     For performance reasons, the first 2 passes are taken out of the
+!!     Internally, it uses an optimized and modified version of merge-sort.
+!!     For performance reasons, the first two passes are taken out of the
 !!     standard loop, and use dedicated coding.
 !!
 !!##OPTIONS
@@ -43,6 +44,7 @@ contains
 !!   Sample program:
 !!
 !!    program demo_mrgrnk
+!!    ! create an index that can order an array in ascending order
 !!    use M_mrgrnk, only : mrgrnk
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'

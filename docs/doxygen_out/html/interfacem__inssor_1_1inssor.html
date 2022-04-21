@@ -331,14 +331,14 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md38"></a>
+<h2><a class="anchor" id="autotoc_md39"></a>
 NAME</h2>
 <p>inssor(3f) - [orderpack:SORT] Sorts array into ascending order (Insertion sort, generally for small or nearly sorted arrays)</p>
-<h2><a class="anchor" id="autotoc_md39"></a>
+<h2><a class="anchor" id="autotoc_md40"></a>
 SYNOPSIS</h2>
-<pre class="fragment"> Subroutine ${KIND}_inssor (XDONT)
+<pre class="fragment"> Subroutine inssor (XDONT)
 
-         ${TYPE} (kind=${KIND}), Dimension (:), Intent (InOut) :: XDONT
+         ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
 
 Where ${TYPE}(kind=${KIND}) may be
 
@@ -346,24 +346,24 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
-</pre><h2><a class="anchor" id="autotoc_md40"></a>
+</pre><h2><a class="anchor" id="autotoc_md41"></a>
 DESCRIPTION</h2>
 <p>Sorts XDONT into ascending order (Insertion sort)</p>
 <p>This subroutine uses an insertion sort. It does not use any work array and is faster when XDONT is of very small size (&lt; 20), or already almost sorted, but worst case behavior can happen fairly probably (initially inverse sorted). In many cases, the quicksort or merge sort method is faster.</p>
-<h2><a class="anchor" id="autotoc_md41"></a>
+<h2><a class="anchor" id="autotoc_md42"></a>
 OPTIONS</h2>
 <p>XDONT array to sort</p>
-<h2><a class="anchor" id="autotoc_md42"></a>
+<h2><a class="anchor" id="autotoc_md43"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
 <p>program demo_inssor ! sort an array using insertion sort use,intrinsic :: iso_fortran_env, only : int32, real32, real64 use M_inssor, only : inssor implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. real(kind=real32) :: valsr(2000) real(kind=real64) :: valsd(2000) integer :: valsi(2000) integer :: i call random_seed() call random_number(valsr) call random_number(valsd) valsi=int(valsr*1000000.0) valsr=valsr*1000000.0-500000.0 valsd=valsd*1000000.0-500000.0 call inssor(valsi) do i=1,size(valsi)-1 if (valsi(i+1).lt.valsi(i))then write(*,*)'not sorted' stop 1 endif enddo call inssor(valsr) do i=1,size(valsr)-1 if (valsr(i+1).lt.valsr(i))then write(*,*)'not sorted' stop 2 endif enddo call inssor(valsd) do i=1,size(valsd)-1 if (valsd(i+1).lt.valsd(i))then write(*,*)'not sorted' stop 3 endif enddo write(*,*)'random arrays are now sorted' end program demo_inssor</p>
 <p>Results:</p>
 <p>random arrays are now sorted</p>
-<h2><a class="anchor" id="autotoc_md43"></a>
+<h2><a class="anchor" id="autotoc_md44"></a>
 AUTHOR</h2>
 <p>Michel Olagnon - Apr. 2000</p>
 <p>John Urban, 2022.04.16 o added man-page and reduced to a template using the prep(1) preprocessor.</p>
-<h2><a class="anchor" id="autotoc_md44"></a>
+<h2><a class="anchor" id="autotoc_md45"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">! __________________________________________________________</span></div>
