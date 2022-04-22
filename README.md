@@ -1,18 +1,20 @@
 ![ORDERPACK](docs/images/orderpack.gif)
 ## Name
-   orderpack(3f) - general and specialized ranking and sorting routines
+   **orderpack**(3f) - general and specialized ranking and sorting routines
    (LICENSE:CC0-1.0)
 
 ## Description
 
-This repository is a derivative of ORDERPACK 2.0 from Michel Olagnon that additionally
+This repository is a derivative of ORDERPACK 2.0 from Michel Olagnon
+that additionally
 
- - supports CHARACTER variables as well as numeric variables on many (but not all)
-   of the procedures.
- - has been restructured so as to be useable as an fpm(1) package
- - is placed in a git(1) repository for version control
- - had man-pages and working demonstration programs of each procedure added 
- - has a growing set of unit tests.
+ - supports CHARACTER variables as well as numeric variables on many of
+   the procedures.
+ - has been restructured so as to be useable as an fpm(1) package.
+ - is placed in a git(1) repository for version control.
+ - had man-pages and working demonstration programs of each procedure
+   added.
+ - contains a growing set of unit tests.
 
 Like the original, ORDERPACK 2.1 provides Fortran procedures for General
 and Specialized Ranking and Sorting Routines.  It includes Fortran 90

@@ -11,7 +11,7 @@ contains
 !>
 !!##NAME
 !!    indnth(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of
-!!                 array, i.e fractile of order N/SIZE(array) (QuickSort-like)
+!!                 array, or "fractile of order N/SIZE(array)" (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!

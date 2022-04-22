@@ -30,9 +30,9 @@ use M_inspar, only : inspar
 use M_rapknr, only : rapknr
 use M_unipar, only : unipar
 use M_mulcnt, only : mulcnt
-use M_uniinv
-use M_unirnk
-use M_unista
+use M_unirnk, only : unirnk
+use M_unista, only : unista
+use M_uniinv, only : uniinv
 implicit none
 character(len=*),parameter :: g='(*(g0,1x))'
 integer,parameter          :: dp=kind(0.0d0)
@@ -59,6 +59,9 @@ integer,parameter          :: dp=kind(0.0d0)
    call test_inspar()
    call test_unipar()
    call test_mulcnt()
+   call test_unirnk()
+   call test_unista()
+   call test_uniinv()
 
    call unit_check_stop()
 
@@ -401,8 +404,6 @@ integer :: nord
 end subroutine test_unipar
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_mulcnt()
-real,parameter :: xdont(*)=[1,2,3,4,5,6,7,4,5,6,6,2]
-integer, dimension(size(xdont)) :: imult
 character(len=20),allocatable :: strings(:)
 integer,allocatable :: cindx(:)
 integer :: csz
@@ -417,10 +418,57 @@ integer :: i
    if(allocated(cindx))deallocate(cindx)
    allocate(cindx(csz))
    call mulcnt(strings,cindx)
-   !write(*,g)(trim(strings(i)),i=1,csz)
-   !write(*,g)cindx
+   call unit_check('mulcnt',all(cindx .eq.  [2,4,3,5,5,2,4,3,5,5,4,4,3,1,5]) ,'returned values')
    call unit_check_done('mulcnt',msg='test completed')
 end subroutine test_mulcnt
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_unirnk()
+integer,allocatable :: xvalt(:)
+integer,allocatable :: irngt(:)
+integer :: nuni
+   call unit_check_start('unirnk', '-library orderpack') ! start tests
+   xvalt=[10,5,7,1,4,5,6,8,9,10,1]
+   if(allocated(irngt))deallocate(irngt)
+   allocate(irngt(size(xvalt)))
+   call unirnk(xvalt,irngt,nuni)
+   call unit_check('unirnk',nuni.eq.8,'number of indices. got',nuni,'expected',8)
+   call unit_check('unirnk',all(irngt(:nuni) .eq.  [ 4,5,2,7,3,8,9,1 ]) ,'returned indices')
+   call unit_check('unirnk',all(xvalt(irngt(:nuni)) .eq.  [ 1,4,5,6,7,8,9,10 ]) ,'sorted data')
+   call unit_check_done('unirnk',msg='test completed')
+end subroutine test_unirnk
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_unista()
+integer,allocatable :: xdont(:)
+integer :: nuni
+   call unit_check_start('unista', '-library orderpack') ! start tests
+   xdont=[44,33,33,33,22,11,33,44,55,33]
+   call unista(xdont,nuni)
+   call unit_check('unista',nuni.eq.5,'number of indices. got',nuni,'expected',5)
+   call unit_check('unista',all(xdont(:nuni) .eq.  [ 44,33,22,11,55 ]) ,'unique values')
+   call unit_check_done('unista',msg='test completed')
+end subroutine test_unista
+!TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+subroutine test_uniinv()
+integer,allocatable :: xdont(:)
+integer,allocatable :: igoest(:)
+integer,allocatable :: out(:)
+integer :: imx
+integer :: i
+   xdont=[10,20,30,10,20,30,10,20,30]
+   if(allocated(igoest))deallocate(igoest)
+   allocate(igoest(size(xdont)))
+   call uniinv(xdont,igoest)
+   call unit_check('uniinv',all(igoest .eq.  [ 1,2,3,1,2,3,1,2,3 ]) ,'returned indices')
+   imx=maxval(igoest)
+   call unit_check('unista',imx.eq.3,'unique indices. got',imx,'expected',3)
+   if(allocated(out))deallocate(out)
+   allocate(out(imx))
+   do i=1,size(xdont)
+           out(igoest(i))=xdont(i)
+   enddo
+   call unit_check('uniinv',all(xdont .eq.  [ 10,20,30 ]) ,'sorted unique values')
+   call unit_check_done('uniinv',msg='test completed')
+end subroutine test_uniinv
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 function random_string(chars,length) result(out)
 

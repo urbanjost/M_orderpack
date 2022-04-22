@@ -10,9 +10,8 @@ end interface rnkpar
 contains
 !>
 !!##NAME
-!!    rnkpar(3f) - [orderpack:RANK:PARTIAL] partially rank array, up to order
-!!                 N (ie. N is the number of sorted elements to return)
-!!                 (QuickSort-like)
+!!    rnkpar(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in
+!!                 ASCENDING order (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!
@@ -35,7 +34,7 @@ contains
 !!
 !!    This routine uses a pivoting strategy such as the one of finding the
 !!    median based on the quicksort algorithm, but we skew the pivot choice
-!!    to try to bring it to NORD as fast as possible. It uses 2 temporary
+!!    to try to bring it to NORD as fast as possible. It uses two temporary
 !!    arrays, where it stores the indices of the values smaller than the
 !!    pivot (ILOWT), and the indices of values larger than the pivot that we
 !!    might still need later on (IHIGT). It iterates until it can bring the

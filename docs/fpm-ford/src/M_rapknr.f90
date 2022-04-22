@@ -10,8 +10,8 @@ end interface rapknr
 contains
 !>
 !!##NAME
-!!    rapknr(3f) - [orderpack:RANK:PARTIAL] partially ranks an array up
-!!                 to a specified number of values, in DECREASING order.
+!!    rapknr(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in
+!!    DECREASING order.
 !!
 !!##SYNOPSIS
 !!

@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 2.1% of total for procedures.">15 statements</a>
+    title=" 1.8% of total for procedures.">14 statements</a>
      </li> 
      
      
@@ -177,11 +177,7 @@
       
       <a class="list-group-item" href="../proc/test_mulcnt.html#variable-i~7">i</a>
       
-      <a class="list-group-item" href="../proc/test_mulcnt.html#variable-imult">imult</a>
-      
       <a class="list-group-item" href="../proc/test_mulcnt.html#variable-strings">strings</a>
-      
-      <a class="list-group-item" href="../proc/test_mulcnt.html#variable-xdont~7">xdont</a>
       
     </div>
   </div>
@@ -261,11 +257,7 @@ subroutine test_mulcnt()
       
       <a class="list-group-item" href="../proc/test_mulcnt.html#variable-i~7">i</a>
       
-      <a class="list-group-item" href="../proc/test_mulcnt.html#variable-imult">imult</a>
-      
       <a class="list-group-item" href="../proc/test_mulcnt.html#variable-strings">strings</a>
-      
-      <a class="list-group-item" href="../proc/test_mulcnt.html#variable-xdont~7">xdont</a>
       
     </div>
   </div>
@@ -365,39 +357,11 @@ subroutine test_mulcnt()
   
 <tr>
   
-  <td><span class="anchor" id="variable-imult"></span>integer,</td>
-  
-  <td>public,</td>
-  <td>dimension(size(xdont))</td><td>::</td>
-  <td><strong>imult</strong></td><td></td><td></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
   <td><span class="anchor" id="variable-strings"></span>character(len=20),</td>
   
   <td>public,</td>
   <td>allocatable</td><td>::</td>
   <td><strong>strings</strong>(:)</td><td></td><td></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-xdont~7"></span>real,</td>
-  
-  <td>public,</td>
-  <td>parameter</td><td>::</td>
-  <td><strong>xdont</strong>(*)</td><td> =</td><td>[1, 2, 3, 4, 5, 6, 7, 4, 5, 6, 6, 2]</td><td></td>
   
 </tr>
 
@@ -425,8 +389,6 @@ subroutine test_mulcnt()
     <section>
     <h2><span class="anchor" id="src"></span>Source Code</h2>
     <div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">test_mulcnt</span><span class="p">()</span>
-<span class="kt">real</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">xdont</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
-<span class="kt">integer</span><span class="p">,</span> <span class="k">dimension</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">))</span> <span class="kd">::</span> <span class="n">imult</span>
 <span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">strings</span><span class="p">(:)</span>
 <span class="kt">integer</span><span class="p">,</span><span class="k">allocatable</span> <span class="kd">::</span> <span class="n">cindx</span><span class="p">(:)</span>
 <span class="kt">integer</span> <span class="kd">::</span> <span class="n">csz</span>
@@ -441,8 +403,7 @@ subroutine test_mulcnt()
    <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">cindx</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">cindx</span><span class="p">)</span>
    <span class="k">allocate</span><span class="p">(</span><span class="n">cindx</span><span class="p">(</span><span class="n">csz</span><span class="p">))</span>
    <span class="k">call </span><span class="n">mulcnt</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span><span class="n">cindx</span><span class="p">)</span>
-   <span class="c">!write(*,g)(trim(strings(i)),i=1,csz)</span>
-   <span class="c">!write(*,g)cindx</span>
+   <span class="k">call </span><span class="n">unit_check</span><span class="p">(</span><span class="s1">&#39;mulcnt&#39;</span><span class="p">,</span><span class="k">all</span><span class="p">(</span><span class="n">cindx</span> <span class="p">.</span><span class="n">eq</span><span class="p">.</span>  <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span> <span class="p">,</span><span class="s1">&#39;returned values&#39;</span><span class="p">)</span>
    <span class="k">call </span><span class="n">unit_check_done</span><span class="p">(</span><span class="s1">&#39;mulcnt&#39;</span><span class="p">,</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;test completed&#39;</span><span class="p">)</span>
 <span class="k">end subroutine </span><span class="n">test_mulcnt</span>
 </pre></div>
@@ -466,7 +427,7 @@ subroutine test_mulcnt()
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 19:18  
+             on 2022-04-21 23:46  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

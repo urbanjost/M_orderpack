@@ -10,7 +10,7 @@ end interface valmed
 contains
 !>
 !!##NAME
-!!    valmed(3f) - [orderpack:MEDIAN] finds the median VALUE of an array
+!!    valmed(3f) - [orderpack:MEDIAN] Returns median VALUE.
 !!
 !!##SYNOPSIS
 !!

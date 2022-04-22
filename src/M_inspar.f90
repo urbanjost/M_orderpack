@@ -10,8 +10,9 @@ end interface inspar
 contains
 !>
 !!##NAME
-!!    inspar(3f) - [orderpack:SORT:PARTIAL] partially sorts an array,
-!!                 bringing the N lowest values to the beginning of the array
+!!    inspar(3f) - [orderpack:SORT:PARTIAL] partially sorts an array
+!!                 (Insertion Sort, generally for small or nearly sorted
+!!                 arrays)
 !!
 !!##SYNOPSIS
 !!

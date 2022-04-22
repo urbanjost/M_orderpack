@@ -13,8 +13,8 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    uniinv(3f) - [orderpack:RANK:UNIQUE] a MergeSort inverse ranking of
-!!    an array, with duplicate entries assigned the same rank.
+!!    uniinv(3f) - [orderpack:RANK:UNIQUE] ranks an array, with duplicate
+!!    entries assigned the same rank(MergeSort)
 !!
 !!##SYNOPSIS
 !!
@@ -294,7 +294,11 @@ Subroutine real64_uniinv (XDONT, IGOEST)
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        XTST = NEARLESS (Min(XDONT(JWRKT(1)), XDONT(IRNGT(IINDB))))
+        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (XDONT(JWRKT(1)))
+        Else
+           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+        Endif
       Else
         XTST = NEARLESS (XDONT(JWRKT(1)))
       Endif
@@ -537,7 +541,11 @@ Subroutine real32_uniinv (XDONT, IGOEST)
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        XTST = NEARLESS (Min(XDONT(JWRKT(1)), XDONT(IRNGT(IINDB))))
+        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (XDONT(JWRKT(1)))
+        Else
+           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+        Endif
       Else
         XTST = NEARLESS (XDONT(JWRKT(1)))
       Endif
@@ -780,7 +788,11 @@ Subroutine int32_uniinv (XDONT, IGOEST)
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        XTST = NEARLESS (Min(XDONT(JWRKT(1)), XDONT(IRNGT(IINDB))))
+        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (XDONT(JWRKT(1)))
+        Else
+           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+        Endif
       Else
         XTST = NEARLESS (XDONT(JWRKT(1)))
       Endif
@@ -1023,7 +1035,11 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        XTST = NEARLESS (Min(XDONT(JWRKT(1)), XDONT(IRNGT(IINDB))))
+        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (XDONT(JWRKT(1)))
+        Else
+           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+        Endif
       Else
         XTST = NEARLESS (XDONT(JWRKT(1)))
       Endif

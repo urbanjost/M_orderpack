@@ -14,8 +14,8 @@ contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file uniinv.3orderpack.man
 NAME
-   uniinv(3f) - [orderpack:RANK:UNIQUE] a MergeSort inverse ranking of
-   an array, with duplicate entries assigned the same rank.
+   uniinv(3f) - [orderpack:RANK:UNIQUE] ranks an array, with duplicate
+   entries assigned the same rank(MergeSort)
 
 SYNOPSIS
     Subroutine uniinv (XDONT, IGOEST)
@@ -304,7 +304,11 @@ $ENDIF
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        XTST = NEARLESS (Min(XDONT(JWRKT(1)), XDONT(IRNGT(IINDB))))
+        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (XDONT(JWRKT(1)))
+        Else
+           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+        Endif
       Else
         XTST = NEARLESS (XDONT(JWRKT(1)))
       Endif

@@ -28,7 +28,7 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    MEDIAN() returns the median value of the array XDONT.  If an even
+!!    MEDIAN() returns the median value of the array XDONT. If an even
 !!    number of elements, it returns the average of the two "medians".
 !!
 !!    This routine uses a pivoting strategy similar to the method  of finding

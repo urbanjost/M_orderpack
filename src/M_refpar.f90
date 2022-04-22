@@ -10,9 +10,8 @@ end interface refpar
 contains
 !>
 !!##NAME
-!!    refpar(3f) - [orderpack:RANK:PARTIAL] partially ranks an array up
-!!                 to specified number of elements in ascending order
-!!                 (QuickSort-like)
+!!    refpar(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in
+!!                 ASCENDING order (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!

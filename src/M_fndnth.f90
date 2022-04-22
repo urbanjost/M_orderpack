@@ -10,8 +10,8 @@ end interface fndnth
 contains
 !>
 !!##NAME
-!!    fndnth(3f) - [orderpack:FRACTILE] Return Nth lowest ordered VALUE of array,
-!!                 i.e. return fractile of order N/SIZE(array) (InsertSort-like)
+!!    fndnth(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered value of array,
+!!                 or "fractile of order N/SIZE(array)" (InsertSort-like)
 !!
 !!##SYNOPSIS
 !!

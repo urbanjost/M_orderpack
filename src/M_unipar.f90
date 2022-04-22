@@ -10,7 +10,7 @@ end interface unipar
 contains
 !>
 !!##NAME
-!!    unipar(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially rank an array
+!!    unipar(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially ranks an array
 !!                 removing duplicates
 !!
 !!##SYNOPSIS

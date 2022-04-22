@@ -10,8 +10,8 @@ end interface rinpar
 contains
 !>
 !!##NAME
-!!    rinpar(3f) - [orderpack:RANK:PARTIAL] creates partial rank index of
-!!                 N lowest values in an array
+!!    rinpar(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in
+!!                 ASCENDING order (Insertion Sort)
 !!
 !!##SYNOPSIS
 !!

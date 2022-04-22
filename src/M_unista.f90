@@ -11,8 +11,8 @@ end interface unista
 contains
 !>
 !!##NAME
-!!    unista(3f) - [orderpack:UNIQUE] (Stable unique) Removes duplicates from an
-!!                 array otherwise retaining original order
+!!    unista(3f) - [orderpack:UNIQUE] removes duplicates from an array
+!!                 otherwise retaining original order (i.e. it is "stable")
 !!
 !!##SYNOPSIS
 !!
@@ -29,9 +29,8 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!    UNISTA ("Stable Unique") removes duplicates from an array, leaving
-!!    unique entries in the order of their first appearance in the initial
-!!    set.
+!!    UNISTA(3f) removes duplicates from an array stabily (i.e. leaving unique
+!!    entries in the order of their first appearance in the initial set).
 !!
 !!##OPTIONS
 !!     XDONT   input array to reduce to unique values

@@ -10,8 +10,8 @@ end interface median
 contains
 !>
 !!##NAME
-!!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE of array. If
-!!                 number of data is even, return average of the two
+!!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If
+!!                 number of data is even, returns average of the two
 !!                 "medians".
 !!
 !!##SYNOPSIS

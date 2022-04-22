@@ -33,7 +33,7 @@ contains
 !!
 !!    This subroutine uses an insertion sort, limiting insertion to the
 !!    first NORD values. An insertion sort is very fast when NORD is very
-!!    small (2-5).  Additionally, internally it requires only a work array
+!!    small (2-5). Additionally, internally it requires only a work array
 !!    of size NORD (and type of XDONT),
 !!
 !!    But worst case behavior can happen fairly probably (e.g., initially

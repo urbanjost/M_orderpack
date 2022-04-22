@@ -14,8 +14,7 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    unirnk(3f) - [orderpack:RANK:UNIQUE] performs a MergeSort ranking
-!!                 of an array, with removal of duplicate entries.
+!!    unirnk(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal of duplicate entries (MergeSort)
 !!
 !!##SYNOPSIS
 !!

@@ -10,9 +10,8 @@ end interface rnkpar
 contains
 !>
 !!##NAME
-!!    rnkpar(3f) - [orderpack:RANK:PARTIAL] partially rank array, up to order
-!!                 N (ie. N is the number of sorted elements to return)
-!!                 (QuickSort-like)
+!!    rnkpar(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in
+!!                 ASCENDING order (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!
