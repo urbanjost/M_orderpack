@@ -37,7 +37,7 @@ contains
 !!
 !!    The routine is similar to pure merge-sort ranking, but on the last
 !!    pass, it sets indices in IGOEST to the rank of the value in the ordered
-!!    set with duplicates ignored.  For performance reasons, the first two
+!!    set with duplicates ignored. For performance reasons, the first two
 !!    passes are taken out of the standard loop, and use dedicated coding.
 !!
 !!##OPTIONS

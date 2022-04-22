@@ -37,7 +37,7 @@ contains
 !!    This subroutine uses an insertion sort, limiting insertion to the first
 !!    NORD values. It does not use any work array and is fastest when NORD is
 !!    very small (2-5). but worst case behavior can happen fairly probably
-!!    (ie. if XDONT initially is inverse sorted).  Therefore, In many cases,
+!!    (ie. if XDONT initially is inverse sorted). Therefore, In many cases,
 !!    the refined quicksort method is faster.
 !!
 !!##OPTIONS

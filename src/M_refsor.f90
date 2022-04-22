@@ -33,7 +33,7 @@ contains
 !!    Quicksort chooses a "pivot" in the set, and explores the array from
 !!    both ends, looking for a value > pivot with the increasing index,
 !!    for a value <= pivot with the decreasing index, and swapping them
-!!    when it has found one of each.  The array is then subdivided in 2
+!!    when it has found one of each. The array is then subdivided in 2
 !!    ([3]) subsets:
 !!
 !!        { values <= pivot} {pivot} {values > pivot}
