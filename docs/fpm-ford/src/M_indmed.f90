@@ -11,15 +11,14 @@ end interface indmed
 contains
 !>
 !!##NAME
-!!    indmed(3f) - [orderpack:MEDIAN] Returns INDEX of median value of
-!!                 an array.
+!!    medianloc(3f) - [orderpack:MEDIAN] Returns median value's INDEX.
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine indmed (XDONT, INDM)
+!!     Subroutine medianloc (INVALS, OUTORD)
 !!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
-!!       Integer, Intent (Out)               :: INDM
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!!       Integer, Intent (Out)               :: OUTORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -29,77 +28,82 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!    INDMED() Finds the index of the median of the array XDONT() using
-!!    the recursive procedure described in Knuth, The Art of Computer
-!!    Programming, vol. 3, 5.3.3.
+!!    MEDIANLOC(3f) Returns the index of the median (((Size(INVALS)+1))/2^th value).
+!!
+!!
+!!    Internally, MEDIANLOC(3f) Finds the index of the median of the array
+!!    INVALS() using the recursive procedure described in Knuth, The Art of
+!!    Computer Programming, vol. 3, 5.3.3.
 !!
 !!    This procedure is linear in time, and does not require to be able
-!!    to interpolate in the set as the one used in INDNTH(), which can also
-!!    be used to calculate a median. It also has better worst-case behavior
-!!    than INDNTH(), but is about 30% slower on average for random uniformly
-!!    distributed values.
+!!    to interpolate in the set as the one used in INDNTH(3f), which can
+!!    also be used to calculate a median. It also has better worst-case
+!!    behavior than INDNTH(3f), but is about 10% slower on average for
+!!    random uniformly distributed values.
 !!
 !!##OPTIONS
-!!     XDONT     array to find the median value of.
-!!     INDM      index of the median value.
+!!     INVALS     array to find the median value of.
+!!     OUTORD     index of the median value.
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_indmed
+!!    program demo_medianloc
 !!    ! return index of median value
-!!    use M_indmed, only : indmed
+!!    use M_orderpack, only : medianloc
 !!    implicit none
-!!    real,allocatable :: xdont(:)
+!!    real,allocatable :: INVALS(:)
 !!    character(len=:),allocatable :: cdont(:)
+!!    character(len=*),parameter :: fmt='(i5,t11,g0)'
 !!    integer :: ii
-!!       xdont=[80.0,70.0,20.0,10.0,1000.0]
-!!       call indmed(xdont,ii)
-!!       write(*,*) ii,xdont(ii)
+!!       write(*,*) 'location  median'
+!!
+!!       INVALS=[80.0,70.0,20.0,10.0,1000.0]
+!!       call medianloc(INVALS,ii)
+!!       write(*,fmt) ii,INVALS(ii)
 !!       !
-!!       xdont=[11, 22, 33, 44, 55, 66, 77, 88]
-!!       call indmed(xdont,ii)
-!!       write(*,*) ii,xdont(ii)
+!!       INVALS=[11, 22, 33, 44, 55, 66, 77, 88]
+!!       call medianloc(INVALS,ii)
+!!       write(*,fmt) ii,INVALS(ii)
 !!       !
-!!       xdont=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]
-!!       call indmed(xdont,ii)
-!!       write(*,*) ii,xdont(ii)
+!!       INVALS=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]
+!!       call medianloc(INVALS,ii)
+!!       write(*,fmt) ii,INVALS(ii)
 !!       !
 !!       cdont=[character(len=20) :: 'apple','bee','cherry','duck',&
 !!               'elephant','finger','goose','h','insect','j']
-!!       call indmed(cdont,ii)
-!!       write(*,*) ii,cdont(ii)
+!!       call medianloc(cdont,ii)
+!!       write(*,fmt) ii,cdont(ii)
 !!       !
-!!    end program demo_indmed
+!!    end program demo_medianloc
 !!
 !!   Results:
-!!     > 2   70.0000000
-!!     > 4   44.0000000
-!!     > 5   33.0000000
-!!     > 5   elephant
+!!
+!!     location  median
+!!        2     70.00000
+!!        4     44.00000
+!!        5     33.00000
+!!        5     elephant
 !!
 !!##AUTHOR
-!!     Michel Olagnon, 2000-2012
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon, 2000-2012
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_indmed (XDONT, INDM)
-      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
-      Integer, Intent (Out) :: INDM
+Subroutine real64_indmed (INVALS, OUTORD)
+      Real (kind=real64), Dimension (:), Intent (In) :: INVALS
+      Integer, Intent (Out) :: OUTORD
 ! __________________________________________________________
       Integer :: IDON
 !
-      Allocate (IDONT (SIZE(XDONT)))
-      Do IDON = 1, SIZE(XDONT)
+      Allocate (IDONT (SIZE(INVALS)))
+      Do IDON = 1, SIZE(INVALS)
          IDONT (IDON) = IDON
       End Do
 !
-      Call real64_med (XDONT, IDONT, INDM)
+      Call real64_med (INVALS, IDONT, OUTORD)
 !
       Deallocate (IDONT)
 End Subroutine real64_indmed
@@ -475,18 +479,18 @@ Recursive Subroutine real64_med (XDATT, IDATT, ires_med)
          End If
 !
 END Subroutine real64_med
-Subroutine real32_indmed (XDONT, INDM)
-      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
-      Integer, Intent (Out) :: INDM
+Subroutine real32_indmed (INVALS, OUTORD)
+      Real (kind=real32), Dimension (:), Intent (In) :: INVALS
+      Integer, Intent (Out) :: OUTORD
 ! __________________________________________________________
       Integer :: IDON
 !
-      Allocate (IDONT (SIZE(XDONT)))
-      Do IDON = 1, SIZE(XDONT)
+      Allocate (IDONT (SIZE(INVALS)))
+      Do IDON = 1, SIZE(INVALS)
          IDONT (IDON) = IDON
       End Do
 !
-      Call real32_med (XDONT, IDONT, INDM)
+      Call real32_med (INVALS, IDONT, OUTORD)
 !
       Deallocate (IDONT)
 End Subroutine real32_indmed
@@ -862,18 +866,18 @@ Recursive Subroutine real32_med (XDATT, IDATT, ires_med)
          End If
 !
 END Subroutine real32_med
-Subroutine int32_indmed (XDONT, INDM)
-      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
-      Integer, Intent (Out) :: INDM
+Subroutine int32_indmed (INVALS, OUTORD)
+      Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
+      Integer, Intent (Out) :: OUTORD
 ! __________________________________________________________
       Integer :: IDON
 !
-      Allocate (IDONT (SIZE(XDONT)))
-      Do IDON = 1, SIZE(XDONT)
+      Allocate (IDONT (SIZE(INVALS)))
+      Do IDON = 1, SIZE(INVALS)
          IDONT (IDON) = IDON
       End Do
 !
-      Call int32_med (XDONT, IDONT, INDM)
+      Call int32_med (INVALS, IDONT, OUTORD)
 !
       Deallocate (IDONT)
 End Subroutine int32_indmed
@@ -1249,18 +1253,18 @@ Recursive Subroutine int32_med (XDATT, IDATT, ires_med)
          End If
 !
 END Subroutine int32_med
-Subroutine f_char_indmed (XDONT, INDM)
-      character (kind=f_char,len=*), Dimension (:), Intent (In) :: XDONT
-      Integer, Intent (Out) :: INDM
+Subroutine f_char_indmed (INVALS, OUTORD)
+      character (kind=f_char,len=*), Dimension (:), Intent (In) :: INVALS
+      Integer, Intent (Out) :: OUTORD
 ! __________________________________________________________
       Integer :: IDON
 !
-      Allocate (IDONT (SIZE(XDONT)))
-      Do IDON = 1, SIZE(XDONT)
+      Allocate (IDONT (SIZE(INVALS)))
+      Do IDON = 1, SIZE(INVALS)
          IDONT (IDON) = IDON
       End Do
 !
-      Call f_char_med (XDONT, IDONT, INDM)
+      Call f_char_med (INVALS, IDONT, OUTORD)
 !
       Deallocate (IDONT)
 End Subroutine f_char_indmed

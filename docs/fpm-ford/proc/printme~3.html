@@ -126,21 +126,21 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.8% of total for procedures.">6 statements</a>
+    title=" 2.4% of total for procedures.">11 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/demo_indnth.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/demo_rank_unique.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/demo_indnth.f90.html'>demo_indnth.f90</a></li>
+     <li><a href='../sourcefile/demo_rank_unique.f90.html'>demo_rank_unique.f90</a></li>
     
-     <li><a href='../program/demo_indnth.html'>demo_indnth</a></li>
+     <li><a href='../program/demo_rank_unique.html'>demo_rank_unique</a></li>
     
   
      <li class="active">printme</li>
@@ -171,7 +171,9 @@
   <div id="vars-0" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/printme~3.html#variable-ii">ii</a>
+      <a class="list-group-item" href="../proc/printme~3.html#variable-irngt">irngt</a>
+      
+      <a class="list-group-item" href="../proc/printme~3.html#variable-nuni">nuni</a>
       
     </div>
   </div>
@@ -196,14 +198,6 @@
 
 
 
-<div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-  <div class="list-group">
-    <a class="list-group-item" href="../proc/printme~3.html#src">printme</a>
-  </div>
-</div>
-
-
 
 </div>
 
@@ -211,7 +205,7 @@
     
     <div class="col-md-9" id='text'>
     <h2>
-subroutine printme(n)
+subroutine printme()
     
     
    
@@ -224,34 +218,8 @@ subroutine printme(n)
 
     <h3>Arguments</h3>
     
-      
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
-<tbody>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-n"></span>integer,</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>n</strong></td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
-
+    <em>None</em>
+    <br>
     
     
     
@@ -271,7 +239,9 @@ subroutine printme(n)
   <div id="vars-1" class="panel-collapse collapse">
     <div class="list-group">
       
-      <a class="list-group-item" href="../proc/printme~3.html#variable-ii">ii</a>
+      <a class="list-group-item" href="../proc/printme~3.html#variable-irngt">irngt</a>
+      
+      <a class="list-group-item" href="../proc/printme~3.html#variable-nuni">nuni</a>
       
     </div>
   </div>
@@ -294,14 +264,6 @@ subroutine printme(n)
 
 
 
-
-
-<div class="panel panel-primary">
-  <div class="panel-heading text-left"><h3 class="panel-title">Source Code</h3></div>
-  <div class="list-group">
-    <a class="list-group-item" href="../proc/printme~3.html#src">printme</a>
-  </div>
-</div>
 
 
 
@@ -329,11 +291,25 @@ subroutine printme(n)
   
 <tr>
   
-  <td><span class="anchor" id="variable-ii"></span>integer,</td>
+  <td><span class="anchor" id="variable-irngt"></span>integer,</td>
+  
+  <td>public,</td>
+  <td>allocatable</td><td>::</td>
+  <td><strong>irngt</strong>(:)</td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-nuni"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>ii</strong></td><td></td><td></td><td></td>
+  <td><strong>nuni</strong></td><td></td><td></td><td></td>
   
 </tr>
 
@@ -358,19 +334,6 @@ subroutine printme(n)
     
     
     
-    <section>
-    <h2><span class="anchor" id="src"></span>Source Code</h2>
-    <div class="highlight"><pre><span></span>     <span class="k">subroutine </span><span class="n">printme</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-     <span class="kt">integer</span><span class="p">,</span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span> <span class="kd">::</span> <span class="n">n</span>
-     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">ii</span>
-        <span class="n">ii</span><span class="o">=</span><span class="n">indnth</span><span class="p">(</span><span class="n">iarr</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-        <span class="k">print </span><span class="n">sp</span><span class="p">,</span><span class="s1">&#39;nord=&#39;</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="s1">&#39; index=&#39;</span><span class="p">,</span><span class="n">ii</span><span class="p">,</span><span class="s1">&#39; fractile=&#39;</span><span class="p">,</span><span class="n">iarr</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span>
-     <span class="k">end subroutine </span><span class="n">printme</span>
-</pre></div>
-
-    </section>
-    <br>
-    
     
     </div>
   </div>
@@ -387,7 +350,7 @@ subroutine printme(n)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 23:46  
+             on 2022-04-23 22:44  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

@@ -11,15 +11,15 @@ end interface ctrper
 contains
 !>
 !!##NAME
-!!    ctrper(3f) - [orderpack:PERMUTATION] generate a random permutation
-!!                 of an array leaving elements close to initial locations
+!!    perturb(3f) - [orderpack:PERMUTATION] generate a random permutation
+!!                  of an array leaving elements close to initial locations
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine ctrper (XDONT, PCLS)
+!!     Subroutine Perturb (INOUTVALS, CLOSENESS)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
-!!      Real, Intent (In)                      :: PCLS
+!!      ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
+!!      Real, Intent (In)                      :: CLOSENESS
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -29,52 +29,53 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!   Shuffle the array XDONT randomly, leaving elements close to their
+!!   Shuffle the array INOUTVALS randomly, leaving elements close to their
 !!   initial locations.
 !!
-!!   Nearbyness is controlled by PCLS. The relative proportion of initial
-!!   order and random order is defined as 1-PCLS / PCLS, thus when PCLS = 0,
-!!   there is no change in the order whereas the new order is fully random
-!!   when PCLS = 1.
+!!   Nearbyness is controlled by CLOSENESS. The relative proportion of
+!!   initial order and random order is defined as 1-CLOSENESS / CLOSENESS,
+!!   thus when CLOSENESS = 0, there is no change in the order whereas the
+!!   new order is fully random when CLOSENESS = 1.
 !!
 !!   Note this differs from adding random noise to the values. The original
 !!   values remain unchanged, their order is just perturbed.
 !!
-!!   Internally, the routine creates a real array of the indices of XDONT()
-!!   perturbed by random values that are based on the size of PCLS. The
-!!   new array is then ranked and the resulting index is used to permute
-!!   the input array.
+!!   Internally, the routine creates a real array of the indices of
+!!   INOUTVALS() perturbed by random values that are based on the size
+!!   of CLOSENESS. The new array is then ranked using MRGRNK(3f) and the
+!!   resulting index is used to permute the input array.
 !!
 !!##OPTIONS
-!!     XDONT      Array of values to perturb.
-!!     PCLS       Proportion of closeness, constrained to the range 0.0(no
-!!                change) to 1.0(fully random).
+!!     INOUTVALS   Array of values to perturb.
+!!     CLOSENESS   Proportion of closeness, constrained to the range 0.0(no
+!!                 change) to 1.0(fully random).
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_ctrper
+!!    program demo_perturb
 !!    ! generate a random perturbation of an array
-!!    use M_ctrper, only : ctrper
+!!    use M_orderpack, only : perturb
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
 !!    character(len=*),parameter :: list= '(*(g0:,", "))'
 !!    integer,allocatable :: xout(:,:)
 !!    integer          :: isz, i, j
 !!    isz=200
-!!       ! randomly pertube location of values
+!!       ! randomly perturb location of values
 !!       !
-!!       ! make an array with three identical rows
+!!       ! make an array with three initially identical rows of
+!!       ! values perturbed by different amounts
 !!       if(allocated(xout))deallocate(xout)
 !!       allocate(xout(3,isz))
 !!       xout(1,:)=[(i,i=isz,1,-1)]*10
 !!       xout(2,:)=xout(1,:)
 !!       xout(3,:)=xout(1,:)
-!!       ! pertube each row a different amount
-!!       call ctrper(xout(1,:),0.0)
-!!       call ctrper(xout(2,:),0.1)
-!!       call ctrper(xout(3,:),1.0)
+!!       ! perturb each row a different amount
+!!       call perturb(xout(1,:),0.0)
+!!       call perturb(xout(2,:),0.1)
+!!       call perturb(xout(3,:),1.0)
 !!       ! show values
 !!       write(*,'(a)')'count    unchanged  perturbed  random'
 !!       do i=1,size(xout,dim=2)
@@ -85,12 +86,12 @@ contains
 !!       cdont=[character(len=20) :: 'a', 'be', 'car', 'dam','fan','gas','egg']
 !!       isz=size(cdont)
 !!       write(*,g)'Original.................:',(trim(cdont(i)),i=1,isz)
-!!       call ctrper(cdont,1.0)
+!!       call perturb(cdont,1.0)
 !!       write(*,g)'Perturbed ...............:',(trim(cdont(i)),i=1,isz)
 !!       write(*,g)
 !!    endblock char
 !!
-!!    end program demo_ctrper
+!!    end program demo_perturb
 !!
 !!   Results:
 !!
@@ -125,95 +126,86 @@ contains
 !!    Original.................: a be car dam fan gas egg
 !!    Perturbed ...............: a be gas dam fan car egg
 !!
-!! ================================================================================
-!! ```
-!!
-!!   Results:
-!!
-!!
 !!##AUTHOR
-!!     Michel Olagnon, 2000-2012
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon, 2000-2012
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_ctrper (XDONT, PCLS)
+Subroutine real64_CTRPER (INOUTVALS, CLOSENESS)
 ! _________________________________________________________
-      Real (kind=real64), Dimension (:), Intent (InOut) :: XDONT
-      Real, Intent (In) :: PCLS
+      Real (kind=real64), Dimension (:), Intent (InOut) :: INOUTVALS
+      Real, Intent (In) :: CLOSENESS
 ! __________________________________________________________
 !
-      Real, Dimension (Size(XDONT)) :: XINDT
-      Integer, Dimension (Size(XDONT)) :: JWRKT
+      Real, Dimension (Size(INOUTVALS)) :: XINDT
+      Integer, Dimension (Size(INOUTVALS)) :: JWRKT
       Real :: PWRK
       Integer :: I
 !
       Call Random_Number (XINDT(:))
-      PWRK = Min (Max (0.0, PCLS), 1.0)
-      XINDT = Real(Size(XDONT)) * XINDT
-      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(XDONT)) ]
+      PWRK = Min (Max (0.0, CLOSENESS), 1.0)
+      XINDT = Real(Size(INOUTVALS)) * XINDT
+      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(INOUTVALS)) ]
       Call MRGRNK (XINDT, JWRKT)
-      XDONT = XDONT (JWRKT)
+      INOUTVALS = INOUTVALS (JWRKT)
 !
-End Subroutine real64_ctrper
-Subroutine real32_ctrper (XDONT, PCLS)
+End Subroutine real64_CTRPER
+Subroutine real32_CTRPER (INOUTVALS, CLOSENESS)
 ! _________________________________________________________
-      Real (kind=real32), Dimension (:), Intent (InOut) :: XDONT
-      Real, Intent (In) :: PCLS
+      Real (kind=real32), Dimension (:), Intent (InOut) :: INOUTVALS
+      Real, Intent (In) :: CLOSENESS
 ! __________________________________________________________
 !
-      Real, Dimension (Size(XDONT)) :: XINDT
-      Integer, Dimension (Size(XDONT)) :: JWRKT
+      Real, Dimension (Size(INOUTVALS)) :: XINDT
+      Integer, Dimension (Size(INOUTVALS)) :: JWRKT
       Real :: PWRK
       Integer :: I
 !
       Call Random_Number (XINDT(:))
-      PWRK = Min (Max (0.0, PCLS), 1.0)
-      XINDT = Real(Size(XDONT)) * XINDT
-      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(XDONT)) ]
+      PWRK = Min (Max (0.0, CLOSENESS), 1.0)
+      XINDT = Real(Size(INOUTVALS)) * XINDT
+      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(INOUTVALS)) ]
       Call MRGRNK (XINDT, JWRKT)
-      XDONT = XDONT (JWRKT)
+      INOUTVALS = INOUTVALS (JWRKT)
 !
-End Subroutine real32_ctrper
-Subroutine int32_ctrper (XDONT, PCLS)
+End Subroutine real32_CTRPER
+Subroutine int32_CTRPER (INOUTVALS, CLOSENESS)
 ! _________________________________________________________
-      Integer (kind=int32), Dimension (:), Intent (InOut) :: XDONT
-      Real, Intent (In) :: PCLS
+      Integer (kind=int32), Dimension (:), Intent (InOut) :: INOUTVALS
+      Real, Intent (In) :: CLOSENESS
 ! __________________________________________________________
 !
-      Real, Dimension (Size(XDONT)) :: XINDT
-      Integer, Dimension (Size(XDONT)) :: JWRKT
+      Real, Dimension (Size(INOUTVALS)) :: XINDT
+      Integer, Dimension (Size(INOUTVALS)) :: JWRKT
       Real :: PWRK
       Integer :: I
 !
       Call Random_Number (XINDT(:))
-      PWRK = Min (Max (0.0, PCLS), 1.0)
-      XINDT = Real(Size(XDONT)) * XINDT
-      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(XDONT)) ]
+      PWRK = Min (Max (0.0, CLOSENESS), 1.0)
+      XINDT = Real(Size(INOUTVALS)) * XINDT
+      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(INOUTVALS)) ]
       Call MRGRNK (XINDT, JWRKT)
-      XDONT = XDONT (JWRKT)
+      INOUTVALS = INOUTVALS (JWRKT)
 !
-End Subroutine int32_ctrper
-Subroutine f_char_ctrper (XDONT, PCLS)
+End Subroutine int32_CTRPER
+Subroutine f_char_CTRPER (INOUTVALS, CLOSENESS)
 ! _________________________________________________________
-      character (kind=f_char,len=*), Dimension (:), Intent (InOut) :: XDONT
-      Real, Intent (In) :: PCLS
+      character (kind=f_char,len=*), Dimension (:), Intent (InOut) :: INOUTVALS
+      Real, Intent (In) :: CLOSENESS
 ! __________________________________________________________
 !
-      Real, Dimension (Size(XDONT)) :: XINDT
-      Integer, Dimension (Size(XDONT)) :: JWRKT
+      Real, Dimension (Size(INOUTVALS)) :: XINDT
+      Integer, Dimension (Size(INOUTVALS)) :: JWRKT
       Real :: PWRK
       Integer :: I
 !
       Call Random_Number (XINDT(:))
-      PWRK = Min (Max (0.0, PCLS), 1.0)
-      XINDT = Real(Size(XDONT)) * XINDT
-      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(XDONT)) ]
+      PWRK = Min (Max (0.0, CLOSENESS), 1.0)
+      XINDT = Real(Size(INOUTVALS)) * XINDT
+      XINDT = PWRK*XINDT + (1.0-PWRK)*[ (Real(I), I=1,size(INOUTVALS)) ]
       Call MRGRNK (XINDT, JWRKT)
-      XDONT = XDONT (JWRKT)
+      INOUTVALS = INOUTVALS (JWRKT)
 !
-End Subroutine f_char_ctrper
+End Subroutine f_char_CTRPER
 end module M_ctrper

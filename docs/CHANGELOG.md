@@ -7,7 +7,7 @@ and usage changes.
 
    - [x] git repository on WWW (github)
    - [x] annotated source files with an open license
-   - [ ] unit test
+   - [x] unit test
    - [x] make(1) build
    - [x] fpm(1) build
    - [x] user manual (on-line)
@@ -18,6 +18,14 @@ and usage changes.
    - [x] CI/CD(Continious Integration/Development) verification (github actions)
    - [ ] registered in fpm(1) repository
 
+---
+**2022-04-23**  John S. Urban  <https://github.com/urbanjost>
+
+### :orange_circle: DIFF:
+   - all procedures have new preferred names, and a single new module (M_orderpack)
+     that defines their interface. Previous inteface still works, but documentation
+     is changed to reflect the new names.
+---
 ---
 **2022-04-19**  John S. Urban  <https://github.com/urbanjost>
 

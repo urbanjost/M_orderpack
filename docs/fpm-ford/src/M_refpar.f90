@@ -10,14 +10,14 @@ end interface refpar
 contains
 !>
 !!##NAME
-!!    refpar(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in
-!!                 ASCENDING order (QuickSort-like)
+!!    prank_basic(3f) - [orderpack:RANK:PARTIAL] partially ranks an array
+!!                 (QuickSort)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine refpar (XDONT, IRNGT, NORD)
+!!     Subroutine prank_basic (INVALS, IRNGT, NORD)
 !!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: IRNGT(:)
 !!       Integer, Intent (In)                :: NORD
 !!
@@ -29,18 +29,21 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!    creates index IRNGT() which partially ranks input array XDONT(),
+!!    creates index IRNGT() which partially ranks input array INVALS(),
 !!    up to order NORD.
 !!
+!!    This version is not optimized for performance, and is thus not as
+!!    difficult to read as some other ones.
+!!
 !!    Internally this routine uses a pivoting strategy such as the one used
-!!    in finding the median based on the quicksort algorithm. It uses a
+!!    in finding the median based on the QuickSort algorithm. It uses a
 !!    temporary array, where it stores the partially ranked indices of the
 !!    values. It iterates until it can bring the number of values lower
-!!    than the pivot to exactly NORD, and then uses an insertion sort to
+!!    than the pivot to exactly NORD, and then uses an Insertion-Sort to
 !!    rank this set, since it is supposedly small.
 !!
 !!##OPTIONS
-!!     XDONT      array to partially rank
+!!     INVALS      array to partially rank
 !!     IRNGT      array to hold indices of ranked elements
 !!     NORD       number of elements to rank
 !!
@@ -48,10 +51,10 @@ contains
 !!
 !!   Sample program:
 !!
-!!    program demo_refpar
+!!    program demo_prank
 !!    ! create index to lowest N values in input array in ascending order
 !!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
-!!    use M_refpar, only : refpar
+!!    use M_orderpack, only : prank_basic
 !!    implicit none
 !!    real(kind=real32) :: valsr(2000)
 !!    integer           :: indx(2000)
@@ -62,7 +65,7 @@ contains
 !!       call random_number(valsr)
 !!       valsr=valsr*1000000.0-500000.0
 !!       ! get 300 lowest values sorted
-!!       call refpar(valsr,indx,300)
+!!       call prank_basic(valsr,indx,300)
 !!       !
 !!       results=valsr(indx(:300))
 !!       ! check if sorted
@@ -73,33 +76,30 @@ contains
 !!          endif
 !!       enddo
 !!       write(*,*)'random array now sorted'
-!!    end program demo_refpar
+!!    end program demo_prank
 !!
 !!   Results:
 !!
 !!     random array now sorted
 !!
 !!##AUTHOR
-!!     Michel Olagnon - Feb. 2000
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon - Feb. 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_refpar (XDONT, IRNGT, NORD)
-      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+Subroutine real64_refpar (INVALS, IRNGT, NORD)
+      Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
       Real (kind=real64) :: XPIV, XWRK
 ! __________________________________________________________
 !
-      Integer, Dimension (SIZE(XDONT)) :: IWRKT
+      Integer, Dimension (SIZE(INVALS)) :: IWRKT
       Integer :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
 !
       Do ICRS = 1, NDON
          IWRKT (ICRS) = ICRS
@@ -112,23 +112,23 @@ Subroutine real64_refpar (XDONT, IRNGT, NORD)
 !
 !  One chooses a pivot, median of 1st, last, and middle values
 !
-         If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+         If (INVALS(IWRKT(IMIL)) < INVALS(IWRKT(IDEB))) Then
             IWRK = IWRKT (IDEB)
             IWRKT (IDEB) = IWRKT (IMIL)
             IWRKT (IMIL) = IWRK
          End If
-         If (XDONT(IWRKT(IMIL)) > XDONT(IWRKT(IFIN))) Then
+         If (INVALS(IWRKT(IMIL)) > INVALS(IWRKT(IFIN))) Then
             IWRK = IWRKT (IFIN)
             IWRKT (IFIN) = IWRKT (IMIL)
             IWRKT (IMIL) = IWRK
-            If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+            If (INVALS(IWRKT(IMIL)) < INVALS(IWRKT(IDEB))) Then
                IWRK = IWRKT (IDEB)
                IWRKT (IDEB) = IWRKT (IMIL)
                IWRKT (IMIL) = IWRK
             End If
          End If
          If ((IFIN-IDEB) < 3) Exit
-         XPIV = XDONT (IWRKT(IMIL))
+         XPIV = INVALS (IWRKT(IMIL))
 !
 !  One exchanges values to put those > pivot in the end and
 !  those <= pivot at the beginning
@@ -145,15 +145,15 @@ Subroutine real64_refpar (XDONT, IRNGT, NORD)
 !  Note: If one arrives here on the first iteration, then
 !        the pivot is the maximum of the set, the last value is equal
 !        to it, and one can reduce by one the size of the set to process,
-!        as if XDONT (IWRKT(IFIN)) > XPIV
+!        as if INVALS (IWRKT(IFIN)) > XPIV
 !
                   Exit ECH2
 !
                End If
-               If (XDONT(IWRKT(ICRS)) > XPIV) Exit
+               If (INVALS(IWRKT(ICRS)) > XPIV) Exit
             End Do
             Do
-               If (XDONT(IWRKT(IDCR)) <= XPIV) Exit
+               If (INVALS(IWRKT(IDCR)) <= XPIV) Exit
                IDCR = IDCR - 1
                If (ICRS >= IDCR) Then
 !
@@ -179,9 +179,9 @@ Subroutine real64_refpar (XDONT, IRNGT, NORD)
 !
       Do ICRS = 2, NORD
          IWRK = IWRKT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          Do IDCR = ICRS - 1, 1, - 1
-            If (XWRK <= XDONT(IWRKT(IDCR))) Then
+            If (XWRK <= INVALS(IWRKT(IDCR))) Then
                IWRKT (IDCR+1) = IWRKT (IDCR)
             Else
                Exit
@@ -194,18 +194,18 @@ Subroutine real64_refpar (XDONT, IRNGT, NORD)
 !
 End Subroutine real64_refpar
 
-Subroutine real32_refpar (XDONT, IRNGT, NORD)
-      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+Subroutine real32_refpar (INVALS, IRNGT, NORD)
+      Real (kind=real32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
       Real (kind=real32) :: XPIV, XWRK
 ! __________________________________________________________
 !
-      Integer, Dimension (SIZE(XDONT)) :: IWRKT
+      Integer, Dimension (SIZE(INVALS)) :: IWRKT
       Integer :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
 !
       Do ICRS = 1, NDON
          IWRKT (ICRS) = ICRS
@@ -218,23 +218,23 @@ Subroutine real32_refpar (XDONT, IRNGT, NORD)
 !
 !  One chooses a pivot, median of 1st, last, and middle values
 !
-         If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+         If (INVALS(IWRKT(IMIL)) < INVALS(IWRKT(IDEB))) Then
             IWRK = IWRKT (IDEB)
             IWRKT (IDEB) = IWRKT (IMIL)
             IWRKT (IMIL) = IWRK
          End If
-         If (XDONT(IWRKT(IMIL)) > XDONT(IWRKT(IFIN))) Then
+         If (INVALS(IWRKT(IMIL)) > INVALS(IWRKT(IFIN))) Then
             IWRK = IWRKT (IFIN)
             IWRKT (IFIN) = IWRKT (IMIL)
             IWRKT (IMIL) = IWRK
-            If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+            If (INVALS(IWRKT(IMIL)) < INVALS(IWRKT(IDEB))) Then
                IWRK = IWRKT (IDEB)
                IWRKT (IDEB) = IWRKT (IMIL)
                IWRKT (IMIL) = IWRK
             End If
          End If
          If ((IFIN-IDEB) < 3) Exit
-         XPIV = XDONT (IWRKT(IMIL))
+         XPIV = INVALS (IWRKT(IMIL))
 !
 !  One exchanges values to put those > pivot in the end and
 !  those <= pivot at the beginning
@@ -251,15 +251,15 @@ Subroutine real32_refpar (XDONT, IRNGT, NORD)
 !  Note: If one arrives here on the first iteration, then
 !        the pivot is the maximum of the set, the last value is equal
 !        to it, and one can reduce by one the size of the set to process,
-!        as if XDONT (IWRKT(IFIN)) > XPIV
+!        as if INVALS (IWRKT(IFIN)) > XPIV
 !
                   Exit ECH2
 !
                End If
-               If (XDONT(IWRKT(ICRS)) > XPIV) Exit
+               If (INVALS(IWRKT(ICRS)) > XPIV) Exit
             End Do
             Do
-               If (XDONT(IWRKT(IDCR)) <= XPIV) Exit
+               If (INVALS(IWRKT(IDCR)) <= XPIV) Exit
                IDCR = IDCR - 1
                If (ICRS >= IDCR) Then
 !
@@ -285,9 +285,9 @@ Subroutine real32_refpar (XDONT, IRNGT, NORD)
 !
       Do ICRS = 2, NORD
          IWRK = IWRKT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          Do IDCR = ICRS - 1, 1, - 1
-            If (XWRK <= XDONT(IWRKT(IDCR))) Then
+            If (XWRK <= INVALS(IWRKT(IDCR))) Then
                IWRKT (IDCR+1) = IWRKT (IDCR)
             Else
                Exit
@@ -300,18 +300,18 @@ Subroutine real32_refpar (XDONT, IRNGT, NORD)
 !
 End Subroutine real32_refpar
 
-Subroutine int32_refpar (XDONT, IRNGT, NORD)
-      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+Subroutine int32_refpar (INVALS, IRNGT, NORD)
+      Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
       Integer (kind=int32) :: XPIV, XWRK
 ! __________________________________________________________
 !
-      Integer, Dimension (SIZE(XDONT)) :: IWRKT
+      Integer, Dimension (SIZE(INVALS)) :: IWRKT
       Integer :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
 !
       Do ICRS = 1, NDON
          IWRKT (ICRS) = ICRS
@@ -324,23 +324,23 @@ Subroutine int32_refpar (XDONT, IRNGT, NORD)
 !
 !  One chooses a pivot, median of 1st, last, and middle values
 !
-         If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+         If (INVALS(IWRKT(IMIL)) < INVALS(IWRKT(IDEB))) Then
             IWRK = IWRKT (IDEB)
             IWRKT (IDEB) = IWRKT (IMIL)
             IWRKT (IMIL) = IWRK
          End If
-         If (XDONT(IWRKT(IMIL)) > XDONT(IWRKT(IFIN))) Then
+         If (INVALS(IWRKT(IMIL)) > INVALS(IWRKT(IFIN))) Then
             IWRK = IWRKT (IFIN)
             IWRKT (IFIN) = IWRKT (IMIL)
             IWRKT (IMIL) = IWRK
-            If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+            If (INVALS(IWRKT(IMIL)) < INVALS(IWRKT(IDEB))) Then
                IWRK = IWRKT (IDEB)
                IWRKT (IDEB) = IWRKT (IMIL)
                IWRKT (IMIL) = IWRK
             End If
          End If
          If ((IFIN-IDEB) < 3) Exit
-         XPIV = XDONT (IWRKT(IMIL))
+         XPIV = INVALS (IWRKT(IMIL))
 !
 !  One exchanges values to put those > pivot in the end and
 !  those <= pivot at the beginning
@@ -357,15 +357,15 @@ Subroutine int32_refpar (XDONT, IRNGT, NORD)
 !  Note: If one arrives here on the first iteration, then
 !        the pivot is the maximum of the set, the last value is equal
 !        to it, and one can reduce by one the size of the set to process,
-!        as if XDONT (IWRKT(IFIN)) > XPIV
+!        as if INVALS (IWRKT(IFIN)) > XPIV
 !
                   Exit ECH2
 !
                End If
-               If (XDONT(IWRKT(ICRS)) > XPIV) Exit
+               If (INVALS(IWRKT(ICRS)) > XPIV) Exit
             End Do
             Do
-               If (XDONT(IWRKT(IDCR)) <= XPIV) Exit
+               If (INVALS(IWRKT(IDCR)) <= XPIV) Exit
                IDCR = IDCR - 1
                If (ICRS >= IDCR) Then
 !
@@ -391,9 +391,9 @@ Subroutine int32_refpar (XDONT, IRNGT, NORD)
 !
       Do ICRS = 2, NORD
          IWRK = IWRKT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          Do IDCR = ICRS - 1, 1, - 1
-            If (XWRK <= XDONT(IWRKT(IDCR))) Then
+            If (XWRK <= INVALS(IWRKT(IDCR))) Then
                IWRKT (IDCR+1) = IWRKT (IDCR)
             Else
                Exit
@@ -406,18 +406,18 @@ Subroutine int32_refpar (XDONT, IRNGT, NORD)
 !
 End Subroutine int32_refpar
 
-Subroutine f_char_refpar (XDONT, IRNGT, NORD)
-      character (kind=f_char,len=*), Dimension (:), Intent (In) :: XDONT
+Subroutine f_char_refpar (INVALS, IRNGT, NORD)
+      character (kind=f_char,len=*), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
       Integer, Intent (In) :: NORD
 ! __________________________________________________________
-      character (kind=f_char,len=len(XDONT)) :: XPIV, XWRK
+      character (kind=f_char,len=len(INVALS)) :: XPIV, XWRK
 ! __________________________________________________________
 !
-      Integer, Dimension (SIZE(XDONT)) :: IWRKT
+      Integer, Dimension (SIZE(INVALS)) :: IWRKT
       Integer :: NDON, ICRS, IDEB, IDCR, IFIN, IMIL, IWRK
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
 !
       Do ICRS = 1, NDON
          IWRKT (ICRS) = ICRS
@@ -430,23 +430,23 @@ Subroutine f_char_refpar (XDONT, IRNGT, NORD)
 !
 !  One chooses a pivot, median of 1st, last, and middle values
 !
-         If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+         If (INVALS(IWRKT(IMIL)) < INVALS(IWRKT(IDEB))) Then
             IWRK = IWRKT (IDEB)
             IWRKT (IDEB) = IWRKT (IMIL)
             IWRKT (IMIL) = IWRK
          End If
-         If (XDONT(IWRKT(IMIL)) > XDONT(IWRKT(IFIN))) Then
+         If (INVALS(IWRKT(IMIL)) > INVALS(IWRKT(IFIN))) Then
             IWRK = IWRKT (IFIN)
             IWRKT (IFIN) = IWRKT (IMIL)
             IWRKT (IMIL) = IWRK
-            If (XDONT(IWRKT(IMIL)) < XDONT(IWRKT(IDEB))) Then
+            If (INVALS(IWRKT(IMIL)) < INVALS(IWRKT(IDEB))) Then
                IWRK = IWRKT (IDEB)
                IWRKT (IDEB) = IWRKT (IMIL)
                IWRKT (IMIL) = IWRK
             End If
          End If
          If ((IFIN-IDEB) < 3) Exit
-         XPIV = XDONT (IWRKT(IMIL))
+         XPIV = INVALS (IWRKT(IMIL))
 !
 !  One exchanges values to put those > pivot in the end and
 !  those <= pivot at the beginning
@@ -463,15 +463,15 @@ Subroutine f_char_refpar (XDONT, IRNGT, NORD)
 !  Note: If one arrives here on the first iteration, then
 !        the pivot is the maximum of the set, the last value is equal
 !        to it, and one can reduce by one the size of the set to process,
-!        as if XDONT (IWRKT(IFIN)) > XPIV
+!        as if INVALS (IWRKT(IFIN)) > XPIV
 !
                   Exit ECH2
 !
                End If
-               If (XDONT(IWRKT(ICRS)) > XPIV) Exit
+               If (INVALS(IWRKT(ICRS)) > XPIV) Exit
             End Do
             Do
-               If (XDONT(IWRKT(IDCR)) <= XPIV) Exit
+               If (INVALS(IWRKT(IDCR)) <= XPIV) Exit
                IDCR = IDCR - 1
                If (ICRS >= IDCR) Then
 !
@@ -497,9 +497,9 @@ Subroutine f_char_refpar (XDONT, IRNGT, NORD)
 !
       Do ICRS = 2, NORD
          IWRK = IWRKT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          Do IDCR = ICRS - 1, 1, - 1
-            If (XWRK <= XDONT(IWRKT(IDCR))) Then
+            If (XWRK <= INVALS(IWRKT(IDCR))) Then
                IWRKT (IDCR+1) = IWRKT (IDCR)
             Else
                Exit

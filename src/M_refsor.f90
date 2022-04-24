@@ -11,14 +11,14 @@ end interface refsor
 contains
 !>
 !!##NAME
-!!    refsor(3f) - [orderpack:SORT] Sorts array into ascending order
+!!    sort(3f) - [orderpack:SORT] Sorts array into ascending order
 !!                 (Quicksort)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine refsor (XDONT)
+!!     Subroutine sort (INOUTVALS)
 !!
-!!       ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
+!!       ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28,31 +28,39 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!    Sorts XDONT into ascending order using the Quicksort method
+!!    Sorts INOUTVALS into ascending order (Quicksort)
 !!
-!!    Quicksort chooses a "pivot" in the set, and explores the array from
+!!    This version is not optimized for performance, and is thus not as
+!!    difficult to read as some other ones.
+!!
+!!    Internally, This subroutine uses Quick-sort in a recursive
+!!    implementation, and insertion sort for the last steps with small
+!!    subsets.  It does not use any work array.
+!!
+!!    The Quick-sort
+!!    chooses a "pivot" in the set, and explores the array from
 !!    both ends, looking for a value > pivot with the increasing index,
 !!    for a value <= pivot with the decreasing index, and swapping them
-!!    when it has found one of each. The array is then subdivided in 2
-!!    ([3]) subsets:
+!!    when it has found one of each. The array is then subdivided in
+!!    two subsets:
 !!
 !!        { values <= pivot} {pivot} {values > pivot}
 !!
-!!    One then call recursively the program to sort each subset.
-!!    When the size of the subarray is small enough, one uses an
-!!    insertion sort that is faster for very small sets.
+!!    It then recursively the procedure to sort each subset.  When the
+!!    size of the subarray is small enough, it switches to an insertion
+!!    sort that is faster for very small sets.
 !!
 !!##OPTIONS
-!!     XDONT      array to sort
+!!     INOUTVALS      array to sort
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_refsor
+!!    program demo_sort
 !!    ! sort array in ascending order
 !!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
-!!    use M_refsor, only : refsor
+!!    use M_orderpack, only : sort
 !!    implicit none
 !!    ! an insertion sort is very efficient for very small arrays
 !!    ! but generally slower than methods like quicksort and mergesort.
@@ -61,7 +69,7 @@ contains
 !!       call random_seed()
 !!       call random_number(valsd)
 !!       valsd=valsd*1000000.0-500000.0
-!!       call refsor(valsd)
+!!       call sort(valsd)
 !!       do i=1,size(valsd)-1
 !!          if (valsd(i+1).lt.valsd(i))then
 !!             write(*,*)'not sorted'
@@ -69,33 +77,30 @@ contains
 !!          endif
 !!       enddo
 !!       write(*,*)'random arrays are now sorted'
-!!    end program demo_refsor
+!!    end program demo_sort
 !!
 !!   Results:
 !!
 !!     random arrays are now sorted
 !!
 !!##AUTHOR
-!!     Michel Olagnon - Apr. 2000
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon - Apr. 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_refsor (XDONT)
+Subroutine real64_refsor (INOUTVALS)
 ! __________________________________________________________
-      Real (kind=real64), Dimension (:), Intent (InOut) :: XDONT
+      Real (kind=real64), Dimension (:), Intent (InOut) :: INOUTVALS
 ! __________________________________________________________
-      Call real64_subsor (XDONT, 1, Size (XDONT))
-      Call real64_inssor (XDONT)
+      Call real64_subsor (INOUTVALS, 1, Size (INOUTVALS))
+      Call real64_inssor (INOUTVALS)
 End Subroutine real64_refsor
 
-Recursive Subroutine real64_subsor (XDONT, IDEB1, IFIN1)
-!  Sorts XDONT from IDEB1 to IFIN1
+Recursive Subroutine real64_subsor (INOUTVALS, IDEB1, IFIN1)
+!  Sorts INOUTVALS from IDEB1 to IFIN1
 ! __________________________________________________________
-      Real(kind=real64), dimension (:), Intent (InOut) :: XDONT
+      Real(kind=real64), dimension (:), Intent (InOut) :: INOUTVALS
       Integer, Intent (In) :: IDEB1, IFIN1
 ! __________________________________________________________
       Real(kind=real64) :: XPIV, XWRK
@@ -113,22 +118,22 @@ Recursive Subroutine real64_subsor (XDONT, IDEB1, IFIN1)
 !
 !  One chooses a pivot, median of 1st, last, and middle values
 !
-         If (XDONT(IMIL) < XDONT(IDEB)) Then
-            XWRK = XDONT (IDEB)
-            XDONT (IDEB) = XDONT (IMIL)
-            XDONT (IMIL) = XWRK
+         If (INOUTVALS(IMIL) < INOUTVALS(IDEB)) Then
+            XWRK = INOUTVALS (IDEB)
+            INOUTVALS (IDEB) = INOUTVALS (IMIL)
+            INOUTVALS (IMIL) = XWRK
          End If
-         If (XDONT(IMIL) > XDONT(IFIN)) Then
-            XWRK = XDONT (IFIN)
-            XDONT (IFIN) = XDONT (IMIL)
-            XDONT (IMIL) = XWRK
-            If (XDONT(IMIL) < XDONT(IDEB)) Then
-               XWRK = XDONT (IDEB)
-               XDONT (IDEB) = XDONT (IMIL)
-               XDONT (IMIL) = XWRK
+         If (INOUTVALS(IMIL) > INOUTVALS(IFIN)) Then
+            XWRK = INOUTVALS (IFIN)
+            INOUTVALS (IFIN) = INOUTVALS (IMIL)
+            INOUTVALS (IMIL) = XWRK
+            If (INOUTVALS(IMIL) < INOUTVALS(IDEB)) Then
+               XWRK = INOUTVALS (IDEB)
+               INOUTVALS (IDEB) = INOUTVALS (IMIL)
+               INOUTVALS (IMIL) = XWRK
             End If
          End If
-         XPIV = XDONT (IMIL)
+         XPIV = INOUTVALS (IMIL)
 !
 !  One exchanges values to put those > pivot in the end and
 !  those <= pivot at the beginning
@@ -145,15 +150,15 @@ Recursive Subroutine real64_subsor (XDONT, IDEB1, IFIN1)
 !  Note: If one arrives here on the first iteration, then
 !        the pivot is the maximum of the set, the last value is equal
 !        to it, and one can reduce by one the size of the set to process,
-!        as if XDONT (IFIN) > XPIV
+!        as if INOUTVALS (IFIN) > XPIV
 !
                   Exit ECH2
 !
                End If
-               If (XDONT(ICRS) > XPIV) Exit
+               If (INOUTVALS(ICRS) > XPIV) Exit
             End Do
             Do
-               If (XDONT(IDCR) <= XPIV) Exit
+               If (INOUTVALS(IDCR) <= XPIV) Exit
                IDCR = IDCR - 1
                If (ICRS >= IDCR) Then
 !
@@ -163,51 +168,51 @@ Recursive Subroutine real64_subsor (XDONT, IDEB1, IFIN1)
                End If
             End Do
 !
-            XWRK = XDONT (IDCR)
-            XDONT (IDCR) = XDONT (ICRS)
-            XDONT (ICRS) = XWRK
+            XWRK = INOUTVALS (IDCR)
+            INOUTVALS (IDCR) = INOUTVALS (ICRS)
+            INOUTVALS (ICRS) = XWRK
          End Do ECH2
 !
 !  One now sorts each of the two sub-intervals
 !
-         Call real64_subsor (XDONT, IDEB1, ICRS-1)
-         Call real64_subsor (XDONT, IDCR, IFIN1)
+         Call real64_subsor (INOUTVALS, IDEB1, ICRS-1)
+         Call real64_subsor (INOUTVALS, IDCR, IFIN1)
       End If
 
    End Subroutine real64_subsor
 
-   Subroutine real64_inssor (XDONT)
-!  Sorts XDONT into increasing order (Insertion sort)
+   Subroutine real64_inssor (INOUTVALS)
+!  Sorts INOUTVALS into increasing order (Insertion sort)
 ! __________________________________________________________
-      Real(kind=real64), dimension (:), Intent (InOut) :: XDONT
+      Real(kind=real64), dimension (:), Intent (InOut) :: INOUTVALS
 ! __________________________________________________________
       Integer :: ICRS, IDCR
       Real(kind=real64) :: XWRK
 !
-      Do ICRS = 2, Size (XDONT)
-         XWRK = XDONT (ICRS)
-         If (XWRK >= XDONT(ICRS-1)) Cycle
-         XDONT (ICRS) = XDONT (ICRS-1)
+      Do ICRS = 2, Size (INOUTVALS)
+         XWRK = INOUTVALS (ICRS)
+         If (XWRK >= INOUTVALS(ICRS-1)) Cycle
+         INOUTVALS (ICRS) = INOUTVALS (ICRS-1)
          Do IDCR = ICRS - 2, 1, - 1
-            If (XWRK >= XDONT(IDCR)) Exit
-            XDONT (IDCR+1) = XDONT (IDCR)
+            If (XWRK >= INOUTVALS(IDCR)) Exit
+            INOUTVALS (IDCR+1) = INOUTVALS (IDCR)
          End Do
-         XDONT (IDCR+1) = XWRK
+         INOUTVALS (IDCR+1) = XWRK
       End Do
 !
 End Subroutine real64_inssor
-Subroutine real32_refsor (XDONT)
+Subroutine real32_refsor (INOUTVALS)
 ! __________________________________________________________
-      Real (kind=real32), Dimension (:), Intent (InOut) :: XDONT
+      Real (kind=real32), Dimension (:), Intent (InOut) :: INOUTVALS
 ! __________________________________________________________
-      Call real32_subsor (XDONT, 1, Size (XDONT))
-      Call real32_inssor (XDONT)
+      Call real32_subsor (INOUTVALS, 1, Size (INOUTVALS))
+      Call real32_inssor (INOUTVALS)
 End Subroutine real32_refsor
 
-Recursive Subroutine real32_subsor (XDONT, IDEB1, IFIN1)
-!  Sorts XDONT from IDEB1 to IFIN1
+Recursive Subroutine real32_subsor (INOUTVALS, IDEB1, IFIN1)
+!  Sorts INOUTVALS from IDEB1 to IFIN1
 ! __________________________________________________________
-      Real(kind=real32), dimension (:), Intent (InOut) :: XDONT
+      Real(kind=real32), dimension (:), Intent (InOut) :: INOUTVALS
       Integer, Intent (In) :: IDEB1, IFIN1
 ! __________________________________________________________
       Real(kind=real32) :: XPIV, XWRK
@@ -225,22 +230,22 @@ Recursive Subroutine real32_subsor (XDONT, IDEB1, IFIN1)
 !
 !  One chooses a pivot, median of 1st, last, and middle values
 !
-         If (XDONT(IMIL) < XDONT(IDEB)) Then
-            XWRK = XDONT (IDEB)
-            XDONT (IDEB) = XDONT (IMIL)
-            XDONT (IMIL) = XWRK
+         If (INOUTVALS(IMIL) < INOUTVALS(IDEB)) Then
+            XWRK = INOUTVALS (IDEB)
+            INOUTVALS (IDEB) = INOUTVALS (IMIL)
+            INOUTVALS (IMIL) = XWRK
          End If
-         If (XDONT(IMIL) > XDONT(IFIN)) Then
-            XWRK = XDONT (IFIN)
-            XDONT (IFIN) = XDONT (IMIL)
-            XDONT (IMIL) = XWRK
-            If (XDONT(IMIL) < XDONT(IDEB)) Then
-               XWRK = XDONT (IDEB)
-               XDONT (IDEB) = XDONT (IMIL)
-               XDONT (IMIL) = XWRK
+         If (INOUTVALS(IMIL) > INOUTVALS(IFIN)) Then
+            XWRK = INOUTVALS (IFIN)
+            INOUTVALS (IFIN) = INOUTVALS (IMIL)
+            INOUTVALS (IMIL) = XWRK
+            If (INOUTVALS(IMIL) < INOUTVALS(IDEB)) Then
+               XWRK = INOUTVALS (IDEB)
+               INOUTVALS (IDEB) = INOUTVALS (IMIL)
+               INOUTVALS (IMIL) = XWRK
             End If
          End If
-         XPIV = XDONT (IMIL)
+         XPIV = INOUTVALS (IMIL)
 !
 !  One exchanges values to put those > pivot in the end and
 !  those <= pivot at the beginning
@@ -257,15 +262,15 @@ Recursive Subroutine real32_subsor (XDONT, IDEB1, IFIN1)
 !  Note: If one arrives here on the first iteration, then
 !        the pivot is the maximum of the set, the last value is equal
 !        to it, and one can reduce by one the size of the set to process,
-!        as if XDONT (IFIN) > XPIV
+!        as if INOUTVALS (IFIN) > XPIV
 !
                   Exit ECH2
 !
                End If
-               If (XDONT(ICRS) > XPIV) Exit
+               If (INOUTVALS(ICRS) > XPIV) Exit
             End Do
             Do
-               If (XDONT(IDCR) <= XPIV) Exit
+               If (INOUTVALS(IDCR) <= XPIV) Exit
                IDCR = IDCR - 1
                If (ICRS >= IDCR) Then
 !
@@ -275,51 +280,51 @@ Recursive Subroutine real32_subsor (XDONT, IDEB1, IFIN1)
                End If
             End Do
 !
-            XWRK = XDONT (IDCR)
-            XDONT (IDCR) = XDONT (ICRS)
-            XDONT (ICRS) = XWRK
+            XWRK = INOUTVALS (IDCR)
+            INOUTVALS (IDCR) = INOUTVALS (ICRS)
+            INOUTVALS (ICRS) = XWRK
          End Do ECH2
 !
 !  One now sorts each of the two sub-intervals
 !
-         Call real32_subsor (XDONT, IDEB1, ICRS-1)
-         Call real32_subsor (XDONT, IDCR, IFIN1)
+         Call real32_subsor (INOUTVALS, IDEB1, ICRS-1)
+         Call real32_subsor (INOUTVALS, IDCR, IFIN1)
       End If
 
    End Subroutine real32_subsor
 
-   Subroutine real32_inssor (XDONT)
-!  Sorts XDONT into increasing order (Insertion sort)
+   Subroutine real32_inssor (INOUTVALS)
+!  Sorts INOUTVALS into increasing order (Insertion sort)
 ! __________________________________________________________
-      Real(kind=real32), dimension (:), Intent (InOut) :: XDONT
+      Real(kind=real32), dimension (:), Intent (InOut) :: INOUTVALS
 ! __________________________________________________________
       Integer :: ICRS, IDCR
       Real(kind=real32) :: XWRK
 !
-      Do ICRS = 2, Size (XDONT)
-         XWRK = XDONT (ICRS)
-         If (XWRK >= XDONT(ICRS-1)) Cycle
-         XDONT (ICRS) = XDONT (ICRS-1)
+      Do ICRS = 2, Size (INOUTVALS)
+         XWRK = INOUTVALS (ICRS)
+         If (XWRK >= INOUTVALS(ICRS-1)) Cycle
+         INOUTVALS (ICRS) = INOUTVALS (ICRS-1)
          Do IDCR = ICRS - 2, 1, - 1
-            If (XWRK >= XDONT(IDCR)) Exit
-            XDONT (IDCR+1) = XDONT (IDCR)
+            If (XWRK >= INOUTVALS(IDCR)) Exit
+            INOUTVALS (IDCR+1) = INOUTVALS (IDCR)
          End Do
-         XDONT (IDCR+1) = XWRK
+         INOUTVALS (IDCR+1) = XWRK
       End Do
 !
 End Subroutine real32_inssor
-Subroutine int32_refsor (XDONT)
+Subroutine int32_refsor (INOUTVALS)
 ! __________________________________________________________
-      Integer (kind=int32), Dimension (:), Intent (InOut) :: XDONT
+      Integer (kind=int32), Dimension (:), Intent (InOut) :: INOUTVALS
 ! __________________________________________________________
-      Call int32_subsor (XDONT, 1, Size (XDONT))
-      Call int32_inssor (XDONT)
+      Call int32_subsor (INOUTVALS, 1, Size (INOUTVALS))
+      Call int32_inssor (INOUTVALS)
 End Subroutine int32_refsor
 
-Recursive Subroutine int32_subsor (XDONT, IDEB1, IFIN1)
-!  Sorts XDONT from IDEB1 to IFIN1
+Recursive Subroutine int32_subsor (INOUTVALS, IDEB1, IFIN1)
+!  Sorts INOUTVALS from IDEB1 to IFIN1
 ! __________________________________________________________
-      Integer(kind=int32), dimension (:), Intent (InOut) :: XDONT
+      Integer(kind=int32), dimension (:), Intent (InOut) :: INOUTVALS
       Integer, Intent (In) :: IDEB1, IFIN1
 ! __________________________________________________________
       Integer(kind=int32) :: XPIV, XWRK
@@ -337,22 +342,22 @@ Recursive Subroutine int32_subsor (XDONT, IDEB1, IFIN1)
 !
 !  One chooses a pivot, median of 1st, last, and middle values
 !
-         If (XDONT(IMIL) < XDONT(IDEB)) Then
-            XWRK = XDONT (IDEB)
-            XDONT (IDEB) = XDONT (IMIL)
-            XDONT (IMIL) = XWRK
+         If (INOUTVALS(IMIL) < INOUTVALS(IDEB)) Then
+            XWRK = INOUTVALS (IDEB)
+            INOUTVALS (IDEB) = INOUTVALS (IMIL)
+            INOUTVALS (IMIL) = XWRK
          End If
-         If (XDONT(IMIL) > XDONT(IFIN)) Then
-            XWRK = XDONT (IFIN)
-            XDONT (IFIN) = XDONT (IMIL)
-            XDONT (IMIL) = XWRK
-            If (XDONT(IMIL) < XDONT(IDEB)) Then
-               XWRK = XDONT (IDEB)
-               XDONT (IDEB) = XDONT (IMIL)
-               XDONT (IMIL) = XWRK
+         If (INOUTVALS(IMIL) > INOUTVALS(IFIN)) Then
+            XWRK = INOUTVALS (IFIN)
+            INOUTVALS (IFIN) = INOUTVALS (IMIL)
+            INOUTVALS (IMIL) = XWRK
+            If (INOUTVALS(IMIL) < INOUTVALS(IDEB)) Then
+               XWRK = INOUTVALS (IDEB)
+               INOUTVALS (IDEB) = INOUTVALS (IMIL)
+               INOUTVALS (IMIL) = XWRK
             End If
          End If
-         XPIV = XDONT (IMIL)
+         XPIV = INOUTVALS (IMIL)
 !
 !  One exchanges values to put those > pivot in the end and
 !  those <= pivot at the beginning
@@ -369,15 +374,15 @@ Recursive Subroutine int32_subsor (XDONT, IDEB1, IFIN1)
 !  Note: If one arrives here on the first iteration, then
 !        the pivot is the maximum of the set, the last value is equal
 !        to it, and one can reduce by one the size of the set to process,
-!        as if XDONT (IFIN) > XPIV
+!        as if INOUTVALS (IFIN) > XPIV
 !
                   Exit ECH2
 !
                End If
-               If (XDONT(ICRS) > XPIV) Exit
+               If (INOUTVALS(ICRS) > XPIV) Exit
             End Do
             Do
-               If (XDONT(IDCR) <= XPIV) Exit
+               If (INOUTVALS(IDCR) <= XPIV) Exit
                IDCR = IDCR - 1
                If (ICRS >= IDCR) Then
 !
@@ -387,54 +392,54 @@ Recursive Subroutine int32_subsor (XDONT, IDEB1, IFIN1)
                End If
             End Do
 !
-            XWRK = XDONT (IDCR)
-            XDONT (IDCR) = XDONT (ICRS)
-            XDONT (ICRS) = XWRK
+            XWRK = INOUTVALS (IDCR)
+            INOUTVALS (IDCR) = INOUTVALS (ICRS)
+            INOUTVALS (ICRS) = XWRK
          End Do ECH2
 !
 !  One now sorts each of the two sub-intervals
 !
-         Call int32_subsor (XDONT, IDEB1, ICRS-1)
-         Call int32_subsor (XDONT, IDCR, IFIN1)
+         Call int32_subsor (INOUTVALS, IDEB1, ICRS-1)
+         Call int32_subsor (INOUTVALS, IDCR, IFIN1)
       End If
 
    End Subroutine int32_subsor
 
-   Subroutine int32_inssor (XDONT)
-!  Sorts XDONT into increasing order (Insertion sort)
+   Subroutine int32_inssor (INOUTVALS)
+!  Sorts INOUTVALS into increasing order (Insertion sort)
 ! __________________________________________________________
-      Integer(kind=int32), dimension (:), Intent (InOut) :: XDONT
+      Integer(kind=int32), dimension (:), Intent (InOut) :: INOUTVALS
 ! __________________________________________________________
       Integer :: ICRS, IDCR
       Integer(kind=int32) :: XWRK
 !
-      Do ICRS = 2, Size (XDONT)
-         XWRK = XDONT (ICRS)
-         If (XWRK >= XDONT(ICRS-1)) Cycle
-         XDONT (ICRS) = XDONT (ICRS-1)
+      Do ICRS = 2, Size (INOUTVALS)
+         XWRK = INOUTVALS (ICRS)
+         If (XWRK >= INOUTVALS(ICRS-1)) Cycle
+         INOUTVALS (ICRS) = INOUTVALS (ICRS-1)
          Do IDCR = ICRS - 2, 1, - 1
-            If (XWRK >= XDONT(IDCR)) Exit
-            XDONT (IDCR+1) = XDONT (IDCR)
+            If (XWRK >= INOUTVALS(IDCR)) Exit
+            INOUTVALS (IDCR+1) = INOUTVALS (IDCR)
          End Do
-         XDONT (IDCR+1) = XWRK
+         INOUTVALS (IDCR+1) = XWRK
       End Do
 !
 End Subroutine int32_inssor
-Subroutine f_char_refsor (XDONT)
+Subroutine f_char_refsor (INOUTVALS)
 ! __________________________________________________________
-      character (kind=f_char,len=*), Dimension (:), Intent (InOut) :: XDONT
+      character (kind=f_char,len=*), Dimension (:), Intent (InOut) :: INOUTVALS
 ! __________________________________________________________
-      Call f_char_subsor (XDONT, 1, Size (XDONT))
-      Call f_char_inssor (XDONT)
+      Call f_char_subsor (INOUTVALS, 1, Size (INOUTVALS))
+      Call f_char_inssor (INOUTVALS)
 End Subroutine f_char_refsor
 
-Recursive Subroutine f_char_subsor (XDONT, IDEB1, IFIN1)
-!  Sorts XDONT from IDEB1 to IFIN1
+Recursive Subroutine f_char_subsor (INOUTVALS, IDEB1, IFIN1)
+!  Sorts INOUTVALS from IDEB1 to IFIN1
 ! __________________________________________________________
-      character(kind=f_char,len=*), dimension (:), Intent (InOut) :: XDONT
+      character(kind=f_char,len=*), dimension (:), Intent (InOut) :: INOUTVALS
       Integer, Intent (In) :: IDEB1, IFIN1
 ! __________________________________________________________
-      character(kind=f_char,len=len(XDONT)) :: XPIV, XWRK
+      character(kind=f_char,len=len(INOUTVALS)) :: XPIV, XWRK
       Integer, Parameter :: NINS = 16 ! Max for insertion sort
       Integer :: ICRS, IDEB, IDCR, IFIN, IMIL
 !
@@ -449,22 +454,22 @@ Recursive Subroutine f_char_subsor (XDONT, IDEB1, IFIN1)
 !
 !  One chooses a pivot, median of 1st, last, and middle values
 !
-         If (XDONT(IMIL) < XDONT(IDEB)) Then
-            XWRK = XDONT (IDEB)
-            XDONT (IDEB) = XDONT (IMIL)
-            XDONT (IMIL) = XWRK
+         If (INOUTVALS(IMIL) < INOUTVALS(IDEB)) Then
+            XWRK = INOUTVALS (IDEB)
+            INOUTVALS (IDEB) = INOUTVALS (IMIL)
+            INOUTVALS (IMIL) = XWRK
          End If
-         If (XDONT(IMIL) > XDONT(IFIN)) Then
-            XWRK = XDONT (IFIN)
-            XDONT (IFIN) = XDONT (IMIL)
-            XDONT (IMIL) = XWRK
-            If (XDONT(IMIL) < XDONT(IDEB)) Then
-               XWRK = XDONT (IDEB)
-               XDONT (IDEB) = XDONT (IMIL)
-               XDONT (IMIL) = XWRK
+         If (INOUTVALS(IMIL) > INOUTVALS(IFIN)) Then
+            XWRK = INOUTVALS (IFIN)
+            INOUTVALS (IFIN) = INOUTVALS (IMIL)
+            INOUTVALS (IMIL) = XWRK
+            If (INOUTVALS(IMIL) < INOUTVALS(IDEB)) Then
+               XWRK = INOUTVALS (IDEB)
+               INOUTVALS (IDEB) = INOUTVALS (IMIL)
+               INOUTVALS (IMIL) = XWRK
             End If
          End If
-         XPIV = XDONT (IMIL)
+         XPIV = INOUTVALS (IMIL)
 !
 !  One exchanges values to put those > pivot in the end and
 !  those <= pivot at the beginning
@@ -481,15 +486,15 @@ Recursive Subroutine f_char_subsor (XDONT, IDEB1, IFIN1)
 !  Note: If one arrives here on the first iteration, then
 !        the pivot is the maximum of the set, the last value is equal
 !        to it, and one can reduce by one the size of the set to process,
-!        as if XDONT (IFIN) > XPIV
+!        as if INOUTVALS (IFIN) > XPIV
 !
                   Exit ECH2
 !
                End If
-               If (XDONT(ICRS) > XPIV) Exit
+               If (INOUTVALS(ICRS) > XPIV) Exit
             End Do
             Do
-               If (XDONT(IDCR) <= XPIV) Exit
+               If (INOUTVALS(IDCR) <= XPIV) Exit
                IDCR = IDCR - 1
                If (ICRS >= IDCR) Then
 !
@@ -499,36 +504,36 @@ Recursive Subroutine f_char_subsor (XDONT, IDEB1, IFIN1)
                End If
             End Do
 !
-            XWRK = XDONT (IDCR)
-            XDONT (IDCR) = XDONT (ICRS)
-            XDONT (ICRS) = XWRK
+            XWRK = INOUTVALS (IDCR)
+            INOUTVALS (IDCR) = INOUTVALS (ICRS)
+            INOUTVALS (ICRS) = XWRK
          End Do ECH2
 !
 !  One now sorts each of the two sub-intervals
 !
-         Call f_char_subsor (XDONT, IDEB1, ICRS-1)
-         Call f_char_subsor (XDONT, IDCR, IFIN1)
+         Call f_char_subsor (INOUTVALS, IDEB1, ICRS-1)
+         Call f_char_subsor (INOUTVALS, IDCR, IFIN1)
       End If
 
    End Subroutine f_char_subsor
 
-   Subroutine f_char_inssor (XDONT)
-!  Sorts XDONT into increasing order (Insertion sort)
+   Subroutine f_char_inssor (INOUTVALS)
+!  Sorts INOUTVALS into increasing order (Insertion sort)
 ! __________________________________________________________
-      character(kind=f_char,len=*), dimension (:), Intent (InOut) :: XDONT
+      character(kind=f_char,len=*), dimension (:), Intent (InOut) :: INOUTVALS
 ! __________________________________________________________
       Integer :: ICRS, IDCR
-      character(kind=f_char,len=len(XDONT)) :: XWRK
+      character(kind=f_char,len=len(INOUTVALS)) :: XWRK
 !
-      Do ICRS = 2, Size (XDONT)
-         XWRK = XDONT (ICRS)
-         If (XWRK >= XDONT(ICRS-1)) Cycle
-         XDONT (ICRS) = XDONT (ICRS-1)
+      Do ICRS = 2, Size (INOUTVALS)
+         XWRK = INOUTVALS (ICRS)
+         If (XWRK >= INOUTVALS(ICRS-1)) Cycle
+         INOUTVALS (ICRS) = INOUTVALS (ICRS-1)
          Do IDCR = ICRS - 2, 1, - 1
-            If (XWRK >= XDONT(IDCR)) Exit
-            XDONT (IDCR+1) = XDONT (IDCR)
+            If (XWRK >= INOUTVALS(IDCR)) Exit
+            INOUTVALS (IDCR+1) = INOUTVALS (IDCR)
          End Do
-         XDONT (IDCR+1) = XWRK
+         INOUTVALS (IDCR+1) = XWRK
       End Do
 !
 End Subroutine f_char_inssor

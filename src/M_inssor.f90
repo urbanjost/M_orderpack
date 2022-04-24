@@ -10,15 +10,14 @@ end interface inssor
 contains
 !>
 !!##NAME
-!!    inssor(3f) - [orderpack:SORT] Sorts array into ascending order
+!!    sort_special(3f) - [orderpack:SORT] Sorts array into ascending order
 !!                 (Insertion sort, generally for small or nearly sorted
 !!                 arrays)
-!!
 !!##SYNOPSIS
 !!
-!!     Subroutine inssor (XDONT)
+!!      Subroutine sort_special (INOUTVALS)
 !!
-!!             ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)
+!!       ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
 !!
@@ -28,269 +27,256 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!    Sorts XDONT into ascending order (Insertion sort)
+!!    Sorts INOUTVALS() into ascending order (Insertion sort).
 !!
-!!    This subroutine uses an insertion sort. It does not use any work array
-!!    and is faster when XDONT is of very small size (< 20), or already
-!!    almost sorted, but worst case behavior can happen fairly probably
-!!    (initially inverse sorted). In many cases, the quicksort or merge
-!!    sort method is faster.
+!!    If certain requirements are met and performance is important this
+!!    procedure can be far faster, but REFSOR(3f) and ranking routines
+!!    MRGRNK(3f) and MRGREF(3f) are recommended for the general case.
+!!
+!!    This subroutine uses an Insertion sort. It does not use any work array
+!!    and is faster when INOUTVALS() is of very small size (< 20), or already
+!!    almost sorted; but worst case behavior can be triggered by commonly
+!!    encountered data order (e.g. initially inverse sorted). Therefore,
+!!    in many cases the Quicksort or Mergesort method is faster.
 !!
 !!##OPTIONS
-!!     XDONT      array to sort
+!!     INOUTVALS      array to sort
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_inssor
+!!    program demo_sort_special
 !!    ! sort an array using insertion sort
 !!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
-!!    use M_inssor, only : inssor
+!!    use M_orderpack, only : sort_special
 !!    implicit none
 !!    ! an insertion sort is very efficient for very small arrays
 !!    ! but generally slower than methods like quicksort and mergesort.
-!!    real(kind=real32) :: valsr(2000)
-!!    real(kind=real64) :: valsd(2000)
-!!    integer           :: valsi(2000)
+!!    integer,parameter :: isz=2000
+!!    real(kind=real64) :: dd(isz), hi, low
 !!    integer           :: i
+!!       ! make an array of random values
 !!       call random_seed()
-!!       call random_number(valsr)
-!!       call random_number(valsd)
-!!       valsi=int(valsr*1000000.0)
-!!       valsr=valsr*1000000.0-500000.0
-!!       valsd=valsd*1000000.0-500000.0
-!!       call inssor(valsi)
-!!       do i=1,size(valsi)-1
-!!          if (valsi(i+1).lt.valsi(i))then
-!!             write(*,*)'not sorted'
-!!             stop 1
-!!          endif
-!!       enddo
-!!       call inssor(valsr)
-!!       do i=1,size(valsr)-1
-!!          if (valsr(i+1).lt.valsr(i))then
-!!             write(*,*)'not sorted'
-!!             stop 2
-!!          endif
-!!       enddo
-!!       call inssor(valsd)
-!!       do i=1,size(valsd)-1
-!!          if (valsd(i+1).lt.valsd(i))then
-!!             write(*,*)'not sorted'
-!!             stop 3
-!!          endif
-!!       enddo
-!!       write(*,*)'random arrays are now sorted'
-!!    end program demo_inssor
+!!       call random_number(dd)
+!!       dd=dd*1000000.0-500000.0
+!!       low= minval(dd)
+!!       hi = maxval(dd)
+!!       ! sort the data
+!!       call sort_special(dd)
+!!       ! cursory checks
+!!       if(any(dd(1:isz-1) .gt. dd(2:isz)))stop 'ERROR: array not sorted'
+!!       write(*,*)'check min:',dd(1).eq.low
+!!       write(*,*)'check max:',dd(isz).eq.hi
+!!       write(*,*)'PASSED: random array is now sorted'
+!!    end program demo_sort_special
 !!
 !!   Results:
 !!
-!!     random arrays are now sorted
+!!     check min: T
+!!     check max: T
+!!     PASSED: random array is now sorted
 !!
 !!##AUTHOR
-!!     Michel Olagnon - Apr. 2000
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon - Apr. 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_inssor (XDONT)
+Subroutine real64_inssor (INOUTVALS)
 ! __________________________________________________________
-      Real (kind=real64), Dimension (:), Intent (InOut) :: XDONT
+      Real (kind=real64), Dimension (:), Intent (InOut) :: INOUTVALS
       Real (Kind=real64) :: XWRK, XMIN
 ! __________________________________________________________
       Integer :: ICRS, IDCR, NDON
 !
-      NDON = Size (XDONT)
+      NDON = Size (INOUTVALS)
 !
 ! We first bring the minimum to the first location in the array.
 ! That way, we will have a "guard", and when looking for the
 ! right place to insert a value, no loop test is necessary.
 !
-      If (XDONT (1) < XDONT (NDON)) Then
-          XMIN = XDONT (1)
+      If (INOUTVALS (1) < INOUTVALS (NDON)) Then
+          XMIN = INOUTVALS (1)
       Else
-          XMIN = XDONT (NDON)
-          XDONT (NDON) = XDONT (1)
+          XMIN = INOUTVALS (NDON)
+          INOUTVALS (NDON) = INOUTVALS (1)
       Endif
       Do IDCR = NDON-1, 2, -1
-         XWRK = XDONT(IDCR)
+         XWRK = INOUTVALS(IDCR)
          IF (XWRK < XMIN) Then
-            XDONT (IDCR) = XMIN
+            INOUTVALS (IDCR) = XMIN
             XMIN = XWRK
          End If
       End Do
-      XDONT (1) = XMIN
+      INOUTVALS (1) = XMIN
 !
 ! The first value is now the minimum
 ! Loop over the array, and when a value is smaller than
 ! the previous one, loop down to insert it at its right place.
 !
       Do ICRS = 3, NDON
-         XWRK = XDONT (ICRS)
+         XWRK = INOUTVALS (ICRS)
          IDCR = ICRS - 1
-         If (XWRK < XDONT(IDCR)) Then
-            XDONT (ICRS) = XDONT (IDCR)
+         If (XWRK < INOUTVALS(IDCR)) Then
+            INOUTVALS (ICRS) = INOUTVALS (IDCR)
             IDCR = IDCR - 1
             Do
-               If (XWRK >= XDONT(IDCR)) Exit
-               XDONT (IDCR+1) = XDONT (IDCR)
+               If (XWRK >= INOUTVALS(IDCR)) Exit
+               INOUTVALS (IDCR+1) = INOUTVALS (IDCR)
                IDCR = IDCR - 1
             End Do
-            XDONT (IDCR+1) = XWRK
+            INOUTVALS (IDCR+1) = XWRK
          End If
       End Do
 !
       Return
 !
 End Subroutine real64_inssor
-Subroutine real32_inssor (XDONT)
+Subroutine real32_inssor (INOUTVALS)
 ! __________________________________________________________
-      Real (kind=real32), Dimension (:), Intent (InOut) :: XDONT
+      Real (kind=real32), Dimension (:), Intent (InOut) :: INOUTVALS
       Real (Kind=real32) :: XWRK, XMIN
 ! __________________________________________________________
       Integer :: ICRS, IDCR, NDON
 !
-      NDON = Size (XDONT)
+      NDON = Size (INOUTVALS)
 !
 ! We first bring the minimum to the first location in the array.
 ! That way, we will have a "guard", and when looking for the
 ! right place to insert a value, no loop test is necessary.
 !
-      If (XDONT (1) < XDONT (NDON)) Then
-          XMIN = XDONT (1)
+      If (INOUTVALS (1) < INOUTVALS (NDON)) Then
+          XMIN = INOUTVALS (1)
       Else
-          XMIN = XDONT (NDON)
-          XDONT (NDON) = XDONT (1)
+          XMIN = INOUTVALS (NDON)
+          INOUTVALS (NDON) = INOUTVALS (1)
       Endif
       Do IDCR = NDON-1, 2, -1
-         XWRK = XDONT(IDCR)
+         XWRK = INOUTVALS(IDCR)
          IF (XWRK < XMIN) Then
-            XDONT (IDCR) = XMIN
+            INOUTVALS (IDCR) = XMIN
             XMIN = XWRK
          End If
       End Do
-      XDONT (1) = XMIN
+      INOUTVALS (1) = XMIN
 !
 ! The first value is now the minimum
 ! Loop over the array, and when a value is smaller than
 ! the previous one, loop down to insert it at its right place.
 !
       Do ICRS = 3, NDON
-         XWRK = XDONT (ICRS)
+         XWRK = INOUTVALS (ICRS)
          IDCR = ICRS - 1
-         If (XWRK < XDONT(IDCR)) Then
-            XDONT (ICRS) = XDONT (IDCR)
+         If (XWRK < INOUTVALS(IDCR)) Then
+            INOUTVALS (ICRS) = INOUTVALS (IDCR)
             IDCR = IDCR - 1
             Do
-               If (XWRK >= XDONT(IDCR)) Exit
-               XDONT (IDCR+1) = XDONT (IDCR)
+               If (XWRK >= INOUTVALS(IDCR)) Exit
+               INOUTVALS (IDCR+1) = INOUTVALS (IDCR)
                IDCR = IDCR - 1
             End Do
-            XDONT (IDCR+1) = XWRK
+            INOUTVALS (IDCR+1) = XWRK
          End If
       End Do
 !
       Return
 !
 End Subroutine real32_inssor
-Subroutine int32_inssor (XDONT)
+Subroutine int32_inssor (INOUTVALS)
 ! __________________________________________________________
-      Integer (kind=int32), Dimension (:), Intent (InOut) :: XDONT
+      Integer (kind=int32), Dimension (:), Intent (InOut) :: INOUTVALS
       Integer (Kind=int32) :: XWRK, XMIN
 ! __________________________________________________________
       Integer :: ICRS, IDCR, NDON
 !
-      NDON = Size (XDONT)
+      NDON = Size (INOUTVALS)
 !
 ! We first bring the minimum to the first location in the array.
 ! That way, we will have a "guard", and when looking for the
 ! right place to insert a value, no loop test is necessary.
 !
-      If (XDONT (1) < XDONT (NDON)) Then
-          XMIN = XDONT (1)
+      If (INOUTVALS (1) < INOUTVALS (NDON)) Then
+          XMIN = INOUTVALS (1)
       Else
-          XMIN = XDONT (NDON)
-          XDONT (NDON) = XDONT (1)
+          XMIN = INOUTVALS (NDON)
+          INOUTVALS (NDON) = INOUTVALS (1)
       Endif
       Do IDCR = NDON-1, 2, -1
-         XWRK = XDONT(IDCR)
+         XWRK = INOUTVALS(IDCR)
          IF (XWRK < XMIN) Then
-            XDONT (IDCR) = XMIN
+            INOUTVALS (IDCR) = XMIN
             XMIN = XWRK
          End If
       End Do
-      XDONT (1) = XMIN
+      INOUTVALS (1) = XMIN
 !
 ! The first value is now the minimum
 ! Loop over the array, and when a value is smaller than
 ! the previous one, loop down to insert it at its right place.
 !
       Do ICRS = 3, NDON
-         XWRK = XDONT (ICRS)
+         XWRK = INOUTVALS (ICRS)
          IDCR = ICRS - 1
-         If (XWRK < XDONT(IDCR)) Then
-            XDONT (ICRS) = XDONT (IDCR)
+         If (XWRK < INOUTVALS(IDCR)) Then
+            INOUTVALS (ICRS) = INOUTVALS (IDCR)
             IDCR = IDCR - 1
             Do
-               If (XWRK >= XDONT(IDCR)) Exit
-               XDONT (IDCR+1) = XDONT (IDCR)
+               If (XWRK >= INOUTVALS(IDCR)) Exit
+               INOUTVALS (IDCR+1) = INOUTVALS (IDCR)
                IDCR = IDCR - 1
             End Do
-            XDONT (IDCR+1) = XWRK
+            INOUTVALS (IDCR+1) = XWRK
          End If
       End Do
 !
       Return
 !
 End Subroutine int32_inssor
-Subroutine f_char_inssor (XDONT)
+Subroutine f_char_inssor (INOUTVALS)
 ! __________________________________________________________
-      character (kind=f_char,len=*), Dimension (:), Intent (InOut) :: XDONT
-      character (Kind=f_char,len=len(XDONT)) :: XWRK, XMIN
+      character (kind=f_char,len=*), Dimension (:), Intent (InOut) :: INOUTVALS
+      character (Kind=f_char,len=len(INOUTVALS)) :: XWRK, XMIN
 ! __________________________________________________________
       Integer :: ICRS, IDCR, NDON
 !
-      NDON = Size (XDONT)
+      NDON = Size (INOUTVALS)
 !
 ! We first bring the minimum to the first location in the array.
 ! That way, we will have a "guard", and when looking for the
 ! right place to insert a value, no loop test is necessary.
 !
-      If (XDONT (1) < XDONT (NDON)) Then
-          XMIN = XDONT (1)
+      If (INOUTVALS (1) < INOUTVALS (NDON)) Then
+          XMIN = INOUTVALS (1)
       Else
-          XMIN = XDONT (NDON)
-          XDONT (NDON) = XDONT (1)
+          XMIN = INOUTVALS (NDON)
+          INOUTVALS (NDON) = INOUTVALS (1)
       Endif
       Do IDCR = NDON-1, 2, -1
-         XWRK = XDONT(IDCR)
+         XWRK = INOUTVALS(IDCR)
          IF (XWRK < XMIN) Then
-            XDONT (IDCR) = XMIN
+            INOUTVALS (IDCR) = XMIN
             XMIN = XWRK
          End If
       End Do
-      XDONT (1) = XMIN
+      INOUTVALS (1) = XMIN
 !
 ! The first value is now the minimum
 ! Loop over the array, and when a value is smaller than
 ! the previous one, loop down to insert it at its right place.
 !
       Do ICRS = 3, NDON
-         XWRK = XDONT (ICRS)
+         XWRK = INOUTVALS (ICRS)
          IDCR = ICRS - 1
-         If (XWRK < XDONT(IDCR)) Then
-            XDONT (ICRS) = XDONT (IDCR)
+         If (XWRK < INOUTVALS(IDCR)) Then
+            INOUTVALS (ICRS) = INOUTVALS (IDCR)
             IDCR = IDCR - 1
             Do
-               If (XWRK >= XDONT(IDCR)) Exit
-               XDONT (IDCR+1) = XDONT (IDCR)
+               If (XWRK >= INOUTVALS(IDCR)) Exit
+               INOUTVALS (IDCR+1) = INOUTVALS (IDCR)
                IDCR = IDCR - 1
             End Do
-            XDONT (IDCR+1) = XWRK
+            INOUTVALS (IDCR+1) = XWRK
          End If
       End Do
 !

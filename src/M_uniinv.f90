@@ -13,14 +13,15 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    uniinv(3f) - [orderpack:RANK:UNIQUE] ranks an array, with duplicate
-!!    entries assigned the same rank(MergeSort)
+!!    rank_rank_decreasing(3f) - [orderpack:RANK:UNIQUE] ranks an array
+!!    in decreasing order, with duplicate entries assigned the same
+!!    rank(MergeSort)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine uniinv (XDONT, IGOEST)
+!!     Subroutine Rank_Decreasing (INVALS, IGOEST)
 !!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: IGOEST(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
@@ -32,38 +33,39 @@ contains
 !!
 !!##DESCRIPTION
 !!
-!!    UNIINV(3f) is a merge-sort inverse ranking of an array, but with
-!!    duplicate entries assigned the same rank.
+!!    RANK_DECREASING(3f) generates an inverse ranking of an array, but with duplicate
+!!    entries assigned the same rank.
 !!
-!!    The routine is similar to pure merge-sort ranking, but on the last
-!!    pass, it sets indices in IGOEST to the rank of the value in the ordered
-!!    set with duplicates ignored. For performance reasons, the first two
-!!    passes are taken out of the standard loop, and use dedicated coding.
+!!    Internally, the routine is similar to pure merge-sort ranking, but on
+!!    the last pass, it sets indices in IGOEST to the rank of the original
+!!    value in an ordered set with duplicates removed. For performance
+!!    reasons, the first two passes are taken out of the standard loop,
+!!    and use dedicated coding.
 !!
 !!##OPTIONS
-!!     XDONT      array to rank
+!!     INVALS     array to rank
 !!     IGOEST     returned rank array
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_uniinv
+!!    program demo_rank_decreasing
 !!    ! rank input array ranking duplicates the same
-!!    use M_uniinv, only : uniinv
+!!    use M_orderpack, only : rank_decreasing
 !!    implicit none
 !!    character(len=*),parameter :: fmt='(a,*(g3.3,1x))'
-!!    integer,allocatable,dimension(:) :: xdont, igoest, distinct, count
+!!    integer,allocatable,dimension(:) :: INVALS, igoest, distinct, count
 !!    integer :: imx, i
 !!       ! create an input array
-!!       xdont=[11, 11, 22, 11, 33, 33, 22, 33, 33]
+!!       INVALS=[11, 11, 22, 11, 33, 33, 22, 33, 33]
 !!       ! make an index array of the same size
 !!       if(allocated(igoest))deallocate(igoest)
-!!       allocate(igoest(size(xdont)))
-!!       print fmt, 'Original:                 ',xdont
-!!       print fmt, 'Number of indices to sort:',size(xdont)
+!!       allocate(igoest(size(INVALS)))
+!!       print fmt, 'Original:                 ',INVALS
+!!       print fmt, 'Number of indices to sort:',size(INVALS)
 !!       ! rank input array ranking duplicates the same
-!!       call uniinv(xdont,igoest)
+!!       call rank_decreasing(INVALS,igoest)
 !!       print fmt, 'Returned Indices:         ',igoest(:)
 !!       !
 !!       ! interrogate the results
@@ -73,13 +75,13 @@ contains
 !!       ! squeeze it down to just IMX unique values
 !!       count=[(0,i=1,imx)] ! count how many times a value occurs
 !!       distinct=count      ! array to set of unique values
-!!       do i=1,size(xdont)
-!!          distinct(igoest(i))=xdont(i)
+!!       do i=1,size(INVALS)
+!!          distinct(igoest(i))=INVALS(i)
 !!          count(igoest(i))= count(igoest(i))+1
 !!       enddo
 !!       print fmt, 'Sorted unique values:     ',distinct
 !!       print fmt, 'count of occurrences:     ',count
-!!    end program demo_uniinv
+!!    end program demo_rank_decreasing
 !!
 !!   Results:
 !!
@@ -91,16 +93,13 @@ contains
 !!    count of occurrences:       3   2   4
 !!
 !!##AUTHOR
-!!     Michel Olagnon, 2000-2012
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon, 2000-2012
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_uniinv (XDONT, IGOEST)
-      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+Subroutine real64_uniinv (INVALS, IGOEST)
+      Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
       Real (kind=real64) :: XTST, XDONA, XDONB
@@ -110,7 +109,7 @@ Subroutine real64_uniinv (XDONT, IGOEST)
       Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2, NUNI
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XDONT), SIZE(IGOEST))
+      NVAL = Min (SIZE(INVALS), SIZE(IGOEST))
 !
       Select Case (NVAL)
       Case (:0)
@@ -125,7 +124,7 @@ Subroutine real64_uniinv (XDONT, IGOEST)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XDONT(IIND-1) < XDONT(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -156,11 +155,11 @@ Subroutine real64_uniinv (XDONT, IGOEST)
 !
 !   1 2 3
 !
-               If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Exit
+               If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Exit
 !
 !   1 3 2
 !
-               If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+               If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                   IRNG2 = IRNGT (IWRKD+2)
                   IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
                   IRNGT (IWRKD+3) = IRNG2
@@ -178,14 +177,14 @@ Subroutine real64_uniinv (XDONT, IGOEST)
 !
 !   1 2 3 4
 !
-            If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Cycle
+            If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Cycle
 !
 !   1 3 x x
 !
-            If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+            If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   1 3 2 4
                   IRNGT (IWRKD+3) = IRNG2
                Else
@@ -200,9 +199,9 @@ Subroutine real64_uniinv (XDONT, IGOEST)
                IRNG1 = IRNGT (IWRKD+1)
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+1) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG1) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG1) <= INVALS(IRNGT(IWRKD+4))) Then
                   IRNGT (IWRKD+2) = IRNG1
-                  If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+                  If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   3 1 2 4
                      IRNGT (IWRKD+3) = IRNG2
                   Else
@@ -252,8 +251,8 @@ Subroutine real64_uniinv (XDONT, IGOEST)
 !  Make a copy of the rank array for the iteration
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
-            XDONA = XDONT (JWRKT(IINDA))
-            XDONB = XDONT (IRNGT(IINDB))
+            XDONA = INVALS (JWRKT(IINDA))
+            XDONB = INVALS (IRNGT(IINDB))
 !
             Do
                IWRK = IWRK + 1
@@ -268,12 +267,12 @@ Subroutine real64_uniinv (XDONT, IGOEST)
                      IRNGT (IWRK+1:IWRKF) = JWRKT (IINDA:LMTNA)
                      Exit
                   End If
-                  XDONB = XDONT (IRNGT(IINDB))
+                  XDONB = INVALS (IRNGT(IINDB))
                Else
                   IRNGT (IWRK) = JWRKT (IINDA)
                   IINDA = IINDA + 1
                   If (IINDA > LMTNA) Exit! Only B still with unprocessed values
-                  XDONA = XDONT (JWRKT(IINDA))
+                  XDONA = INVALS (JWRKT(IINDA))
                End If
 !
             End Do
@@ -294,13 +293,13 @@ Subroutine real64_uniinv (XDONT, IGOEST)
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
-           XTST = NEARLESS (XDONT(JWRKT(1)))
+        If (INVALS(JWRKT(1)) < INVALS(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (INVALS(JWRKT(1)))
         Else
-           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+           XTST = NEARLESS (INVALS(IRNGT(IINDB)))
         Endif
       Else
-        XTST = NEARLESS (XDONT(JWRKT(1)))
+        XTST = NEARLESS (INVALS(JWRKT(1)))
       Endif
       Do IWRK = 1, NVAL
 !
@@ -308,7 +307,7 @@ Subroutine real64_uniinv (XDONT, IGOEST)
 !
          If (IINDA <= LMTNA) Then
             If (IINDB <= NVAL) Then
-               If (XDONT(JWRKT(IINDA)) > XDONT(IRNGT(IINDB))) Then
+               If (INVALS(JWRKT(IINDA)) > INVALS(IRNGT(IINDB))) Then
                   IRNG = IRNGT (IINDB)
                   IINDB = IINDB + 1
                Else
@@ -328,8 +327,8 @@ Subroutine real64_uniinv (XDONT, IGOEST)
 !
             IRNG = IRNGT (IWRK)
          End If
-         If (XDONT(IRNG) > XTST) Then
-            XTST = XDONT (IRNG)
+         If (INVALS(IRNG) > XTST) Then
+            XTST = INVALS (IRNG)
             NUNI = NUNI + 1
          End If
          IGOEST (IRNG) = NUNI
@@ -346,8 +345,8 @@ Function real64_nearless (XVAL) result (real64_nl)
       real64_nl = nearest (XVAL, -1.0_real64)
 !
 End Function real64_nearless
-Subroutine real32_uniinv (XDONT, IGOEST)
-      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+Subroutine real32_uniinv (INVALS, IGOEST)
+      Real (kind=real32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
       Real (kind=real32) :: XTST, XDONA, XDONB
@@ -357,7 +356,7 @@ Subroutine real32_uniinv (XDONT, IGOEST)
       Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2, NUNI
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XDONT), SIZE(IGOEST))
+      NVAL = Min (SIZE(INVALS), SIZE(IGOEST))
 !
       Select Case (NVAL)
       Case (:0)
@@ -372,7 +371,7 @@ Subroutine real32_uniinv (XDONT, IGOEST)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XDONT(IIND-1) < XDONT(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -403,11 +402,11 @@ Subroutine real32_uniinv (XDONT, IGOEST)
 !
 !   1 2 3
 !
-               If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Exit
+               If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Exit
 !
 !   1 3 2
 !
-               If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+               If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                   IRNG2 = IRNGT (IWRKD+2)
                   IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
                   IRNGT (IWRKD+3) = IRNG2
@@ -425,14 +424,14 @@ Subroutine real32_uniinv (XDONT, IGOEST)
 !
 !   1 2 3 4
 !
-            If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Cycle
+            If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Cycle
 !
 !   1 3 x x
 !
-            If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+            If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   1 3 2 4
                   IRNGT (IWRKD+3) = IRNG2
                Else
@@ -447,9 +446,9 @@ Subroutine real32_uniinv (XDONT, IGOEST)
                IRNG1 = IRNGT (IWRKD+1)
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+1) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG1) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG1) <= INVALS(IRNGT(IWRKD+4))) Then
                   IRNGT (IWRKD+2) = IRNG1
-                  If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+                  If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   3 1 2 4
                      IRNGT (IWRKD+3) = IRNG2
                   Else
@@ -499,8 +498,8 @@ Subroutine real32_uniinv (XDONT, IGOEST)
 !  Make a copy of the rank array for the iteration
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
-            XDONA = XDONT (JWRKT(IINDA))
-            XDONB = XDONT (IRNGT(IINDB))
+            XDONA = INVALS (JWRKT(IINDA))
+            XDONB = INVALS (IRNGT(IINDB))
 !
             Do
                IWRK = IWRK + 1
@@ -515,12 +514,12 @@ Subroutine real32_uniinv (XDONT, IGOEST)
                      IRNGT (IWRK+1:IWRKF) = JWRKT (IINDA:LMTNA)
                      Exit
                   End If
-                  XDONB = XDONT (IRNGT(IINDB))
+                  XDONB = INVALS (IRNGT(IINDB))
                Else
                   IRNGT (IWRK) = JWRKT (IINDA)
                   IINDA = IINDA + 1
                   If (IINDA > LMTNA) Exit! Only B still with unprocessed values
-                  XDONA = XDONT (JWRKT(IINDA))
+                  XDONA = INVALS (JWRKT(IINDA))
                End If
 !
             End Do
@@ -541,13 +540,13 @@ Subroutine real32_uniinv (XDONT, IGOEST)
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
-           XTST = NEARLESS (XDONT(JWRKT(1)))
+        If (INVALS(JWRKT(1)) < INVALS(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (INVALS(JWRKT(1)))
         Else
-           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+           XTST = NEARLESS (INVALS(IRNGT(IINDB)))
         Endif
       Else
-        XTST = NEARLESS (XDONT(JWRKT(1)))
+        XTST = NEARLESS (INVALS(JWRKT(1)))
       Endif
       Do IWRK = 1, NVAL
 !
@@ -555,7 +554,7 @@ Subroutine real32_uniinv (XDONT, IGOEST)
 !
          If (IINDA <= LMTNA) Then
             If (IINDB <= NVAL) Then
-               If (XDONT(JWRKT(IINDA)) > XDONT(IRNGT(IINDB))) Then
+               If (INVALS(JWRKT(IINDA)) > INVALS(IRNGT(IINDB))) Then
                   IRNG = IRNGT (IINDB)
                   IINDB = IINDB + 1
                Else
@@ -575,8 +574,8 @@ Subroutine real32_uniinv (XDONT, IGOEST)
 !
             IRNG = IRNGT (IWRK)
          End If
-         If (XDONT(IRNG) > XTST) Then
-            XTST = XDONT (IRNG)
+         If (INVALS(IRNG) > XTST) Then
+            XTST = INVALS (IRNG)
             NUNI = NUNI + 1
          End If
          IGOEST (IRNG) = NUNI
@@ -593,8 +592,8 @@ Function real32_nearless (XVAL) result (real32_nl)
       real32_nl = nearest (XVAL, -1.0_real32)
 !
 End Function real32_nearless
-Subroutine int32_uniinv (XDONT, IGOEST)
-      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+Subroutine int32_uniinv (INVALS, IGOEST)
+      Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
       Integer (kind=int32) :: XTST, XDONA, XDONB
@@ -604,7 +603,7 @@ Subroutine int32_uniinv (XDONT, IGOEST)
       Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2, NUNI
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XDONT), SIZE(IGOEST))
+      NVAL = Min (SIZE(INVALS), SIZE(IGOEST))
 !
       Select Case (NVAL)
       Case (:0)
@@ -619,7 +618,7 @@ Subroutine int32_uniinv (XDONT, IGOEST)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XDONT(IIND-1) < XDONT(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -650,11 +649,11 @@ Subroutine int32_uniinv (XDONT, IGOEST)
 !
 !   1 2 3
 !
-               If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Exit
+               If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Exit
 !
 !   1 3 2
 !
-               If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+               If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                   IRNG2 = IRNGT (IWRKD+2)
                   IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
                   IRNGT (IWRKD+3) = IRNG2
@@ -672,14 +671,14 @@ Subroutine int32_uniinv (XDONT, IGOEST)
 !
 !   1 2 3 4
 !
-            If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Cycle
+            If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Cycle
 !
 !   1 3 x x
 !
-            If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+            If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   1 3 2 4
                   IRNGT (IWRKD+3) = IRNG2
                Else
@@ -694,9 +693,9 @@ Subroutine int32_uniinv (XDONT, IGOEST)
                IRNG1 = IRNGT (IWRKD+1)
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+1) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG1) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG1) <= INVALS(IRNGT(IWRKD+4))) Then
                   IRNGT (IWRKD+2) = IRNG1
-                  If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+                  If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   3 1 2 4
                      IRNGT (IWRKD+3) = IRNG2
                   Else
@@ -746,8 +745,8 @@ Subroutine int32_uniinv (XDONT, IGOEST)
 !  Make a copy of the rank array for the iteration
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
-            XDONA = XDONT (JWRKT(IINDA))
-            XDONB = XDONT (IRNGT(IINDB))
+            XDONA = INVALS (JWRKT(IINDA))
+            XDONB = INVALS (IRNGT(IINDB))
 !
             Do
                IWRK = IWRK + 1
@@ -762,12 +761,12 @@ Subroutine int32_uniinv (XDONT, IGOEST)
                      IRNGT (IWRK+1:IWRKF) = JWRKT (IINDA:LMTNA)
                      Exit
                   End If
-                  XDONB = XDONT (IRNGT(IINDB))
+                  XDONB = INVALS (IRNGT(IINDB))
                Else
                   IRNGT (IWRK) = JWRKT (IINDA)
                   IINDA = IINDA + 1
                   If (IINDA > LMTNA) Exit! Only B still with unprocessed values
-                  XDONA = XDONT (JWRKT(IINDA))
+                  XDONA = INVALS (JWRKT(IINDA))
                End If
 !
             End Do
@@ -788,13 +787,13 @@ Subroutine int32_uniinv (XDONT, IGOEST)
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
-           XTST = NEARLESS (XDONT(JWRKT(1)))
+        If (INVALS(JWRKT(1)) < INVALS(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (INVALS(JWRKT(1)))
         Else
-           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+           XTST = NEARLESS (INVALS(IRNGT(IINDB)))
         Endif
       Else
-        XTST = NEARLESS (XDONT(JWRKT(1)))
+        XTST = NEARLESS (INVALS(JWRKT(1)))
       Endif
       Do IWRK = 1, NVAL
 !
@@ -802,7 +801,7 @@ Subroutine int32_uniinv (XDONT, IGOEST)
 !
          If (IINDA <= LMTNA) Then
             If (IINDB <= NVAL) Then
-               If (XDONT(JWRKT(IINDA)) > XDONT(IRNGT(IINDB))) Then
+               If (INVALS(JWRKT(IINDA)) > INVALS(IRNGT(IINDB))) Then
                   IRNG = IRNGT (IINDB)
                   IINDB = IINDB + 1
                Else
@@ -822,8 +821,8 @@ Subroutine int32_uniinv (XDONT, IGOEST)
 !
             IRNG = IRNGT (IWRK)
          End If
-         If (XDONT(IRNG) > XTST) Then
-            XTST = XDONT (IRNG)
+         If (INVALS(IRNG) > XTST) Then
+            XTST = INVALS (IRNG)
             NUNI = NUNI + 1
          End If
          IGOEST (IRNG) = NUNI
@@ -840,18 +839,18 @@ Function int32_nearless (XVAL) result (int32_nl)
       int32_nl = XVAL -1_int32
 !
 End Function int32_nearless
-Subroutine f_char_uniinv (XDONT, IGOEST)
-      character (kind=f_char,len=*), Dimension (:), Intent (In) :: XDONT
+Subroutine f_char_uniinv (INVALS, IGOEST)
+      character (kind=f_char,len=*), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IGOEST
 ! __________________________________________________________
-      character (kind=f_char,len=len(XDONT)) :: XTST, XDONA, XDONB
+      character (kind=f_char,len=len(INVALS)) :: XTST, XDONA, XDONB
 !
 ! __________________________________________________________
       Integer, Dimension (SIZE(IGOEST)) :: JWRKT, IRNGT
       Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2, NUNI
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XDONT), SIZE(IGOEST))
+      NVAL = Min (SIZE(INVALS), SIZE(IGOEST))
 !
       Select Case (NVAL)
       Case (:0)
@@ -866,7 +865,7 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XDONT(IIND-1) < XDONT(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -897,11 +896,11 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
 !
 !   1 2 3
 !
-               If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Exit
+               If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Exit
 !
 !   1 3 2
 !
-               If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+               If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                   IRNG2 = IRNGT (IWRKD+2)
                   IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
                   IRNGT (IWRKD+3) = IRNG2
@@ -919,14 +918,14 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
 !
 !   1 2 3 4
 !
-            If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Cycle
+            If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Cycle
 !
 !   1 3 x x
 !
-            If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+            If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   1 3 2 4
                   IRNGT (IWRKD+3) = IRNG2
                Else
@@ -941,9 +940,9 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
                IRNG1 = IRNGT (IWRKD+1)
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+1) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG1) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG1) <= INVALS(IRNGT(IWRKD+4))) Then
                   IRNGT (IWRKD+2) = IRNG1
-                  If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+                  If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   3 1 2 4
                      IRNGT (IWRKD+3) = IRNG2
                   Else
@@ -993,8 +992,8 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
 !  Make a copy of the rank array for the iteration
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
-            XDONA = XDONT (JWRKT(IINDA))
-            XDONB = XDONT (IRNGT(IINDB))
+            XDONA = INVALS (JWRKT(IINDA))
+            XDONB = INVALS (IRNGT(IINDB))
 !
             Do
                IWRK = IWRK + 1
@@ -1009,12 +1008,12 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
                      IRNGT (IWRK+1:IWRKF) = JWRKT (IINDA:LMTNA)
                      Exit
                   End If
-                  XDONB = XDONT (IRNGT(IINDB))
+                  XDONB = INVALS (IRNGT(IINDB))
                Else
                   IRNGT (IWRK) = JWRKT (IINDA)
                   IINDA = IINDA + 1
                   If (IINDA > LMTNA) Exit! Only B still with unprocessed values
-                  XDONA = XDONT (JWRKT(IINDA))
+                  XDONA = INVALS (JWRKT(IINDA))
                End If
 !
             End Do
@@ -1035,13 +1034,13 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
 !
       JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
       If (IINDB <= NVAL) Then
-        If (XDONT(JWRKT(1)) < XDONT(IRNGT(IINDB)) ) Then
-           XTST = NEARLESS (XDONT(JWRKT(1)))
+        If (INVALS(JWRKT(1)) < INVALS(IRNGT(IINDB)) ) Then
+           XTST = NEARLESS (INVALS(JWRKT(1)))
         Else
-           XTST = NEARLESS (XDONT(IRNGT(IINDB)))
+           XTST = NEARLESS (INVALS(IRNGT(IINDB)))
         Endif
       Else
-        XTST = NEARLESS (XDONT(JWRKT(1)))
+        XTST = NEARLESS (INVALS(JWRKT(1)))
       Endif
       Do IWRK = 1, NVAL
 !
@@ -1049,7 +1048,7 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
 !
          If (IINDA <= LMTNA) Then
             If (IINDB <= NVAL) Then
-               If (XDONT(JWRKT(IINDA)) > XDONT(IRNGT(IINDB))) Then
+               If (INVALS(JWRKT(IINDA)) > INVALS(IRNGT(IINDB))) Then
                   IRNG = IRNGT (IINDB)
                   IINDB = IINDB + 1
                Else
@@ -1069,8 +1068,8 @@ Subroutine f_char_uniinv (XDONT, IGOEST)
 !
             IRNG = IRNGT (IWRK)
          End If
-         If (XDONT(IRNG) > XTST) Then
-            XTST = XDONT (IRNG)
+         If (INVALS(IRNG) > XTST) Then
+            XTST = INVALS (IRNG)
             NUNI = NUNI + 1
          End If
          IGOEST (IRNG) = NUNI

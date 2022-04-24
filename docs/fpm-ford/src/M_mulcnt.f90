@@ -11,14 +11,14 @@ end interface mulcnt
 contains
 !>
 !!##NAME
-!!    mulcnt(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each
+!!    occurrences(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each
 !!                 array value (number of times that it appears in the array)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine mulcnt (XDONT, IMULT)
+!!     Subroutine Occurrences (INVALS, IMULT)
 !!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: IMULT(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
@@ -29,20 +29,25 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!     MULCNT = Give for each array value its multiplicity
-!!              (number of times that it appears in the array)
+!!     OCCURRENCES(3f) Gives, for each array value, its multiplicity (number of
+!!     times that it appears in the array).
+!!
+!!     Internally, the number of times that a value appears in the array
+!!     is computed by using inverse ranking, counting for each rank the
+!!     number of values that "collide" to this rank, and returning this sum
+!!     to the locations in the original set. It uses subroutine UNIINV(3f).
 !!
 !!##OPTIONS
-!!     XDONT      input array
-!!     IMULT      array containing how often the value in XDONT
-!!                appears in XDONT
+!!     INVALS      input array
+!!     IMULT      array containing how often the value in INVALS
+!!                appears in INVALS
 !!
 !!##EXAMPLES
 !!
 !! Sample program:
 !!
-!!      program demo_mulcnt
-!!      use M_mulcnt, only : mulcnt
+!!      program demo_occurrences
+!!      use M_orderpack, only : occurrences
 !!      ! determine how many times each value appears in an input array
 !!      implicit none
 !!      character(len=*),parameter    :: g='(*(g0,1x))'
@@ -58,10 +63,10 @@ contains
 !!         csz=size(strings)
 !!         if(allocated(cindx))deallocate(cindx)
 !!         allocate(cindx(csz))
-!!         call mulcnt(strings,cindx)
+!!         call occurrences(strings,cindx)
 !!         write(*,g)(trim(strings(i)),i=1,csz)
 !!         write(*,g)cindx
-!!      end program demo_mulcnt
+!!      end program demo_occurrences
 !!
 !! Results:
 !!
@@ -69,86 +74,83 @@ contains
 !!  2   4    3     5    5    2   4    3     5    5    4    4    3     1   5
 !!
 !!##AUTHOR
-!!     Michel Olagnon, Mar 2000
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon, Mar 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_mulcnt (XDONT, IMULT)
+Subroutine real64_mulcnt (INVALS, IMULT)
 ! __________________________________________________________
-      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+      Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IMULT
 ! __________________________________________________________
-      Integer, Dimension (Size(XDONT)) :: IWRKT
-      Integer, Dimension (Size(XDONT)) :: ICNTT
+      Integer, Dimension (Size(INVALS)) :: IWRKT
+      Integer, Dimension (Size(INVALS)) :: ICNTT
       Integer :: ICRS
 ! __________________________________________________________
-      Call UNIINV (XDONT, IWRKT)
+      Call UNIINV (INVALS, IWRKT)
       ICNTT = 0
-      Do ICRS = 1, Size(XDONT)
+      Do ICRS = 1, Size(INVALS)
             ICNTT(IWRKT(ICRS)) = ICNTT(IWRKT(ICRS)) + 1
       End Do
-      Do ICRS = 1, Size(XDONT)
+      Do ICRS = 1, Size(INVALS)
             IMULT(ICRS) = ICNTT(IWRKT(ICRS))
       End Do
 !
 End Subroutine real64_mulcnt
-Subroutine real32_mulcnt (XDONT, IMULT)
+Subroutine real32_mulcnt (INVALS, IMULT)
 ! __________________________________________________________
-      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+      Real (kind=real32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IMULT
 ! __________________________________________________________
-      Integer, Dimension (Size(XDONT)) :: IWRKT
-      Integer, Dimension (Size(XDONT)) :: ICNTT
+      Integer, Dimension (Size(INVALS)) :: IWRKT
+      Integer, Dimension (Size(INVALS)) :: ICNTT
       Integer :: ICRS
 ! __________________________________________________________
-      Call UNIINV (XDONT, IWRKT)
+      Call UNIINV (INVALS, IWRKT)
       ICNTT = 0
-      Do ICRS = 1, Size(XDONT)
+      Do ICRS = 1, Size(INVALS)
             ICNTT(IWRKT(ICRS)) = ICNTT(IWRKT(ICRS)) + 1
       End Do
-      Do ICRS = 1, Size(XDONT)
+      Do ICRS = 1, Size(INVALS)
             IMULT(ICRS) = ICNTT(IWRKT(ICRS))
       End Do
 !
 End Subroutine real32_mulcnt
-Subroutine int32_mulcnt (XDONT, IMULT)
+Subroutine int32_mulcnt (INVALS, IMULT)
 ! __________________________________________________________
-      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+      Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IMULT
 ! __________________________________________________________
-      Integer, Dimension (Size(XDONT)) :: IWRKT
-      Integer, Dimension (Size(XDONT)) :: ICNTT
+      Integer, Dimension (Size(INVALS)) :: IWRKT
+      Integer, Dimension (Size(INVALS)) :: ICNTT
       Integer :: ICRS
 ! __________________________________________________________
-      Call UNIINV (XDONT, IWRKT)
+      Call UNIINV (INVALS, IWRKT)
       ICNTT = 0
-      Do ICRS = 1, Size(XDONT)
+      Do ICRS = 1, Size(INVALS)
             ICNTT(IWRKT(ICRS)) = ICNTT(IWRKT(ICRS)) + 1
       End Do
-      Do ICRS = 1, Size(XDONT)
+      Do ICRS = 1, Size(INVALS)
             IMULT(ICRS) = ICNTT(IWRKT(ICRS))
       End Do
 !
 End Subroutine int32_mulcnt
-Subroutine f_char_mulcnt (XDONT, IMULT)
+Subroutine f_char_mulcnt (INVALS, IMULT)
 ! __________________________________________________________
-      character (kind=f_char,len=*), Dimension (:), Intent (In) :: XDONT
+      character (kind=f_char,len=*), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IMULT
 ! __________________________________________________________
-      Integer, Dimension (Size(XDONT)) :: IWRKT
-      Integer, Dimension (Size(XDONT)) :: ICNTT
+      Integer, Dimension (Size(INVALS)) :: IWRKT
+      Integer, Dimension (Size(INVALS)) :: ICNTT
       Integer :: ICRS
 ! __________________________________________________________
-      Call UNIINV (XDONT, IWRKT)
+      Call UNIINV (INVALS, IWRKT)
       ICNTT = 0
-      Do ICRS = 1, Size(XDONT)
+      Do ICRS = 1, Size(INVALS)
             ICNTT(IWRKT(ICRS)) = ICNTT(IWRKT(ICRS)) + 1
       End Do
-      Do ICRS = 1, Size(XDONT)
+      Do ICRS = 1, Size(INVALS)
             IMULT(ICRS) = ICNTT(IWRKT(ICRS))
       End Do
 !

@@ -1,6 +1,6 @@
      program demo_median
      ! calculate median value
-     use M_median, only : median
+     use M_orderpack, only : median
      implicit none
      character(len=*),parameter :: g='(*(g0,1x))'
 

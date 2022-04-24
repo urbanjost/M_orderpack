@@ -3,24 +3,24 @@
 \doxysubsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a825a1da7bfed4bb94fc6dc6244a785e3}{real64\+\_\+unirnk}} (X\+V\+A\+LT, I\+R\+N\+GT, N\+U\+NI)
+subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_afaca91b343aa9984020990bf0f6e62f7}{real64\+\_\+unirnk}} (I\+N\+V\+A\+LS, I\+R\+N\+GT, N\+U\+NI)
 \item 
-subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a9480d3d0e0ffe1f50cc417de4e963930}{real32\+\_\+unirnk}} (X\+V\+A\+LT, I\+R\+N\+GT, N\+U\+NI)
+subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a844abc2717a82da711b7c06414ac843d}{real32\+\_\+unirnk}} (I\+N\+V\+A\+LS, I\+R\+N\+GT, N\+U\+NI)
 \item 
-subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db45129d65a645d}{int32\+\_\+unirnk}} (X\+V\+A\+LT, I\+R\+N\+GT, N\+U\+NI)
+subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a902361f8438cf992d29a480311e7787e}{int32\+\_\+unirnk}} (I\+N\+V\+A\+LS, I\+R\+N\+GT, N\+U\+NI)
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Member Function/\+Subroutine Documentation}
-\mbox{\Hypertarget{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db45129d65a645d}\label{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db45129d65a645d}} 
+\mbox{\Hypertarget{interfacem__unirnk_1_1unirnk_a902361f8438cf992d29a480311e7787e}\label{interfacem__unirnk_1_1unirnk_a902361f8438cf992d29a480311e7787e}} 
 \index{m\_unirnk::unirnk@{m\_unirnk::unirnk}!int32\_unirnk@{int32\_unirnk}}
 \index{int32\_unirnk@{int32\_unirnk}!m\_unirnk::unirnk@{m\_unirnk::unirnk}}
 \doxysubsubsection{\texorpdfstring{int32\_unirnk()}{int32\_unirnk()}}
-{\footnotesize\ttfamily subroutine m\+\_\+unirnk\+::unirnk\+::int32\+\_\+unirnk (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily subroutine m\+\_\+unirnk\+::unirnk\+::int32\+\_\+unirnk (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{591       \textcolor{keywordtype}{Integer (Kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: XVALT}
+\DoxyCodeLine{591       \textcolor{keywordtype}{Integer (Kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: INVALS}
 \DoxyCodeLine{592       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
 \DoxyCodeLine{593       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
 \DoxyCodeLine{594 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
@@ -30,7 +30,7 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{598       \textcolor{keywordtype}{Integer (Kind=int32)} :: XTST, XVALA, XVALB}
 \DoxyCodeLine{599 \textcolor{comment}{!}}
 \DoxyCodeLine{600 \textcolor{comment}{!}}
-\DoxyCodeLine{601       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
+\DoxyCodeLine{601       nval = min(\textcolor{keyword}{SIZE}(invals), \textcolor{keyword}{SIZE}(irngt))}
 \DoxyCodeLine{602       nuni = nval}
 \DoxyCodeLine{603 \textcolor{comment}{!}}
 \DoxyCodeLine{604       \textcolor{keywordflow}{Select Case} (nval)}
@@ -46,7 +46,7 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{614 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
 \DoxyCodeLine{615 \textcolor{comment}{!}}
 \DoxyCodeLine{616       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
-\DoxyCodeLine{617          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{617          \textcolor{keywordflow}{If} (invals(iind-\/1) < invals(iind)) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{618             irngt(iind-\/1) = iind -\/ 1}
 \DoxyCodeLine{619             irngt(iind) = iind}
 \DoxyCodeLine{620          \textcolor{keywordflow}{Else}}
@@ -77,11 +77,11 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{645 \textcolor{comment}{!}}
 \DoxyCodeLine{646 \textcolor{comment}{!   1 2 3}}
 \DoxyCodeLine{647 \textcolor{comment}{!}}
-\DoxyCodeLine{648                \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+2)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{648                \textcolor{keywordflow}{If} (invals(irngt(iwrkd+2)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Exit}}
 \DoxyCodeLine{649 \textcolor{comment}{!}}
 \DoxyCodeLine{650 \textcolor{comment}{!   1 3 2}}
 \DoxyCodeLine{651 \textcolor{comment}{!}}
-\DoxyCodeLine{652                \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+1)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{652                \textcolor{keywordflow}{If} (invals(irngt(iwrkd+1)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{653                   irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{654                   irngt(iwrkd+2) = irngt(iwrkd+3)}
 \DoxyCodeLine{655                   irngt(iwrkd+3) = irng2}
@@ -99,14 +99,14 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{667 \textcolor{comment}{!}}
 \DoxyCodeLine{668 \textcolor{comment}{!   1 2 3 4}}
 \DoxyCodeLine{669 \textcolor{comment}{!}}
-\DoxyCodeLine{670             \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+2)) <= xvalt(irngt(iwrkd+3))) cycle}
+\DoxyCodeLine{670             \textcolor{keywordflow}{If} (invals(irngt(iwrkd+2)) <= invals(irngt(iwrkd+3))) cycle}
 \DoxyCodeLine{671 \textcolor{comment}{!}}
 \DoxyCodeLine{672 \textcolor{comment}{!   1 3 x x}}
 \DoxyCodeLine{673 \textcolor{comment}{!}}
-\DoxyCodeLine{674             \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+1)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{674             \textcolor{keywordflow}{If} (invals(irngt(iwrkd+1)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{675                irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{676                irngt(iwrkd+2) = irngt(iwrkd+3)}
-\DoxyCodeLine{677                \textcolor{keywordflow}{If} (xvalt(irng2) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{677                \textcolor{keywordflow}{If} (invals(irng2) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{678 \textcolor{comment}{!   1 3 2 4}}
 \DoxyCodeLine{679                   irngt(iwrkd+3) = irng2}
 \DoxyCodeLine{680                \textcolor{keywordflow}{Else}}
@@ -121,9 +121,9 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{689                irng1 = irngt(iwrkd+1)}
 \DoxyCodeLine{690                irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{691                irngt(iwrkd+1) = irngt(iwrkd+3)}
-\DoxyCodeLine{692                \textcolor{keywordflow}{If} (xvalt(irng1) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{692                \textcolor{keywordflow}{If} (invals(irng1) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{693                   irngt(iwrkd+2) = irng1}
-\DoxyCodeLine{694                   \textcolor{keywordflow}{If} (xvalt(irng2) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{694                   \textcolor{keywordflow}{If} (invals(irng2) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{695 \textcolor{comment}{!   3 1 2 4}}
 \DoxyCodeLine{696                      irngt(iwrkd+3) = irng2}
 \DoxyCodeLine{697                   \textcolor{keywordflow}{Else}}
@@ -173,8 +173,8 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{741 \textcolor{comment}{!  Make a copy of the rank array for the iteration}}
 \DoxyCodeLine{742 \textcolor{comment}{!}}
 \DoxyCodeLine{743             jwrkt(1:lmtna) = irngt(iwrkd:jinda)}
-\DoxyCodeLine{744             xvala = xvalt(jwrkt(iinda))}
-\DoxyCodeLine{745             xvalb = xvalt(irngt(iindb))}
+\DoxyCodeLine{744             xvala = invals(jwrkt(iinda))}
+\DoxyCodeLine{745             xvalb = invals(irngt(iindb))}
 \DoxyCodeLine{746 \textcolor{comment}{!}}
 \DoxyCodeLine{747             \textcolor{keywordflow}{Do}}
 \DoxyCodeLine{748                iwrk = iwrk + 1}
@@ -189,12 +189,12 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{757                      irngt(iwrk+1:iwrkf) = jwrkt(iinda:lmtna)}
 \DoxyCodeLine{758                      \textcolor{keywordflow}{Exit}}
 \DoxyCodeLine{759 \textcolor{keywordflow}{                  End If}}
-\DoxyCodeLine{760                   xvalb = xvalt(irngt(iindb))}
+\DoxyCodeLine{760                   xvalb = invals(irngt(iindb))}
 \DoxyCodeLine{761                \textcolor{keywordflow}{Else}}
 \DoxyCodeLine{762                   irngt(iwrk) = jwrkt(iinda)}
 \DoxyCodeLine{763                   iinda = iinda + 1}
 \DoxyCodeLine{764                   \textcolor{keywordflow}{If} (iinda > lmtna) exit\textcolor{comment}{! Only B still with unprocessed values}}
-\DoxyCodeLine{765                   xvala = xvalt(jwrkt(iinda))}
+\DoxyCodeLine{765                   xvala = invals(jwrkt(iinda))}
 \DoxyCodeLine{766 \textcolor{keywordflow}{               End If}}
 \DoxyCodeLine{767 \textcolor{comment}{!}}
 \DoxyCodeLine{768 \textcolor{keywordflow}{            End Do}}
@@ -215,9 +215,9 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{783 \textcolor{comment}{!}}
 \DoxyCodeLine{784       jwrkt(1:lmtna) = irngt(1:lmtna)}
 \DoxyCodeLine{785       \textcolor{keywordflow}{If} (iindb <= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{786         xtst = nearless(min(xvalt(jwrkt(1)), xvalt(irngt(iindb))))}
+\DoxyCodeLine{786         xtst = nearless(min(invals(jwrkt(1)), invals(irngt(iindb))))}
 \DoxyCodeLine{787       \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{788         xtst = nearless(xvalt(jwrkt(1)))}
+\DoxyCodeLine{788         xtst = nearless(invals(jwrkt(1)))}
 \DoxyCodeLine{789 \textcolor{keywordflow}{      Endif}}
 \DoxyCodeLine{790       \textcolor{keywordflow}{Do} iwrk = 1, nval}
 \DoxyCodeLine{791 \textcolor{comment}{!}}
@@ -225,7 +225,7 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{793 \textcolor{comment}{!}}
 \DoxyCodeLine{794          \textcolor{keywordflow}{If} (iinda <= lmtna) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{795             \textcolor{keywordflow}{If} (iindb <= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{796                \textcolor{keywordflow}{If} (xvalt(jwrkt(iinda)) > xvalt(irngt(iindb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{796                \textcolor{keywordflow}{If} (invals(jwrkt(iinda)) > invals(irngt(iindb))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{797                   irng = irngt(iindb)}
 \DoxyCodeLine{798                   iindb = iindb + 1}
 \DoxyCodeLine{799                \textcolor{keywordflow}{Else}}
@@ -245,8 +245,8 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{813 \textcolor{comment}{!}}
 \DoxyCodeLine{814             irng = irngt(iwrk)}
 \DoxyCodeLine{815 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{816          \textcolor{keywordflow}{If} (xvalt(irng) > xtst) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{817             xtst = xvalt(irng)}
+\DoxyCodeLine{816          \textcolor{keywordflow}{If} (invals(irng) > xtst) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{817             xtst = invals(irng)}
 \DoxyCodeLine{818             nuni = nuni + 1}
 \DoxyCodeLine{819             irngt(nuni) = irng}
 \DoxyCodeLine{820 \textcolor{keywordflow}{         End If}}
@@ -257,15 +257,15 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{825 \textcolor{comment}{!}}
 
 \end{DoxyCode}
-\mbox{\Hypertarget{interfacem__unirnk_1_1unirnk_a9480d3d0e0ffe1f50cc417de4e963930}\label{interfacem__unirnk_1_1unirnk_a9480d3d0e0ffe1f50cc417de4e963930}} 
+\mbox{\Hypertarget{interfacem__unirnk_1_1unirnk_a844abc2717a82da711b7c06414ac843d}\label{interfacem__unirnk_1_1unirnk_a844abc2717a82da711b7c06414ac843d}} 
 \index{m\_unirnk::unirnk@{m\_unirnk::unirnk}!real32\_unirnk@{real32\_unirnk}}
 \index{real32\_unirnk@{real32\_unirnk}!m\_unirnk::unirnk@{m\_unirnk::unirnk}}
 \doxysubsubsection{\texorpdfstring{real32\_unirnk()}{real32\_unirnk()}}
-{\footnotesize\ttfamily subroutine m\+\_\+unirnk\+::unirnk\+::real32\+\_\+unirnk (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily subroutine m\+\_\+unirnk\+::unirnk\+::real32\+\_\+unirnk (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{345 \textcolor{keywordtype}{      Real} (Kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xvalt}
+\DoxyCodeLine{345 \textcolor{keywordtype}{      Real} (Kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
 \DoxyCodeLine{346       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
 \DoxyCodeLine{347       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
 \DoxyCodeLine{348 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
@@ -275,7 +275,7 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{352 \textcolor{keywordtype}{      Real} (Kind=real32) :: xtst, xvala, xvalb}
 \DoxyCodeLine{353 \textcolor{comment}{!}}
 \DoxyCodeLine{354 \textcolor{comment}{!}}
-\DoxyCodeLine{355       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
+\DoxyCodeLine{355       nval = min(\textcolor{keyword}{SIZE}(invals), \textcolor{keyword}{SIZE}(irngt))}
 \DoxyCodeLine{356       nuni = nval}
 \DoxyCodeLine{357 \textcolor{comment}{!}}
 \DoxyCodeLine{358       \textcolor{keywordflow}{Select Case} (nval)}
@@ -291,7 +291,7 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{368 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
 \DoxyCodeLine{369 \textcolor{comment}{!}}
 \DoxyCodeLine{370       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
-\DoxyCodeLine{371          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{371          \textcolor{keywordflow}{If} (invals(iind-\/1) < invals(iind)) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{372             irngt(iind-\/1) = iind -\/ 1}
 \DoxyCodeLine{373             irngt(iind) = iind}
 \DoxyCodeLine{374          \textcolor{keywordflow}{Else}}
@@ -322,11 +322,11 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{399 \textcolor{comment}{!}}
 \DoxyCodeLine{400 \textcolor{comment}{!   1 2 3}}
 \DoxyCodeLine{401 \textcolor{comment}{!}}
-\DoxyCodeLine{402                \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+2)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{402                \textcolor{keywordflow}{If} (invals(irngt(iwrkd+2)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Exit}}
 \DoxyCodeLine{403 \textcolor{comment}{!}}
 \DoxyCodeLine{404 \textcolor{comment}{!   1 3 2}}
 \DoxyCodeLine{405 \textcolor{comment}{!}}
-\DoxyCodeLine{406                \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+1)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{406                \textcolor{keywordflow}{If} (invals(irngt(iwrkd+1)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{407                   irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{408                   irngt(iwrkd+2) = irngt(iwrkd+3)}
 \DoxyCodeLine{409                   irngt(iwrkd+3) = irng2}
@@ -344,14 +344,14 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{421 \textcolor{comment}{!}}
 \DoxyCodeLine{422 \textcolor{comment}{!   1 2 3 4}}
 \DoxyCodeLine{423 \textcolor{comment}{!}}
-\DoxyCodeLine{424             \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+2)) <= xvalt(irngt(iwrkd+3))) cycle}
+\DoxyCodeLine{424             \textcolor{keywordflow}{If} (invals(irngt(iwrkd+2)) <= invals(irngt(iwrkd+3))) cycle}
 \DoxyCodeLine{425 \textcolor{comment}{!}}
 \DoxyCodeLine{426 \textcolor{comment}{!   1 3 x x}}
 \DoxyCodeLine{427 \textcolor{comment}{!}}
-\DoxyCodeLine{428             \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+1)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{428             \textcolor{keywordflow}{If} (invals(irngt(iwrkd+1)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{429                irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{430                irngt(iwrkd+2) = irngt(iwrkd+3)}
-\DoxyCodeLine{431                \textcolor{keywordflow}{If} (xvalt(irng2) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{431                \textcolor{keywordflow}{If} (invals(irng2) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{432 \textcolor{comment}{!   1 3 2 4}}
 \DoxyCodeLine{433                   irngt(iwrkd+3) = irng2}
 \DoxyCodeLine{434                \textcolor{keywordflow}{Else}}
@@ -366,9 +366,9 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{443                irng1 = irngt(iwrkd+1)}
 \DoxyCodeLine{444                irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{445                irngt(iwrkd+1) = irngt(iwrkd+3)}
-\DoxyCodeLine{446                \textcolor{keywordflow}{If} (xvalt(irng1) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{446                \textcolor{keywordflow}{If} (invals(irng1) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{447                   irngt(iwrkd+2) = irng1}
-\DoxyCodeLine{448                   \textcolor{keywordflow}{If} (xvalt(irng2) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{448                   \textcolor{keywordflow}{If} (invals(irng2) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{449 \textcolor{comment}{!   3 1 2 4}}
 \DoxyCodeLine{450                      irngt(iwrkd+3) = irng2}
 \DoxyCodeLine{451                   \textcolor{keywordflow}{Else}}
@@ -418,8 +418,8 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{495 \textcolor{comment}{!  Make a copy of the rank array for the iteration}}
 \DoxyCodeLine{496 \textcolor{comment}{!}}
 \DoxyCodeLine{497             jwrkt(1:lmtna) = irngt(iwrkd:jinda)}
-\DoxyCodeLine{498             xvala = xvalt(jwrkt(iinda))}
-\DoxyCodeLine{499             xvalb = xvalt(irngt(iindb))}
+\DoxyCodeLine{498             xvala = invals(jwrkt(iinda))}
+\DoxyCodeLine{499             xvalb = invals(irngt(iindb))}
 \DoxyCodeLine{500 \textcolor{comment}{!}}
 \DoxyCodeLine{501             \textcolor{keywordflow}{Do}}
 \DoxyCodeLine{502                iwrk = iwrk + 1}
@@ -434,12 +434,12 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{511                      irngt(iwrk+1:iwrkf) = jwrkt(iinda:lmtna)}
 \DoxyCodeLine{512                      \textcolor{keywordflow}{Exit}}
 \DoxyCodeLine{513 \textcolor{keywordflow}{                  End If}}
-\DoxyCodeLine{514                   xvalb = xvalt(irngt(iindb))}
+\DoxyCodeLine{514                   xvalb = invals(irngt(iindb))}
 \DoxyCodeLine{515                \textcolor{keywordflow}{Else}}
 \DoxyCodeLine{516                   irngt(iwrk) = jwrkt(iinda)}
 \DoxyCodeLine{517                   iinda = iinda + 1}
 \DoxyCodeLine{518                   \textcolor{keywordflow}{If} (iinda > lmtna) exit\textcolor{comment}{! Only B still with unprocessed values}}
-\DoxyCodeLine{519                   xvala = xvalt(jwrkt(iinda))}
+\DoxyCodeLine{519                   xvala = invals(jwrkt(iinda))}
 \DoxyCodeLine{520 \textcolor{keywordflow}{               End If}}
 \DoxyCodeLine{521 \textcolor{comment}{!}}
 \DoxyCodeLine{522 \textcolor{keywordflow}{            End Do}}
@@ -460,9 +460,9 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{537 \textcolor{comment}{!}}
 \DoxyCodeLine{538       jwrkt(1:lmtna) = irngt(1:lmtna)}
 \DoxyCodeLine{539       \textcolor{keywordflow}{If} (iindb <= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{540         xtst = nearless(min(xvalt(jwrkt(1)), xvalt(irngt(iindb))))}
+\DoxyCodeLine{540         xtst = nearless(min(invals(jwrkt(1)), invals(irngt(iindb))))}
 \DoxyCodeLine{541       \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{542         xtst = nearless(xvalt(jwrkt(1)))}
+\DoxyCodeLine{542         xtst = nearless(invals(jwrkt(1)))}
 \DoxyCodeLine{543 \textcolor{keywordflow}{      Endif}}
 \DoxyCodeLine{544       \textcolor{keywordflow}{Do} iwrk = 1, nval}
 \DoxyCodeLine{545 \textcolor{comment}{!}}
@@ -470,7 +470,7 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{547 \textcolor{comment}{!}}
 \DoxyCodeLine{548          \textcolor{keywordflow}{If} (iinda <= lmtna) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{549             \textcolor{keywordflow}{If} (iindb <= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{550                \textcolor{keywordflow}{If} (xvalt(jwrkt(iinda)) > xvalt(irngt(iindb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{550                \textcolor{keywordflow}{If} (invals(jwrkt(iinda)) > invals(irngt(iindb))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{551                   irng = irngt(iindb)}
 \DoxyCodeLine{552                   iindb = iindb + 1}
 \DoxyCodeLine{553                \textcolor{keywordflow}{Else}}
@@ -490,8 +490,8 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{567 \textcolor{comment}{!}}
 \DoxyCodeLine{568             irng = irngt(iwrk)}
 \DoxyCodeLine{569 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{570          \textcolor{keywordflow}{If} (xvalt(irng) > xtst) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{571             xtst = xvalt(irng)}
+\DoxyCodeLine{570          \textcolor{keywordflow}{If} (invals(irng) > xtst) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{571             xtst = invals(irng)}
 \DoxyCodeLine{572             nuni = nuni + 1}
 \DoxyCodeLine{573             irngt(nuni) = irng}
 \DoxyCodeLine{574 \textcolor{keywordflow}{         End If}}
@@ -502,17 +502,17 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a516bcbbef8cf5b582db451
 \DoxyCodeLine{579 \textcolor{comment}{!}}
 
 \end{DoxyCode}
-\mbox{\Hypertarget{interfacem__unirnk_1_1unirnk_a825a1da7bfed4bb94fc6dc6244a785e3}\label{interfacem__unirnk_1_1unirnk_a825a1da7bfed4bb94fc6dc6244a785e3}} 
+\mbox{\Hypertarget{interfacem__unirnk_1_1unirnk_afaca91b343aa9984020990bf0f6e62f7}\label{interfacem__unirnk_1_1unirnk_afaca91b343aa9984020990bf0f6e62f7}} 
 \index{m\_unirnk::unirnk@{m\_unirnk::unirnk}!real64\_unirnk@{real64\_unirnk}}
 \index{real64\_unirnk@{real64\_unirnk}!m\_unirnk::unirnk@{m\_unirnk::unirnk}}
 \doxysubsubsection{\texorpdfstring{real64\_unirnk()}{real64\_unirnk()}}
-{\footnotesize\ttfamily subroutine m\+\_\+unirnk\+::unirnk\+::real64\+\_\+unirnk (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{X\+V\+A\+LT,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily subroutine m\+\_\+unirnk\+::unirnk\+::real64\+\_\+unirnk (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__unirnk_autotoc_md125}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__unirnk_autotoc_md125}
-unirnk(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:U\+N\+I\+Q\+UE\mbox{]} ranks an array, with removal of duplicate entries (Merge\+Sort)\hypertarget{namespacem__unirnk_autotoc_md126}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__unirnk_autotoc_md126}
-\begin{DoxyVerb} Subroutine unirnk (XVALT, IRNGT, NUNI)
+\hypertarget{namespacem__unirnk_autotoc_md154}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__unirnk_autotoc_md154}
+rank\+\_\+unique(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:U\+N\+I\+Q\+UE\mbox{]} ranks an array, with removal of duplicate entries (Merge\+Sort)\hypertarget{namespacem__unirnk_autotoc_md155}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__unirnk_autotoc_md155}
+\begin{DoxyVerb} Subroutine rank_unique (INVALS, IRNGT, NUNI)
 
-   ${TYPE} (Kind=${KIND}), Intent (In) :: XVALT(:)
+   ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
    Integer, Intent (Out)               :: IRNGT(:)
    Integer, Intent (Out)               :: NUNI
 
@@ -522,31 +522,32 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
 \end{DoxyVerb}
-\hypertarget{namespacem__unirnk_autotoc_md127}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__unirnk_autotoc_md127}
-\begin{DoxyVerb}UNIRNK performs a Merge-sort ranking of an array, with removal of
-duplicate entries.
+\hypertarget{namespacem__unirnk_autotoc_md156}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__unirnk_autotoc_md156}
+\begin{DoxyVerb}Ranks an array, removing duplicate entries.
+
+Internally, RANK_UNIQUE(3f) performs a Merge-sort ranking of an array,
+with removal of duplicate entries.
 
 The routine is similar to pure merge-sort ranking, but on the last
 pass, it discards indices that correspond to duplicate entries.
 
-For performance reasons, the first 2 passes are taken out of the
+For performance reasons, the first two passes are taken out of the
 standard loop, and use dedicated coding.
 \end{DoxyVerb}
-\hypertarget{namespacem__unirnk_autotoc_md128}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__unirnk_autotoc_md128}
-X\+V\+A\+LT array to index I\+R\+N\+GT rank index returned pointing to unique values N\+U\+NI the number of unique values found\hypertarget{namespacem__unirnk_autotoc_md129}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__unirnk_autotoc_md129}
+\hypertarget{namespacem__unirnk_autotoc_md157}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__unirnk_autotoc_md157}
+I\+N\+V\+A\+LS array to index I\+R\+N\+GT rank index returned pointing to unique values N\+U\+NI the number of unique values found\hypertarget{namespacem__unirnk_autotoc_md158}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__unirnk_autotoc_md158}
 Sample program\+:
 
-program demo\+\_\+unirnk ! rank an array, with removal of duplicate entries. use M\+\_\+unirnk, only \+: unirnk implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: xvalt(\+:) ! xvalt=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} call printme() xvalt=\mbox{[}-\/1,0,-\/2,0,-\/3,0,-\/4\mbox{]} call printme() contains subroutine printme() integer,allocatable \+:: irngt(\+:) integer \+:: nuni if(allocated(irngt))deallocate(irngt) allocate(irngt(size(xvalt))) write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},xvalt call unirnk(xvalt,irngt,nuni) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+:\textquotesingle{},nuni write($\ast$,g)\textquotesingle{}R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+:\textquotesingle{},irngt(\+:nuni) write($\ast$,g)\textquotesingle{}S\+O\+R\+T\+ED D\+A\+TA\+:\textquotesingle{},xvalt(irngt(\+:nuni)) end subroutine end program demo\+\_\+unirnk
+program demo\+\_\+rank\+\_\+unique ! rank an array, with removal of duplicate entries. use M\+\_\+orderpack, only \+: rank\+\_\+unique implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) ! I\+N\+V\+A\+LS=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} call printme() I\+N\+V\+A\+LS=\mbox{[}-\/1,0,-\/2,0,-\/3,0,-\/4\mbox{]} call printme() contains subroutine printme() integer,allocatable \+:: irngt(\+:) integer \+:: nuni if(allocated(irngt))deallocate(irngt) allocate(irngt(size(\+I\+N\+V\+A\+L\+S))) write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+V\+A\+LS call rank\+\_\+unique(\+I\+N\+V\+A\+L\+S,irngt,nuni) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+:\textquotesingle{},nuni write($\ast$,g)\textquotesingle{}R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+:\textquotesingle{},irngt(\+:nuni) write($\ast$,g)\textquotesingle{}S\+O\+R\+T\+ED D\+A\+TA\+:\textquotesingle{},I\+N\+V\+A\+L\+S(irngt(\+:nuni)) end subroutine end program demo\+\_\+rank\+\_\+unique
 
 Results\+:
 
-O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+: 8 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 4 5 2 7 3 8 9 1 S\+O\+R\+T\+ED D\+A\+TA\+: 1 4 5 6 7 8 9 10 O\+R\+I\+G\+I\+N\+AL\+: -\/1 0 -\/2 0 -\/3 0 -\/4 N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+: 5 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 7 5 3 1 2 S\+O\+R\+T\+ED D\+A\+TA\+: -\/4 -\/3 -\/2 -\/1 0\hypertarget{namespacem__unirnk_autotoc_md130}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__unirnk_autotoc_md130}
-Michel Olagnon, 2000-\/2012
-
-John Urban, 2022.\+04.\+16 o added man-\/page and reduced to a template using the prep(1) preprocessor.\hypertarget{namespacem__unirnk_autotoc_md131}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__unirnk_autotoc_md131}
+O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+: 8 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 4 5 2 7 3 8 9 1 S\+O\+R\+T\+ED D\+A\+TA\+: 1 4 5 6 7 8 9 10 O\+R\+I\+G\+I\+N\+AL\+: -\/1 0 -\/2 0 -\/3 0 -\/4 N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+: 5 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 7 5 3 1 2 S\+O\+R\+T\+ED D\+A\+TA\+: -\/4 -\/3 -\/2 -\/1 0\hypertarget{namespacem__unirnk_autotoc_md159}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__unirnk_autotoc_md159}
+Michel Olagnon, 2000-\/2012 \hypertarget{namespacem__unirnk_autotoc_md160}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__unirnk_autotoc_md160}
+John Urban, 2022.\+04.\+16 \hypertarget{namespacem__unirnk_autotoc_md161}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__unirnk_autotoc_md161}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{99 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: xvalt}
+\DoxyCodeLine{99 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
 \DoxyCodeLine{100       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
 \DoxyCodeLine{101       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
 \DoxyCodeLine{102 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
@@ -556,7 +557,7 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{106 \textcolor{keywordtype}{      Real} (Kind=real64) :: xtst, xvala, xvalb}
 \DoxyCodeLine{107 \textcolor{comment}{!}}
 \DoxyCodeLine{108 \textcolor{comment}{!}}
-\DoxyCodeLine{109       nval = min(\textcolor{keyword}{SIZE}(xvalt), \textcolor{keyword}{SIZE}(irngt))}
+\DoxyCodeLine{109       nval = min(\textcolor{keyword}{SIZE}(invals), \textcolor{keyword}{SIZE}(irngt))}
 \DoxyCodeLine{110       nuni = nval}
 \DoxyCodeLine{111 \textcolor{comment}{!}}
 \DoxyCodeLine{112       \textcolor{keywordflow}{Select Case} (nval)}
@@ -572,7 +573,7 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{122 \textcolor{comment}{!  Fill-\/in the index array, creating ordered couples}}
 \DoxyCodeLine{123 \textcolor{comment}{!}}
 \DoxyCodeLine{124       \textcolor{keywordflow}{Do} iind = 2, nval, 2}
-\DoxyCodeLine{125          \textcolor{keywordflow}{If} (xvalt(iind-\/1) < xvalt(iind)) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{125          \textcolor{keywordflow}{If} (invals(iind-\/1) < invals(iind)) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{126             irngt(iind-\/1) = iind -\/ 1}
 \DoxyCodeLine{127             irngt(iind) = iind}
 \DoxyCodeLine{128          \textcolor{keywordflow}{Else}}
@@ -603,11 +604,11 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{153 \textcolor{comment}{!}}
 \DoxyCodeLine{154 \textcolor{comment}{!   1 2 3}}
 \DoxyCodeLine{155 \textcolor{comment}{!}}
-\DoxyCodeLine{156                \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+2)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{156                \textcolor{keywordflow}{If} (invals(irngt(iwrkd+2)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Exit}}
 \DoxyCodeLine{157 \textcolor{comment}{!}}
 \DoxyCodeLine{158 \textcolor{comment}{!   1 3 2}}
 \DoxyCodeLine{159 \textcolor{comment}{!}}
-\DoxyCodeLine{160                \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+1)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{160                \textcolor{keywordflow}{If} (invals(irngt(iwrkd+1)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{161                   irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{162                   irngt(iwrkd+2) = irngt(iwrkd+3)}
 \DoxyCodeLine{163                   irngt(iwrkd+3) = irng2}
@@ -625,14 +626,14 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{175 \textcolor{comment}{!}}
 \DoxyCodeLine{176 \textcolor{comment}{!   1 2 3 4}}
 \DoxyCodeLine{177 \textcolor{comment}{!}}
-\DoxyCodeLine{178             \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+2)) <= xvalt(irngt(iwrkd+3))) cycle}
+\DoxyCodeLine{178             \textcolor{keywordflow}{If} (invals(irngt(iwrkd+2)) <= invals(irngt(iwrkd+3))) cycle}
 \DoxyCodeLine{179 \textcolor{comment}{!}}
 \DoxyCodeLine{180 \textcolor{comment}{!   1 3 x x}}
 \DoxyCodeLine{181 \textcolor{comment}{!}}
-\DoxyCodeLine{182             \textcolor{keywordflow}{If} (xvalt(irngt(iwrkd+1)) <= xvalt(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{182             \textcolor{keywordflow}{If} (invals(irngt(iwrkd+1)) <= invals(irngt(iwrkd+3))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{183                irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{184                irngt(iwrkd+2) = irngt(iwrkd+3)}
-\DoxyCodeLine{185                \textcolor{keywordflow}{If} (xvalt(irng2) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{185                \textcolor{keywordflow}{If} (invals(irng2) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{186 \textcolor{comment}{!   1 3 2 4}}
 \DoxyCodeLine{187                   irngt(iwrkd+3) = irng2}
 \DoxyCodeLine{188                \textcolor{keywordflow}{Else}}
@@ -647,9 +648,9 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{197                irng1 = irngt(iwrkd+1)}
 \DoxyCodeLine{198                irng2 = irngt(iwrkd+2)}
 \DoxyCodeLine{199                irngt(iwrkd+1) = irngt(iwrkd+3)}
-\DoxyCodeLine{200                \textcolor{keywordflow}{If} (xvalt(irng1) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{200                \textcolor{keywordflow}{If} (invals(irng1) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{201                   irngt(iwrkd+2) = irng1}
-\DoxyCodeLine{202                   \textcolor{keywordflow}{If} (xvalt(irng2) <= xvalt(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{202                   \textcolor{keywordflow}{If} (invals(irng2) <= invals(irngt(iwrkd+4))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{203 \textcolor{comment}{!   3 1 2 4}}
 \DoxyCodeLine{204                      irngt(iwrkd+3) = irng2}
 \DoxyCodeLine{205                   \textcolor{keywordflow}{Else}}
@@ -699,8 +700,8 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{249 \textcolor{comment}{!  Make a copy of the rank array for the iteration}}
 \DoxyCodeLine{250 \textcolor{comment}{!}}
 \DoxyCodeLine{251             jwrkt(1:lmtna) = irngt(iwrkd:jinda)}
-\DoxyCodeLine{252             xvala = xvalt(jwrkt(iinda))}
-\DoxyCodeLine{253             xvalb = xvalt(irngt(iindb))}
+\DoxyCodeLine{252             xvala = invals(jwrkt(iinda))}
+\DoxyCodeLine{253             xvalb = invals(irngt(iindb))}
 \DoxyCodeLine{254 \textcolor{comment}{!}}
 \DoxyCodeLine{255             \textcolor{keywordflow}{Do}}
 \DoxyCodeLine{256                iwrk = iwrk + 1}
@@ -715,12 +716,12 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{265                      irngt(iwrk+1:iwrkf) = jwrkt(iinda:lmtna)}
 \DoxyCodeLine{266                      \textcolor{keywordflow}{Exit}}
 \DoxyCodeLine{267 \textcolor{keywordflow}{                  End If}}
-\DoxyCodeLine{268                   xvalb = xvalt(irngt(iindb))}
+\DoxyCodeLine{268                   xvalb = invals(irngt(iindb))}
 \DoxyCodeLine{269                \textcolor{keywordflow}{Else}}
 \DoxyCodeLine{270                   irngt(iwrk) = jwrkt(iinda)}
 \DoxyCodeLine{271                   iinda = iinda + 1}
 \DoxyCodeLine{272                   \textcolor{keywordflow}{If} (iinda > lmtna) exit\textcolor{comment}{! Only B still with unprocessed values}}
-\DoxyCodeLine{273                   xvala = xvalt(jwrkt(iinda))}
+\DoxyCodeLine{273                   xvala = invals(jwrkt(iinda))}
 \DoxyCodeLine{274 \textcolor{keywordflow}{               End If}}
 \DoxyCodeLine{275 \textcolor{comment}{!}}
 \DoxyCodeLine{276 \textcolor{keywordflow}{            End Do}}
@@ -741,9 +742,9 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{291 \textcolor{comment}{!}}
 \DoxyCodeLine{292       jwrkt(1:lmtna) = irngt(1:lmtna)}
 \DoxyCodeLine{293       \textcolor{keywordflow}{If} (iindb <= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{294         xtst = nearless(min(xvalt(jwrkt(1)), xvalt(irngt(iindb))))}
+\DoxyCodeLine{294         xtst = nearless(min(invals(jwrkt(1)), invals(irngt(iindb))))}
 \DoxyCodeLine{295       \textcolor{keywordflow}{Else}}
-\DoxyCodeLine{296         xtst = nearless(xvalt(jwrkt(1)))}
+\DoxyCodeLine{296         xtst = nearless(invals(jwrkt(1)))}
 \DoxyCodeLine{297 \textcolor{keywordflow}{      Endif}}
 \DoxyCodeLine{298       \textcolor{keywordflow}{Do} iwrk = 1, nval}
 \DoxyCodeLine{299 \textcolor{comment}{!}}
@@ -751,7 +752,7 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{301 \textcolor{comment}{!}}
 \DoxyCodeLine{302          \textcolor{keywordflow}{If} (iinda <= lmtna) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{303             \textcolor{keywordflow}{If} (iindb <= nval) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{304                \textcolor{keywordflow}{If} (xvalt(jwrkt(iinda)) > xvalt(irngt(iindb))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{304                \textcolor{keywordflow}{If} (invals(jwrkt(iinda)) > invals(irngt(iindb))) \textcolor{keywordflow}{Then}}
 \DoxyCodeLine{305                   irng = irngt(iindb)}
 \DoxyCodeLine{306                   iindb = iindb + 1}
 \DoxyCodeLine{307                \textcolor{keywordflow}{Else}}
@@ -771,8 +772,8 @@ C\+C0-\/1.\+0
 \DoxyCodeLine{321 \textcolor{comment}{!}}
 \DoxyCodeLine{322             irng = irngt(iwrk)}
 \DoxyCodeLine{323 \textcolor{keywordflow}{         End If}}
-\DoxyCodeLine{324          \textcolor{keywordflow}{If} (xvalt(irng) > xtst) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{325             xtst = xvalt(irng)}
+\DoxyCodeLine{324          \textcolor{keywordflow}{If} (invals(irng) > xtst) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{325             xtst = invals(irng)}
 \DoxyCodeLine{326             nuni = nuni + 1}
 \DoxyCodeLine{327             irngt(nuni) = irng}
 \DoxyCodeLine{328 \textcolor{keywordflow}{         End If}}

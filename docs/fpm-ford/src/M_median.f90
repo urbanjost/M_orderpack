@@ -10,15 +10,15 @@ end interface median
 contains
 !>
 !!##NAME
-!!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE of array. If
-!!                 number of data is even, return average of the two
+!!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If
+!!                 number of data is even, returns average of the two
 !!                 "medians".
 !!
 !!##SYNOPSIS
 !!
-!!     Function median (XDONT) Result (MEDIAN)
+!!     Function median (INVALS) Result (MEDIAN)
 !!
-!!      ${TYPE} (Kind=${KIND}), Intent (In) :: XDONT(:)
+!!      ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
 !!      ${TYPE} (Kind=${KIND})              :: MEDIAN
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
@@ -28,11 +28,12 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    MEDIAN() returns the median value of the array XDONT. If an even
-!!    number of elements, it returns the average of the two "medians".
+!!    MEDIAN() calculates the median value of the array INVALS().
+!!    It is a modified version of VALMED() that provides the average between the
+!!    two middle values in the case Size(INVALS) is even.
 !!
 !!    This routine uses a pivoting strategy similar to the method  of finding
-!!    the median based on the quicksort algorithm, but we skew the pivot
+!!    the median based on the Quick-sort algorithm, but we skew the pivot
 !!    choice to try to bring it to NORD as fast as possible. It uses two
 !!    temporary arrays, where it stores the indices of the values smaller
 !!    than the pivot (ILOWT), and the indices of values larger than the
@@ -41,10 +42,10 @@ contains
 !!    finds the maximum of this set.
 !!
 !!##OPTIONS
-!!     XDONT      array to determine the median value of.
+!!     INVALS      array to determine the median value of.
 !!
 !!##RETURNS
-!!     MEDIAN     median value. If XDONT contains an even number
+!!     MEDIAN     median value. If INVALS contains an even number
 !!                of elements the value is the average of the
 !!                two "medians".
 !!
@@ -54,7 +55,7 @@ contains
 !!
 !!    program demo_median
 !!    ! calculate median value
-!!    use M_median, only : median
+!!    use M_orderpack, only : median
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
 !!
@@ -76,19 +77,16 @@ contains
 !!    double  49.50000000000000
 !!
 !!##AUTHOR
-!!     Michel Olagnon - Aug. 2000
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon - Aug. 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Function real64_median (XDONT) Result (median)
-      Real (Kind=real64), Dimension (:), Intent (In) :: XDONT
+Function real64_median (INVALS) Result (median)
+      Real (Kind=real64), Dimension (:), Intent (In) :: INVALS
       Real (Kind=real64) :: median
 ! __________________________________________________________
-      Real (Kind=real64), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+      Real (Kind=real64), Dimension (SIZE(INVALS)) :: XLOWT, XHIGT
       Real (Kind=real64) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !!
       Logical :: IFODD
@@ -96,39 +94,39 @@ Function real64_median (XDONT) Result (median)
       Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
       Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = NDON/2 + 1
       IFODD = (2*INTH == NDON + 1)
 !
 !    First loop is used to fill-in XLOWT, XHIGT at the same time
 !
       If (NDON < 3) Then
-         If (NDON > 0) median = 0.5 * (XDONT (1) + XDONT (NDON))
+         If (NDON > 0) median = 0.5 * (INVALS (1) + INVALS (NDON))
          Return
       End If
 !
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
-         XLOWT (1) = XDONT(2)
-         XHIGT (1) = XDONT(1)
+      If (INVALS(2) < INVALS(1)) Then
+         XLOWT (1) = INVALS(2)
+         XHIGT (1) = INVALS(1)
       Else
-         XLOWT (1) = XDONT(1)
-         XHIGT (1) = XDONT(2)
+         XLOWT (1) = INVALS(1)
+         XHIGT (1) = INVALS(2)
       End If
 !
 !
-      If (XDONT(3) < XHIGT(1)) Then
+      If (INVALS(3) < XHIGT(1)) Then
          XHIGT (2) = XHIGT (1)
-         If (XDONT(3) < XLOWT(1)) Then
+         If (INVALS(3) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(3)
+            XLOWT (1) = INVALS(3)
          Else
-            XHIGT (1) = XDONT(3)
+            XHIGT (1) = INVALS(3)
          End If
       Else
-         XHIGT (2) = XDONT(3)
+         XHIGT (2) = INVALS(3)
       End If
 !
       If (NDON < 4) Then ! 3 values
@@ -136,21 +134,21 @@ Function real64_median (XDONT) Result (median)
          Return
       End If
 !
-      If (XDONT(NDON) < XHIGT(1)) Then
+      If (INVALS(NDON) < XHIGT(1)) Then
          XHIGT (3) = XHIGT (2)
          XHIGT (2) = XHIGT (1)
-         If (XDONT(NDON) < XLOWT(1)) Then
+         If (INVALS(NDON) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(NDON)
+            XLOWT (1) = INVALS(NDON)
          Else
-            XHIGT (1) = XDONT(NDON)
+            XHIGT (1) = INVALS(NDON)
          End If
       Else
-         If (XDONT(NDON) < XHIGT(2)) Then
+         If (INVALS(NDON) < XHIGT(2)) Then
             XHIGT (3) = XHIGT (2)
-            XHIGT (2) = XDONT(NDON)
+            XHIGT (2) = INVALS(NDON)
          Else
-            XHIGT (3) = XDONT(NDON)
+            XHIGT (3) = INVALS(NDON)
          End If
       End If
 !
@@ -176,17 +174,17 @@ Function real64_median (XDONT) Result (median)
 !  than enough values in XLOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -197,9 +195,9 @@ Function real64_median (XDONT) Result (median)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                Else If (ICRS >= NDON) Then
                   Exit
                End If
@@ -213,12 +211,12 @@ Function real64_median (XDONT) Result (median)
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -226,10 +224,10 @@ Function real64_median (XDONT) Result (median)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                End If
             End Do
          End If
@@ -573,11 +571,11 @@ Function real64_median (XDONT) Result (median)
       Return
 !
 End Function real64_median
-Function real32_median (XDONT) Result (median)
-      Real (Kind=real32), Dimension (:), Intent (In) :: XDONT
+Function real32_median (INVALS) Result (median)
+      Real (Kind=real32), Dimension (:), Intent (In) :: INVALS
       Real (Kind=real32) :: median
 ! __________________________________________________________
-      Real (Kind=real32), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+      Real (Kind=real32), Dimension (SIZE(INVALS)) :: XLOWT, XHIGT
       Real (Kind=real32) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !!
       Logical :: IFODD
@@ -585,39 +583,39 @@ Function real32_median (XDONT) Result (median)
       Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
       Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = NDON/2 + 1
       IFODD = (2*INTH == NDON + 1)
 !
 !    First loop is used to fill-in XLOWT, XHIGT at the same time
 !
       If (NDON < 3) Then
-         If (NDON > 0) median = 0.5 * (XDONT (1) + XDONT (NDON))
+         If (NDON > 0) median = 0.5 * (INVALS (1) + INVALS (NDON))
          Return
       End If
 !
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
-         XLOWT (1) = XDONT(2)
-         XHIGT (1) = XDONT(1)
+      If (INVALS(2) < INVALS(1)) Then
+         XLOWT (1) = INVALS(2)
+         XHIGT (1) = INVALS(1)
       Else
-         XLOWT (1) = XDONT(1)
-         XHIGT (1) = XDONT(2)
+         XLOWT (1) = INVALS(1)
+         XHIGT (1) = INVALS(2)
       End If
 !
 !
-      If (XDONT(3) < XHIGT(1)) Then
+      If (INVALS(3) < XHIGT(1)) Then
          XHIGT (2) = XHIGT (1)
-         If (XDONT(3) < XLOWT(1)) Then
+         If (INVALS(3) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(3)
+            XLOWT (1) = INVALS(3)
          Else
-            XHIGT (1) = XDONT(3)
+            XHIGT (1) = INVALS(3)
          End If
       Else
-         XHIGT (2) = XDONT(3)
+         XHIGT (2) = INVALS(3)
       End If
 !
       If (NDON < 4) Then ! 3 values
@@ -625,21 +623,21 @@ Function real32_median (XDONT) Result (median)
          Return
       End If
 !
-      If (XDONT(NDON) < XHIGT(1)) Then
+      If (INVALS(NDON) < XHIGT(1)) Then
          XHIGT (3) = XHIGT (2)
          XHIGT (2) = XHIGT (1)
-         If (XDONT(NDON) < XLOWT(1)) Then
+         If (INVALS(NDON) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(NDON)
+            XLOWT (1) = INVALS(NDON)
          Else
-            XHIGT (1) = XDONT(NDON)
+            XHIGT (1) = INVALS(NDON)
          End If
       Else
-         If (XDONT(NDON) < XHIGT(2)) Then
+         If (INVALS(NDON) < XHIGT(2)) Then
             XHIGT (3) = XHIGT (2)
-            XHIGT (2) = XDONT(NDON)
+            XHIGT (2) = INVALS(NDON)
          Else
-            XHIGT (3) = XDONT(NDON)
+            XHIGT (3) = INVALS(NDON)
          End If
       End If
 !
@@ -665,17 +663,17 @@ Function real32_median (XDONT) Result (median)
 !  than enough values in XLOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -686,9 +684,9 @@ Function real32_median (XDONT) Result (median)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                Else If (ICRS >= NDON) Then
                   Exit
                End If
@@ -702,12 +700,12 @@ Function real32_median (XDONT) Result (median)
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -715,10 +713,10 @@ Function real32_median (XDONT) Result (median)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                End If
             End Do
          End If
@@ -1062,11 +1060,11 @@ Function real32_median (XDONT) Result (median)
       Return
 !
 End Function real32_median
-Function int32_median (XDONT) Result (median)
-      Integer (Kind=int32), Dimension (:), Intent (In) :: XDONT
+Function int32_median (INVALS) Result (median)
+      Integer (Kind=int32), Dimension (:), Intent (In) :: INVALS
       Integer (Kind=int32) :: median
 ! __________________________________________________________
-      Integer (Kind=int32), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+      Integer (Kind=int32), Dimension (SIZE(INVALS)) :: XLOWT, XHIGT
       Integer (Kind=int32) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !!
       Logical :: IFODD
@@ -1074,39 +1072,39 @@ Function int32_median (XDONT) Result (median)
       Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
       Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = NDON/2 + 1
       IFODD = (2*INTH == NDON + 1)
 !
 !    First loop is used to fill-in XLOWT, XHIGT at the same time
 !
       If (NDON < 3) Then
-         If (NDON > 0) median = 0.5 * (XDONT (1) + XDONT (NDON))
+         If (NDON > 0) median = 0.5 * (INVALS (1) + INVALS (NDON))
          Return
       End If
 !
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
-         XLOWT (1) = XDONT(2)
-         XHIGT (1) = XDONT(1)
+      If (INVALS(2) < INVALS(1)) Then
+         XLOWT (1) = INVALS(2)
+         XHIGT (1) = INVALS(1)
       Else
-         XLOWT (1) = XDONT(1)
-         XHIGT (1) = XDONT(2)
+         XLOWT (1) = INVALS(1)
+         XHIGT (1) = INVALS(2)
       End If
 !
 !
-      If (XDONT(3) < XHIGT(1)) Then
+      If (INVALS(3) < XHIGT(1)) Then
          XHIGT (2) = XHIGT (1)
-         If (XDONT(3) < XLOWT(1)) Then
+         If (INVALS(3) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(3)
+            XLOWT (1) = INVALS(3)
          Else
-            XHIGT (1) = XDONT(3)
+            XHIGT (1) = INVALS(3)
          End If
       Else
-         XHIGT (2) = XDONT(3)
+         XHIGT (2) = INVALS(3)
       End If
 !
       If (NDON < 4) Then ! 3 values
@@ -1114,21 +1112,21 @@ Function int32_median (XDONT) Result (median)
          Return
       End If
 !
-      If (XDONT(NDON) < XHIGT(1)) Then
+      If (INVALS(NDON) < XHIGT(1)) Then
          XHIGT (3) = XHIGT (2)
          XHIGT (2) = XHIGT (1)
-         If (XDONT(NDON) < XLOWT(1)) Then
+         If (INVALS(NDON) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(NDON)
+            XLOWT (1) = INVALS(NDON)
          Else
-            XHIGT (1) = XDONT(NDON)
+            XHIGT (1) = INVALS(NDON)
          End If
       Else
-         If (XDONT(NDON) < XHIGT(2)) Then
+         If (INVALS(NDON) < XHIGT(2)) Then
             XHIGT (3) = XHIGT (2)
-            XHIGT (2) = XDONT(NDON)
+            XHIGT (2) = INVALS(NDON)
          Else
-            XHIGT (3) = XDONT(NDON)
+            XHIGT (3) = INVALS(NDON)
          End If
       End If
 !
@@ -1154,17 +1152,17 @@ Function int32_median (XDONT) Result (median)
 !  than enough values in XLOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -1175,9 +1173,9 @@ Function int32_median (XDONT) Result (median)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                Else If (ICRS >= NDON) Then
                   Exit
                End If
@@ -1191,12 +1189,12 @@ Function int32_median (XDONT) Result (median)
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -1204,10 +1202,10 @@ Function int32_median (XDONT) Result (median)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                End If
             End Do
          End If

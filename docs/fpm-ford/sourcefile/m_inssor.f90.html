@@ -273,294 +273,280 @@
 <a name="ln-10"></a><span class="k">contains</span>
 <a name="ln-11"></a><span class="c">!&gt;</span>
 <a name="ln-12"></a><span class="c">!!##NAME</span>
-<a name="ln-13"></a><span class="c">!!    inssor(3f) - [orderpack:SORT] Sorts array into ascending order</span>
+<a name="ln-13"></a><span class="c">!!    sort_special(3f) - [orderpack:SORT] Sorts array into ascending order</span>
 <a name="ln-14"></a><span class="c">!!                 (Insertion sort, generally for small or nearly sorted</span>
 <a name="ln-15"></a><span class="c">!!                 arrays)</span>
-<a name="ln-16"></a><span class="c">!!</span>
-<a name="ln-17"></a><span class="c">!!##SYNOPSIS</span>
-<a name="ln-18"></a><span class="c">!!</span>
-<a name="ln-19"></a><span class="c">!!     Subroutine inssor (XDONT)</span>
-<a name="ln-20"></a><span class="c">!!</span>
-<a name="ln-21"></a><span class="c">!!             ${TYPE} (kind=${KIND}), Intent (InOut) :: XDONT(:)</span>
-<a name="ln-22"></a><span class="c">!!</span>
-<a name="ln-23"></a><span class="c">!!    Where ${TYPE}(kind=${KIND}) may be</span>
-<a name="ln-24"></a><span class="c">!!</span>
-<a name="ln-25"></a><span class="c">!!       o Real(kind=real32)</span>
-<a name="ln-26"></a><span class="c">!!       o Real(kind=real64)</span>
-<a name="ln-27"></a><span class="c">!!       o Integer(kind=int32)</span>
-<a name="ln-28"></a><span class="c">!!       o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)</span>
-<a name="ln-29"></a><span class="c">!!</span>
-<a name="ln-30"></a><span class="c">!!##DESCRIPTION</span>
-<a name="ln-31"></a><span class="c">!!    Sorts XDONT into ascending order (Insertion sort)</span>
-<a name="ln-32"></a><span class="c">!!</span>
-<a name="ln-33"></a><span class="c">!!    This subroutine uses an insertion sort. It does not use any work array</span>
-<a name="ln-34"></a><span class="c">!!    and is faster when XDONT is of very small size (&lt; 20), or already</span>
-<a name="ln-35"></a><span class="c">!!    almost sorted, but worst case behavior can happen fairly probably</span>
-<a name="ln-36"></a><span class="c">!!    (initially inverse sorted). In many cases, the quicksort or merge</span>
-<a name="ln-37"></a><span class="c">!!    sort method is faster.</span>
-<a name="ln-38"></a><span class="c">!!</span>
-<a name="ln-39"></a><span class="c">!!##OPTIONS</span>
-<a name="ln-40"></a><span class="c">!!     XDONT      array to sort</span>
+<a name="ln-16"></a><span class="c">!!##SYNOPSIS</span>
+<a name="ln-17"></a><span class="c">!!</span>
+<a name="ln-18"></a><span class="c">!!      Subroutine sort_special (INOUTVALS)</span>
+<a name="ln-19"></a><span class="c">!!</span>
+<a name="ln-20"></a><span class="c">!!       ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)</span>
+<a name="ln-21"></a><span class="c">!!</span>
+<a name="ln-22"></a><span class="c">!!    Where ${TYPE}(kind=${KIND}) may be</span>
+<a name="ln-23"></a><span class="c">!!</span>
+<a name="ln-24"></a><span class="c">!!       o Real(kind=real32)</span>
+<a name="ln-25"></a><span class="c">!!       o Real(kind=real64)</span>
+<a name="ln-26"></a><span class="c">!!       o Integer(kind=int32)</span>
+<a name="ln-27"></a><span class="c">!!       o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)</span>
+<a name="ln-28"></a><span class="c">!!</span>
+<a name="ln-29"></a><span class="c">!!##DESCRIPTION</span>
+<a name="ln-30"></a><span class="c">!!    Sorts INOUTVALS() into ascending order (Insertion sort).</span>
+<a name="ln-31"></a><span class="c">!!</span>
+<a name="ln-32"></a><span class="c">!!    If certain requirements are met and performance is important this</span>
+<a name="ln-33"></a><span class="c">!!    procedure can be far faster, but REFSOR(3f) and ranking routines</span>
+<a name="ln-34"></a><span class="c">!!    MRGRNK(3f) and MRGREF(3f) are recommended for the general case.</span>
+<a name="ln-35"></a><span class="c">!!</span>
+<a name="ln-36"></a><span class="c">!!    This subroutine uses an Insertion sort. It does not use any work array</span>
+<a name="ln-37"></a><span class="c">!!    and is faster when INOUTVALS() is of very small size (&lt; 20), or already</span>
+<a name="ln-38"></a><span class="c">!!    almost sorted; but worst case behavior can be triggered by commonly</span>
+<a name="ln-39"></a><span class="c">!!    encountered data order (e.g. initially inverse sorted). Therefore,</span>
+<a name="ln-40"></a><span class="c">!!    in many cases the Quicksort or Mergesort method is faster.</span>
 <a name="ln-41"></a><span class="c">!!</span>
-<a name="ln-42"></a><span class="c">!!##EXAMPLES</span>
-<a name="ln-43"></a><span class="c">!!</span>
-<a name="ln-44"></a><span class="c">!!   Sample program:</span>
-<a name="ln-45"></a><span class="c">!!</span>
-<a name="ln-46"></a><span class="c">!!    program demo_inssor</span>
-<a name="ln-47"></a><span class="c">!!    ! sort an array using insertion sort</span>
-<a name="ln-48"></a><span class="c">!!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64</span>
-<a name="ln-49"></a><span class="c">!!    use M_inssor, only : inssor</span>
-<a name="ln-50"></a><span class="c">!!    implicit none</span>
-<a name="ln-51"></a><span class="c">!!    ! an insertion sort is very efficient for very small arrays</span>
-<a name="ln-52"></a><span class="c">!!    ! but generally slower than methods like quicksort and mergesort.</span>
-<a name="ln-53"></a><span class="c">!!    real(kind=real32) :: valsr(2000)</span>
-<a name="ln-54"></a><span class="c">!!    real(kind=real64) :: valsd(2000)</span>
-<a name="ln-55"></a><span class="c">!!    integer           :: valsi(2000)</span>
-<a name="ln-56"></a><span class="c">!!    integer           :: i</span>
-<a name="ln-57"></a><span class="c">!!       call random_seed()</span>
-<a name="ln-58"></a><span class="c">!!       call random_number(valsr)</span>
-<a name="ln-59"></a><span class="c">!!       call random_number(valsd)</span>
-<a name="ln-60"></a><span class="c">!!       valsi=int(valsr*1000000.0)</span>
-<a name="ln-61"></a><span class="c">!!       valsr=valsr*1000000.0-500000.0</span>
-<a name="ln-62"></a><span class="c">!!       valsd=valsd*1000000.0-500000.0</span>
-<a name="ln-63"></a><span class="c">!!       call inssor(valsi)</span>
-<a name="ln-64"></a><span class="c">!!       do i=1,size(valsi)-1</span>
-<a name="ln-65"></a><span class="c">!!          if (valsi(i+1).lt.valsi(i))then</span>
-<a name="ln-66"></a><span class="c">!!             write(*,*)&#39;not sorted&#39;</span>
-<a name="ln-67"></a><span class="c">!!             stop 1</span>
-<a name="ln-68"></a><span class="c">!!          endif</span>
-<a name="ln-69"></a><span class="c">!!       enddo</span>
-<a name="ln-70"></a><span class="c">!!       call inssor(valsr)</span>
-<a name="ln-71"></a><span class="c">!!       do i=1,size(valsr)-1</span>
-<a name="ln-72"></a><span class="c">!!          if (valsr(i+1).lt.valsr(i))then</span>
-<a name="ln-73"></a><span class="c">!!             write(*,*)&#39;not sorted&#39;</span>
-<a name="ln-74"></a><span class="c">!!             stop 2</span>
-<a name="ln-75"></a><span class="c">!!          endif</span>
-<a name="ln-76"></a><span class="c">!!       enddo</span>
-<a name="ln-77"></a><span class="c">!!       call inssor(valsd)</span>
-<a name="ln-78"></a><span class="c">!!       do i=1,size(valsd)-1</span>
-<a name="ln-79"></a><span class="c">!!          if (valsd(i+1).lt.valsd(i))then</span>
-<a name="ln-80"></a><span class="c">!!             write(*,*)&#39;not sorted&#39;</span>
-<a name="ln-81"></a><span class="c">!!             stop 3</span>
-<a name="ln-82"></a><span class="c">!!          endif</span>
-<a name="ln-83"></a><span class="c">!!       enddo</span>
-<a name="ln-84"></a><span class="c">!!       write(*,*)&#39;random arrays are now sorted&#39;</span>
-<a name="ln-85"></a><span class="c">!!    end program demo_inssor</span>
-<a name="ln-86"></a><span class="c">!!</span>
-<a name="ln-87"></a><span class="c">!!   Results:</span>
-<a name="ln-88"></a><span class="c">!!</span>
-<a name="ln-89"></a><span class="c">!!     random arrays are now sorted</span>
-<a name="ln-90"></a><span class="c">!!</span>
-<a name="ln-91"></a><span class="c">!!##AUTHOR</span>
-<a name="ln-92"></a><span class="c">!!     Michel Olagnon - Apr. 2000</span>
-<a name="ln-93"></a><span class="c">!!</span>
-<a name="ln-94"></a><span class="c">!!     John Urban, 2022.04.16</span>
-<a name="ln-95"></a><span class="c">!!     o added man-page and reduced to a template using the</span>
-<a name="ln-96"></a><span class="c">!!       prep(1) preprocessor.</span>
-<a name="ln-97"></a><span class="c">!!</span>
-<a name="ln-98"></a><span class="c">!!##LICENSE</span>
-<a name="ln-99"></a><span class="c">!!    CC0-1.0</span>
-<a name="ln-100"></a><span class="k">Subroutine </span><span class="n">real64_inssor</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-101"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-102"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real64</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-103"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">real64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XWRK</span><span class="p">,</span> <span class="n">XMIN</span>
-<a name="ln-104"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-105"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">IDCR</span><span class="p">,</span> <span class="n">NDON</span>
-<a name="ln-106"></a><span class="c">!</span>
-<a name="ln-107"></a>      <span class="n">NDON</span> <span class="o">=</span> <span class="n">Size</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-108"></a><span class="c">!</span>
-<a name="ln-109"></a><span class="c">! We first bring the minimum to the first location in the array.</span>
-<a name="ln-110"></a><span class="c">! That way, we will have a &quot;guard&quot;, and when looking for the</span>
-<a name="ln-111"></a><span class="c">! right place to insert a value, no loop test is necessary.</span>
-<a name="ln-112"></a><span class="c">!</span>
-<a name="ln-113"></a>      <span class="k">If</span> <span class="p">(</span><span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">))</span> <span class="k">Then</span>
-<a name="ln-114"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-115"></a>      <span class="k">Else</span>
-<a name="ln-116"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span>
-<a name="ln-117"></a>          <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-118"></a>      <span class="k">Endif</span>
-<a name="ln-119"></a><span class="k">      Do </span><span class="n">IDCR</span> <span class="o">=</span> <span class="n">NDON</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
-<a name="ln-120"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-121"></a>         <span class="k">IF</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XMIN</span><span class="p">)</span> <span class="k">Then</span>
-<a name="ln-122"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
-<a name="ln-123"></a>            <span class="n">XMIN</span> <span class="o">=</span> <span class="n">XWRK</span>
-<a name="ln-124"></a>         <span class="k">End If</span>
-<a name="ln-125"></a><span class="k">      End Do</span>
-<a name="ln-126"></a><span class="k">      </span><span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
-<a name="ln-127"></a><span class="c">!</span>
-<a name="ln-128"></a><span class="c">! The first value is now the minimum</span>
-<a name="ln-129"></a><span class="c">! Loop over the array, and when a value is smaller than</span>
-<a name="ln-130"></a><span class="c">! the previous one, loop down to insert it at its right place.</span>
-<a name="ln-131"></a><span class="c">!</span>
-<a name="ln-132"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">NDON</span>
-<a name="ln-133"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
-<a name="ln-134"></a>         <span class="n">IDCR</span> <span class="o">=</span> <span class="n">ICRS</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-135"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Then</span>
-<a name="ln-136"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-137"></a>            <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-138"></a>            <span class="k">Do</span>
-<a name="ln-139"></a><span class="k">               If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&gt;=</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Exit</span>
-<a name="ln-140"></a><span class="k">               </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-141"></a>               <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-142"></a>            <span class="k">End Do</span>
-<a name="ln-143"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRK</span>
-<a name="ln-144"></a>         <span class="k">End If</span>
-<a name="ln-145"></a><span class="k">      End Do</span>
-<a name="ln-146"></a><span class="c">!</span>
-<a name="ln-147"></a>      <span class="k">Return</span>
+<a name="ln-42"></a><span class="c">!!##OPTIONS</span>
+<a name="ln-43"></a><span class="c">!!     INOUTVALS      array to sort</span>
+<a name="ln-44"></a><span class="c">!!</span>
+<a name="ln-45"></a><span class="c">!!##EXAMPLES</span>
+<a name="ln-46"></a><span class="c">!!</span>
+<a name="ln-47"></a><span class="c">!!   Sample program:</span>
+<a name="ln-48"></a><span class="c">!!</span>
+<a name="ln-49"></a><span class="c">!!    program demo_sort_special</span>
+<a name="ln-50"></a><span class="c">!!    ! sort an array using insertion sort</span>
+<a name="ln-51"></a><span class="c">!!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64</span>
+<a name="ln-52"></a><span class="c">!!    use M_orderpack, only : sort_special</span>
+<a name="ln-53"></a><span class="c">!!    implicit none</span>
+<a name="ln-54"></a><span class="c">!!    ! an insertion sort is very efficient for very small arrays</span>
+<a name="ln-55"></a><span class="c">!!    ! but generally slower than methods like quicksort and mergesort.</span>
+<a name="ln-56"></a><span class="c">!!    integer,parameter :: isz=2000</span>
+<a name="ln-57"></a><span class="c">!!    real(kind=real64) :: dd(isz), hi, low</span>
+<a name="ln-58"></a><span class="c">!!    integer           :: i</span>
+<a name="ln-59"></a><span class="c">!!       ! make an array of random values</span>
+<a name="ln-60"></a><span class="c">!!       call random_seed()</span>
+<a name="ln-61"></a><span class="c">!!       call random_number(dd)</span>
+<a name="ln-62"></a><span class="c">!!       dd=dd*1000000.0-500000.0</span>
+<a name="ln-63"></a><span class="c">!!       low= minval(dd)</span>
+<a name="ln-64"></a><span class="c">!!       hi = maxval(dd)</span>
+<a name="ln-65"></a><span class="c">!!       ! sort the data</span>
+<a name="ln-66"></a><span class="c">!!       call sort_special(dd)</span>
+<a name="ln-67"></a><span class="c">!!       ! cursory checks</span>
+<a name="ln-68"></a><span class="c">!!       if(any(dd(1:isz-1) .gt. dd(2:isz)))stop &#39;ERROR: array not sorted&#39;</span>
+<a name="ln-69"></a><span class="c">!!       write(*,*)&#39;check min:&#39;,dd(1).eq.low</span>
+<a name="ln-70"></a><span class="c">!!       write(*,*)&#39;check max:&#39;,dd(isz).eq.hi</span>
+<a name="ln-71"></a><span class="c">!!       write(*,*)&#39;PASSED: random array is now sorted&#39;</span>
+<a name="ln-72"></a><span class="c">!!    end program demo_sort_special</span>
+<a name="ln-73"></a><span class="c">!!</span>
+<a name="ln-74"></a><span class="c">!!   Results:</span>
+<a name="ln-75"></a><span class="c">!!</span>
+<a name="ln-76"></a><span class="c">!!     check min: T</span>
+<a name="ln-77"></a><span class="c">!!     check max: T</span>
+<a name="ln-78"></a><span class="c">!!     PASSED: random array is now sorted</span>
+<a name="ln-79"></a><span class="c">!!</span>
+<a name="ln-80"></a><span class="c">!!##AUTHOR</span>
+<a name="ln-81"></a><span class="c">!!    Michel Olagnon - Apr. 2000</span>
+<a name="ln-82"></a><span class="c">!!##MAINTAINER</span>
+<a name="ln-83"></a><span class="c">!!    John Urban, 2022.04.16</span>
+<a name="ln-84"></a><span class="c">!!##LICENSE</span>
+<a name="ln-85"></a><span class="c">!!    CC0-1.0</span>
+<a name="ln-86"></a><span class="k">Subroutine </span><span class="n">real64_inssor</span> <span class="p">(</span><span class="n">INOUTVALS</span><span class="p">)</span>
+<a name="ln-87"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-88"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real64</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">INOUTVALS</span>
+<a name="ln-89"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">real64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XWRK</span><span class="p">,</span> <span class="n">XMIN</span>
+<a name="ln-90"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-91"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">IDCR</span><span class="p">,</span> <span class="n">NDON</span>
+<a name="ln-92"></a><span class="c">!</span>
+<a name="ln-93"></a>      <span class="n">NDON</span> <span class="o">=</span> <span class="n">Size</span> <span class="p">(</span><span class="n">INOUTVALS</span><span class="p">)</span>
+<a name="ln-94"></a><span class="c">!</span>
+<a name="ln-95"></a><span class="c">! We first bring the minimum to the first location in the array.</span>
+<a name="ln-96"></a><span class="c">! That way, we will have a &quot;guard&quot;, and when looking for the</span>
+<a name="ln-97"></a><span class="c">! right place to insert a value, no loop test is necessary.</span>
+<a name="ln-98"></a><span class="c">!</span>
+<a name="ln-99"></a>      <span class="k">If</span> <span class="p">(</span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">))</span> <span class="k">Then</span>
+<a name="ln-100"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-101"></a>      <span class="k">Else</span>
+<a name="ln-102"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span>
+<a name="ln-103"></a>          <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-104"></a>      <span class="k">Endif</span>
+<a name="ln-105"></a><span class="k">      Do </span><span class="n">IDCR</span> <span class="o">=</span> <span class="n">NDON</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+<a name="ln-106"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-107"></a>         <span class="k">IF</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XMIN</span><span class="p">)</span> <span class="k">Then</span>
+<a name="ln-108"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
+<a name="ln-109"></a>            <span class="n">XMIN</span> <span class="o">=</span> <span class="n">XWRK</span>
+<a name="ln-110"></a>         <span class="k">End If</span>
+<a name="ln-111"></a><span class="k">      End Do</span>
+<a name="ln-112"></a><span class="k">      </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
+<a name="ln-113"></a><span class="c">!</span>
+<a name="ln-114"></a><span class="c">! The first value is now the minimum</span>
+<a name="ln-115"></a><span class="c">! Loop over the array, and when a value is smaller than</span>
+<a name="ln-116"></a><span class="c">! the previous one, loop down to insert it at its right place.</span>
+<a name="ln-117"></a><span class="c">!</span>
+<a name="ln-118"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">NDON</span>
+<a name="ln-119"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
+<a name="ln-120"></a>         <span class="n">IDCR</span> <span class="o">=</span> <span class="n">ICRS</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-121"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Then</span>
+<a name="ln-122"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-123"></a>            <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-124"></a>            <span class="k">Do</span>
+<a name="ln-125"></a><span class="k">               If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&gt;=</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Exit</span>
+<a name="ln-126"></a><span class="k">               </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-127"></a>               <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-128"></a>            <span class="k">End Do</span>
+<a name="ln-129"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRK</span>
+<a name="ln-130"></a>         <span class="k">End If</span>
+<a name="ln-131"></a><span class="k">      End Do</span>
+<a name="ln-132"></a><span class="c">!</span>
+<a name="ln-133"></a>      <span class="k">Return</span>
+<a name="ln-134"></a><span class="c">!</span>
+<a name="ln-135"></a><span class="k">End Subroutine </span><span class="n">real64_inssor</span>
+<a name="ln-136"></a><span class="k">Subroutine </span><span class="n">real32_inssor</span> <span class="p">(</span><span class="n">INOUTVALS</span><span class="p">)</span>
+<a name="ln-137"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-138"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real32</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">INOUTVALS</span>
+<a name="ln-139"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">real32</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XWRK</span><span class="p">,</span> <span class="n">XMIN</span>
+<a name="ln-140"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-141"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">IDCR</span><span class="p">,</span> <span class="n">NDON</span>
+<a name="ln-142"></a><span class="c">!</span>
+<a name="ln-143"></a>      <span class="n">NDON</span> <span class="o">=</span> <span class="n">Size</span> <span class="p">(</span><span class="n">INOUTVALS</span><span class="p">)</span>
+<a name="ln-144"></a><span class="c">!</span>
+<a name="ln-145"></a><span class="c">! We first bring the minimum to the first location in the array.</span>
+<a name="ln-146"></a><span class="c">! That way, we will have a &quot;guard&quot;, and when looking for the</span>
+<a name="ln-147"></a><span class="c">! right place to insert a value, no loop test is necessary.</span>
 <a name="ln-148"></a><span class="c">!</span>
-<a name="ln-149"></a><span class="k">End Subroutine </span><span class="n">real64_inssor</span>
-<a name="ln-150"></a><span class="k">Subroutine </span><span class="n">real32_inssor</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-151"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-152"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real32</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-153"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">real32</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XWRK</span><span class="p">,</span> <span class="n">XMIN</span>
-<a name="ln-154"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-155"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">IDCR</span><span class="p">,</span> <span class="n">NDON</span>
-<a name="ln-156"></a><span class="c">!</span>
-<a name="ln-157"></a>      <span class="n">NDON</span> <span class="o">=</span> <span class="n">Size</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-158"></a><span class="c">!</span>
-<a name="ln-159"></a><span class="c">! We first bring the minimum to the first location in the array.</span>
-<a name="ln-160"></a><span class="c">! That way, we will have a &quot;guard&quot;, and when looking for the</span>
-<a name="ln-161"></a><span class="c">! right place to insert a value, no loop test is necessary.</span>
-<a name="ln-162"></a><span class="c">!</span>
-<a name="ln-163"></a>      <span class="k">If</span> <span class="p">(</span><span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">))</span> <span class="k">Then</span>
-<a name="ln-164"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-165"></a>      <span class="k">Else</span>
-<a name="ln-166"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span>
-<a name="ln-167"></a>          <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-168"></a>      <span class="k">Endif</span>
-<a name="ln-169"></a><span class="k">      Do </span><span class="n">IDCR</span> <span class="o">=</span> <span class="n">NDON</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
-<a name="ln-170"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-171"></a>         <span class="k">IF</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XMIN</span><span class="p">)</span> <span class="k">Then</span>
-<a name="ln-172"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
-<a name="ln-173"></a>            <span class="n">XMIN</span> <span class="o">=</span> <span class="n">XWRK</span>
-<a name="ln-174"></a>         <span class="k">End If</span>
-<a name="ln-175"></a><span class="k">      End Do</span>
-<a name="ln-176"></a><span class="k">      </span><span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
-<a name="ln-177"></a><span class="c">!</span>
-<a name="ln-178"></a><span class="c">! The first value is now the minimum</span>
-<a name="ln-179"></a><span class="c">! Loop over the array, and when a value is smaller than</span>
-<a name="ln-180"></a><span class="c">! the previous one, loop down to insert it at its right place.</span>
-<a name="ln-181"></a><span class="c">!</span>
-<a name="ln-182"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">NDON</span>
-<a name="ln-183"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
-<a name="ln-184"></a>         <span class="n">IDCR</span> <span class="o">=</span> <span class="n">ICRS</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-185"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Then</span>
-<a name="ln-186"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-187"></a>            <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-188"></a>            <span class="k">Do</span>
-<a name="ln-189"></a><span class="k">               If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&gt;=</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Exit</span>
-<a name="ln-190"></a><span class="k">               </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-191"></a>               <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-192"></a>            <span class="k">End Do</span>
-<a name="ln-193"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRK</span>
-<a name="ln-194"></a>         <span class="k">End If</span>
-<a name="ln-195"></a><span class="k">      End Do</span>
-<a name="ln-196"></a><span class="c">!</span>
-<a name="ln-197"></a>      <span class="k">Return</span>
+<a name="ln-149"></a>      <span class="k">If</span> <span class="p">(</span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">))</span> <span class="k">Then</span>
+<a name="ln-150"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-151"></a>      <span class="k">Else</span>
+<a name="ln-152"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span>
+<a name="ln-153"></a>          <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-154"></a>      <span class="k">Endif</span>
+<a name="ln-155"></a><span class="k">      Do </span><span class="n">IDCR</span> <span class="o">=</span> <span class="n">NDON</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+<a name="ln-156"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-157"></a>         <span class="k">IF</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XMIN</span><span class="p">)</span> <span class="k">Then</span>
+<a name="ln-158"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
+<a name="ln-159"></a>            <span class="n">XMIN</span> <span class="o">=</span> <span class="n">XWRK</span>
+<a name="ln-160"></a>         <span class="k">End If</span>
+<a name="ln-161"></a><span class="k">      End Do</span>
+<a name="ln-162"></a><span class="k">      </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
+<a name="ln-163"></a><span class="c">!</span>
+<a name="ln-164"></a><span class="c">! The first value is now the minimum</span>
+<a name="ln-165"></a><span class="c">! Loop over the array, and when a value is smaller than</span>
+<a name="ln-166"></a><span class="c">! the previous one, loop down to insert it at its right place.</span>
+<a name="ln-167"></a><span class="c">!</span>
+<a name="ln-168"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">NDON</span>
+<a name="ln-169"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
+<a name="ln-170"></a>         <span class="n">IDCR</span> <span class="o">=</span> <span class="n">ICRS</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-171"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Then</span>
+<a name="ln-172"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-173"></a>            <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-174"></a>            <span class="k">Do</span>
+<a name="ln-175"></a><span class="k">               If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&gt;=</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Exit</span>
+<a name="ln-176"></a><span class="k">               </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-177"></a>               <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-178"></a>            <span class="k">End Do</span>
+<a name="ln-179"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRK</span>
+<a name="ln-180"></a>         <span class="k">End If</span>
+<a name="ln-181"></a><span class="k">      End Do</span>
+<a name="ln-182"></a><span class="c">!</span>
+<a name="ln-183"></a>      <span class="k">Return</span>
+<a name="ln-184"></a><span class="c">!</span>
+<a name="ln-185"></a><span class="k">End Subroutine </span><span class="n">real32_inssor</span>
+<a name="ln-186"></a><span class="k">Subroutine </span><span class="n">int32_inssor</span> <span class="p">(</span><span class="n">INOUTVALS</span><span class="p">)</span>
+<a name="ln-187"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-188"></a>      <span class="kt">Integer</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">int32</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">INOUTVALS</span>
+<a name="ln-189"></a>      <span class="kt">Integer</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XWRK</span><span class="p">,</span> <span class="n">XMIN</span>
+<a name="ln-190"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-191"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">IDCR</span><span class="p">,</span> <span class="n">NDON</span>
+<a name="ln-192"></a><span class="c">!</span>
+<a name="ln-193"></a>      <span class="n">NDON</span> <span class="o">=</span> <span class="n">Size</span> <span class="p">(</span><span class="n">INOUTVALS</span><span class="p">)</span>
+<a name="ln-194"></a><span class="c">!</span>
+<a name="ln-195"></a><span class="c">! We first bring the minimum to the first location in the array.</span>
+<a name="ln-196"></a><span class="c">! That way, we will have a &quot;guard&quot;, and when looking for the</span>
+<a name="ln-197"></a><span class="c">! right place to insert a value, no loop test is necessary.</span>
 <a name="ln-198"></a><span class="c">!</span>
-<a name="ln-199"></a><span class="k">End Subroutine </span><span class="n">real32_inssor</span>
-<a name="ln-200"></a><span class="k">Subroutine </span><span class="n">int32_inssor</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-201"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-202"></a>      <span class="kt">Integer</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">int32</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-203"></a>      <span class="kt">Integer</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XWRK</span><span class="p">,</span> <span class="n">XMIN</span>
-<a name="ln-204"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-205"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">IDCR</span><span class="p">,</span> <span class="n">NDON</span>
-<a name="ln-206"></a><span class="c">!</span>
-<a name="ln-207"></a>      <span class="n">NDON</span> <span class="o">=</span> <span class="n">Size</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-208"></a><span class="c">!</span>
-<a name="ln-209"></a><span class="c">! We first bring the minimum to the first location in the array.</span>
-<a name="ln-210"></a><span class="c">! That way, we will have a &quot;guard&quot;, and when looking for the</span>
-<a name="ln-211"></a><span class="c">! right place to insert a value, no loop test is necessary.</span>
-<a name="ln-212"></a><span class="c">!</span>
-<a name="ln-213"></a>      <span class="k">If</span> <span class="p">(</span><span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">))</span> <span class="k">Then</span>
-<a name="ln-214"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-215"></a>      <span class="k">Else</span>
-<a name="ln-216"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span>
-<a name="ln-217"></a>          <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-218"></a>      <span class="k">Endif</span>
-<a name="ln-219"></a><span class="k">      Do </span><span class="n">IDCR</span> <span class="o">=</span> <span class="n">NDON</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
-<a name="ln-220"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-221"></a>         <span class="k">IF</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XMIN</span><span class="p">)</span> <span class="k">Then</span>
-<a name="ln-222"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
-<a name="ln-223"></a>            <span class="n">XMIN</span> <span class="o">=</span> <span class="n">XWRK</span>
-<a name="ln-224"></a>         <span class="k">End If</span>
-<a name="ln-225"></a><span class="k">      End Do</span>
-<a name="ln-226"></a><span class="k">      </span><span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
-<a name="ln-227"></a><span class="c">!</span>
-<a name="ln-228"></a><span class="c">! The first value is now the minimum</span>
-<a name="ln-229"></a><span class="c">! Loop over the array, and when a value is smaller than</span>
-<a name="ln-230"></a><span class="c">! the previous one, loop down to insert it at its right place.</span>
-<a name="ln-231"></a><span class="c">!</span>
-<a name="ln-232"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">NDON</span>
-<a name="ln-233"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
-<a name="ln-234"></a>         <span class="n">IDCR</span> <span class="o">=</span> <span class="n">ICRS</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-235"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Then</span>
-<a name="ln-236"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-237"></a>            <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-238"></a>            <span class="k">Do</span>
-<a name="ln-239"></a><span class="k">               If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&gt;=</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Exit</span>
-<a name="ln-240"></a><span class="k">               </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-241"></a>               <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-242"></a>            <span class="k">End Do</span>
-<a name="ln-243"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRK</span>
-<a name="ln-244"></a>         <span class="k">End If</span>
-<a name="ln-245"></a><span class="k">      End Do</span>
-<a name="ln-246"></a><span class="c">!</span>
-<a name="ln-247"></a>      <span class="k">Return</span>
+<a name="ln-199"></a>      <span class="k">If</span> <span class="p">(</span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">))</span> <span class="k">Then</span>
+<a name="ln-200"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-201"></a>      <span class="k">Else</span>
+<a name="ln-202"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span>
+<a name="ln-203"></a>          <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-204"></a>      <span class="k">Endif</span>
+<a name="ln-205"></a><span class="k">      Do </span><span class="n">IDCR</span> <span class="o">=</span> <span class="n">NDON</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+<a name="ln-206"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-207"></a>         <span class="k">IF</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XMIN</span><span class="p">)</span> <span class="k">Then</span>
+<a name="ln-208"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
+<a name="ln-209"></a>            <span class="n">XMIN</span> <span class="o">=</span> <span class="n">XWRK</span>
+<a name="ln-210"></a>         <span class="k">End If</span>
+<a name="ln-211"></a><span class="k">      End Do</span>
+<a name="ln-212"></a><span class="k">      </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
+<a name="ln-213"></a><span class="c">!</span>
+<a name="ln-214"></a><span class="c">! The first value is now the minimum</span>
+<a name="ln-215"></a><span class="c">! Loop over the array, and when a value is smaller than</span>
+<a name="ln-216"></a><span class="c">! the previous one, loop down to insert it at its right place.</span>
+<a name="ln-217"></a><span class="c">!</span>
+<a name="ln-218"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">NDON</span>
+<a name="ln-219"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
+<a name="ln-220"></a>         <span class="n">IDCR</span> <span class="o">=</span> <span class="n">ICRS</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-221"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Then</span>
+<a name="ln-222"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-223"></a>            <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-224"></a>            <span class="k">Do</span>
+<a name="ln-225"></a><span class="k">               If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&gt;=</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Exit</span>
+<a name="ln-226"></a><span class="k">               </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-227"></a>               <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-228"></a>            <span class="k">End Do</span>
+<a name="ln-229"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRK</span>
+<a name="ln-230"></a>         <span class="k">End If</span>
+<a name="ln-231"></a><span class="k">      End Do</span>
+<a name="ln-232"></a><span class="c">!</span>
+<a name="ln-233"></a>      <span class="k">Return</span>
+<a name="ln-234"></a><span class="c">!</span>
+<a name="ln-235"></a><span class="k">End Subroutine </span><span class="n">int32_inssor</span>
+<a name="ln-236"></a><span class="k">Subroutine </span><span class="n">f_char_inssor</span> <span class="p">(</span><span class="n">INOUTVALS</span><span class="p">)</span>
+<a name="ln-237"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-238"></a>      <span class="kt">character</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">f_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">INOUTVALS</span>
+<a name="ln-239"></a>      <span class="kt">character</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">f_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">INOUTVALS</span><span class="p">))</span> <span class="kd">::</span> <span class="n">XWRK</span><span class="p">,</span> <span class="n">XMIN</span>
+<a name="ln-240"></a><span class="c">! __________________________________________________________</span>
+<a name="ln-241"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">IDCR</span><span class="p">,</span> <span class="n">NDON</span>
+<a name="ln-242"></a><span class="c">!</span>
+<a name="ln-243"></a>      <span class="n">NDON</span> <span class="o">=</span> <span class="n">Size</span> <span class="p">(</span><span class="n">INOUTVALS</span><span class="p">)</span>
+<a name="ln-244"></a><span class="c">!</span>
+<a name="ln-245"></a><span class="c">! We first bring the minimum to the first location in the array.</span>
+<a name="ln-246"></a><span class="c">! That way, we will have a &quot;guard&quot;, and when looking for the</span>
+<a name="ln-247"></a><span class="c">! right place to insert a value, no loop test is necessary.</span>
 <a name="ln-248"></a><span class="c">!</span>
-<a name="ln-249"></a><span class="k">End Subroutine </span><span class="n">int32_inssor</span>
-<a name="ln-250"></a><span class="k">Subroutine </span><span class="n">f_char_inssor</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-251"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-252"></a>      <span class="kt">character</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">f_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">InOut</span><span class="p">)</span> <span class="kd">::</span> <span class="n">XDONT</span>
-<a name="ln-253"></a>      <span class="kt">character</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">f_char</span><span class="p">,</span><span class="nb">len</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">XDONT</span><span class="p">))</span> <span class="kd">::</span> <span class="n">XWRK</span><span class="p">,</span> <span class="n">XMIN</span>
-<a name="ln-254"></a><span class="c">! __________________________________________________________</span>
-<a name="ln-255"></a>      <span class="kt">Integer</span> <span class="kd">::</span> <span class="n">ICRS</span><span class="p">,</span> <span class="n">IDCR</span><span class="p">,</span> <span class="n">NDON</span>
-<a name="ln-256"></a><span class="c">!</span>
-<a name="ln-257"></a>      <span class="n">NDON</span> <span class="o">=</span> <span class="n">Size</span> <span class="p">(</span><span class="n">XDONT</span><span class="p">)</span>
-<a name="ln-258"></a><span class="c">!</span>
-<a name="ln-259"></a><span class="c">! We first bring the minimum to the first location in the array.</span>
-<a name="ln-260"></a><span class="c">! That way, we will have a &quot;guard&quot;, and when looking for the</span>
-<a name="ln-261"></a><span class="c">! right place to insert a value, no loop test is necessary.</span>
-<a name="ln-262"></a><span class="c">!</span>
-<a name="ln-263"></a>      <span class="k">If</span> <span class="p">(</span><span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">))</span> <span class="k">Then</span>
-<a name="ln-264"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-265"></a>      <span class="k">Else</span>
-<a name="ln-266"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span>
-<a name="ln-267"></a>          <span class="n">XDONT</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<a name="ln-268"></a>      <span class="k">Endif</span>
-<a name="ln-269"></a><span class="k">      Do </span><span class="n">IDCR</span> <span class="o">=</span> <span class="n">NDON</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
-<a name="ln-270"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-271"></a>         <span class="k">IF</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XMIN</span><span class="p">)</span> <span class="k">Then</span>
-<a name="ln-272"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
-<a name="ln-273"></a>            <span class="n">XMIN</span> <span class="o">=</span> <span class="n">XWRK</span>
-<a name="ln-274"></a>         <span class="k">End If</span>
-<a name="ln-275"></a><span class="k">      End Do</span>
-<a name="ln-276"></a><span class="k">      </span><span class="n">XDONT</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
-<a name="ln-277"></a><span class="c">!</span>
-<a name="ln-278"></a><span class="c">! The first value is now the minimum</span>
-<a name="ln-279"></a><span class="c">! Loop over the array, and when a value is smaller than</span>
-<a name="ln-280"></a><span class="c">! the previous one, loop down to insert it at its right place.</span>
-<a name="ln-281"></a><span class="c">!</span>
-<a name="ln-282"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">NDON</span>
-<a name="ln-283"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
-<a name="ln-284"></a>         <span class="n">IDCR</span> <span class="o">=</span> <span class="n">ICRS</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-285"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Then</span>
-<a name="ln-286"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-287"></a>            <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-288"></a>            <span class="k">Do</span>
-<a name="ln-289"></a><span class="k">               If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&gt;=</span> <span class="n">XDONT</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Exit</span>
-<a name="ln-290"></a><span class="k">               </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
-<a name="ln-291"></a>               <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
-<a name="ln-292"></a>            <span class="k">End Do</span>
-<a name="ln-293"></a><span class="k">            </span><span class="n">XDONT</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRK</span>
-<a name="ln-294"></a>         <span class="k">End If</span>
-<a name="ln-295"></a><span class="k">      End Do</span>
-<a name="ln-296"></a><span class="c">!</span>
-<a name="ln-297"></a>      <span class="k">Return</span>
-<a name="ln-298"></a><span class="c">!</span>
-<a name="ln-299"></a><span class="k">End Subroutine </span><span class="n">f_char_inssor</span>
-<a name="ln-300"></a><span class="k">end module </span><span class="n">M_inssor</span>
+<a name="ln-249"></a>      <span class="k">If</span> <span class="p">(</span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">))</span> <span class="k">Then</span>
+<a name="ln-250"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-251"></a>      <span class="k">Else</span>
+<a name="ln-252"></a><span class="k">          </span><span class="n">XMIN</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span>
+<a name="ln-253"></a>          <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">NDON</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<a name="ln-254"></a>      <span class="k">Endif</span>
+<a name="ln-255"></a><span class="k">      Do </span><span class="n">IDCR</span> <span class="o">=</span> <span class="n">NDON</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+<a name="ln-256"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-257"></a>         <span class="k">IF</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">XMIN</span><span class="p">)</span> <span class="k">Then</span>
+<a name="ln-258"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
+<a name="ln-259"></a>            <span class="n">XMIN</span> <span class="o">=</span> <span class="n">XWRK</span>
+<a name="ln-260"></a>         <span class="k">End If</span>
+<a name="ln-261"></a><span class="k">      End Do</span>
+<a name="ln-262"></a><span class="k">      </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XMIN</span>
+<a name="ln-263"></a><span class="c">!</span>
+<a name="ln-264"></a><span class="c">! The first value is now the minimum</span>
+<a name="ln-265"></a><span class="c">! Loop over the array, and when a value is smaller than</span>
+<a name="ln-266"></a><span class="c">! the previous one, loop down to insert it at its right place.</span>
+<a name="ln-267"></a><span class="c">!</span>
+<a name="ln-268"></a>      <span class="k">Do </span><span class="n">ICRS</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">NDON</span>
+<a name="ln-269"></a>         <span class="n">XWRK</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span>
+<a name="ln-270"></a>         <span class="n">IDCR</span> <span class="o">=</span> <span class="n">ICRS</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-271"></a>         <span class="k">If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&lt;</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Then</span>
+<a name="ln-272"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">ICRS</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-273"></a>            <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-274"></a>            <span class="k">Do</span>
+<a name="ln-275"></a><span class="k">               If</span> <span class="p">(</span><span class="n">XWRK</span> <span class="o">&gt;=</span> <span class="n">INOUTVALS</span><span class="p">(</span><span class="n">IDCR</span><span class="p">))</span> <span class="k">Exit</span>
+<a name="ln-276"></a><span class="k">               </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="p">)</span>
+<a name="ln-277"></a>               <span class="n">IDCR</span> <span class="o">=</span> <span class="n">IDCR</span> <span class="o">-</span> <span class="mi">1</span>
+<a name="ln-278"></a>            <span class="k">End Do</span>
+<a name="ln-279"></a><span class="k">            </span><span class="n">INOUTVALS</span> <span class="p">(</span><span class="n">IDCR</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">XWRK</span>
+<a name="ln-280"></a>         <span class="k">End If</span>
+<a name="ln-281"></a><span class="k">      End Do</span>
+<a name="ln-282"></a><span class="c">!</span>
+<a name="ln-283"></a>      <span class="k">Return</span>
+<a name="ln-284"></a><span class="c">!</span>
+<a name="ln-285"></a><span class="k">End Subroutine </span><span class="n">f_char_inssor</span>
+<a name="ln-286"></a><span class="k">end module </span><span class="n">M_inssor</span>
 </pre></div>
 
     </section>
@@ -579,7 +565,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-21 23:46  
+             on 2022-04-23 22:44  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

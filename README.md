@@ -82,24 +82,21 @@ This will compile the Fortran module and basic example programs that exercise th
 ## Documentation ![docs](docs/images/docs.gif)
 
 ### User
-   - **UNDER CONSTRUCTION** an index to man-pages in HTML form for all the
-     [routines](https://urbanjost.github.io/orderpack/man3.html)
-   - documentation derived from the original [procedure documentation](https://urbanjost.github.io/orderpack/),
-     which will gradually be replaced by the above.
+   - [routines](https://urbanjost.github.io/orderpack/man3.html) 
+     are described in HTML form using the format of man-pages.
 <!--
-   and [programs](https://urbanjost.github.io/orderpack/man1.html)
-
+     and [programs](https://urbanjost.github.io/orderpack/man1.html)
    - A single page that uses javascript to combine all the HTML
      descriptions of the man-pages is at
      [BOOK_orderpack](https://urbanjost.github.io/orderpack/BOOK_orderpack.html).
-
-   - There are man-pages in the repository download in the docs/ directory
-     that may be installed on ULS (Unix-Like Systems).
+-->
 
    - ![man-pages](docs/images/manpages.gif)
+     There are man-pages in the repository download in the docs/ directory
+     that may be installed on ULS (Unix-Like Systems).
+
       + [manpages.zip](https://urbanjost.github.io/orderpack/manpages.zip)
       + [manpages.tgz](https://urbanjost.github.io/orderpack/manpages.tgz)
--->
    - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 ---
 ### Developer

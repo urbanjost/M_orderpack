@@ -10,15 +10,15 @@ end interface valnth
 contains
 !>
 !!##NAME
-!!    valnth(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered value of
+!!    orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered value of
 !!                 array, or "fractile of order N/SIZE(array)". (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!
-!!     Function valnth (XDONT, NORD) Result (VALNTH)
+!!     Function orderval (INVALS, NORD) Result (orderval)
 !!
-!!      ${TYPE} (Kind=${KIND}), Intent (In) :: XDONT(:)
-!!      ${TYPE} (Kind=${KIND})              :: VALNTH
+!!      ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
+!!      ${TYPE} (Kind=${KIND})              :: orderval
 !!      Integer, Intent (In)                :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
@@ -28,12 +28,14 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!   VALNTH(3f) returns the  NORDth ordered value of XDONT, i.e. fractile
-!!   of order NORD/SIZE(XDONT).
+!!   orderval(3f) returns the  NORDth (ascending order) value of INVALS,
+!!   i.e. fractile of order NORD/SIZE(INVALS).
+!!
+!!   Internally, this subroutine simply calls INDNTH.
 !!
 !!   This routine uses a pivoting strategy such as the one of finding the
 !!   median based on the QuickSort algorithm, but we skew the pivot choice
-!!   to try to bring it to NORD as fast as possible. It uses 2 temporary
+!!   to try to bring it to NORD as fast as possible. It uses two temporary
 !!   arrays, where it stores the indices of the values smaller than the
 !!   pivot (ILOWT), and the indices of values larger than the pivot that we
 !!   might still need later on (IHIGT). It iterates until it can bring the
@@ -41,37 +43,37 @@ contains
 !!   of this set.
 !!
 !!##OPTIONS
-!!     XDONT    array to search
+!!     INVALS    array to search
 !!     NORD     Nth lowest value to find
 !!##RETURNS
-!!     VALNTH   Nth lowest value
+!!     orderval   Nth lowest value
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_valnth
+!!    program demo_orderval
 !!    !  Return value of Nth lowest value of array
-!!    use M_valnth, only : valnth
+!!    use M_orderpack, only : orderval
 !!    implicit none
 !!    character(len=*),parameter :: list= '(*(g0:,", "))'
 !!    character(len=*),parameter :: sp='(*(g0,1x))'
-!!    real,parameter ::  xdont(*)=[1.1,20.20,3.3,10.10,5.5,4.4,2.2]
+!!    real,parameter ::  INVALS(*)=[1.1,20.20,3.3,10.10,5.5,4.4,2.2]
 !!    integer :: i
 !!    integer :: imiddle
-!!       write(*,list) 'ORIGINAL:',xdont
+!!       write(*,list) 'ORIGINAL:',INVALS
 !!       ! can return the same values as intrinsics minval() and maxval()
-!!       print sp, 'minval',valnth(xdont,1),          minval(xdont)
-!!       print sp, 'maxval',valnth(xdont,size(xdont)), maxval(xdont)
+!!       print sp, 'minval',orderval(INVALS,1),          minval(INVALS)
+!!       print sp, 'maxval',orderval(INVALS,size(INVALS)), maxval(INVALS)
 !!       ! but more generally it can return the Nth lowest value.
-!!       print sp,'nord=',4, ' fractile=',valnth(xdont,4)
+!!       print sp,'nord=',4, ' fractile=',orderval(INVALS,4)
 !!       ! so a value at the middle would be
-!!       imiddle=(size(xdont)+1)/2
-!!       print sp,'median',valnth(xdont,imiddle)
+!!       imiddle=(size(INVALS)+1)/2
+!!       print sp,'median',orderval(INVALS,imiddle)
 !!       ! sorting the hard way
-!!       do i=1,size(xdont)
-!!          write(*,list)i,valnth(xdont,i)
+!!       do i=1,size(INVALS)
+!!          write(*,list)i,orderval(INVALS,i)
 !!       enddo
-!!    end program demo_valnth
+!!    end program demo_orderval
 !!
 !!   Results:
 !!
@@ -90,45 +92,42 @@ contains
 !!
 !!##AUTHOR
 !!    Michel Olagnon - Aug. 2000
-!!
+!!##MAINTAINER
 !!    John Urban, 2022.04.16
-!!    o added man-page and reduced to a template using the
-!!      prep(1) preprocessor.
-!!
 !!##LICENSE
 !!    CC0-1.0
-Function real64_valnth (XDONT, NORD) Result (valnth)
+Function real64_valnth (INVALS, NORD) Result (valnth)
 ! __________________________________________________________
-Real (Kind=real64), Dimension (:), Intent (In) :: XDONT
+Real (Kind=real64), Dimension (:), Intent (In) :: INVALS
 Real (Kind=real64) :: valnth
 Integer, Intent (In) :: NORD
 ! __________________________________________________________
-Real (Kind=real64), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+Real (Kind=real64), Dimension (SIZE(INVALS)) :: XLOWT, XHIGT
 Real (Kind=real64) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !
 Integer :: NDON, JHIG, JLOW, IHIG
 Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
 Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = MAX (MIN (NORD, NDON), 1)
 !
 !    First loop is used to fill-in XLOWT, XHIGT at the same time
 !
       If (NDON < 2) Then
-         If (INTH == 1) VALNTH = XDONT (1)
+         If (INTH == 1) VALNTH = INVALS (1)
          Return
       End If
 !
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
-         XLOWT (1) = XDONT(2)
-         XHIGT (1) = XDONT(1)
+      If (INVALS(2) < INVALS(1)) Then
+         XLOWT (1) = INVALS(2)
+         XHIGT (1) = INVALS(1)
       Else
-         XLOWT (1) = XDONT(1)
-         XHIGT (1) = XDONT(2)
+         XLOWT (1) = INVALS(1)
+         XHIGT (1) = INVALS(2)
       End If
 !
       If (NDON < 3) Then
@@ -137,16 +136,16 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          Return
       End If
 !
-      If (XDONT(3) < XHIGT(1)) Then
+      If (INVALS(3) < XHIGT(1)) Then
          XHIGT (2) = XHIGT (1)
-         If (XDONT(3) < XLOWT(1)) Then
+         If (INVALS(3) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(3)
+            XLOWT (1) = INVALS(3)
          Else
-            XHIGT (1) = XDONT(3)
+            XHIGT (1) = INVALS(3)
          End If
       Else
-         XHIGT (2) = XDONT(3)
+         XHIGT (2) = INVALS(3)
       End If
 !
       If (NDON < 4) Then
@@ -158,17 +157,17 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          Return
       End If
 !
-      If (XDONT(NDON) < XHIGT(1)) Then
+      If (INVALS(NDON) < XHIGT(1)) Then
          XHIGT (3) = XHIGT (2)
          XHIGT (2) = XHIGT (1)
-         If (XDONT(NDON) < XLOWT(1)) Then
+         If (INVALS(NDON) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(NDON)
+            XLOWT (1) = INVALS(NDON)
          Else
-            XHIGT (1) = XDONT(NDON)
+            XHIGT (1) = INVALS(NDON)
          End If
       Else
-         XHIGT (3) = XDONT(NDON)
+         XHIGT (3) = INVALS(NDON)
       End If
 !
       If (NDON < 5) Then
@@ -201,17 +200,17 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !  than enough values in XLOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -222,9 +221,9 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                Else If (ICRS >= NDON) Then
                   Exit
                End If
@@ -238,12 +237,12 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -251,10 +250,10 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                End If
             End Do
          End If
@@ -576,38 +575,38 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
       VALNTH = MAXVAL (XLOWT (1:INTH))
 !
 End Function real64_valnth
-Function real32_valnth (XDONT, NORD) Result (valnth)
+Function real32_valnth (INVALS, NORD) Result (valnth)
 ! __________________________________________________________
-Real (Kind=real32), Dimension (:), Intent (In) :: XDONT
+Real (Kind=real32), Dimension (:), Intent (In) :: INVALS
 Real (Kind=real32) :: valnth
 Integer, Intent (In) :: NORD
 ! __________________________________________________________
-Real (Kind=real32), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+Real (Kind=real32), Dimension (SIZE(INVALS)) :: XLOWT, XHIGT
 Real (Kind=real32) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !
 Integer :: NDON, JHIG, JLOW, IHIG
 Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
 Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = MAX (MIN (NORD, NDON), 1)
 !
 !    First loop is used to fill-in XLOWT, XHIGT at the same time
 !
       If (NDON < 2) Then
-         If (INTH == 1) VALNTH = XDONT (1)
+         If (INTH == 1) VALNTH = INVALS (1)
          Return
       End If
 !
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
-         XLOWT (1) = XDONT(2)
-         XHIGT (1) = XDONT(1)
+      If (INVALS(2) < INVALS(1)) Then
+         XLOWT (1) = INVALS(2)
+         XHIGT (1) = INVALS(1)
       Else
-         XLOWT (1) = XDONT(1)
-         XHIGT (1) = XDONT(2)
+         XLOWT (1) = INVALS(1)
+         XHIGT (1) = INVALS(2)
       End If
 !
       If (NDON < 3) Then
@@ -616,16 +615,16 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          Return
       End If
 !
-      If (XDONT(3) < XHIGT(1)) Then
+      If (INVALS(3) < XHIGT(1)) Then
          XHIGT (2) = XHIGT (1)
-         If (XDONT(3) < XLOWT(1)) Then
+         If (INVALS(3) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(3)
+            XLOWT (1) = INVALS(3)
          Else
-            XHIGT (1) = XDONT(3)
+            XHIGT (1) = INVALS(3)
          End If
       Else
-         XHIGT (2) = XDONT(3)
+         XHIGT (2) = INVALS(3)
       End If
 !
       If (NDON < 4) Then
@@ -637,17 +636,17 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          Return
       End If
 !
-      If (XDONT(NDON) < XHIGT(1)) Then
+      If (INVALS(NDON) < XHIGT(1)) Then
          XHIGT (3) = XHIGT (2)
          XHIGT (2) = XHIGT (1)
-         If (XDONT(NDON) < XLOWT(1)) Then
+         If (INVALS(NDON) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(NDON)
+            XLOWT (1) = INVALS(NDON)
          Else
-            XHIGT (1) = XDONT(NDON)
+            XHIGT (1) = INVALS(NDON)
          End If
       Else
-         XHIGT (3) = XDONT(NDON)
+         XHIGT (3) = INVALS(NDON)
       End If
 !
       If (NDON < 5) Then
@@ -680,17 +679,17 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !  than enough values in XLOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -701,9 +700,9 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                Else If (ICRS >= NDON) Then
                   Exit
                End If
@@ -717,12 +716,12 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -730,10 +729,10 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                End If
             End Do
          End If
@@ -1055,38 +1054,38 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
       VALNTH = MAXVAL (XLOWT (1:INTH))
 !
 End Function real32_valnth
-Function int32_valnth (XDONT, NORD) Result (valnth)
+Function int32_valnth (INVALS, NORD) Result (valnth)
 ! __________________________________________________________
-Integer (Kind=int32), Dimension (:), Intent (In) :: XDONT
+Integer (Kind=int32), Dimension (:), Intent (In) :: INVALS
 Integer (Kind=int32) :: valnth
 Integer, Intent (In) :: NORD
 ! __________________________________________________________
-Integer (Kind=int32), Dimension (SIZE(XDONT)) :: XLOWT, XHIGT
+Integer (Kind=int32), Dimension (SIZE(INVALS)) :: XLOWT, XHIGT
 Integer (Kind=int32) :: XPIV, XPIV0, XWRK, XWRK1, XWRK2, XWRK3, XMIN, XMAX
 !
 Integer :: NDON, JHIG, JLOW, IHIG
 Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
 Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = MAX (MIN (NORD, NDON), 1)
 !
 !    First loop is used to fill-in XLOWT, XHIGT at the same time
 !
       If (NDON < 2) Then
-         If (INTH == 1) VALNTH = XDONT (1)
+         If (INTH == 1) VALNTH = INVALS (1)
          Return
       End If
 !
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
-         XLOWT (1) = XDONT(2)
-         XHIGT (1) = XDONT(1)
+      If (INVALS(2) < INVALS(1)) Then
+         XLOWT (1) = INVALS(2)
+         XHIGT (1) = INVALS(1)
       Else
-         XLOWT (1) = XDONT(1)
-         XHIGT (1) = XDONT(2)
+         XLOWT (1) = INVALS(1)
+         XHIGT (1) = INVALS(2)
       End If
 !
       If (NDON < 3) Then
@@ -1095,16 +1094,16 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          Return
       End If
 !
-      If (XDONT(3) < XHIGT(1)) Then
+      If (INVALS(3) < XHIGT(1)) Then
          XHIGT (2) = XHIGT (1)
-         If (XDONT(3) < XLOWT(1)) Then
+         If (INVALS(3) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(3)
+            XLOWT (1) = INVALS(3)
          Else
-            XHIGT (1) = XDONT(3)
+            XHIGT (1) = INVALS(3)
          End If
       Else
-         XHIGT (2) = XDONT(3)
+         XHIGT (2) = INVALS(3)
       End If
 !
       If (NDON < 4) Then
@@ -1116,17 +1115,17 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          Return
       End If
 !
-      If (XDONT(NDON) < XHIGT(1)) Then
+      If (INVALS(NDON) < XHIGT(1)) Then
          XHIGT (3) = XHIGT (2)
          XHIGT (2) = XHIGT (1)
-         If (XDONT(NDON) < XLOWT(1)) Then
+         If (INVALS(NDON) < XLOWT(1)) Then
             XHIGT (1) = XLOWT (1)
-            XLOWT (1) = XDONT(NDON)
+            XLOWT (1) = INVALS(NDON)
          Else
-            XHIGT (1) = XDONT(NDON)
+            XHIGT (1) = INVALS(NDON)
          End If
       Else
-         XHIGT (3) = XDONT(NDON)
+         XHIGT (3) = INVALS(NDON)
       End If
 !
       If (NDON < 5) Then
@@ -1159,17 +1158,17 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !  than enough values in XLOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -1180,9 +1179,9 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                Else If (ICRS >= NDON) Then
                   Exit
                End If
@@ -1196,12 +1195,12 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
-               XHIGT (JHIG) = XDONT(ICRS)
+               XHIGT (JHIG) = INVALS(ICRS)
             Else
                JLOW = JLOW + 1
-               XLOWT (JLOW) = XDONT(ICRS)
+               XLOWT (JLOW) = INVALS(ICRS)
                If (JLOW >= INTH) Exit
             End If
          End Do
@@ -1209,10 +1208,10 @@ Integer :: JLM2, JLM1, JHM2, JHM1, INTH
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
-                  XLOWT (JLOW) = XDONT(ICRS)
+                  XLOWT (JLOW) = INVALS(ICRS)
                End If
             End Do
          End If

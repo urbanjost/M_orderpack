@@ -10,15 +10,15 @@ end interface indnth
 contains
 !>
 !!##NAME
-!!    indnth(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of
-!!                 array, i.e fractile of order N/SIZE(array) (QuickSort-like)
+!!    orderloc(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of
+!!                 array, or "fractile of order N/SIZE(array)" (QuickSort-like)
 !!
 !!##SYNOPSIS
 !!
-!!     Function indnth (XDONT, NORD) Result (INDNTH)
+!!     Function orderloc (INVALS, NORD) Result (orderloc)
 !!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
-!!       Integer                             :: INDNTH
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!!       Integer                             :: orderloc
 !!       Integer, Intent (In)                :: NORD
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
@@ -28,37 +28,36 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    INDNTH(3) returns the index of NORDth value of XDONT, i.e. the fractile
-!!    of order NORD/SIZE(XDONT).
+!!    orderloc(3) returns the index of NORDth value of INVALS, i.e. the fractile
+!!    of order NORD/SIZE(INVALS).
 !!
-!!    That is, it is the same as sorting the array first and then returning
-!!    the value XDONT(NORD); but should be much more efficient than that
-!!    method.
+!!    That is, the result is the same as sorting the array first and then
+!!    returning the value INVALS(NORD).
 !!
-!!    Internally INDNTH(3f) uses a pivoting strategy such as the one of
+!!    Internally orderloc(3f) uses a pivoting strategy such as the one of
 !!    finding the median based on the quicksort algorithm, but we skew the
 !!    pivot choice to try to bring it to NORD as fast as possible. It uses
-!!    2 temporary arrays, where it stores the indices of the values smaller
+!!    two temporary arrays, where it stores the indices of the values smaller
 !!    than the pivot (ILOWT), and the indices of values larger than the
 !!    pivot that we might still need later on (IHIGT). It iterates until
 !!    it can bring the number of values in ILOWT to exactly NORD, and then
 !!    finds the maximum of this set.
 !!
 !!##OPTIONS
-!!     XDONT      array to search
+!!     INVALS      array to search
 !!     NORD       indicates the Nth ordered value to search for
 !!
 !!##RETURNS
-!!     INDNTH     the index of XDONT() that contains the requested value
+!!     orderloc     the index of INVALS() that contains the requested value
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_indnth
+!!    program demo_orderloc
 !!    ! find Nth lowest ordered value in an array without sorting entire array
-!!    use M_indnth, only : indnth
-!!    use M_indmed, only : indmed
+!!    use M_orderpack, only : orderloc
+!!    use M_orderpack, only : medianloc
 !!    implicit none
 !!    integer,allocatable :: iarr(:)
 !!    character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))'
@@ -67,26 +66,26 @@ contains
 !!       iarr=[80,70,30,40,50,60,20,10,0,-100]
 !!       print list, 'ORIGINAL:',iarr
 !!       ! like minloc() and maxloc()
-!!       print sp,'minloc',indnth(iarr,1),                minloc(iarr)
-!!       print sp,'maxloc',indnth(iarr,size(iarr)),       maxloc(iarr)
+!!       print sp,'minloc',orderloc(iarr,1),                minloc(iarr)
+!!       print sp,'maxloc',orderloc(iarr,size(iarr)),       maxloc(iarr)
 !!       ! can find median
-!!       call indmed(iarr,indx)
-!!       print sp,'median',indnth(iarr,(size(iarr)+1)/2), indx
+!!       call medianloc(iarr,indx)
+!!       print sp,'median',orderloc(iarr,(size(iarr)+1)/2), indx
 !!       ! but more general so can find location of the Nth lowest value ...
 !!       !
 !!       ! sort the hard way, finding location of Nth value one at a time
 !!       do i=1,size(iarr)
-!!          write(*,sp,advance='no') iarr(indnth(iarr,i))
+!!          write(*,sp,advance='no') iarr(orderloc(iarr,i))
 !!       enddo
 !!       print *
 !!    contains
 !!    subroutine printme(n)
 !!    integer,intent(in) :: n
 !!    integer :: ii
-!!       ii=indnth(iarr,n)
+!!       ii=orderloc(iarr,n)
 !!       print sp,'nord=',n,' index=',ii,' fractile=',iarr(ii)
 !!    end subroutine printme
-!!    end program demo_indnth
+!!    end program demo_orderloc
 !!
 !!   Results:
 !!
@@ -98,27 +97,24 @@ contains
 !!
 !!##AUTHOR
 !!    Michel Olagnon - Aug. 2000
-!!
+!!##MAINTAINER
 !!    John Urban, 2022.04.16
-!!    o added man-page and reduced to a template using the
-!!      prep(1) preprocessor.
-!!
 !!##LICENSE
 !!    CC0-1.0
-Function real64_indnth (XDONT, NORD) Result (INDNTH)
-      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+Function real64_indnth (INVALS, NORD) Result (INDNTH)
+      Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Intent (In) :: NORD
       Integer :: INDNTH
 ! __________________________________________________________
       Real (kind=real64) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (NORD) :: IRNGT
-      Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+      Integer, Dimension (SIZE(INVALS)) :: ILOWT, IHIGT
       Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
       Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
       Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = NORD
 !
 !    First loop is used to fill-in ILOWT, IHIGT at the same time
@@ -131,7 +127,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
+      If (INVALS(2) < INVALS(1)) Then
          ILOWT (1) = 2
          IHIGT (1) = 1
       Else
@@ -145,9 +141,9 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
          Return
       End If
 !
-      If (XDONT(3) < XDONT(IHIGT(1))) Then
+      If (INVALS(3) < INVALS(IHIGT(1))) Then
          IHIGT (2) = IHIGT (1)
-         If (XDONT(3) < XDONT(ILOWT(1))) Then
+         If (INVALS(3) < INVALS(ILOWT(1))) Then
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = 3
          Else
@@ -164,10 +160,10 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
          Return
       End If
 !
-      If (XDONT(NDON) < XDONT(IHIGT(1))) Then
+      If (INVALS(NDON) < INVALS(IHIGT(1))) Then
          IHIGT (3) = IHIGT (2)
          IHIGT (2) = IHIGT (1)
-         If (XDONT(NDON) < XDONT(ILOWT(1))) Then
+         If (INVALS(NDON) < INVALS(ILOWT(1))) Then
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = NDON
          Else
@@ -188,14 +184,14 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 
       JLOW = 1
       JHIG = 3
-      XPIV = XDONT (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
-                                   (XDONT(IHIGT(3))-XDONT(ILOWT(1)))
-      If (XPIV >= XDONT(IHIGT(1))) Then
-         XPIV = XDONT (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
-                                      (XDONT(IHIGT(2))-XDONT(ILOWT(1)))
-         If (XPIV >= XDONT(IHIGT(1))) &
-             XPIV = XDONT (ILOWT(1)) + REAL (2*INTH) / REAL (NDON+INTH) * &
-                                          (XDONT(IHIGT(1))-XDONT(ILOWT(1)))
+      XPIV = INVALS (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
+                                   (INVALS(IHIGT(3))-INVALS(ILOWT(1)))
+      If (XPIV >= INVALS(IHIGT(1))) Then
+         XPIV = INVALS (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
+                                      (INVALS(IHIGT(2))-INVALS(ILOWT(1)))
+         If (XPIV >= INVALS(IHIGT(1))) &
+             XPIV = INVALS (ILOWT(1)) + REAL (2*INTH) / REAL (NDON+INTH) * &
+                                          (INVALS(IHIGT(1))-INVALS(ILOWT(1)))
       End If
       XPIV0 = XPIV
 !
@@ -207,11 +203,11 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !  than enough values in ILOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
@@ -228,7 +224,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
                Else If (ICRS >= NDON) Then
@@ -244,7 +240,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
@@ -257,7 +253,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
@@ -277,11 +273,11 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !   to INTH
 !
              If (INTH > JLOW) Then
-                XMIN = XDONT (IHIGT(1))
+                XMIN = INVALS (IHIGT(1))
                 IHIG = 1
                 Do ICRS = 2, JHIG
-                   If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                      XMIN = XDONT (IHIGT(ICRS))
+                   If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                      XMIN = INVALS (IHIGT(ICRS))
                       IHIG = ICRS
                    End If
                 End Do
@@ -293,11 +289,11 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
              Else
 
                 ILOW = ILOWT (1)
-                XMAX = XDONT (ILOW)
+                XMAX = INVALS (ILOW)
                 Do ICRS = 2, JLOW
-                   If (XDONT(ILOWT(ICRS)) > XMAX) Then
+                   If (INVALS(ILOWT(ICRS)) > XMAX) Then
                       IWRK = ILOWT (ICRS)
-                      XMAX = XDONT (IWRK)
+                      XMAX = INVALS (IWRK)
                       ILOWT (ICRS) = ILOW
                       ILOW = IWRK
                    End If
@@ -330,7 +326,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !   and apply the general algorithm.
 !
             Case (2)
-               If (XDONT(IHIGT(1)) <= XDONT(IHIGT(2))) Then
+               If (INVALS(IHIGT(1)) <= INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   JLOW = JLOW + 1
@@ -349,16 +345,16 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (3)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (3) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -384,16 +380,16 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (IFIN)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (IFIN) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -402,7 +398,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                JLOW = JLOW + 1
                ILOWT (JLOW) = IWRK1
-               XPIV = XDONT (IWRK1) + 0.5 * (XDONT(IHIGT(IFIN))-XDONT(IWRK1))
+               XPIV = INVALS (IWRK1) + 0.5 * (INVALS(IHIGT(IFIN))-INVALS(IWRK1))
 !
 !  One takes values <= pivot to ILOWT
 !  Again, 2 parts, one where we take care of the remaining
@@ -412,7 +408,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !
                JHIG = 0
                Do ICRS = 2, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                      If (JLOW >= INTH) Exit
@@ -423,7 +419,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
                End Do
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                   End If
@@ -435,11 +431,11 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !
 !  Only 1 value is missing in low part
 !
-            XMIN = XDONT (IHIGT(1))
+            XMIN = INVALS (IHIGT(1))
             IHIG = 1
             Do ICRS = 2, JHIG
-               If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                  XMIN = XDONT (IHIGT(ICRS))
+               If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                  XMIN = INVALS (IHIGT(ICRS))
                   IHIG = ICRS
                End If
             End Do
@@ -463,9 +459,9 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
             ILOW = 1 + INTH - JLOW
             Do ICRS = 2, INTH
                IWRK = ILOWT (ICRS)
-               XWRK = XDONT (IWRK)
+               XWRK = INVALS (IWRK)
                Do IDCR = ICRS - 1, MAX (1, ILOW), - 1
-                  If (XWRK < XDONT(IRNGT(IDCR))) Then
+                  If (XWRK < INVALS(IRNGT(IDCR))) Then
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   Else
                      Exit
@@ -475,17 +471,17 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
                ILOW = ILOW + 1
             End Do
 !
-            XWRK1 = XDONT (IRNGT(INTH))
+            XWRK1 = INVALS (IRNGT(INTH))
             ILOW = 2*INTH - JLOW
             Do ICRS = INTH + 1, JLOW
-               If (XDONT(ILOWT (ICRS)) < XWRK1) Then
-                  XWRK = XDONT (ILOWT (ICRS))
+               If (INVALS(ILOWT (ICRS)) < XWRK1) Then
+                  XWRK = INVALS (ILOWT (ICRS))
                   Do IDCR = INTH - 1, MAX (1, ILOW), - 1
-                     If (XWRK >= XDONT(IRNGT(IDCR))) Exit
+                     If (XWRK >= INVALS(IRNGT(IDCR))) Exit
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   End Do
                   IRNGT (IDCR+1) = ILOWT (ICRS)
-                  XWRK1 = XDONT (IRNGT(INTH))
+                  XWRK1 = INVALS (IRNGT(INTH))
                End If
                ILOW = ILOW + 1
             End Do
@@ -504,16 +500,16 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !
 !  One chooses a pivot from 1st, last, and middle values
 !
-            If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(1))) Then
+            If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(1))) Then
                IWRK = ILOWT (1)
                ILOWT (1) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
             End If
-            If (XDONT(ILOWT(IMIL)) > XDONT(ILOWT(IFIN))) Then
+            If (INVALS(ILOWT(IMIL)) > INVALS(ILOWT(IFIN))) Then
                IWRK = ILOWT (IFIN)
                ILOWT (IFIN) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
-               If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(1))) Then
+               If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(1))) Then
                   IWRK = ILOWT (1)
                   ILOWT (1) = ILOWT (IMIL)
                   ILOWT (IMIL) = IWRK
@@ -521,8 +517,8 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
             End If
             If (IFIN <= 3) Exit
 !
-            XPIV = XDONT (ILOWT(1)) + REAL(INTH)/REAL(JLOW+INTH) * &
-                                      (XDONT(ILOWT(IFIN))-XDONT(ILOWT(1)))
+            XPIV = INVALS (ILOWT(1)) + REAL(INTH)/REAL(JLOW+INTH) * &
+                                      (INVALS(ILOWT(IFIN))-INVALS(ILOWT(1)))
 
 !
 !  One takes values > XPIV to IHIGT
@@ -530,11 +526,11 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
             JHIG = 0
             JLOW = 0
 !
-            If (XDONT(ILOWT(IFIN)) > XPIV) Then
+            If (INVALS(ILOWT(IFIN)) > XPIV) Then
                ICRS = 0
                Do
                   ICRS = ICRS + 1
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                      If (ICRS >= IFIN) Exit
@@ -548,7 +544,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
                If (ICRS < IFIN) Then
                   Do
                      ICRS = ICRS + 1
-                     If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                     If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                         JLOW = JLOW + 1
                         ILOWT (JLOW) = ILOWT (ICRS)
                      Else
@@ -558,7 +554,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
                End If
             Else
                Do ICRS = 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                   Else
@@ -569,7 +565,7 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
                End Do
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = ILOWT (ICRS)
                   End If
@@ -584,10 +580,10 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !
 
       IWRK1 = ILOWT (1)
-      XWRK1 =  XDONT (IWRK1)
+      XWRK1 =  INVALS (IWRK1)
       Do ICRS = 1+1, INTH
          IWRK = ILOWT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          If (XWRK > XWRK1) Then
             XWRK1 = XWRK
             IWRK1 = IWRK
@@ -598,20 +594,20 @@ Function real64_indnth (XDONT, NORD) Result (INDNTH)
 !
 !
 End Function real64_indnth
-Function real32_indnth (XDONT, NORD) Result (INDNTH)
-      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+Function real32_indnth (INVALS, NORD) Result (INDNTH)
+      Real (kind=real32), Dimension (:), Intent (In) :: INVALS
       Integer, Intent (In) :: NORD
       Integer :: INDNTH
 ! __________________________________________________________
       Real (kind=real32) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (NORD) :: IRNGT
-      Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+      Integer, Dimension (SIZE(INVALS)) :: ILOWT, IHIGT
       Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
       Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
       Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = NORD
 !
 !    First loop is used to fill-in ILOWT, IHIGT at the same time
@@ -624,7 +620,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
+      If (INVALS(2) < INVALS(1)) Then
          ILOWT (1) = 2
          IHIGT (1) = 1
       Else
@@ -638,9 +634,9 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
          Return
       End If
 !
-      If (XDONT(3) < XDONT(IHIGT(1))) Then
+      If (INVALS(3) < INVALS(IHIGT(1))) Then
          IHIGT (2) = IHIGT (1)
-         If (XDONT(3) < XDONT(ILOWT(1))) Then
+         If (INVALS(3) < INVALS(ILOWT(1))) Then
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = 3
          Else
@@ -657,10 +653,10 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
          Return
       End If
 !
-      If (XDONT(NDON) < XDONT(IHIGT(1))) Then
+      If (INVALS(NDON) < INVALS(IHIGT(1))) Then
          IHIGT (3) = IHIGT (2)
          IHIGT (2) = IHIGT (1)
-         If (XDONT(NDON) < XDONT(ILOWT(1))) Then
+         If (INVALS(NDON) < INVALS(ILOWT(1))) Then
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = NDON
          Else
@@ -681,14 +677,14 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 
       JLOW = 1
       JHIG = 3
-      XPIV = XDONT (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
-                                   (XDONT(IHIGT(3))-XDONT(ILOWT(1)))
-      If (XPIV >= XDONT(IHIGT(1))) Then
-         XPIV = XDONT (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
-                                      (XDONT(IHIGT(2))-XDONT(ILOWT(1)))
-         If (XPIV >= XDONT(IHIGT(1))) &
-             XPIV = XDONT (ILOWT(1)) + REAL (2*INTH) / REAL (NDON+INTH) * &
-                                          (XDONT(IHIGT(1))-XDONT(ILOWT(1)))
+      XPIV = INVALS (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
+                                   (INVALS(IHIGT(3))-INVALS(ILOWT(1)))
+      If (XPIV >= INVALS(IHIGT(1))) Then
+         XPIV = INVALS (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
+                                      (INVALS(IHIGT(2))-INVALS(ILOWT(1)))
+         If (XPIV >= INVALS(IHIGT(1))) &
+             XPIV = INVALS (ILOWT(1)) + REAL (2*INTH) / REAL (NDON+INTH) * &
+                                          (INVALS(IHIGT(1))-INVALS(ILOWT(1)))
       End If
       XPIV0 = XPIV
 !
@@ -700,11 +696,11 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !  than enough values in ILOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
@@ -721,7 +717,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
                Else If (ICRS >= NDON) Then
@@ -737,7 +733,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
@@ -750,7 +746,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
@@ -770,11 +766,11 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !   to INTH
 !
              If (INTH > JLOW) Then
-                XMIN = XDONT (IHIGT(1))
+                XMIN = INVALS (IHIGT(1))
                 IHIG = 1
                 Do ICRS = 2, JHIG
-                   If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                      XMIN = XDONT (IHIGT(ICRS))
+                   If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                      XMIN = INVALS (IHIGT(ICRS))
                       IHIG = ICRS
                    End If
                 End Do
@@ -786,11 +782,11 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
              Else
 
                 ILOW = ILOWT (1)
-                XMAX = XDONT (ILOW)
+                XMAX = INVALS (ILOW)
                 Do ICRS = 2, JLOW
-                   If (XDONT(ILOWT(ICRS)) > XMAX) Then
+                   If (INVALS(ILOWT(ICRS)) > XMAX) Then
                       IWRK = ILOWT (ICRS)
-                      XMAX = XDONT (IWRK)
+                      XMAX = INVALS (IWRK)
                       ILOWT (ICRS) = ILOW
                       ILOW = IWRK
                    End If
@@ -823,7 +819,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !   and apply the general algorithm.
 !
             Case (2)
-               If (XDONT(IHIGT(1)) <= XDONT(IHIGT(2))) Then
+               If (INVALS(IHIGT(1)) <= INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   JLOW = JLOW + 1
@@ -842,16 +838,16 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (3)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (3) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -877,16 +873,16 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (IFIN)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (IFIN) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -895,7 +891,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                JLOW = JLOW + 1
                ILOWT (JLOW) = IWRK1
-               XPIV = XDONT (IWRK1) + 0.5 * (XDONT(IHIGT(IFIN))-XDONT(IWRK1))
+               XPIV = INVALS (IWRK1) + 0.5 * (INVALS(IHIGT(IFIN))-INVALS(IWRK1))
 !
 !  One takes values <= pivot to ILOWT
 !  Again, 2 parts, one where we take care of the remaining
@@ -905,7 +901,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !
                JHIG = 0
                Do ICRS = 2, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                      If (JLOW >= INTH) Exit
@@ -916,7 +912,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
                End Do
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                   End If
@@ -928,11 +924,11 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !
 !  Only 1 value is missing in low part
 !
-            XMIN = XDONT (IHIGT(1))
+            XMIN = INVALS (IHIGT(1))
             IHIG = 1
             Do ICRS = 2, JHIG
-               If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                  XMIN = XDONT (IHIGT(ICRS))
+               If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                  XMIN = INVALS (IHIGT(ICRS))
                   IHIG = ICRS
                End If
             End Do
@@ -956,9 +952,9 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
             ILOW = 1 + INTH - JLOW
             Do ICRS = 2, INTH
                IWRK = ILOWT (ICRS)
-               XWRK = XDONT (IWRK)
+               XWRK = INVALS (IWRK)
                Do IDCR = ICRS - 1, MAX (1, ILOW), - 1
-                  If (XWRK < XDONT(IRNGT(IDCR))) Then
+                  If (XWRK < INVALS(IRNGT(IDCR))) Then
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   Else
                      Exit
@@ -968,17 +964,17 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
                ILOW = ILOW + 1
             End Do
 !
-            XWRK1 = XDONT (IRNGT(INTH))
+            XWRK1 = INVALS (IRNGT(INTH))
             ILOW = 2*INTH - JLOW
             Do ICRS = INTH + 1, JLOW
-               If (XDONT(ILOWT (ICRS)) < XWRK1) Then
-                  XWRK = XDONT (ILOWT (ICRS))
+               If (INVALS(ILOWT (ICRS)) < XWRK1) Then
+                  XWRK = INVALS (ILOWT (ICRS))
                   Do IDCR = INTH - 1, MAX (1, ILOW), - 1
-                     If (XWRK >= XDONT(IRNGT(IDCR))) Exit
+                     If (XWRK >= INVALS(IRNGT(IDCR))) Exit
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   End Do
                   IRNGT (IDCR+1) = ILOWT (ICRS)
-                  XWRK1 = XDONT (IRNGT(INTH))
+                  XWRK1 = INVALS (IRNGT(INTH))
                End If
                ILOW = ILOW + 1
             End Do
@@ -997,16 +993,16 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !
 !  One chooses a pivot from 1st, last, and middle values
 !
-            If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(1))) Then
+            If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(1))) Then
                IWRK = ILOWT (1)
                ILOWT (1) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
             End If
-            If (XDONT(ILOWT(IMIL)) > XDONT(ILOWT(IFIN))) Then
+            If (INVALS(ILOWT(IMIL)) > INVALS(ILOWT(IFIN))) Then
                IWRK = ILOWT (IFIN)
                ILOWT (IFIN) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
-               If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(1))) Then
+               If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(1))) Then
                   IWRK = ILOWT (1)
                   ILOWT (1) = ILOWT (IMIL)
                   ILOWT (IMIL) = IWRK
@@ -1014,8 +1010,8 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
             End If
             If (IFIN <= 3) Exit
 !
-            XPIV = XDONT (ILOWT(1)) + REAL(INTH)/REAL(JLOW+INTH) * &
-                                      (XDONT(ILOWT(IFIN))-XDONT(ILOWT(1)))
+            XPIV = INVALS (ILOWT(1)) + REAL(INTH)/REAL(JLOW+INTH) * &
+                                      (INVALS(ILOWT(IFIN))-INVALS(ILOWT(1)))
 
 !
 !  One takes values > XPIV to IHIGT
@@ -1023,11 +1019,11 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
             JHIG = 0
             JLOW = 0
 !
-            If (XDONT(ILOWT(IFIN)) > XPIV) Then
+            If (INVALS(ILOWT(IFIN)) > XPIV) Then
                ICRS = 0
                Do
                   ICRS = ICRS + 1
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                      If (ICRS >= IFIN) Exit
@@ -1041,7 +1037,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
                If (ICRS < IFIN) Then
                   Do
                      ICRS = ICRS + 1
-                     If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                     If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                         JLOW = JLOW + 1
                         ILOWT (JLOW) = ILOWT (ICRS)
                      Else
@@ -1051,7 +1047,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
                End If
             Else
                Do ICRS = 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                   Else
@@ -1062,7 +1058,7 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
                End Do
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = ILOWT (ICRS)
                   End If
@@ -1077,10 +1073,10 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !
 
       IWRK1 = ILOWT (1)
-      XWRK1 =  XDONT (IWRK1)
+      XWRK1 =  INVALS (IWRK1)
       Do ICRS = 1+1, INTH
          IWRK = ILOWT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          If (XWRK > XWRK1) Then
             XWRK1 = XWRK
             IWRK1 = IWRK
@@ -1091,20 +1087,20 @@ Function real32_indnth (XDONT, NORD) Result (INDNTH)
 !
 !
 End Function real32_indnth
-Function int32_indnth (XDONT, NORD) Result (INDNTH)
-      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+Function int32_indnth (INVALS, NORD) Result (INDNTH)
+      Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
       Integer, Intent (In) :: NORD
       Integer :: INDNTH
 ! __________________________________________________________
       Integer (kind=int32) :: XPIV, XPIV0, XWRK, XWRK1, XMIN, XMAX
 !
       Integer, Dimension (NORD) :: IRNGT
-      Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+      Integer, Dimension (SIZE(INVALS)) :: ILOWT, IHIGT
       Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
       Integer :: IMIL, IFIN, ICRS, IDCR, ILOW
       Integer :: JLM2, JLM1, JHM2, JHM1, INTH
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       INTH = NORD
 !
 !    First loop is used to fill-in ILOWT, IHIGT at the same time
@@ -1117,7 +1113,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
-      If (XDONT(2) < XDONT(1)) Then
+      If (INVALS(2) < INVALS(1)) Then
          ILOWT (1) = 2
          IHIGT (1) = 1
       Else
@@ -1131,9 +1127,9 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
          Return
       End If
 !
-      If (XDONT(3) < XDONT(IHIGT(1))) Then
+      If (INVALS(3) < INVALS(IHIGT(1))) Then
          IHIGT (2) = IHIGT (1)
-         If (XDONT(3) < XDONT(ILOWT(1))) Then
+         If (INVALS(3) < INVALS(ILOWT(1))) Then
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = 3
          Else
@@ -1150,10 +1146,10 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
          Return
       End If
 !
-      If (XDONT(NDON) < XDONT(IHIGT(1))) Then
+      If (INVALS(NDON) < INVALS(IHIGT(1))) Then
          IHIGT (3) = IHIGT (2)
          IHIGT (2) = IHIGT (1)
-         If (XDONT(NDON) < XDONT(ILOWT(1))) Then
+         If (INVALS(NDON) < INVALS(ILOWT(1))) Then
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = NDON
          Else
@@ -1174,14 +1170,14 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 
       JLOW = 1
       JHIG = 3
-      XPIV = XDONT (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
-                                   (XDONT(IHIGT(3))-XDONT(ILOWT(1)))
-      If (XPIV >= XDONT(IHIGT(1))) Then
-         XPIV = XDONT (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
-                                      (XDONT(IHIGT(2))-XDONT(ILOWT(1)))
-         If (XPIV >= XDONT(IHIGT(1))) &
-             XPIV = XDONT (ILOWT(1)) + REAL (2*INTH) / REAL (NDON+INTH) * &
-                                          (XDONT(IHIGT(1))-XDONT(ILOWT(1)))
+      XPIV = INVALS (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
+                                   (INVALS(IHIGT(3))-INVALS(ILOWT(1)))
+      If (XPIV >= INVALS(IHIGT(1))) Then
+         XPIV = INVALS (ILOWT(1)) + REAL(2*INTH)/REAL(NDON+INTH) * &
+                                      (INVALS(IHIGT(2))-INVALS(ILOWT(1)))
+         If (XPIV >= INVALS(IHIGT(1))) &
+             XPIV = INVALS (ILOWT(1)) + REAL (2*INTH) / REAL (NDON+INTH) * &
+                                          (INVALS(IHIGT(1))-INVALS(ILOWT(1)))
       End If
       XPIV0 = XPIV
 !
@@ -1193,11 +1189,11 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !  than enough values in ILOWT.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          ICRS = 3
          Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
@@ -1214,7 +1210,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
                Else If (ICRS >= NDON) Then
@@ -1230,7 +1226,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !  DO-loop is kept
 !
          Do ICRS = 4, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
@@ -1243,7 +1239,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
@@ -1263,11 +1259,11 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !   to INTH
 !
              If (INTH > JLOW) Then
-                XMIN = XDONT (IHIGT(1))
+                XMIN = INVALS (IHIGT(1))
                 IHIG = 1
                 Do ICRS = 2, JHIG
-                   If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                      XMIN = XDONT (IHIGT(ICRS))
+                   If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                      XMIN = INVALS (IHIGT(ICRS))
                       IHIG = ICRS
                    End If
                 End Do
@@ -1279,11 +1275,11 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
              Else
 
                 ILOW = ILOWT (1)
-                XMAX = XDONT (ILOW)
+                XMAX = INVALS (ILOW)
                 Do ICRS = 2, JLOW
-                   If (XDONT(ILOWT(ICRS)) > XMAX) Then
+                   If (INVALS(ILOWT(ICRS)) > XMAX) Then
                       IWRK = ILOWT (ICRS)
-                      XMAX = XDONT (IWRK)
+                      XMAX = INVALS (IWRK)
                       ILOWT (ICRS) = ILOW
                       ILOW = IWRK
                    End If
@@ -1316,7 +1312,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !   and apply the general algorithm.
 !
             Case (2)
-               If (XDONT(IHIGT(1)) <= XDONT(IHIGT(2))) Then
+               If (INVALS(IHIGT(1)) <= INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   JLOW = JLOW + 1
@@ -1335,16 +1331,16 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (3)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (3) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -1370,16 +1366,16 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (IFIN)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (IFIN) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -1388,7 +1384,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
                IWRK1 = IHIGT (1)
                JLOW = JLOW + 1
                ILOWT (JLOW) = IWRK1
-               XPIV = XDONT (IWRK1) + 0.5 * (XDONT(IHIGT(IFIN))-XDONT(IWRK1))
+               XPIV = INVALS (IWRK1) + 0.5 * (INVALS(IHIGT(IFIN))-INVALS(IWRK1))
 !
 !  One takes values <= pivot to ILOWT
 !  Again, 2 parts, one where we take care of the remaining
@@ -1398,7 +1394,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !
                JHIG = 0
                Do ICRS = 2, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                      If (JLOW >= INTH) Exit
@@ -1409,7 +1405,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
                End Do
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                   End If
@@ -1421,11 +1417,11 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !
 !  Only 1 value is missing in low part
 !
-            XMIN = XDONT (IHIGT(1))
+            XMIN = INVALS (IHIGT(1))
             IHIG = 1
             Do ICRS = 2, JHIG
-               If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                  XMIN = XDONT (IHIGT(ICRS))
+               If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                  XMIN = INVALS (IHIGT(ICRS))
                   IHIG = ICRS
                End If
             End Do
@@ -1449,9 +1445,9 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
             ILOW = 1 + INTH - JLOW
             Do ICRS = 2, INTH
                IWRK = ILOWT (ICRS)
-               XWRK = XDONT (IWRK)
+               XWRK = INVALS (IWRK)
                Do IDCR = ICRS - 1, MAX (1, ILOW), - 1
-                  If (XWRK < XDONT(IRNGT(IDCR))) Then
+                  If (XWRK < INVALS(IRNGT(IDCR))) Then
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   Else
                      Exit
@@ -1461,17 +1457,17 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
                ILOW = ILOW + 1
             End Do
 !
-            XWRK1 = XDONT (IRNGT(INTH))
+            XWRK1 = INVALS (IRNGT(INTH))
             ILOW = 2*INTH - JLOW
             Do ICRS = INTH + 1, JLOW
-               If (XDONT(ILOWT (ICRS)) < XWRK1) Then
-                  XWRK = XDONT (ILOWT (ICRS))
+               If (INVALS(ILOWT (ICRS)) < XWRK1) Then
+                  XWRK = INVALS (ILOWT (ICRS))
                   Do IDCR = INTH - 1, MAX (1, ILOW), - 1
-                     If (XWRK >= XDONT(IRNGT(IDCR))) Exit
+                     If (XWRK >= INVALS(IRNGT(IDCR))) Exit
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   End Do
                   IRNGT (IDCR+1) = ILOWT (ICRS)
-                  XWRK1 = XDONT (IRNGT(INTH))
+                  XWRK1 = INVALS (IRNGT(INTH))
                End If
                ILOW = ILOW + 1
             End Do
@@ -1490,16 +1486,16 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !
 !  One chooses a pivot from 1st, last, and middle values
 !
-            If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(1))) Then
+            If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(1))) Then
                IWRK = ILOWT (1)
                ILOWT (1) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
             End If
-            If (XDONT(ILOWT(IMIL)) > XDONT(ILOWT(IFIN))) Then
+            If (INVALS(ILOWT(IMIL)) > INVALS(ILOWT(IFIN))) Then
                IWRK = ILOWT (IFIN)
                ILOWT (IFIN) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
-               If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(1))) Then
+               If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(1))) Then
                   IWRK = ILOWT (1)
                   ILOWT (1) = ILOWT (IMIL)
                   ILOWT (IMIL) = IWRK
@@ -1507,8 +1503,8 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
             End If
             If (IFIN <= 3) Exit
 !
-            XPIV = XDONT (ILOWT(1)) + REAL(INTH)/REAL(JLOW+INTH) * &
-                                      (XDONT(ILOWT(IFIN))-XDONT(ILOWT(1)))
+            XPIV = INVALS (ILOWT(1)) + REAL(INTH)/REAL(JLOW+INTH) * &
+                                      (INVALS(ILOWT(IFIN))-INVALS(ILOWT(1)))
 
 !
 !  One takes values > XPIV to IHIGT
@@ -1516,11 +1512,11 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
             JHIG = 0
             JLOW = 0
 !
-            If (XDONT(ILOWT(IFIN)) > XPIV) Then
+            If (INVALS(ILOWT(IFIN)) > XPIV) Then
                ICRS = 0
                Do
                   ICRS = ICRS + 1
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                      If (ICRS >= IFIN) Exit
@@ -1534,7 +1530,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
                If (ICRS < IFIN) Then
                   Do
                      ICRS = ICRS + 1
-                     If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                     If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                         JLOW = JLOW + 1
                         ILOWT (JLOW) = ILOWT (ICRS)
                      Else
@@ -1544,7 +1540,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
                End If
             Else
                Do ICRS = 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                   Else
@@ -1555,7 +1551,7 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
                End Do
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = ILOWT (ICRS)
                   End If
@@ -1570,10 +1566,10 @@ Function int32_indnth (XDONT, NORD) Result (INDNTH)
 !
 
       IWRK1 = ILOWT (1)
-      XWRK1 =  XDONT (IWRK1)
+      XWRK1 =  INVALS (IWRK1)
       Do ICRS = 1+1, INTH
          IWRK = ILOWT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          If (XWRK > XWRK1) Then
             XWRK1 = XWRK
             IWRK1 = IWRK

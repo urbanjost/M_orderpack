@@ -10,14 +10,14 @@ end interface unipar
 contains
 !>
 !!##NAME
-!!    unipar(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially ranks an array
-!!                 removing duplicates
+!!    prank_unique(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially ranks
+!!                       an array removing duplicates
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine unipar (XDONT, IRNGT, NORD)
+!!     Subroutine prank_unique (INVALS, IRNGT, NORD)
 !!
-!!      ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!      ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!      Integer, Intent (Out)               :: IRNGT(:)
 !!      Integer, Intent (InOut)             :: NORD
 !!
@@ -28,24 +28,23 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    Ranks partially XDONT by IRNGT, up to order NORD at most,
-!!    removing duplicate entries
+!!    Partially rank INVALS() up to order NORD at most, removing duplicate
+!!    entries.
 !!
-!!    This routine uses a pivoting strategy such as the one of
-!!    finding the median based on the quicksort algorithm, but
-!!    we skew the pivot choice to try to bring it to NORD as
-!!    quickly as possible. It uses 2 temporary arrays, where it
-!!    stores the indices of the values smaller than the pivot
-!!    (ILOWT), and the indices of values larger than the pivot
-!!    that we might still need later on (IHIGT). It iterates
-!!    until it can bring the number of values in ILOWT to
-!!    exactly NORD, and then uses an insertion sort to rank
-!!    this set, since it is supposedly small. At all times, the
-!!    NORD first values in ILOWT correspond to distinct values
-!!    of the input array.
+!!    Internally, this routine uses a pivoting strategy such as the one of
+!!    finding the median based on the quicksort algorithm, but we skew the
+!!    pivot choice to try to bring it to NORD as quickly as possible. It
+!!    uses two temporary arrays, where it stores the indices of the values
+!!    smaller than the pivot (ILOWT), and the indices of values larger
+!!    than the pivot that we might still need later on (IHIGT). It iterates
+!!    until it can bring the number of values in ILOWT to exactly NORD, and
+!!    then uses an insertion sort to rank this set, since it is supposedly
+!!    small. At all times, the NORD first values in ILOWT correspond to
+!!    distinct values of the input array.
+!!
 !!
 !!##OPTIONS
-!!     XDONT      array to partially sort
+!!     INVALS      array to partially sort
 !!     IRNGT      indices returned that point to lowest values
 !!     NORD       number of sorted values to determine before
 !!                eliminating duplicates
@@ -54,38 +53,38 @@ contains
 !!
 !!   Sample program:
 !!
-!!    program demo_unipar
+!!    program demo_prank_unique
 !!    ! ranks array, removing duplicates
-!!    use M_unipar, only : unipar
+!!    use M_orderpack, only : prank_unique
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    integer,allocatable :: xdont(:)
+!!    integer,allocatable :: INVALS(:)
 !!    integer,allocatable :: irngt(:)
 !!    integer :: nord
 !!    !
 !!    write(*,g)'If enough values are unique, will return NORD indices'
 !!    if(allocated(irngt))deallocate(irngt)
-!!    xdont=[10,5,7,1,4,5,6,8,9,10,1]
+!!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]
 !!    nord=5
 !!    allocate(irngt(nord))
 !!    call printme()
 !!    !
 !!    !BUG!write(*,g)'If not enough values are unique, will change NORD'
-!!    !BUG!xdont=[-1,0,-1,0,-1,0,-1]
+!!    !BUG!INVALS=[-1,0,-1,0,-1,0,-1]
 !!    !BUG!nord=5
 !!    !BUG!if(allocated(irngt))deallocate(irngt)
 !!    !BUG!allocate(irngt(nord))
 !!    !BUG!call printme()
 !!    contains
 !!    subroutine printme()
-!!       write(*,g)'ORIGINAL:',xdont
+!!       write(*,g)'ORIGINAL:',INVALS
 !!       write(*,g)'NUMBER OF INDICES TO SORT:',nord
-!!       call unipar(xdont,irngt,nord)
+!!       call prank_unique(INVALS,irngt,nord)
 !!       write(*,g)'NUMBER OF INDICES RETURNED:',nord
 !!       write(*,g)'RETURNED INDICES:',irngt(:nord)
-!!       write(*,g)nord,'SMALLEST UNIQUE VALUES:',xdont(irngt(:nord))
+!!       write(*,g)nord,'SMALLEST UNIQUE VALUES:',INVALS(irngt(:nord))
 !!    end subroutine
-!!    end program demo_unipar
+!!    end program demo_prank_unique
 !!
 !!   Results:
 !!
@@ -103,28 +102,25 @@ contains
 !!    2 SMALLEST UNIQUE VALUES: -1 0
 !!
 !!##AUTHOR
-!!     Michel Olagnon - Feb. 2000
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon - Feb. 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_unipar (XDONT, IRNGT, NORD)
+Subroutine real64_unipar (INVALS, IRNGT, NORD)
 ! __________________________________________________________
-   Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+   Real (kind=real64), Dimension (:), Intent (In) :: INVALS
    Integer, Dimension (:), Intent (Out) :: IRNGT
    Integer, Intent (InOut) :: NORD
 ! __________________________________________________________
    Real (kind=real64) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
 ! __________________________________________________________
-   Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+   Integer, Dimension (SIZE(INVALS)) :: ILOWT, IHIGT
    Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
    Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
    Integer :: JLM2, JLM1, JHM2, JHM1
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
 !
 !    First loop is used to fill-in ILOWT, IHIGT at the same time
 !
@@ -140,9 +136,9 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !  mid-point of the set of low values.
 !
      Do ICRS = 2, NDON
-        If (XDONT(ICRS) == XDONT(1)) Then
+        If (INVALS(ICRS) == INVALS(1)) Then
           Cycle
-        Else If (XDONT(ICRS) < XDONT(1)) Then
+        Else If (INVALS(ICRS) < INVALS(1)) Then
            ILOWT (1) = ICRS
            IHIGT (1) = 1
         Else
@@ -161,18 +157,18 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !
       ICRS = ICRS + 1
       JHIG = 1
-      If (XDONT(ICRS) < XDONT(IHIGT(1))) Then
-         If (XDONT(ICRS) < XDONT(ILOWT(1))) Then
+      If (INVALS(ICRS) < INVALS(IHIGT(1))) Then
+         If (INVALS(ICRS) < INVALS(ILOWT(1))) Then
             JHIG = JHIG + 1
             IHIGT (JHIG) = IHIGT (1)
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = ICRS
-         Else If (XDONT(ICRS) > XDONT(ILOWT(1))) Then
+         Else If (INVALS(ICRS) > INVALS(ILOWT(1))) Then
             JHIG = JHIG + 1
             IHIGT (JHIG) = IHIGT (1)
             IHIGT (1) = ICRS
          End If
-      ElseIf (XDONT(ICRS) > XDONT(IHIGT(1))) Then
+      ElseIf (INVALS(ICRS) > INVALS(IHIGT(1))) Then
          JHIG = JHIG + 1
          IHIGT (JHIG) = ICRS
       End If
@@ -185,22 +181,22 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
          Return
       End If
 !
-      If (XDONT(NDON) < XDONT(IHIGT(1))) Then
-         If (XDONT(NDON) < XDONT(ILOWT(1))) Then
+      If (INVALS(NDON) < INVALS(IHIGT(1))) Then
+         If (INVALS(NDON) < INVALS(ILOWT(1))) Then
             Do IDCR = JHIG, 1, -1
               IHIGT (IDCR+1) = IHIGT (IDCR)
             End Do
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = NDON
             JHIG = JHIG + 1
-         ElseIf (XDONT(NDON) > XDONT(ILOWT(1))) Then
+         ElseIf (INVALS(NDON) > INVALS(ILOWT(1))) Then
             Do IDCR = JHIG, 1, -1
               IHIGT (IDCR+1) = IHIGT (IDCR)
             End Do
             IHIGT (1) = NDON
             JHIG = JHIG + 1
          End If
-      ElseIf (XDONT(NDON) > XDONT(IHIGT(1))) Then
+      ElseIf (INVALS(NDON) > INVALS(IHIGT(1))) Then
          JHIG = JHIG + 1
          IHIGT (JHIG) = NDON
       End If
@@ -217,14 +213,14 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
       JDEB = 0
       IDEB = JDEB + 1
       JLOW = IDEB
-      XPIV = XDONT (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
-                                   (XDONT(IHIGT(3))-XDONT(ILOWT(IDEB)))
-      If (XPIV >= XDONT(IHIGT(1))) Then
-         XPIV = XDONT (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
-                                      (XDONT(IHIGT(2))-XDONT(ILOWT(IDEB)))
-         If (XPIV >= XDONT(IHIGT(1))) &
-             XPIV = XDONT (ILOWT(IDEB)) + REAL (2*NORD) / REAL (NDON+NORD) * &
-                                          (XDONT(IHIGT(1))-XDONT(ILOWT(IDEB)))
+      XPIV = INVALS (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
+                                   (INVALS(IHIGT(3))-INVALS(ILOWT(IDEB)))
+      If (XPIV >= INVALS(IHIGT(1))) Then
+         XPIV = INVALS (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
+                                      (INVALS(IHIGT(2))-INVALS(ILOWT(IDEB)))
+         If (XPIV >= INVALS(IHIGT(1))) &
+             XPIV = INVALS (ILOWT(IDEB)) + REAL (2*NORD) / REAL (NDON+NORD) * &
+                                          (INVALS(IHIGT(1))-INVALS(ILOWT(IDEB)))
       End If
       XPIV0 = XPIV
 !
@@ -239,16 +235,16 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !  by values that are exclusively duplicates of these.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          lowloop1: Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
                Do ILOW = 1, JLOW
-                 If (XDONT(ICRS) == XDONT(ILOWT(ILOW))) Cycle lowloop1
+                 If (INVALS(ICRS) == INVALS(ILOWT(ILOW))) Cycle lowloop1
                End Do
                JLOW = JLOW + 1
                ILOWT (JLOW) = ICRS
@@ -262,7 +258,7 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
                Else If (ICRS >= NDON) Then
@@ -278,12 +274,12 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !  DO-loop is kept
 !
          lowloop2: Do ICRS = ICRS + 1, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
                Do ILOW = 1, JLOW
-                 If (XDONT(ICRS) == XDONT (ILOWT(ILOW))) Cycle lowloop2
+                 If (INVALS(ICRS) == INVALS (ILOWT(ILOW))) Cycle lowloop2
                End Do
                JLOW = JLOW + 1
                ILOWT (JLOW) = ICRS
@@ -294,7 +290,7 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
@@ -315,11 +311,11 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !   to NORD
 !
            If (NORD > JLOW) Then
-                XMIN = XDONT (IHIGT(1))
+                XMIN = INVALS (IHIGT(1))
                 IHIG = 1
                 Do ICRS = 2, JHIG
-                   If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                      XMIN = XDONT (IHIGT(ICRS))
+                   If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                      XMIN = INVALS (IHIGT(ICRS))
                       IHIG = ICRS
                    End If
                 End Do
@@ -328,7 +324,7 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                 ILOWT (JLOW) = IHIGT (IHIG)
                 IHIG = 0
                 Do ICRS = 1, JHIG
-                   If (XDONT(IHIGT (ICRS)) /= XMIN) then
+                   If (INVALS(IHIGT (ICRS)) /= XMIN) then
                       IHIG = IHIG + 1
                       IHIGT (IHIG ) = IHIGT (ICRS)
                    End If
@@ -336,11 +332,11 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                 JHIG = IHIG
              Else
                 ILOW = ILOWT (JLOW)
-                XMAX = XDONT (ILOW)
+                XMAX = INVALS (ILOW)
                 Do ICRS = 1, JLOW
-                   If (XDONT(ILOWT(ICRS)) > XMAX) Then
+                   If (INVALS(ILOWT(ICRS)) > XMAX) Then
                       IWRK = ILOWT (ICRS)
-                      XMAX = XDONT (IWRK)
+                      XMAX = INVALS (IWRK)
                       ILOWT (ICRS) = ILOW
                       ILOW = IWRK
                    End If
@@ -382,12 +378,12 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !   and apply the general algorithm.
 !
             Case (2)
-               If (XDONT(IHIGT(1)) <= XDONT(IHIGT(2))) Then
+               If (INVALS(IHIGT(1)) <= INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (2)
-               ElseIf (XDONT(IHIGT(1)) == XDONT(IHIGT(2))) Then
+               ElseIf (INVALS(IHIGT(1)) == INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   NORD = JLOW
@@ -405,16 +401,16 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (3)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (3) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -423,12 +419,12 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                JLOW = JLOW + 1
                ILOWT (JLOW) = IHIGT (1)
                JHIG = JHIG + 1
-               IF (XDONT(IHIGT(JHIG)) /= XDONT(ILOWT(JLOW))) Then
+               IF (INVALS(IHIGT(JHIG)) /= INVALS(ILOWT(JLOW))) Then
                  JLOW = JLOW + 1
                  ILOWT (JLOW) = IHIGT (JHIG)
                End If
                JHIG = JHIG + 1
-               IF (XDONT(IHIGT(JHIG)) /= XDONT(ILOWT(JLOW))) Then
+               IF (INVALS(IHIGT(JHIG)) /= INVALS(ILOWT(JLOW))) Then
                  JLOW = JLOW + 1
                  ILOWT (JLOW) = IHIGT (JHIG)
                End If
@@ -448,16 +444,16 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (IFIN)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (IFIN) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -466,8 +462,8 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                JDEB = JLOW
                NWRK = NORD - JLOW
                IWRK1 = IHIGT (1)
-               XPIV = XDONT (IWRK1) + REAL (NWRK) / REAL (NORD+NWRK) * &
-                                      (XDONT(IHIGT(IFIN))-XDONT(IWRK1))
+               XPIV = INVALS (IWRK1) + REAL (NWRK) / REAL (NORD+NWRK) * &
+                                      (INVALS(IHIGT(IFIN))-INVALS(IWRK1))
 !
 !  One takes values <= pivot to ILOWT
 !  Again, 2 parts, one where we take care of the remaining
@@ -477,9 +473,9 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !
                JHIG = 0
                lowloop3: Do ICRS = 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      Do ILOW = 1, JLOW
-                        If (XDONT(IHIGT(ICRS)) == XDONT (ILOWT(ILOW))) &
+                        If (INVALS(IHIGT(ICRS)) == INVALS (ILOWT(ILOW))) &
                             Cycle lowloop3
                      End Do
                      JLOW = JLOW + 1
@@ -492,7 +488,7 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                End Do lowloop3
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                   End If
@@ -505,11 +501,11 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !
 !  Only 1 value is missing in low part
 !
-            XMIN = XDONT (IHIGT(1))
+            XMIN = INVALS (IHIGT(1))
             IHIG = 1
             Do ICRS = 2, JHIG
-               If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                  XMIN = XDONT (IHIGT(ICRS))
+               If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                  XMIN = INVALS (IHIGT(ICRS))
                   IHIG = ICRS
                End If
             End Do
@@ -535,9 +531,9 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
             IRNGT (1) = ILOWT (1)
             Do ICRS = 2, NORD
                IWRK = ILOWT (ICRS)
-               XWRK = XDONT (IWRK)
+               XWRK = INVALS (IWRK)
                Do IDCR = ICRS - 1, 1, - 1
-                  If (XWRK < XDONT(IRNGT(IDCR))) Then
+                  If (XWRK < INVALS(IRNGT(IDCR))) Then
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   Else
                      Exit
@@ -546,13 +542,13 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                IRNGT (IDCR+1) = IWRK
             End Do
 !
-            XWRK1 = XDONT (IRNGT(NORD))
+            XWRK1 = INVALS (IRNGT(NORD))
             insert1: Do ICRS = NORD + 1, JLOW
-               If (XDONT(ILOWT (ICRS)) < XWRK1) Then
-                  XWRK = XDONT (ILOWT (ICRS))
+               If (INVALS(ILOWT (ICRS)) < XWRK1) Then
+                  XWRK = INVALS (ILOWT (ICRS))
                   Do ILOW = 1, NORD - 1
-                     If (XWRK <= XDONT(IRNGT(ILOW))) Then
-                        If (XWRK == XDONT(IRNGT(ILOW))) Cycle insert1
+                     If (XWRK <= INVALS(IRNGT(ILOW))) Then
+                        If (XWRK == INVALS(IRNGT(ILOW))) Cycle insert1
                         Exit
                      End If
                   End Do
@@ -560,7 +556,7 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   End Do
                   IRNGT (IDCR+1) = ILOWT (ICRS)
-                  XWRK1 = XDONT (IRNGT(NORD))
+                  XWRK1 = INVALS (IRNGT(NORD))
                End If
             End Do insert1
 !
@@ -578,16 +574,16 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !
 !  One chooses a pivot from 1st, last, and middle values
 !
-            If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(IDEB))) Then
+            If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(IDEB))) Then
                IWRK = ILOWT (IDEB)
                ILOWT (IDEB) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
             End If
-            If (XDONT(ILOWT(IMIL)) > XDONT(ILOWT(IFIN))) Then
+            If (INVALS(ILOWT(IMIL)) > INVALS(ILOWT(IFIN))) Then
                IWRK = ILOWT (IFIN)
                ILOWT (IFIN) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
-               If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(IDEB))) Then
+               If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(IDEB))) Then
                   IWRK = ILOWT (IDEB)
                   ILOWT (IDEB) = ILOWT (IMIL)
                   ILOWT (IMIL) = IWRK
@@ -595,12 +591,12 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
             End If
             If (IFIN <= 3) Exit
 !
-            XPIV = XDONT (ILOWT(IDEB)) + REAL(NORD)/REAL(JLOW+NORD) * &
-                                      (XDONT(ILOWT(IFIN))-XDONT(ILOWT(1)))
+            XPIV = INVALS (ILOWT(IDEB)) + REAL(NORD)/REAL(JLOW+NORD) * &
+                                      (INVALS(ILOWT(IFIN))-INVALS(ILOWT(1)))
             If (JDEB > 0) Then
                If (XPIV <= XPIV0) &
                    XPIV = XPIV0 + REAL(2*NORD-JDEB)/REAL (JLOW+NORD) * &
-                                  (XDONT(ILOWT(IFIN))-XPIV0)
+                                  (INVALS(ILOWT(IFIN))-XPIV0)
             Else
                IDEB = 1
             End If
@@ -613,18 +609,18 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
             IFIN = JLOW
             JLOW = JDEB
 !
-            If (XDONT(ILOWT(IFIN)) > XPIV) Then
+            If (INVALS(ILOWT(IFIN)) > XPIV) Then
                ICRS = JDEB
               lowloop4: Do
                  ICRS = ICRS + 1
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                      If (ICRS >= IFIN) Exit
                   Else
-                     XWRK1 = XDONT(ILOWT(ICRS))
+                     XWRK1 = INVALS(ILOWT(ICRS))
                      Do ILOW = IDEB, JLOW
-                        If (XWRK1 == XDONT(ILOWT(ILOW))) &
+                        If (XWRK1 == INVALS(ILOWT(ILOW))) &
                             Cycle lowloop4
                      End Do
                      JLOW = JLOW + 1
@@ -636,7 +632,7 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                If (ICRS < IFIN) Then
                   Do
                      ICRS = ICRS + 1
-                     If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                     If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                         JLOW = JLOW + 1
                         ILOWT (JLOW) = ILOWT (ICRS)
                      Else
@@ -646,13 +642,13 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                End If
            Else
               lowloop5: Do ICRS = IDEB, IFIN
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                   Else
-                     XWRK1 = XDONT(ILOWT(ICRS))
+                     XWRK1 = INVALS(ILOWT(ICRS))
                      Do ILOW = IDEB, JLOW
-                        If (XWRK1 == XDONT(ILOWT(ILOW))) &
+                        If (XWRK1 == INVALS(ILOWT(ILOW))) &
                             Cycle lowloop5
                      End Do
                      JLOW = JLOW + 1
@@ -662,7 +658,7 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
                End Do lowloop5
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = ILOWT (ICRS)
                   End If
@@ -680,9 +676,9 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
       IRNGT (1) = ILOWT (1)
       Do ICRS = 2, NORD
          IWRK = ILOWT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          Do IDCR = ICRS - 1, 1, - 1
-            If (XWRK < XDONT(IRNGT(IDCR))) Then
+            If (XWRK < INVALS(IRNGT(IDCR))) Then
                IRNGT (IDCR+1) = IRNGT (IDCR)
             Else
                Exit
@@ -694,20 +690,20 @@ Subroutine real64_unipar (XDONT, IRNGT, NORD)
 !
 !
 End Subroutine real64_unipar
-Subroutine real32_unipar (XDONT, IRNGT, NORD)
+Subroutine real32_unipar (INVALS, IRNGT, NORD)
 ! __________________________________________________________
-   Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+   Real (kind=real32), Dimension (:), Intent (In) :: INVALS
    Integer, Dimension (:), Intent (Out) :: IRNGT
    Integer, Intent (InOut) :: NORD
 ! __________________________________________________________
    Real (kind=real32) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
 ! __________________________________________________________
-   Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+   Integer, Dimension (SIZE(INVALS)) :: ILOWT, IHIGT
    Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
    Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
    Integer :: JLM2, JLM1, JHM2, JHM1
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
 !
 !    First loop is used to fill-in ILOWT, IHIGT at the same time
 !
@@ -723,9 +719,9 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !  mid-point of the set of low values.
 !
      Do ICRS = 2, NDON
-        If (XDONT(ICRS) == XDONT(1)) Then
+        If (INVALS(ICRS) == INVALS(1)) Then
           Cycle
-        Else If (XDONT(ICRS) < XDONT(1)) Then
+        Else If (INVALS(ICRS) < INVALS(1)) Then
            ILOWT (1) = ICRS
            IHIGT (1) = 1
         Else
@@ -744,18 +740,18 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !
       ICRS = ICRS + 1
       JHIG = 1
-      If (XDONT(ICRS) < XDONT(IHIGT(1))) Then
-         If (XDONT(ICRS) < XDONT(ILOWT(1))) Then
+      If (INVALS(ICRS) < INVALS(IHIGT(1))) Then
+         If (INVALS(ICRS) < INVALS(ILOWT(1))) Then
             JHIG = JHIG + 1
             IHIGT (JHIG) = IHIGT (1)
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = ICRS
-         Else If (XDONT(ICRS) > XDONT(ILOWT(1))) Then
+         Else If (INVALS(ICRS) > INVALS(ILOWT(1))) Then
             JHIG = JHIG + 1
             IHIGT (JHIG) = IHIGT (1)
             IHIGT (1) = ICRS
          End If
-      ElseIf (XDONT(ICRS) > XDONT(IHIGT(1))) Then
+      ElseIf (INVALS(ICRS) > INVALS(IHIGT(1))) Then
          JHIG = JHIG + 1
          IHIGT (JHIG) = ICRS
       End If
@@ -768,22 +764,22 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
          Return
       End If
 !
-      If (XDONT(NDON) < XDONT(IHIGT(1))) Then
-         If (XDONT(NDON) < XDONT(ILOWT(1))) Then
+      If (INVALS(NDON) < INVALS(IHIGT(1))) Then
+         If (INVALS(NDON) < INVALS(ILOWT(1))) Then
             Do IDCR = JHIG, 1, -1
               IHIGT (IDCR+1) = IHIGT (IDCR)
             End Do
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = NDON
             JHIG = JHIG + 1
-         ElseIf (XDONT(NDON) > XDONT(ILOWT(1))) Then
+         ElseIf (INVALS(NDON) > INVALS(ILOWT(1))) Then
             Do IDCR = JHIG, 1, -1
               IHIGT (IDCR+1) = IHIGT (IDCR)
             End Do
             IHIGT (1) = NDON
             JHIG = JHIG + 1
          End If
-      ElseIf (XDONT(NDON) > XDONT(IHIGT(1))) Then
+      ElseIf (INVALS(NDON) > INVALS(IHIGT(1))) Then
          JHIG = JHIG + 1
          IHIGT (JHIG) = NDON
       End If
@@ -800,14 +796,14 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
       JDEB = 0
       IDEB = JDEB + 1
       JLOW = IDEB
-      XPIV = XDONT (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
-                                   (XDONT(IHIGT(3))-XDONT(ILOWT(IDEB)))
-      If (XPIV >= XDONT(IHIGT(1))) Then
-         XPIV = XDONT (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
-                                      (XDONT(IHIGT(2))-XDONT(ILOWT(IDEB)))
-         If (XPIV >= XDONT(IHIGT(1))) &
-             XPIV = XDONT (ILOWT(IDEB)) + REAL (2*NORD) / REAL (NDON+NORD) * &
-                                          (XDONT(IHIGT(1))-XDONT(ILOWT(IDEB)))
+      XPIV = INVALS (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
+                                   (INVALS(IHIGT(3))-INVALS(ILOWT(IDEB)))
+      If (XPIV >= INVALS(IHIGT(1))) Then
+         XPIV = INVALS (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
+                                      (INVALS(IHIGT(2))-INVALS(ILOWT(IDEB)))
+         If (XPIV >= INVALS(IHIGT(1))) &
+             XPIV = INVALS (ILOWT(IDEB)) + REAL (2*NORD) / REAL (NDON+NORD) * &
+                                          (INVALS(IHIGT(1))-INVALS(ILOWT(IDEB)))
       End If
       XPIV0 = XPIV
 !
@@ -822,16 +818,16 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !  by values that are exclusively duplicates of these.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          lowloop1: Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
                Do ILOW = 1, JLOW
-                 If (XDONT(ICRS) == XDONT(ILOWT(ILOW))) Cycle lowloop1
+                 If (INVALS(ICRS) == INVALS(ILOWT(ILOW))) Cycle lowloop1
                End Do
                JLOW = JLOW + 1
                ILOWT (JLOW) = ICRS
@@ -845,7 +841,7 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
                Else If (ICRS >= NDON) Then
@@ -861,12 +857,12 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !  DO-loop is kept
 !
          lowloop2: Do ICRS = ICRS + 1, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
                Do ILOW = 1, JLOW
-                 If (XDONT(ICRS) == XDONT (ILOWT(ILOW))) Cycle lowloop2
+                 If (INVALS(ICRS) == INVALS (ILOWT(ILOW))) Cycle lowloop2
                End Do
                JLOW = JLOW + 1
                ILOWT (JLOW) = ICRS
@@ -877,7 +873,7 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
@@ -898,11 +894,11 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !   to NORD
 !
            If (NORD > JLOW) Then
-                XMIN = XDONT (IHIGT(1))
+                XMIN = INVALS (IHIGT(1))
                 IHIG = 1
                 Do ICRS = 2, JHIG
-                   If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                      XMIN = XDONT (IHIGT(ICRS))
+                   If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                      XMIN = INVALS (IHIGT(ICRS))
                       IHIG = ICRS
                    End If
                 End Do
@@ -911,7 +907,7 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                 ILOWT (JLOW) = IHIGT (IHIG)
                 IHIG = 0
                 Do ICRS = 1, JHIG
-                   If (XDONT(IHIGT (ICRS)) /= XMIN) then
+                   If (INVALS(IHIGT (ICRS)) /= XMIN) then
                       IHIG = IHIG + 1
                       IHIGT (IHIG ) = IHIGT (ICRS)
                    End If
@@ -919,11 +915,11 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                 JHIG = IHIG
              Else
                 ILOW = ILOWT (JLOW)
-                XMAX = XDONT (ILOW)
+                XMAX = INVALS (ILOW)
                 Do ICRS = 1, JLOW
-                   If (XDONT(ILOWT(ICRS)) > XMAX) Then
+                   If (INVALS(ILOWT(ICRS)) > XMAX) Then
                       IWRK = ILOWT (ICRS)
-                      XMAX = XDONT (IWRK)
+                      XMAX = INVALS (IWRK)
                       ILOWT (ICRS) = ILOW
                       ILOW = IWRK
                    End If
@@ -965,12 +961,12 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !   and apply the general algorithm.
 !
             Case (2)
-               If (XDONT(IHIGT(1)) <= XDONT(IHIGT(2))) Then
+               If (INVALS(IHIGT(1)) <= INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (2)
-               ElseIf (XDONT(IHIGT(1)) == XDONT(IHIGT(2))) Then
+               ElseIf (INVALS(IHIGT(1)) == INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   NORD = JLOW
@@ -988,16 +984,16 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (3)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (3) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -1006,12 +1002,12 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                JLOW = JLOW + 1
                ILOWT (JLOW) = IHIGT (1)
                JHIG = JHIG + 1
-               IF (XDONT(IHIGT(JHIG)) /= XDONT(ILOWT(JLOW))) Then
+               IF (INVALS(IHIGT(JHIG)) /= INVALS(ILOWT(JLOW))) Then
                  JLOW = JLOW + 1
                  ILOWT (JLOW) = IHIGT (JHIG)
                End If
                JHIG = JHIG + 1
-               IF (XDONT(IHIGT(JHIG)) /= XDONT(ILOWT(JLOW))) Then
+               IF (INVALS(IHIGT(JHIG)) /= INVALS(ILOWT(JLOW))) Then
                  JLOW = JLOW + 1
                  ILOWT (JLOW) = IHIGT (JHIG)
                End If
@@ -1031,16 +1027,16 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (IFIN)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (IFIN) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -1049,8 +1045,8 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                JDEB = JLOW
                NWRK = NORD - JLOW
                IWRK1 = IHIGT (1)
-               XPIV = XDONT (IWRK1) + REAL (NWRK) / REAL (NORD+NWRK) * &
-                                      (XDONT(IHIGT(IFIN))-XDONT(IWRK1))
+               XPIV = INVALS (IWRK1) + REAL (NWRK) / REAL (NORD+NWRK) * &
+                                      (INVALS(IHIGT(IFIN))-INVALS(IWRK1))
 !
 !  One takes values <= pivot to ILOWT
 !  Again, 2 parts, one where we take care of the remaining
@@ -1060,9 +1056,9 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !
                JHIG = 0
                lowloop3: Do ICRS = 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      Do ILOW = 1, JLOW
-                        If (XDONT(IHIGT(ICRS)) == XDONT (ILOWT(ILOW))) &
+                        If (INVALS(IHIGT(ICRS)) == INVALS (ILOWT(ILOW))) &
                             Cycle lowloop3
                      End Do
                      JLOW = JLOW + 1
@@ -1075,7 +1071,7 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                End Do lowloop3
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                   End If
@@ -1088,11 +1084,11 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !
 !  Only 1 value is missing in low part
 !
-            XMIN = XDONT (IHIGT(1))
+            XMIN = INVALS (IHIGT(1))
             IHIG = 1
             Do ICRS = 2, JHIG
-               If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                  XMIN = XDONT (IHIGT(ICRS))
+               If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                  XMIN = INVALS (IHIGT(ICRS))
                   IHIG = ICRS
                End If
             End Do
@@ -1118,9 +1114,9 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
             IRNGT (1) = ILOWT (1)
             Do ICRS = 2, NORD
                IWRK = ILOWT (ICRS)
-               XWRK = XDONT (IWRK)
+               XWRK = INVALS (IWRK)
                Do IDCR = ICRS - 1, 1, - 1
-                  If (XWRK < XDONT(IRNGT(IDCR))) Then
+                  If (XWRK < INVALS(IRNGT(IDCR))) Then
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   Else
                      Exit
@@ -1129,13 +1125,13 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                IRNGT (IDCR+1) = IWRK
             End Do
 !
-            XWRK1 = XDONT (IRNGT(NORD))
+            XWRK1 = INVALS (IRNGT(NORD))
             insert1: Do ICRS = NORD + 1, JLOW
-               If (XDONT(ILOWT (ICRS)) < XWRK1) Then
-                  XWRK = XDONT (ILOWT (ICRS))
+               If (INVALS(ILOWT (ICRS)) < XWRK1) Then
+                  XWRK = INVALS (ILOWT (ICRS))
                   Do ILOW = 1, NORD - 1
-                     If (XWRK <= XDONT(IRNGT(ILOW))) Then
-                        If (XWRK == XDONT(IRNGT(ILOW))) Cycle insert1
+                     If (XWRK <= INVALS(IRNGT(ILOW))) Then
+                        If (XWRK == INVALS(IRNGT(ILOW))) Cycle insert1
                         Exit
                      End If
                   End Do
@@ -1143,7 +1139,7 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   End Do
                   IRNGT (IDCR+1) = ILOWT (ICRS)
-                  XWRK1 = XDONT (IRNGT(NORD))
+                  XWRK1 = INVALS (IRNGT(NORD))
                End If
             End Do insert1
 !
@@ -1161,16 +1157,16 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !
 !  One chooses a pivot from 1st, last, and middle values
 !
-            If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(IDEB))) Then
+            If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(IDEB))) Then
                IWRK = ILOWT (IDEB)
                ILOWT (IDEB) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
             End If
-            If (XDONT(ILOWT(IMIL)) > XDONT(ILOWT(IFIN))) Then
+            If (INVALS(ILOWT(IMIL)) > INVALS(ILOWT(IFIN))) Then
                IWRK = ILOWT (IFIN)
                ILOWT (IFIN) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
-               If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(IDEB))) Then
+               If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(IDEB))) Then
                   IWRK = ILOWT (IDEB)
                   ILOWT (IDEB) = ILOWT (IMIL)
                   ILOWT (IMIL) = IWRK
@@ -1178,12 +1174,12 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
             End If
             If (IFIN <= 3) Exit
 !
-            XPIV = XDONT (ILOWT(IDEB)) + REAL(NORD)/REAL(JLOW+NORD) * &
-                                      (XDONT(ILOWT(IFIN))-XDONT(ILOWT(1)))
+            XPIV = INVALS (ILOWT(IDEB)) + REAL(NORD)/REAL(JLOW+NORD) * &
+                                      (INVALS(ILOWT(IFIN))-INVALS(ILOWT(1)))
             If (JDEB > 0) Then
                If (XPIV <= XPIV0) &
                    XPIV = XPIV0 + REAL(2*NORD-JDEB)/REAL (JLOW+NORD) * &
-                                  (XDONT(ILOWT(IFIN))-XPIV0)
+                                  (INVALS(ILOWT(IFIN))-XPIV0)
             Else
                IDEB = 1
             End If
@@ -1196,18 +1192,18 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
             IFIN = JLOW
             JLOW = JDEB
 !
-            If (XDONT(ILOWT(IFIN)) > XPIV) Then
+            If (INVALS(ILOWT(IFIN)) > XPIV) Then
                ICRS = JDEB
               lowloop4: Do
                  ICRS = ICRS + 1
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                      If (ICRS >= IFIN) Exit
                   Else
-                     XWRK1 = XDONT(ILOWT(ICRS))
+                     XWRK1 = INVALS(ILOWT(ICRS))
                      Do ILOW = IDEB, JLOW
-                        If (XWRK1 == XDONT(ILOWT(ILOW))) &
+                        If (XWRK1 == INVALS(ILOWT(ILOW))) &
                             Cycle lowloop4
                      End Do
                      JLOW = JLOW + 1
@@ -1219,7 +1215,7 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                If (ICRS < IFIN) Then
                   Do
                      ICRS = ICRS + 1
-                     If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                     If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                         JLOW = JLOW + 1
                         ILOWT (JLOW) = ILOWT (ICRS)
                      Else
@@ -1229,13 +1225,13 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                End If
            Else
               lowloop5: Do ICRS = IDEB, IFIN
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                   Else
-                     XWRK1 = XDONT(ILOWT(ICRS))
+                     XWRK1 = INVALS(ILOWT(ICRS))
                      Do ILOW = IDEB, JLOW
-                        If (XWRK1 == XDONT(ILOWT(ILOW))) &
+                        If (XWRK1 == INVALS(ILOWT(ILOW))) &
                             Cycle lowloop5
                      End Do
                      JLOW = JLOW + 1
@@ -1245,7 +1241,7 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
                End Do lowloop5
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = ILOWT (ICRS)
                   End If
@@ -1263,9 +1259,9 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
       IRNGT (1) = ILOWT (1)
       Do ICRS = 2, NORD
          IWRK = ILOWT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          Do IDCR = ICRS - 1, 1, - 1
-            If (XWRK < XDONT(IRNGT(IDCR))) Then
+            If (XWRK < INVALS(IRNGT(IDCR))) Then
                IRNGT (IDCR+1) = IRNGT (IDCR)
             Else
                Exit
@@ -1277,20 +1273,20 @@ Subroutine real32_unipar (XDONT, IRNGT, NORD)
 !
 !
 End Subroutine real32_unipar
-Subroutine int32_unipar (XDONT, IRNGT, NORD)
+Subroutine int32_unipar (INVALS, IRNGT, NORD)
 ! __________________________________________________________
-   Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+   Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
    Integer, Dimension (:), Intent (Out) :: IRNGT
    Integer, Intent (InOut) :: NORD
 ! __________________________________________________________
    Integer (kind=int32) :: XPIV, XWRK, XWRK1, XMIN, XMAX, XPIV0
 ! __________________________________________________________
-   Integer, Dimension (SIZE(XDONT)) :: ILOWT, IHIGT
+   Integer, Dimension (SIZE(INVALS)) :: ILOWT, IHIGT
    Integer :: NDON, JHIG, JLOW, IHIG, IWRK, IWRK1, IWRK2, IWRK3
    Integer :: IDEB, JDEB, IMIL, IFIN, NWRK, ICRS, IDCR, ILOW
    Integer :: JLM2, JLM1, JHM2, JHM1
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
 !
 !    First loop is used to fill-in ILOWT, IHIGT at the same time
 !
@@ -1306,9 +1302,9 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !  mid-point of the set of low values.
 !
      Do ICRS = 2, NDON
-        If (XDONT(ICRS) == XDONT(1)) Then
+        If (INVALS(ICRS) == INVALS(1)) Then
           Cycle
-        Else If (XDONT(ICRS) < XDONT(1)) Then
+        Else If (INVALS(ICRS) < INVALS(1)) Then
            ILOWT (1) = ICRS
            IHIGT (1) = 1
         Else
@@ -1327,18 +1323,18 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !
       ICRS = ICRS + 1
       JHIG = 1
-      If (XDONT(ICRS) < XDONT(IHIGT(1))) Then
-         If (XDONT(ICRS) < XDONT(ILOWT(1))) Then
+      If (INVALS(ICRS) < INVALS(IHIGT(1))) Then
+         If (INVALS(ICRS) < INVALS(ILOWT(1))) Then
             JHIG = JHIG + 1
             IHIGT (JHIG) = IHIGT (1)
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = ICRS
-         Else If (XDONT(ICRS) > XDONT(ILOWT(1))) Then
+         Else If (INVALS(ICRS) > INVALS(ILOWT(1))) Then
             JHIG = JHIG + 1
             IHIGT (JHIG) = IHIGT (1)
             IHIGT (1) = ICRS
          End If
-      ElseIf (XDONT(ICRS) > XDONT(IHIGT(1))) Then
+      ElseIf (INVALS(ICRS) > INVALS(IHIGT(1))) Then
          JHIG = JHIG + 1
          IHIGT (JHIG) = ICRS
       End If
@@ -1351,22 +1347,22 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
          Return
       End If
 !
-      If (XDONT(NDON) < XDONT(IHIGT(1))) Then
-         If (XDONT(NDON) < XDONT(ILOWT(1))) Then
+      If (INVALS(NDON) < INVALS(IHIGT(1))) Then
+         If (INVALS(NDON) < INVALS(ILOWT(1))) Then
             Do IDCR = JHIG, 1, -1
               IHIGT (IDCR+1) = IHIGT (IDCR)
             End Do
             IHIGT (1) = ILOWT (1)
             ILOWT (1) = NDON
             JHIG = JHIG + 1
-         ElseIf (XDONT(NDON) > XDONT(ILOWT(1))) Then
+         ElseIf (INVALS(NDON) > INVALS(ILOWT(1))) Then
             Do IDCR = JHIG, 1, -1
               IHIGT (IDCR+1) = IHIGT (IDCR)
             End Do
             IHIGT (1) = NDON
             JHIG = JHIG + 1
          End If
-      ElseIf (XDONT(NDON) > XDONT(IHIGT(1))) Then
+      ElseIf (INVALS(NDON) > INVALS(IHIGT(1))) Then
          JHIG = JHIG + 1
          IHIGT (JHIG) = NDON
       End If
@@ -1383,14 +1379,14 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
       JDEB = 0
       IDEB = JDEB + 1
       JLOW = IDEB
-      XPIV = XDONT (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
-                                   (XDONT(IHIGT(3))-XDONT(ILOWT(IDEB)))
-      If (XPIV >= XDONT(IHIGT(1))) Then
-         XPIV = XDONT (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
-                                      (XDONT(IHIGT(2))-XDONT(ILOWT(IDEB)))
-         If (XPIV >= XDONT(IHIGT(1))) &
-             XPIV = XDONT (ILOWT(IDEB)) + REAL (2*NORD) / REAL (NDON+NORD) * &
-                                          (XDONT(IHIGT(1))-XDONT(ILOWT(IDEB)))
+      XPIV = INVALS (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
+                                   (INVALS(IHIGT(3))-INVALS(ILOWT(IDEB)))
+      If (XPIV >= INVALS(IHIGT(1))) Then
+         XPIV = INVALS (ILOWT(IDEB)) + REAL(2*NORD)/REAL(NDON+NORD) * &
+                                      (INVALS(IHIGT(2))-INVALS(ILOWT(IDEB)))
+         If (XPIV >= INVALS(IHIGT(1))) &
+             XPIV = INVALS (ILOWT(IDEB)) + REAL (2*NORD) / REAL (NDON+NORD) * &
+                                          (INVALS(IHIGT(1))-INVALS(ILOWT(IDEB)))
       End If
       XPIV0 = XPIV
 !
@@ -1405,16 +1401,16 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !  by values that are exclusively duplicates of these.
 !
 !
-      If (XDONT(NDON) > XPIV) Then
+      If (INVALS(NDON) > XPIV) Then
          lowloop1: Do
             ICRS = ICRS + 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                If (ICRS >= NDON) Exit
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
                Do ILOW = 1, JLOW
-                 If (XDONT(ICRS) == XDONT(ILOWT(ILOW))) Cycle lowloop1
+                 If (INVALS(ICRS) == INVALS(ILOWT(ILOW))) Cycle lowloop1
                End Do
                JLOW = JLOW + 1
                ILOWT (JLOW) = ICRS
@@ -1428,7 +1424,7 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
                Else If (ICRS >= NDON) Then
@@ -1444,12 +1440,12 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !  DO-loop is kept
 !
          lowloop2: Do ICRS = ICRS + 1, NDON - 1
-            If (XDONT(ICRS) > XPIV) Then
+            If (INVALS(ICRS) > XPIV) Then
                JHIG = JHIG + 1
                IHIGT (JHIG) = ICRS
             Else
                Do ILOW = 1, JLOW
-                 If (XDONT(ICRS) == XDONT (ILOWT(ILOW))) Cycle lowloop2
+                 If (INVALS(ICRS) == INVALS (ILOWT(ILOW))) Cycle lowloop2
                End Do
                JLOW = JLOW + 1
                ILOWT (JLOW) = ICRS
@@ -1460,7 +1456,7 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
          If (ICRS < NDON-1) Then
             Do
                ICRS = ICRS + 1
-               If (XDONT(ICRS) <= XPIV) Then
+               If (INVALS(ICRS) <= XPIV) Then
                   If (ICRS >= NDON) Exit
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = ICRS
@@ -1481,11 +1477,11 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !   to NORD
 !
            If (NORD > JLOW) Then
-                XMIN = XDONT (IHIGT(1))
+                XMIN = INVALS (IHIGT(1))
                 IHIG = 1
                 Do ICRS = 2, JHIG
-                   If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                      XMIN = XDONT (IHIGT(ICRS))
+                   If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                      XMIN = INVALS (IHIGT(ICRS))
                       IHIG = ICRS
                    End If
                 End Do
@@ -1494,7 +1490,7 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                 ILOWT (JLOW) = IHIGT (IHIG)
                 IHIG = 0
                 Do ICRS = 1, JHIG
-                   If (XDONT(IHIGT (ICRS)) /= XMIN) then
+                   If (INVALS(IHIGT (ICRS)) /= XMIN) then
                       IHIG = IHIG + 1
                       IHIGT (IHIG ) = IHIGT (ICRS)
                    End If
@@ -1502,11 +1498,11 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                 JHIG = IHIG
              Else
                 ILOW = ILOWT (JLOW)
-                XMAX = XDONT (ILOW)
+                XMAX = INVALS (ILOW)
                 Do ICRS = 1, JLOW
-                   If (XDONT(ILOWT(ICRS)) > XMAX) Then
+                   If (INVALS(ILOWT(ICRS)) > XMAX) Then
                       IWRK = ILOWT (ICRS)
-                      XMAX = XDONT (IWRK)
+                      XMAX = INVALS (IWRK)
                       ILOWT (ICRS) = ILOW
                       ILOW = IWRK
                    End If
@@ -1548,12 +1544,12 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !   and apply the general algorithm.
 !
             Case (2)
-               If (XDONT(IHIGT(1)) <= XDONT(IHIGT(2))) Then
+               If (INVALS(IHIGT(1)) <= INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (2)
-               ElseIf (XDONT(IHIGT(1)) == XDONT(IHIGT(2))) Then
+               ElseIf (INVALS(IHIGT(1)) == INVALS(IHIGT(2))) Then
                   JLOW = JLOW + 1
                   ILOWT (JLOW) = IHIGT (1)
                   NORD = JLOW
@@ -1571,16 +1567,16 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (3)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (3) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -1589,12 +1585,12 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                JLOW = JLOW + 1
                ILOWT (JLOW) = IHIGT (1)
                JHIG = JHIG + 1
-               IF (XDONT(IHIGT(JHIG)) /= XDONT(ILOWT(JLOW))) Then
+               IF (INVALS(IHIGT(JHIG)) /= INVALS(ILOWT(JLOW))) Then
                  JLOW = JLOW + 1
                  ILOWT (JLOW) = IHIGT (JHIG)
                End If
                JHIG = JHIG + 1
-               IF (XDONT(IHIGT(JHIG)) /= XDONT(ILOWT(JLOW))) Then
+               IF (INVALS(IHIGT(JHIG)) /= INVALS(ILOWT(JLOW))) Then
                  JLOW = JLOW + 1
                  ILOWT (JLOW) = IHIGT (JHIG)
                End If
@@ -1614,16 +1610,16 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                IWRK1 = IHIGT (1)
                IWRK2 = IHIGT (2)
                IWRK3 = IHIGT (IFIN)
-               If (XDONT(IWRK2) < XDONT(IWRK1)) Then
+               If (INVALS(IWRK2) < INVALS(IWRK1)) Then
                   IHIGT (1) = IWRK2
                   IHIGT (2) = IWRK1
                   IWRK2 = IWRK1
                End If
-               If (XDONT(IWRK2) > XDONT(IWRK3)) Then
+               If (INVALS(IWRK2) > INVALS(IWRK3)) Then
                   IHIGT (IFIN) = IWRK2
                   IHIGT (2) = IWRK3
                   IWRK2 = IWRK3
-                  If (XDONT(IWRK2) < XDONT(IHIGT(1))) Then
+                  If (INVALS(IWRK2) < INVALS(IHIGT(1))) Then
                      IHIGT (2) = IHIGT (1)
                      IHIGT (1) = IWRK2
                   End If
@@ -1632,8 +1628,8 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                JDEB = JLOW
                NWRK = NORD - JLOW
                IWRK1 = IHIGT (1)
-               XPIV = XDONT (IWRK1) + REAL (NWRK) / REAL (NORD+NWRK) * &
-                                      (XDONT(IHIGT(IFIN))-XDONT(IWRK1))
+               XPIV = INVALS (IWRK1) + REAL (NWRK) / REAL (NORD+NWRK) * &
+                                      (INVALS(IHIGT(IFIN))-INVALS(IWRK1))
 !
 !  One takes values <= pivot to ILOWT
 !  Again, 2 parts, one where we take care of the remaining
@@ -1643,9 +1639,9 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !
                JHIG = 0
                lowloop3: Do ICRS = 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      Do ILOW = 1, JLOW
-                        If (XDONT(IHIGT(ICRS)) == XDONT (ILOWT(ILOW))) &
+                        If (INVALS(IHIGT(ICRS)) == INVALS (ILOWT(ILOW))) &
                             Cycle lowloop3
                      End Do
                      JLOW = JLOW + 1
@@ -1658,7 +1654,7 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                End Do lowloop3
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(IHIGT(ICRS)) <= XPIV) Then
+                  If (INVALS(IHIGT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = IHIGT (ICRS)
                   End If
@@ -1671,11 +1667,11 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !
 !  Only 1 value is missing in low part
 !
-            XMIN = XDONT (IHIGT(1))
+            XMIN = INVALS (IHIGT(1))
             IHIG = 1
             Do ICRS = 2, JHIG
-               If (XDONT(IHIGT(ICRS)) < XMIN) Then
-                  XMIN = XDONT (IHIGT(ICRS))
+               If (INVALS(IHIGT(ICRS)) < XMIN) Then
+                  XMIN = INVALS (IHIGT(ICRS))
                   IHIG = ICRS
                End If
             End Do
@@ -1701,9 +1697,9 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
             IRNGT (1) = ILOWT (1)
             Do ICRS = 2, NORD
                IWRK = ILOWT (ICRS)
-               XWRK = XDONT (IWRK)
+               XWRK = INVALS (IWRK)
                Do IDCR = ICRS - 1, 1, - 1
-                  If (XWRK < XDONT(IRNGT(IDCR))) Then
+                  If (XWRK < INVALS(IRNGT(IDCR))) Then
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   Else
                      Exit
@@ -1712,13 +1708,13 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                IRNGT (IDCR+1) = IWRK
             End Do
 !
-            XWRK1 = XDONT (IRNGT(NORD))
+            XWRK1 = INVALS (IRNGT(NORD))
             insert1: Do ICRS = NORD + 1, JLOW
-               If (XDONT(ILOWT (ICRS)) < XWRK1) Then
-                  XWRK = XDONT (ILOWT (ICRS))
+               If (INVALS(ILOWT (ICRS)) < XWRK1) Then
+                  XWRK = INVALS (ILOWT (ICRS))
                   Do ILOW = 1, NORD - 1
-                     If (XWRK <= XDONT(IRNGT(ILOW))) Then
-                        If (XWRK == XDONT(IRNGT(ILOW))) Cycle insert1
+                     If (XWRK <= INVALS(IRNGT(ILOW))) Then
+                        If (XWRK == INVALS(IRNGT(ILOW))) Cycle insert1
                         Exit
                      End If
                   End Do
@@ -1726,7 +1722,7 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                      IRNGT (IDCR+1) = IRNGT (IDCR)
                   End Do
                   IRNGT (IDCR+1) = ILOWT (ICRS)
-                  XWRK1 = XDONT (IRNGT(NORD))
+                  XWRK1 = INVALS (IRNGT(NORD))
                End If
             End Do insert1
 !
@@ -1744,16 +1740,16 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
 !
 !  One chooses a pivot from 1st, last, and middle values
 !
-            If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(IDEB))) Then
+            If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(IDEB))) Then
                IWRK = ILOWT (IDEB)
                ILOWT (IDEB) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
             End If
-            If (XDONT(ILOWT(IMIL)) > XDONT(ILOWT(IFIN))) Then
+            If (INVALS(ILOWT(IMIL)) > INVALS(ILOWT(IFIN))) Then
                IWRK = ILOWT (IFIN)
                ILOWT (IFIN) = ILOWT (IMIL)
                ILOWT (IMIL) = IWRK
-               If (XDONT(ILOWT(IMIL)) < XDONT(ILOWT(IDEB))) Then
+               If (INVALS(ILOWT(IMIL)) < INVALS(ILOWT(IDEB))) Then
                   IWRK = ILOWT (IDEB)
                   ILOWT (IDEB) = ILOWT (IMIL)
                   ILOWT (IMIL) = IWRK
@@ -1761,12 +1757,12 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
             End If
             If (IFIN <= 3) Exit
 !
-            XPIV = XDONT (ILOWT(IDEB)) + REAL(NORD)/REAL(JLOW+NORD) * &
-                                      (XDONT(ILOWT(IFIN))-XDONT(ILOWT(1)))
+            XPIV = INVALS (ILOWT(IDEB)) + REAL(NORD)/REAL(JLOW+NORD) * &
+                                      (INVALS(ILOWT(IFIN))-INVALS(ILOWT(1)))
             If (JDEB > 0) Then
                If (XPIV <= XPIV0) &
                    XPIV = XPIV0 + REAL(2*NORD-JDEB)/REAL (JLOW+NORD) * &
-                                  (XDONT(ILOWT(IFIN))-XPIV0)
+                                  (INVALS(ILOWT(IFIN))-XPIV0)
             Else
                IDEB = 1
             End If
@@ -1779,18 +1775,18 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
             IFIN = JLOW
             JLOW = JDEB
 !
-            If (XDONT(ILOWT(IFIN)) > XPIV) Then
+            If (INVALS(ILOWT(IFIN)) > XPIV) Then
                ICRS = JDEB
               lowloop4: Do
                  ICRS = ICRS + 1
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                      If (ICRS >= IFIN) Exit
                   Else
-                     XWRK1 = XDONT(ILOWT(ICRS))
+                     XWRK1 = INVALS(ILOWT(ICRS))
                      Do ILOW = IDEB, JLOW
-                        If (XWRK1 == XDONT(ILOWT(ILOW))) &
+                        If (XWRK1 == INVALS(ILOWT(ILOW))) &
                             Cycle lowloop4
                      End Do
                      JLOW = JLOW + 1
@@ -1802,7 +1798,7 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                If (ICRS < IFIN) Then
                   Do
                      ICRS = ICRS + 1
-                     If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                     If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                         JLOW = JLOW + 1
                         ILOWT (JLOW) = ILOWT (ICRS)
                      Else
@@ -1812,13 +1808,13 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                End If
            Else
               lowloop5: Do ICRS = IDEB, IFIN
-                  If (XDONT(ILOWT(ICRS)) > XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) > XPIV) Then
                      JHIG = JHIG + 1
                      IHIGT (JHIG) = ILOWT (ICRS)
                   Else
-                     XWRK1 = XDONT(ILOWT(ICRS))
+                     XWRK1 = INVALS(ILOWT(ICRS))
                      Do ILOW = IDEB, JLOW
-                        If (XWRK1 == XDONT(ILOWT(ILOW))) &
+                        If (XWRK1 == INVALS(ILOWT(ILOW))) &
                             Cycle lowloop5
                      End Do
                      JLOW = JLOW + 1
@@ -1828,7 +1824,7 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
                End Do lowloop5
 !
                Do ICRS = ICRS + 1, IFIN
-                  If (XDONT(ILOWT(ICRS)) <= XPIV) Then
+                  If (INVALS(ILOWT(ICRS)) <= XPIV) Then
                      JLOW = JLOW + 1
                      ILOWT (JLOW) = ILOWT (ICRS)
                   End If
@@ -1846,9 +1842,9 @@ Subroutine int32_unipar (XDONT, IRNGT, NORD)
       IRNGT (1) = ILOWT (1)
       Do ICRS = 2, NORD
          IWRK = ILOWT (ICRS)
-         XWRK = XDONT (IWRK)
+         XWRK = INVALS (IWRK)
          Do IDCR = ICRS - 1, 1, - 1
-            If (XWRK < XDONT(IRNGT(IDCR))) Then
+            If (XWRK < INVALS(IRNGT(IDCR))) Then
                IRNGT (IDCR+1) = IRNGT (IDCR)
             Else
                Exit

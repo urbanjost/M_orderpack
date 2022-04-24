@@ -10,13 +10,13 @@ end interface valmed
 contains
 !>
 !!##NAME
-!!    valmed(3f) - [orderpack:MEDIAN] Returns median VALUE.
+!!    medianval(3f) - [orderpack:MEDIAN] Returns median VALUE.
 !!
 !!##SYNOPSIS
 !!
-!!     Recursive Function valmed (XDONT) Result (RES_MED)
+!!     Recursive Function medianval (INVALS) Result (RES_MED)
 !!
-!!       ${TYPE} (kind=${KIND}),  Intent (In) :: XDONT(:)
+!!       ${TYPE} (kind=${KIND}),  Intent (In) :: INVALS(:)
 !!       ${TYPE} (kind=${KIND})               :: RES_MED
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
@@ -27,35 +27,39 @@ contains
 !!
 !!##DESCRIPTION
 !!
-!!    Finds the median of XDONT using the recursive procedure described in
-!!    Knuth, The Art of Computer Programming, vol. 3, 5.3.3 - This procedure
-!!    is linear in time, and does not require to be able to interpolate
-!!    in the set as the one used in INDNTH. It also has better worst-case
-!!    behavior than INDNTH, but is about 30% slower on average for random
-!!    uniformly distributed values.
+!!    Finds out and returns the median (((Size(INVALS)+1))/2^th value)
+!!    of INVALS.
+!!
+!!    Internally, it uses the recursive procedure described in Knuth,
+!!    The Art of Computer Programming, vol. 3, 5.3.3 .
+!!
+!!    The procedure is linear in time, and does not require to be able
+!!    to interpolate in the set as the one used in VALNTH/INDNTH. It also
+!!    has better worst case behavior than VALNTH/INDNTH, and is about 20%
+!!    faster in average for random uniformly distributed values.
 !!
 !!##OPTIONS
-!!     XDONT      input array
+!!     INVALS      input array
 !!
 !!##RETURNS
-!!     RES_MED    the median value of the array XDONT
+!!     RES_MED    the median value of the array INVALS
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_valmed
+!!    program demo_medianval
 !!    ! return median value
-!!    use M_valmed, only : valmed
+!!    use M_orderpack, only : medianval
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
 !!       write(*,g)'real   ',&
-!!       valmed( [80.0,70.0,20.0,10.0,1000.0] )
+!!       medianval( [80.0,70.0,20.0,10.0,1000.0] )
 !!       write(*,g)'integer',&
-!!       valmed( [11, 22, 33, 44, 55, 66, 77, 88] )
+!!       medianval( [11, 22, 33, 44, 55, 66, 77, 88] )
 !!       write(*,g)'double ',&
-!!       valmed( [11.0d0, 22.0d0, 33.0d0, 66.0d0, 77.0d0, 88.0d0] )
-!!    end program demo_valmed
+!!       medianval( [11.0d0, 22.0d0, 33.0d0, 66.0d0, 77.0d0, 88.0d0] )
+!!    end program demo_medianval
 !!
 !!   Results:
 !!
@@ -64,28 +68,25 @@ contains
 !!    double  33.00000000000000
 !!
 !!##AUTHOR
-!!     Michel Olagnon, 2000-2012
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon, 2000-2012
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Recursive Function real64_valmed (XDONT) Result (res_med)
+Recursive Function real64_valmed (INVALS) Result (res_med)
 !!__________________________________________________________
-      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+      Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Real (kind=real64) :: res_med
 ! __________________________________________________________
-      Real (kind=real64), Parameter :: XHUGE = HUGE (XDONT)
-      Real (kind=real64), Dimension (SIZE(XDONT)+6) :: XWRKT
+      Real (kind=real64), Parameter :: XHUGE = HUGE (INVALS)
+      Real (kind=real64), Dimension (SIZE(INVALS)+6) :: XWRKT
       Real (kind=real64) :: XWRK, XWRK1, XMED7
 !
-      Integer, Dimension ((SIZE(XDONT)+6)/7) :: ISTRT, IENDT, IMEDT
+      Integer, Dimension ((SIZE(INVALS)+6)/7) :: ISTRT, IENDT, IMEDT
       Integer :: NDON, NTRI, NMED, NORD, NEQU, NLEQ, IMED, IDON, IDON1
       Integer :: IDEB, IWRK, IDCR, ICRS, ICRS1, ICRS2, IMED1
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       NMED = (NDON+1) / 2
 !      write(unit=*,fmt=*) NMED, NDON
 !
@@ -96,16 +97,16 @@ Recursive Function real64_valmed (XDONT) Result (res_med)
 !  Bring minimum to first location to save test in decreasing loop
 !
          IDCR = NDON
-         If (XDONT (1) < XDONT (NDON)) Then
-            XWRK = XDONT (1)
-            XWRKT (IDCR) = XDONT (IDCR)
+         If (INVALS (1) < INVALS (NDON)) Then
+            XWRK = INVALS (1)
+            XWRKT (IDCR) = INVALS (IDCR)
          Else
-            XWRK = XDONT (IDCR)
-            XWRKT (IDCR) = XDONT (1)
+            XWRK = INVALS (IDCR)
+            XWRKT (IDCR) = INVALS (1)
          Endif
          Do IWRK = 1, NDON - 2
             IDCR = IDCR - 1
-            XWRK1 = XDONT (IDCR)
+            XWRK1 = INVALS (IDCR)
             If (XWRK1 < XWRK) Then
                 XWRKT (IDCR) = XWRK
                 XWRK = XWRK1
@@ -154,16 +155,16 @@ Recursive Function real64_valmed (XDONT) Result (res_med)
 !
       DO IDEB = 1, NDON-6, 7
          IDCR = IDEB + 6
-         If (XDONT (IDEB) < XDONT (IDCR)) Then
-            XWRK = XDONT (IDEB)
-            XWRKT (IDCR) = XDONT (IDCR)
+         If (INVALS (IDEB) < INVALS (IDCR)) Then
+            XWRK = INVALS (IDEB)
+            XWRKT (IDCR) = INVALS (IDCR)
          Else
-            XWRK = XDONT (IDCR)
-            XWRKT (IDCR) = XDONT (IDEB)
+            XWRK = INVALS (IDCR)
+            XWRKT (IDCR) = INVALS (IDEB)
          Endif
          Do IWRK = 1, 5
             IDCR = IDCR - 1
-            XWRK1 = XDONT (IDCR)
+            XWRK1 = INVALS (IDCR)
             If (XWRK1 < XWRK) Then
                 XWRKT (IDCR) = XWRK
                 XWRK = XWRK1
@@ -199,7 +200,7 @@ Recursive Function real64_valmed (XDONT) Result (res_med)
          XWRK1 = XHUGE
          Do ICRS = IDEB+1, IDEB+7
             If (ICRS <= NDON) Then
-               XWRKT (ICRS) = XDONT (ICRS)
+               XWRKT (ICRS) = INVALS (ICRS)
             Else
                If (XWRK1 /= XHUGE) NMED = NMED + 1
                XWRKT (ICRS) = XWRK1
@@ -399,20 +400,20 @@ Recursive Function real64_valmed (XDONT) Result (res_med)
          End If
 !
 End Function real64_valmed
-Recursive Function real32_valmed (XDONT) Result (res_med)
+Recursive Function real32_valmed (INVALS) Result (res_med)
 !!__________________________________________________________
-      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+      Real (kind=real32), Dimension (:), Intent (In) :: INVALS
       Real (kind=real32) :: res_med
 ! __________________________________________________________
-      Real (kind=real32), Parameter :: XHUGE = HUGE (XDONT)
-      Real (kind=real32), Dimension (SIZE(XDONT)+6) :: XWRKT
+      Real (kind=real32), Parameter :: XHUGE = HUGE (INVALS)
+      Real (kind=real32), Dimension (SIZE(INVALS)+6) :: XWRKT
       Real (kind=real32) :: XWRK, XWRK1, XMED7
 !
-      Integer, Dimension ((SIZE(XDONT)+6)/7) :: ISTRT, IENDT, IMEDT
+      Integer, Dimension ((SIZE(INVALS)+6)/7) :: ISTRT, IENDT, IMEDT
       Integer :: NDON, NTRI, NMED, NORD, NEQU, NLEQ, IMED, IDON, IDON1
       Integer :: IDEB, IWRK, IDCR, ICRS, ICRS1, ICRS2, IMED1
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       NMED = (NDON+1) / 2
 !      write(unit=*,fmt=*) NMED, NDON
 !
@@ -423,16 +424,16 @@ Recursive Function real32_valmed (XDONT) Result (res_med)
 !  Bring minimum to first location to save test in decreasing loop
 !
          IDCR = NDON
-         If (XDONT (1) < XDONT (NDON)) Then
-            XWRK = XDONT (1)
-            XWRKT (IDCR) = XDONT (IDCR)
+         If (INVALS (1) < INVALS (NDON)) Then
+            XWRK = INVALS (1)
+            XWRKT (IDCR) = INVALS (IDCR)
          Else
-            XWRK = XDONT (IDCR)
-            XWRKT (IDCR) = XDONT (1)
+            XWRK = INVALS (IDCR)
+            XWRKT (IDCR) = INVALS (1)
          Endif
          Do IWRK = 1, NDON - 2
             IDCR = IDCR - 1
-            XWRK1 = XDONT (IDCR)
+            XWRK1 = INVALS (IDCR)
             If (XWRK1 < XWRK) Then
                 XWRKT (IDCR) = XWRK
                 XWRK = XWRK1
@@ -481,16 +482,16 @@ Recursive Function real32_valmed (XDONT) Result (res_med)
 !
       DO IDEB = 1, NDON-6, 7
          IDCR = IDEB + 6
-         If (XDONT (IDEB) < XDONT (IDCR)) Then
-            XWRK = XDONT (IDEB)
-            XWRKT (IDCR) = XDONT (IDCR)
+         If (INVALS (IDEB) < INVALS (IDCR)) Then
+            XWRK = INVALS (IDEB)
+            XWRKT (IDCR) = INVALS (IDCR)
          Else
-            XWRK = XDONT (IDCR)
-            XWRKT (IDCR) = XDONT (IDEB)
+            XWRK = INVALS (IDCR)
+            XWRKT (IDCR) = INVALS (IDEB)
          Endif
          Do IWRK = 1, 5
             IDCR = IDCR - 1
-            XWRK1 = XDONT (IDCR)
+            XWRK1 = INVALS (IDCR)
             If (XWRK1 < XWRK) Then
                 XWRKT (IDCR) = XWRK
                 XWRK = XWRK1
@@ -526,7 +527,7 @@ Recursive Function real32_valmed (XDONT) Result (res_med)
          XWRK1 = XHUGE
          Do ICRS = IDEB+1, IDEB+7
             If (ICRS <= NDON) Then
-               XWRKT (ICRS) = XDONT (ICRS)
+               XWRKT (ICRS) = INVALS (ICRS)
             Else
                If (XWRK1 /= XHUGE) NMED = NMED + 1
                XWRKT (ICRS) = XWRK1
@@ -726,20 +727,20 @@ Recursive Function real32_valmed (XDONT) Result (res_med)
          End If
 !
 End Function real32_valmed
-Recursive Function int32_valmed (XDONT) Result (res_med)
+Recursive Function int32_valmed (INVALS) Result (res_med)
 !!__________________________________________________________
-      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+      Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
       Integer (kind=int32) :: res_med
 ! __________________________________________________________
-      Integer (kind=int32), Parameter :: XHUGE = HUGE (XDONT)
-      Integer (kind=int32), Dimension (SIZE(XDONT)+6) :: XWRKT
+      Integer (kind=int32), Parameter :: XHUGE = HUGE (INVALS)
+      Integer (kind=int32), Dimension (SIZE(INVALS)+6) :: XWRKT
       Integer (kind=int32) :: XWRK, XWRK1, XMED7
 !
-      Integer, Dimension ((SIZE(XDONT)+6)/7) :: ISTRT, IENDT, IMEDT
+      Integer, Dimension ((SIZE(INVALS)+6)/7) :: ISTRT, IENDT, IMEDT
       Integer :: NDON, NTRI, NMED, NORD, NEQU, NLEQ, IMED, IDON, IDON1
       Integer :: IDEB, IWRK, IDCR, ICRS, ICRS1, ICRS2, IMED1
 !
-      NDON = SIZE (XDONT)
+      NDON = SIZE (INVALS)
       NMED = (NDON+1) / 2
 !      write(unit=*,fmt=*) NMED, NDON
 !
@@ -750,16 +751,16 @@ Recursive Function int32_valmed (XDONT) Result (res_med)
 !  Bring minimum to first location to save test in decreasing loop
 !
          IDCR = NDON
-         If (XDONT (1) < XDONT (NDON)) Then
-            XWRK = XDONT (1)
-            XWRKT (IDCR) = XDONT (IDCR)
+         If (INVALS (1) < INVALS (NDON)) Then
+            XWRK = INVALS (1)
+            XWRKT (IDCR) = INVALS (IDCR)
          Else
-            XWRK = XDONT (IDCR)
-            XWRKT (IDCR) = XDONT (1)
+            XWRK = INVALS (IDCR)
+            XWRKT (IDCR) = INVALS (1)
          Endif
          Do IWRK = 1, NDON - 2
             IDCR = IDCR - 1
-            XWRK1 = XDONT (IDCR)
+            XWRK1 = INVALS (IDCR)
             If (XWRK1 < XWRK) Then
                 XWRKT (IDCR) = XWRK
                 XWRK = XWRK1
@@ -808,16 +809,16 @@ Recursive Function int32_valmed (XDONT) Result (res_med)
 !
       DO IDEB = 1, NDON-6, 7
          IDCR = IDEB + 6
-         If (XDONT (IDEB) < XDONT (IDCR)) Then
-            XWRK = XDONT (IDEB)
-            XWRKT (IDCR) = XDONT (IDCR)
+         If (INVALS (IDEB) < INVALS (IDCR)) Then
+            XWRK = INVALS (IDEB)
+            XWRKT (IDCR) = INVALS (IDCR)
          Else
-            XWRK = XDONT (IDCR)
-            XWRKT (IDCR) = XDONT (IDEB)
+            XWRK = INVALS (IDCR)
+            XWRKT (IDCR) = INVALS (IDEB)
          Endif
          Do IWRK = 1, 5
             IDCR = IDCR - 1
-            XWRK1 = XDONT (IDCR)
+            XWRK1 = INVALS (IDCR)
             If (XWRK1 < XWRK) Then
                 XWRKT (IDCR) = XWRK
                 XWRK = XWRK1
@@ -853,7 +854,7 @@ Recursive Function int32_valmed (XDONT) Result (res_med)
          XWRK1 = XHUGE
          Do ICRS = IDEB+1, IDEB+7
             If (ICRS <= NDON) Then
-               XWRKT (ICRS) = XDONT (ICRS)
+               XWRKT (ICRS) = INVALS (ICRS)
             Else
                If (XWRK1 /= XHUGE) NMED = NMED + 1
                XWRKT (ICRS) = XWRK1

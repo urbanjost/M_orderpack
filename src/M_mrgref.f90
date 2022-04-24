@@ -10,14 +10,15 @@ end interface mrgref
 contains
 !>
 !!##NAME
-!!    mrgref(3f) - [orderpack:RANK] create an INDEX that defines the
-!!                 order of array sorted in ascending order (basic merge-sort)
+!!    rank_basic(3f) - [orderpack:RANK] create an INDEX that defines the
+!!                     order of array sorted in ascending order (basic
+!!                     merge-sort)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine mrgref (XVALT, IRNGT)
+!!     Subroutine rank_basic (INVALS, IRNGT)
 !!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: XVALT(:)
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: IRNGT(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
@@ -28,24 +29,26 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!    Ranks array XVALT, filling array IRNGT with sorted indices.
+!!    Ranks array INVALS, filling array IRNGT with sorted indices.
 !!
 !!    It uses a basic merge-sort.
 !!
 !!    This version is not optimized for performance, and is thus
 !!    not as difficult to read as some other ones.
 !!
+!!    It uses Merge-sort.
+!!
 !!##OPTIONS
-!!     XVALT      input array to rank
+!!     INVALS      input array to rank
 !!     IRNGT      returned rank array
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_mrgref
+!!    program demo_rank_basic
 !!    ! create an index that can order an array in ascending order
-!!    use M_mrgref, only : mrgref
+!!    use M_orderpack, only : rank_basic
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
 !!    integer,parameter             :: dp=kind(0.0d0)
@@ -67,7 +70,7 @@ contains
 !!          dd(i)=dd(i)*(2.0_dp**j)
 !!       enddo
 !!       ! rank the numeric data
-!!       call mrgref(dd,indx)
+!!       call rank_basic(dd,indx)
 !!       ! check order
 !!       do i=1,isz-1
 !!          if(dd(indx(i)).gt.dd(indx(i+1)))then
@@ -95,7 +98,7 @@ contains
 !!       write(*,'(a,8(a:,","))')'BEFORE ',&
 !!               & (trim(strings(i)),i=1,size(strings))
 !!
-!!       call mrgref(strings,cindx)
+!!       call rank_basic(strings,cindx)
 !!
 !!       write(*,'(a,8(a:,","))')'SORTED ',&
 !!               & (trim(strings(cindx(i))),i=1,size(strings))
@@ -107,7 +110,7 @@ contains
 !!             write(*,*)'Error in sorting strings a-z'
 !!          endif
 !!       enddo
-!!    end program demo_mrgref
+!!    end program demo_rank_basic
 !!
 !!   Results:
 !!
@@ -123,17 +126,14 @@ contains
 !!    purple,red,white,yellow
 !!
 !!##AUTHOR
-!!     Michel Olagnon - April 2000
-!!
-!!     John Urban, 2022.04.16
-!!         o added man-page and reduced to a template using the
-!!           prep(1) preprocessor.
-!!
+!!    Michel Olagnon - April 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_mrgref (XVALT, IRNGT)
+Subroutine real64_mrgref (INVALS, IRNGT)
 !!__________________________________________________________
-      Real (kind=real64), Dimension (:), Intent (In) :: XVALT
+      Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
 !
@@ -141,7 +141,7 @@ Subroutine real64_mrgref (XVALT, IRNGT)
       Integer :: LMTNA, LMTNC
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XVALT), SIZE(IRNGT))
+      NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
       If (NVAL <= 0) Then
          Return
       End If
@@ -149,7 +149,7 @@ Subroutine real64_mrgref (XVALT, IRNGT)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XVALT(IIND-1) < XVALT(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -193,7 +193,7 @@ Subroutine real64_mrgref (XVALT, IRNGT)
 !   Shortcut for the case when the max of A is smaller
 !   than the min of B (no need to do anything)
 !
-            If (XVALT(IRNGT(JINDA)) <= XVALT(IRNGT(JINDA+1))) Then
+            If (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(JINDA+1))) Then
                IWRK = IWRKF
                Cycle
             End If
@@ -215,7 +215,7 @@ Subroutine real64_mrgref (XVALT, IRNGT)
 !
                If (IINDA < JINDA) Then
                   If (IINDB < IWRKF) Then
-                     If (XVALT(IRNGT(IINDA+1)) > XVALT(IRNGT(IINDB+1))) &
+                     If (INVALS(IRNGT(IINDA+1)) > INVALS(IRNGT(IINDB+1))) &
                     & Then
                         IINDB = IINDB + 1
                         JWRKT (IWRK) = IRNGT (IINDB)
@@ -253,9 +253,9 @@ Subroutine real64_mrgref (XVALT, IRNGT)
       Return
 !
 End Subroutine real64_mrgref
-Subroutine real32_mrgref (XVALT, IRNGT)
+Subroutine real32_mrgref (INVALS, IRNGT)
 !!__________________________________________________________
-      Real (kind=real32), Dimension (:), Intent (In) :: XVALT
+      Real (kind=real32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
 !
@@ -263,7 +263,7 @@ Subroutine real32_mrgref (XVALT, IRNGT)
       Integer :: LMTNA, LMTNC
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XVALT), SIZE(IRNGT))
+      NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
       If (NVAL <= 0) Then
          Return
       End If
@@ -271,7 +271,7 @@ Subroutine real32_mrgref (XVALT, IRNGT)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XVALT(IIND-1) < XVALT(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -315,7 +315,7 @@ Subroutine real32_mrgref (XVALT, IRNGT)
 !   Shortcut for the case when the max of A is smaller
 !   than the min of B (no need to do anything)
 !
-            If (XVALT(IRNGT(JINDA)) <= XVALT(IRNGT(JINDA+1))) Then
+            If (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(JINDA+1))) Then
                IWRK = IWRKF
                Cycle
             End If
@@ -337,7 +337,7 @@ Subroutine real32_mrgref (XVALT, IRNGT)
 !
                If (IINDA < JINDA) Then
                   If (IINDB < IWRKF) Then
-                     If (XVALT(IRNGT(IINDA+1)) > XVALT(IRNGT(IINDB+1))) &
+                     If (INVALS(IRNGT(IINDA+1)) > INVALS(IRNGT(IINDB+1))) &
                     & Then
                         IINDB = IINDB + 1
                         JWRKT (IWRK) = IRNGT (IINDB)
@@ -375,9 +375,9 @@ Subroutine real32_mrgref (XVALT, IRNGT)
       Return
 !
 End Subroutine real32_mrgref
-Subroutine int32_mrgref (XVALT, IRNGT)
+Subroutine int32_mrgref (INVALS, IRNGT)
 !!__________________________________________________________
-      Integer (kind=int32), Dimension (:), Intent (In) :: XVALT
+      Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
 !
@@ -385,7 +385,7 @@ Subroutine int32_mrgref (XVALT, IRNGT)
       Integer :: LMTNA, LMTNC
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XVALT), SIZE(IRNGT))
+      NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
       If (NVAL <= 0) Then
          Return
       End If
@@ -393,7 +393,7 @@ Subroutine int32_mrgref (XVALT, IRNGT)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XVALT(IIND-1) < XVALT(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -437,7 +437,7 @@ Subroutine int32_mrgref (XVALT, IRNGT)
 !   Shortcut for the case when the max of A is smaller
 !   than the min of B (no need to do anything)
 !
-            If (XVALT(IRNGT(JINDA)) <= XVALT(IRNGT(JINDA+1))) Then
+            If (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(JINDA+1))) Then
                IWRK = IWRKF
                Cycle
             End If
@@ -459,7 +459,7 @@ Subroutine int32_mrgref (XVALT, IRNGT)
 !
                If (IINDA < JINDA) Then
                   If (IINDB < IWRKF) Then
-                     If (XVALT(IRNGT(IINDA+1)) > XVALT(IRNGT(IINDB+1))) &
+                     If (INVALS(IRNGT(IINDA+1)) > INVALS(IRNGT(IINDB+1))) &
                     & Then
                         IINDB = IINDB + 1
                         JWRKT (IWRK) = IRNGT (IINDB)
@@ -497,9 +497,9 @@ Subroutine int32_mrgref (XVALT, IRNGT)
       Return
 !
 End Subroutine int32_mrgref
-Subroutine f_char_mrgref (XVALT, IRNGT)
+Subroutine f_char_mrgref (INVALS, IRNGT)
 !!__________________________________________________________
-      character (kind=f_char,len=*), Dimension (:), Intent (In) :: XVALT
+      character (kind=f_char,len=*), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
 !
@@ -507,7 +507,7 @@ Subroutine f_char_mrgref (XVALT, IRNGT)
       Integer :: LMTNA, LMTNC
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XVALT), SIZE(IRNGT))
+      NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
       If (NVAL <= 0) Then
          Return
       End If
@@ -515,7 +515,7 @@ Subroutine f_char_mrgref (XVALT, IRNGT)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XVALT(IIND-1) < XVALT(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -559,7 +559,7 @@ Subroutine f_char_mrgref (XVALT, IRNGT)
 !   Shortcut for the case when the max of A is smaller
 !   than the min of B (no need to do anything)
 !
-            If (XVALT(IRNGT(JINDA)) <= XVALT(IRNGT(JINDA+1))) Then
+            If (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(JINDA+1))) Then
                IWRK = IWRKF
                Cycle
             End If
@@ -581,7 +581,7 @@ Subroutine f_char_mrgref (XVALT, IRNGT)
 !
                If (IINDA < JINDA) Then
                   If (IINDB < IWRKF) Then
-                     If (XVALT(IRNGT(IINDA+1)) > XVALT(IRNGT(IINDB+1))) &
+                     If (INVALS(IRNGT(IINDA+1)) > INVALS(IRNGT(IINDB+1))) &
                     & Then
                         IINDB = IINDB + 1
                         JWRKT (IWRK) = IRNGT (IINDB)

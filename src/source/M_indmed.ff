@@ -10,15 +10,15 @@ interface indmed
 end interface indmed
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file indmed.3orderpack.man
+$BLOCK COMMENT --file medianloc.3orderpack.man
 NAME
-   indmed(3f) - [orderpack:MEDIAN] Returns median value's INDEX.
+   medianloc(3f) - [orderpack:MEDIAN] Returns median value's INDEX.
 
 SYNOPSIS
-    Subroutine indmed (XDONT, INDM)
+    Subroutine MedianLoc (INVALS, OUTORD)
 
-      ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
-      Integer, Intent (Out)               :: INDM
+      ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+      Integer, Intent (Out)               :: OUTORD
 
    Where ${TYPE}(kind=${KIND}) may be
 
@@ -28,83 +28,88 @@ SYNOPSIS
       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
-   INDMED() Finds the index of the median of the array XDONT() using
-   the recursive procedure described in Knuth, The Art of Computer
-   Programming, vol. 3, 5.3.3.
+   MEDIANLOC(3f) Returns the index of the median (((Size(INVALS)+1))/2^th value).
+    
+
+   Internally, MEDIANLOC(3f) Finds the index of the median of the array
+   INVALS() using the recursive procedure described in Knuth, The Art of
+   Computer Programming, vol. 3, 5.3.3.
 
    This procedure is linear in time, and does not require to be able
-   to interpolate in the set as the one used in INDNTH(), which can also
-   be used to calculate a median. It also has better worst-case behavior
-   than INDNTH(), but is about 30% slower on average for random uniformly
-   distributed values.
+   to interpolate in the set as the one used in INDNTH(3f), which can
+   also be used to calculate a median. It also has better worst-case
+   behavior than INDNTH(3f), but is about 10% slower on average for
+   random uniformly distributed values.
 
 OPTIONS
-    XDONT     array to find the median value of.
-    INDM      index of the median value.
+    INVALS     array to find the median value of.
+    OUTORD     index of the median value.
 
 EXAMPLES
   Sample program:
 
-   program demo_indmed
+   program demo_medianloc
    ! return index of median value
-   use M_indmed, only : indmed
+   use M_orderpack, only : medianloc
    implicit none
-   real,allocatable :: xdont(:)
+   real,allocatable :: INVALS(:)
    character(len=:),allocatable :: cdont(:)
+   character(len=*),parameter :: fmt='(i5,t11,g0)'
    integer :: ii
-      xdont=[80.0,70.0,20.0,10.0,1000.0]
-      call indmed(xdont,ii)
-      write(*,*) ii,xdont(ii)
+      write(*,*) 'location  median'
+
+      INVALS=[80.0,70.0,20.0,10.0,1000.0]
+      call medianloc(INVALS,ii)
+      write(*,fmt) ii,INVALS(ii)
       !
-      xdont=[11, 22, 33, 44, 55, 66, 77, 88]
-      call indmed(xdont,ii)
-      write(*,*) ii,xdont(ii)
+      INVALS=[11, 22, 33, 44, 55, 66, 77, 88]
+      call medianloc(INVALS,ii)
+      write(*,fmt) ii,INVALS(ii)
       !
-      xdont=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]
-      call indmed(xdont,ii)
-      write(*,*) ii,xdont(ii)
+      INVALS=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]
+      call medianloc(INVALS,ii)
+      write(*,fmt) ii,INVALS(ii)
       !
       cdont=[character(len=20) :: 'apple','bee','cherry','duck',&
               'elephant','finger','goose','h','insect','j']
-      call indmed(cdont,ii)
-      write(*,*) ii,cdont(ii)
+      call medianloc(cdont,ii)
+      write(*,fmt) ii,cdont(ii)
       !
-   end program demo_indmed
+   end program demo_medianloc
 
   Results:
-    > 2   70.0000000    
-    > 4   44.0000000    
-    > 5   33.0000000    
-    > 5   elephant
+
+    location  median
+       2     70.00000
+       4     44.00000
+       5     33.00000
+       5     elephant            
 
 AUTHOR
-    Michel Olagnon, 2000-2012
-
-    John Urban, 2022.04.16
-    o added man-page and reduced to a template using the
-      prep(1) preprocessor.
-
+   Michel Olagnon, 2000-2012
+MAINTAINER
+   John Urban, 2022.04.16
 LICENSE
    CC0-1.0
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL INDMED
-Subroutine ${KIND}_indmed (XDONT, INDM)
+Subroutine ${KIND}_indmed (INVALS, OUTORD)
 $IFDEF CHARACTER
-      ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (In) :: XDONT
+      ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (In) :: INVALS
 $ELSE
-      ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: XDONT
+      ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: INVALS
 $ENDIF
-      Integer, Intent (Out) :: INDM
+      Integer, Intent (Out) :: OUTORD
 ! __________________________________________________________
       Integer :: IDON
 !
-      Allocate (IDONT (SIZE(XDONT)))
-      Do IDON = 1, SIZE(XDONT)
+      Allocate (IDONT (SIZE(INVALS)))
+      Do IDON = 1, SIZE(INVALS)
          IDONT (IDON) = IDON
       End Do
 !
-      Call ${KIND}_med (XDONT, IDONT, INDM)
+      Call ${KIND}_med (INVALS, IDONT, OUTORD)
 !
       Deallocate (IDONT)
 End Subroutine ${KIND}_indmed

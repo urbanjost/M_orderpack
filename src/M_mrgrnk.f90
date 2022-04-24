@@ -10,14 +10,14 @@ end interface mrgrnk
 contains
 !>
 !!##NAME
-!!    mrgrnk(3f) - [orderpack:RANK] produces an INDEX that sorts an input
-!!                 array (optimized merge-sort)
+!!    rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input
+!!               array (optimized merge-sort)
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine mrgrnk (XDONT, IRNGT)
+!!     Subroutine rank (INVALS, IRNGT)
 !!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: XDONT(:)
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: IRNGT(:)
 !!
 !!    Where ${TYPE}(kind=${KIND}) may be
@@ -28,24 +28,27 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!     MRGRNK ranks an input array; i.e. it produces an index array that
-!!     can order an input array in ascending order .
+!!     RANK(3f) ranks an input array; i.e. it produces an index of the input
+!!     array elements that can order the input array in ascending order.
+!!
+!!     The ranks can be used to sort the input array, or other associated arrays
+!!     or components of user types.
 !!
 !!     Internally, it uses an optimized and modified version of merge-sort.
 !!     For performance reasons, the first two passes are taken out of the
 !!     standard loop, and use dedicated coding.
 !!
 !!##OPTIONS
-!!     XDONT      The array to sort
+!!     INVALS      The array to sort
 !!     IRNGT      The rank index returned
 !!
 !!##EXAMPLES
 !!
 !!   Sample program:
 !!
-!!    program demo_mrgrnk
+!!    program demo_rank
 !!    ! create an index that can order an array in ascending order
-!!    use M_mrgrnk, only : mrgrnk
+!!    use M_orderpack, only : rank
 !!    implicit none
 !!    character(len=*),parameter :: g='(*(g0,1x))'
 !!    integer,parameter             :: dp=kind(0.0d0)
@@ -67,7 +70,7 @@ contains
 !!          dd(i)=dd(i)*(2.0_dp**j)
 !!       enddo
 !!       ! rank the numeric data
-!!       call mrgrnk(dd,indx)
+!!       call rank(dd,indx)
 !!       ! check order
 !!       do i=1,isz-1
 !!          if(dd(indx(i)).gt.dd(indx(i+1)))then
@@ -94,7 +97,7 @@ contains
 !!       write(*,'(a,8(a:,","))')'BEFORE ',&
 !!               & (trim(strings(i)),i=1,size(strings))
 !!
-!!       call mrgrnk(strings,cindx)
+!!       call rank(strings,cindx)
 !!
 !!       write(*,'(a,8(a:,","))')'SORTED ',&
 !!               & (trim(strings(cindx(i))),i=1,size(strings))
@@ -106,7 +109,7 @@ contains
 !!             write(*,*)'Error in sorting strings a-z'
 !!          endif
 !!       enddo
-!!    end program demo_mrgrnk
+!!    end program demo_rank
 !!
 !!   Results:
 !!
@@ -122,17 +125,14 @@ contains
 !!    purple,red,white,yellow
 !!
 !!##AUTHOR
-!!     Michel Olagnon, 2000-2012
-!!
-!!     John Urban, 2022.04.16
-!!     o added man-page and reduced to a template using the
-!!       prep(1) preprocessor.
-!!
+!!    Michel Olagnon, 2000-2012
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
-Subroutine real64_mrgrnk (XDONT, IRNGT)
+Subroutine real64_mrgrnk (INVALS, IRNGT)
 ! __________________________________________________________
-      Real (kind=real64), Dimension (:), Intent (In) :: XDONT
+      Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
       Real (kind=real64) :: XVALA, XVALB
@@ -141,7 +141,7 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
       Integer :: LMTNA, LMTNC, IRNG1, IRNG2
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XDONT), SIZE(IRNGT))
+      NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
       Select Case (NVAL)
       Case (:0)
          Return
@@ -155,7 +155,7 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XDONT(IIND-1) <= XDONT(IIND)) Then
+         If (INVALS(IIND-1) <= INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -186,11 +186,11 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
 !
 !   1 2 3
 !
-               If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Exit
+               If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Exit
 !
 !   1 3 2
 !
-               If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+               If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                   IRNG2 = IRNGT (IWRKD+2)
                   IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
                   IRNGT (IWRKD+3) = IRNG2
@@ -208,14 +208,14 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
 !
 !   1 2 3 4
 !
-            If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Cycle
+            If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Cycle
 !
 !   1 3 x x
 !
-            If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+            If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   1 3 2 4
                   IRNGT (IWRKD+3) = IRNG2
                Else
@@ -230,9 +230,9 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
                IRNG1 = IRNGT (IWRKD+1)
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+1) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG1) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG1) <= INVALS(IRNGT(IWRKD+4))) Then
                   IRNGT (IWRKD+2) = IRNG1
-                  If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+                  If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   3 1 2 4
                      IRNGT (IWRKD+3) = IRNG2
                   Else
@@ -281,7 +281,7 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
 !   than the min of B. This line may be activated when the
 !   initial set is already close to sorted.
 !
-!          IF (XDONT(IRNGT(JINDA)) <= XDONT(IRNGT(IINDB))) CYCLE
+!          IF (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(IINDB))) CYCLE
 !
 !  One steps in the C subset, that we build in the final rank array
 !
@@ -289,8 +289,8 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
 !
-            XVALA = XDONT (JWRKT(IINDA))
-            XVALB = XDONT (IRNGT(IINDB))
+            XVALA = INVALS (JWRKT(IINDA))
+            XVALB = INVALS (IRNGT(IINDB))
 !
             Do
                IWRK = IWRK + 1
@@ -305,12 +305,12 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
                      IRNGT (IWRK+1:IWRKF) = JWRKT (IINDA:LMTNA)
                      Exit
                   End If
-                  XVALB = XDONT (IRNGT(IINDB))
+                  XVALB = INVALS (IRNGT(IINDB))
                Else
                   IRNGT (IWRK) = JWRKT (IINDA)
                   IINDA = IINDA + 1
                   If (IINDA > LMTNA) Exit! Only B still with unprocessed values
-                  XVALA = XDONT (JWRKT(IINDA))
+                  XVALA = INVALS (JWRKT(IINDA))
                End If
 !
             End Do
@@ -324,9 +324,9 @@ Subroutine real64_mrgrnk (XDONT, IRNGT)
       Return
 !
 End Subroutine real64_mrgrnk
-Subroutine real32_mrgrnk (XDONT, IRNGT)
+Subroutine real32_mrgrnk (INVALS, IRNGT)
 ! __________________________________________________________
-      Real (kind=real32), Dimension (:), Intent (In) :: XDONT
+      Real (kind=real32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
       Real (kind=real32) :: XVALA, XVALB
@@ -335,7 +335,7 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
       Integer :: LMTNA, LMTNC, IRNG1, IRNG2
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XDONT), SIZE(IRNGT))
+      NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
       Select Case (NVAL)
       Case (:0)
          Return
@@ -349,7 +349,7 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XDONT(IIND-1) <= XDONT(IIND)) Then
+         If (INVALS(IIND-1) <= INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -380,11 +380,11 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
 !
 !   1 2 3
 !
-               If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Exit
+               If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Exit
 !
 !   1 3 2
 !
-               If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+               If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                   IRNG2 = IRNGT (IWRKD+2)
                   IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
                   IRNGT (IWRKD+3) = IRNG2
@@ -402,14 +402,14 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
 !
 !   1 2 3 4
 !
-            If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Cycle
+            If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Cycle
 !
 !   1 3 x x
 !
-            If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+            If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   1 3 2 4
                   IRNGT (IWRKD+3) = IRNG2
                Else
@@ -424,9 +424,9 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
                IRNG1 = IRNGT (IWRKD+1)
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+1) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG1) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG1) <= INVALS(IRNGT(IWRKD+4))) Then
                   IRNGT (IWRKD+2) = IRNG1
-                  If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+                  If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   3 1 2 4
                      IRNGT (IWRKD+3) = IRNG2
                   Else
@@ -475,7 +475,7 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
 !   than the min of B. This line may be activated when the
 !   initial set is already close to sorted.
 !
-!          IF (XDONT(IRNGT(JINDA)) <= XDONT(IRNGT(IINDB))) CYCLE
+!          IF (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(IINDB))) CYCLE
 !
 !  One steps in the C subset, that we build in the final rank array
 !
@@ -483,8 +483,8 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
 !
-            XVALA = XDONT (JWRKT(IINDA))
-            XVALB = XDONT (IRNGT(IINDB))
+            XVALA = INVALS (JWRKT(IINDA))
+            XVALB = INVALS (IRNGT(IINDB))
 !
             Do
                IWRK = IWRK + 1
@@ -499,12 +499,12 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
                      IRNGT (IWRK+1:IWRKF) = JWRKT (IINDA:LMTNA)
                      Exit
                   End If
-                  XVALB = XDONT (IRNGT(IINDB))
+                  XVALB = INVALS (IRNGT(IINDB))
                Else
                   IRNGT (IWRK) = JWRKT (IINDA)
                   IINDA = IINDA + 1
                   If (IINDA > LMTNA) Exit! Only B still with unprocessed values
-                  XVALA = XDONT (JWRKT(IINDA))
+                  XVALA = INVALS (JWRKT(IINDA))
                End If
 !
             End Do
@@ -518,9 +518,9 @@ Subroutine real32_mrgrnk (XDONT, IRNGT)
       Return
 !
 End Subroutine real32_mrgrnk
-Subroutine int32_mrgrnk (XDONT, IRNGT)
+Subroutine int32_mrgrnk (INVALS, IRNGT)
 ! __________________________________________________________
-      Integer (kind=int32), Dimension (:), Intent (In) :: XDONT
+      Integer (kind=int32), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
       Integer (kind=int32) :: XVALA, XVALB
@@ -529,7 +529,7 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
       Integer :: LMTNA, LMTNC, IRNG1, IRNG2
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XDONT), SIZE(IRNGT))
+      NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
       Select Case (NVAL)
       Case (:0)
          Return
@@ -543,7 +543,7 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XDONT(IIND-1) <= XDONT(IIND)) Then
+         If (INVALS(IIND-1) <= INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -574,11 +574,11 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
 !
 !   1 2 3
 !
-               If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Exit
+               If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Exit
 !
 !   1 3 2
 !
-               If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+               If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                   IRNG2 = IRNGT (IWRKD+2)
                   IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
                   IRNGT (IWRKD+3) = IRNG2
@@ -596,14 +596,14 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
 !
 !   1 2 3 4
 !
-            If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Cycle
+            If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Cycle
 !
 !   1 3 x x
 !
-            If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+            If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   1 3 2 4
                   IRNGT (IWRKD+3) = IRNG2
                Else
@@ -618,9 +618,9 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
                IRNG1 = IRNGT (IWRKD+1)
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+1) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG1) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG1) <= INVALS(IRNGT(IWRKD+4))) Then
                   IRNGT (IWRKD+2) = IRNG1
-                  If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+                  If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   3 1 2 4
                      IRNGT (IWRKD+3) = IRNG2
                   Else
@@ -669,7 +669,7 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
 !   than the min of B. This line may be activated when the
 !   initial set is already close to sorted.
 !
-!          IF (XDONT(IRNGT(JINDA)) <= XDONT(IRNGT(IINDB))) CYCLE
+!          IF (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(IINDB))) CYCLE
 !
 !  One steps in the C subset, that we build in the final rank array
 !
@@ -677,8 +677,8 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
 !
-            XVALA = XDONT (JWRKT(IINDA))
-            XVALB = XDONT (IRNGT(IINDB))
+            XVALA = INVALS (JWRKT(IINDA))
+            XVALB = INVALS (IRNGT(IINDB))
 !
             Do
                IWRK = IWRK + 1
@@ -693,12 +693,12 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
                      IRNGT (IWRK+1:IWRKF) = JWRKT (IINDA:LMTNA)
                      Exit
                   End If
-                  XVALB = XDONT (IRNGT(IINDB))
+                  XVALB = INVALS (IRNGT(IINDB))
                Else
                   IRNGT (IWRK) = JWRKT (IINDA)
                   IINDA = IINDA + 1
                   If (IINDA > LMTNA) Exit! Only B still with unprocessed values
-                  XVALA = XDONT (JWRKT(IINDA))
+                  XVALA = INVALS (JWRKT(IINDA))
                End If
 !
             End Do
@@ -712,18 +712,18 @@ Subroutine int32_mrgrnk (XDONT, IRNGT)
       Return
 !
 End Subroutine int32_mrgrnk
-Subroutine f_char_mrgrnk (XDONT, IRNGT)
+Subroutine f_char_mrgrnk (INVALS, IRNGT)
 ! __________________________________________________________
-      character (kind=f_char,len=*), Dimension (:), Intent (In) :: XDONT
+      character (kind=f_char,len=*), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT
 ! __________________________________________________________
-      character (kind=f_char,len=len(XDONT)) :: XVALA, XVALB
+      character (kind=f_char,len=len(INVALS)) :: XVALA, XVALB
 !
       Integer, Dimension (SIZE(IRNGT)) :: JWRKT
       Integer :: LMTNA, LMTNC, IRNG1, IRNG2
       Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
-      NVAL = Min (SIZE(XDONT), SIZE(IRNGT))
+      NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
       Select Case (NVAL)
       Case (:0)
          Return
@@ -737,7 +737,7 @@ Subroutine f_char_mrgrnk (XDONT, IRNGT)
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (XDONT(IIND-1) <= XDONT(IIND)) Then
+         If (INVALS(IIND-1) <= INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -768,11 +768,11 @@ Subroutine f_char_mrgrnk (XDONT, IRNGT)
 !
 !   1 2 3
 !
-               If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Exit
+               If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Exit
 !
 !   1 3 2
 !
-               If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+               If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                   IRNG2 = IRNGT (IWRKD+2)
                   IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
                   IRNGT (IWRKD+3) = IRNG2
@@ -790,14 +790,14 @@ Subroutine f_char_mrgrnk (XDONT, IRNGT)
 !
 !   1 2 3 4
 !
-            If (XDONT(IRNGT(IWRKD+2)) <= XDONT(IRNGT(IWRKD+3))) Cycle
+            If (INVALS(IRNGT(IWRKD+2)) <= INVALS(IRNGT(IWRKD+3))) Cycle
 !
 !   1 3 x x
 !
-            If (XDONT(IRNGT(IWRKD+1)) <= XDONT(IRNGT(IWRKD+3))) Then
+            If (INVALS(IRNGT(IWRKD+1)) <= INVALS(IRNGT(IWRKD+3))) Then
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+2) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   1 3 2 4
                   IRNGT (IWRKD+3) = IRNG2
                Else
@@ -812,9 +812,9 @@ Subroutine f_char_mrgrnk (XDONT, IRNGT)
                IRNG1 = IRNGT (IWRKD+1)
                IRNG2 = IRNGT (IWRKD+2)
                IRNGT (IWRKD+1) = IRNGT (IWRKD+3)
-               If (XDONT(IRNG1) <= XDONT(IRNGT(IWRKD+4))) Then
+               If (INVALS(IRNG1) <= INVALS(IRNGT(IWRKD+4))) Then
                   IRNGT (IWRKD+2) = IRNG1
-                  If (XDONT(IRNG2) <= XDONT(IRNGT(IWRKD+4))) Then
+                  If (INVALS(IRNG2) <= INVALS(IRNGT(IWRKD+4))) Then
 !   3 1 2 4
                      IRNGT (IWRKD+3) = IRNG2
                   Else
@@ -863,7 +863,7 @@ Subroutine f_char_mrgrnk (XDONT, IRNGT)
 !   than the min of B. This line may be activated when the
 !   initial set is already close to sorted.
 !
-!          IF (XDONT(IRNGT(JINDA)) <= XDONT(IRNGT(IINDB))) CYCLE
+!          IF (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(IINDB))) CYCLE
 !
 !  One steps in the C subset, that we build in the final rank array
 !
@@ -871,8 +871,8 @@ Subroutine f_char_mrgrnk (XDONT, IRNGT)
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
 !
-            XVALA = XDONT (JWRKT(IINDA))
-            XVALB = XDONT (IRNGT(IINDB))
+            XVALA = INVALS (JWRKT(IINDA))
+            XVALB = INVALS (IRNGT(IINDB))
 !
             Do
                IWRK = IWRK + 1
@@ -887,12 +887,12 @@ Subroutine f_char_mrgrnk (XDONT, IRNGT)
                      IRNGT (IWRK+1:IWRKF) = JWRKT (IINDA:LMTNA)
                      Exit
                   End If
-                  XVALB = XDONT (IRNGT(IINDB))
+                  XVALB = INVALS (IRNGT(IINDB))
                Else
                   IRNGT (IWRK) = JWRKT (IINDA)
                   IINDA = IINDA + 1
                   If (IINDA > LMTNA) Exit! Only B still with unprocessed values
-                  XVALA = XDONT (JWRKT(IINDA))
+                  XVALA = INVALS (JWRKT(IINDA))
                End If
 !
             End Do
