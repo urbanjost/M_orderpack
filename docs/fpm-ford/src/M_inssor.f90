@@ -15,7 +15,7 @@ contains
 !!                 arrays)
 !!##SYNOPSIS
 !!
-!!      Subroutine sort_special (INOUTVALS)
+!!      Subroutine Sort_Special (INOUTVALS)
 !!
 !!       ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
 !!

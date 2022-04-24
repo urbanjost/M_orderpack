@@ -14,7 +14,7 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    rank_unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal
+!!    Rank_Unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal
 !!                      of duplicate entries (MergeSort)
 !!
 !!##SYNOPSIS

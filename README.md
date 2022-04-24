@@ -1,7 +1,6 @@
 ![ORDERPACK](docs/images/orderpack.gif)
 ## Name
    **orderpack**(3f) - general and specialized ranking and sorting routines
-   (LICENSE:CC0-1.0)
 
 ## Description
 
@@ -16,17 +15,33 @@ that additionally
    added.
  - contains a growing set of unit tests.
 
-Like the original, ORDERPACK 2.1 provides Fortran procedures for General
-and Specialized Ranking and Sorting Routines.  It includes Fortran 90
-source code for Unconditional, Unique, and Partial Ranking, Sorting,
-and Permutation.
+ORDERPACK 2.1 performs both conventional sorting and ranking as well as
+the rarer specialized ordering tasks such as partial sorting, partial
+ranking, unique sorting, unique ranking, inverse unique ranking, and
+more. These partial sort and ranking routines can greatly accelerate
+many computations when users need only the M largest or smallest elements
+out of a N-element vector.
+
+All the specialized procedures have a range over which they far outperform
+a basic sort, and most have a range where they dramatically underperform.
+If you are not limited by memory requirements or have no issues with
+runtimes the simplest solution may be just to use SORT(3f) and RANK(3f).
+
+Otherwise, your solution method may very well depend on the size of the
+input arrays, whether the data is already close to the required order,
+or how costly it is to create work arrays or an index array.
+
+So, if you want the smallest value in an array call the intrinsic
+MINVAL(3f), not ORDERVAL(3f).
 
 **Authors**: 
 
 - Michel Olagnon date: 2000-2013 wrote the original ORDERPACK 2.0
 - John S. Urban, date: 2022 derived ORDERPACK 2.1 from ORDERPACK 2.0
 
-Suggestions, testing, test cases, feedback, and assistance welcome!
+**LICENSE**:
+
+CC0-1.0
 
 ---
 ## Recent Events and Issues (See Also : CHANGELOG)
@@ -105,7 +120,7 @@ This will compile the Fortran module and basic example programs that exercise th
    - [github action status](docs/STATUS.md)
 ---
 ## See also ![-](docs/images/demos.gif)
-   * [parallel mrgrnk](https://github.com/cphyc/Fortran-parallel-sort)
+   - [parallel mrgrnk](https://github.com/cphyc/Fortran-parallel-sort)
 ---
 ## References ![-](docs/images/ref.gif)
 

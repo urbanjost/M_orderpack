@@ -16,7 +16,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine unique (INOUTVALS, NUNI)
+!!     Subroutine Unique (INOUTVALS, NUNI)
 !!
 !!      ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
 !!      Integer, Intent (Out)                  :: NUNI
@@ -29,7 +29,7 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!    unique(3f) does a stable removal of duplicates from an array.
+!!    UNIQUE(3f) does a stable removal of duplicates from an array.
 !!
 !!    It leaves in the initial set only those entries that are unique,
 !!    packing the array, and leaving the order of the retained values

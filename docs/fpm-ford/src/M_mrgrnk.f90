@@ -15,7 +15,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine rank (INVALS, IRNGT)
+!!     Subroutine Rank (INVALS, IRNGT)
 !!
 !!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: IRNGT(:)

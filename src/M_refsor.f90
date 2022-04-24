@@ -16,7 +16,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine sort (INOUTVALS)
+!!     Subroutine Sort (INOUTVALS)
 !!
 !!       ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
 !!

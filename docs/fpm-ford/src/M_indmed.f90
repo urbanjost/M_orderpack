@@ -15,7 +15,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine medianloc (INVALS, OUTORD)
+!!     Subroutine MedianLoc (INVALS, OUTORD)
 !!
 !!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: OUTORD

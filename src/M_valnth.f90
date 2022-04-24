@@ -15,7 +15,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Function orderval (INVALS, NORD) Result (orderval)
+!!     Function OrderVal (INVALS, NORD)
 !!
 !!      ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
 !!      ${TYPE} (Kind=${KIND})              :: orderval
@@ -28,10 +28,10 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!   orderval(3f) returns the  NORDth (ascending order) value of INVALS,
-!!   i.e. fractile of order NORD/SIZE(INVALS).
+!!   ORDERVAL(3f) returns the  NORDth (ascending order) value of INVALS,
+!!   i.e. the fractile of order NORD/SIZE(INVALS).
 !!
-!!   Internally, this subroutine simply calls INDNTH.
+!!   Internally, this subroutine simply calls INDNTH(3f).
 !!
 !!   This routine uses a pivoting strategy such as the one of finding the
 !!   median based on the QuickSort algorithm, but we skew the pivot choice

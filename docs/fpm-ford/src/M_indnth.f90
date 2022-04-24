@@ -15,7 +15,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Function orderloc (INVALS, NORD) Result (orderloc)
+!!     Function OrderLoc (INVALS, NORD)
 !!
 !!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer                             :: orderloc
@@ -28,20 +28,20 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    orderloc(3) returns the index of NORDth value of INVALS, i.e. the fractile
-!!    of order NORD/SIZE(INVALS).
+!!    orderloc(3f) returns the index of NORDth value of INVALS, i.e. the
+!!    fractile of order NORD/SIZE(INVALS).
 !!
 !!    That is, the result is the same as sorting the array first and then
 !!    returning the value INVALS(NORD).
 !!
-!!    Internally orderloc(3f) uses a pivoting strategy such as the one of
-!!    finding the median based on the quicksort algorithm, but we skew the
-!!    pivot choice to try to bring it to NORD as fast as possible. It uses
-!!    two temporary arrays, where it stores the indices of the values smaller
-!!    than the pivot (ILOWT), and the indices of values larger than the
-!!    pivot that we might still need later on (IHIGT). It iterates until
-!!    it can bring the number of values in ILOWT to exactly NORD, and then
-!!    finds the maximum of this set.
+!!    Internally orderloc(3f) uses a pivoting strategy such as the one
+!!    of finding the median based on the quicksort algorithm, but we skew
+!!    the pivot choice to try to bring it to NORD as fast as possible. It
+!!    uses two temporary arrays, where it stores the indices of the values
+!!    smaller than the pivot (ILOWT), and the indices of values larger than
+!!    the pivot that we might still need later on (IHIGT). It iterates
+!!    until it can bring the number of values in ILOWT to exactly NORD,
+!!    and then finds the maximum of this set.
 !!
 !!##OPTIONS
 !!     INVALS      array to search

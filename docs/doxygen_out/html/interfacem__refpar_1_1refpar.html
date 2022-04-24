@@ -413,12 +413,12 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md105"></a>
+<h2><a class="anchor" id="autotoc_md110"></a>
 NAME</h2>
 <p>prank_basic(3f) - [orderpack:RANK:PARTIAL] partially ranks an array (QuickSort)</p>
-<h2><a class="anchor" id="autotoc_md106"></a>
+<h2><a class="anchor" id="autotoc_md111"></a>
 SYNOPSIS</h2>
-<pre class="fragment"> Subroutine prank_basic (INVALS, IRNGT, NORD)
+<pre class="fragment"> Subroutine Prank_Basic (INVALS, IRNGT, NORD)
 
    ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
    Integer, Intent (Out)               :: IRNGT(:)
@@ -430,27 +430,27 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
-</pre><h2><a class="anchor" id="autotoc_md107"></a>
+</pre><h2><a class="anchor" id="autotoc_md112"></a>
 DESCRIPTION</h2>
 <p>creates index IRNGT() which partially ranks input array INVALS(), up to order NORD.</p>
 <p>This version is not optimized for performance, and is thus not as difficult to read as some other ones.</p>
 <p>Internally this routine uses a pivoting strategy such as the one used in finding the median based on the QuickSort algorithm. It uses a temporary array, where it stores the partially ranked indices of the values. It iterates until it can bring the number of values lower than the pivot to exactly NORD, and then uses an Insertion-Sort to rank this set, since it is supposedly small.</p>
-<h2><a class="anchor" id="autotoc_md108"></a>
+<h2><a class="anchor" id="autotoc_md113"></a>
 OPTIONS</h2>
 <p>INVALS array to partially rank IRNGT array to hold indices of ranked elements NORD number of elements to rank</p>
-<h2><a class="anchor" id="autotoc_md109"></a>
+<h2><a class="anchor" id="autotoc_md114"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
 <p>program demo_prank ! create index to lowest N values in input array in ascending order use,intrinsic :: iso_fortran_env, only : int32, real32, real64 use M_orderpack, only : prank_basic implicit none real(kind=real32) :: valsr(2000) integer :: indx(2000) integer :: i real,allocatable :: results(:) ! create some random data call random_seed() call random_number(valsr) valsr=valsr*1000000.0-500000.0 ! get 300 lowest values sorted call prank_basic(valsr,indx,300) ! results=valsr(indx(:300)) ! check if sorted do i=1,300-1 if (results(i+1).lt.results(i))then write(*,*)'ERROR: not sorted' stop 1 endif enddo write(*,*)'random array now sorted' end program demo_prank</p>
 <p>Results:</p>
 <p>random array now sorted</p>
-<h2><a class="anchor" id="autotoc_md110"></a>
+<h2><a class="anchor" id="autotoc_md115"></a>
 AUTHOR</h2>
 <p>Michel Olagnon - Feb. 2000 </p>
-<h2><a class="anchor" id="autotoc_md111"></a>
+<h2><a class="anchor" id="autotoc_md116"></a>
 MAINTAINER</h2>
 <p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md112"></a>
+<h2><a class="anchor" id="autotoc_md117"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>

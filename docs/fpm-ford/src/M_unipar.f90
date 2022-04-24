@@ -15,7 +15,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine prank_unique (INVALS, IRNGT, NORD)
+!!     Subroutine Prank_Unique (INVALS, IRNGT, NORD)
 !!
 !!      ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!      Integer, Intent (Out)               :: IRNGT(:)

@@ -16,7 +16,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Function orderval_special (INVALS, INORD) Result (orderval_special)
+!!     Function Orderval_Special (INVALS, INORD)
 !!
 !!      ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
 !!      Integer, Intent (In)                :: INORD
@@ -29,22 +29,22 @@ contains
 !!    o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    ORDERVAL_SPECIAL(3) returns the INORDth lowest value of INVALS(),
+!!    ORDERVAL_SPECIAL(3f) returns the INORDth lowest value of INVALS(),
 !!    i.e. the fractile of order INORD/SIZE(INVALS).
 !!
 !!    Internally, This subroutine uses an insertion sort, limiting insertion
 !!    to the first INORD values and even less when one can know that the
 !!    value that is considered will not be the INORDth.
 !!
-!!    An insertion sort
-!!    is very fast when INORD is very small (2-5). Additionally, internally
-!!    it requires only a work array of size INORD (and type of INVALS),
+!!    An insertion sort is very fast when INORD is very small
+!!    (2-5). Additionally, internally it requires only a work array of size
+!!    INORD (and type of INVALS),
 !!
 !!    But worst case behavior can happen fairly probably (e.g., initially
 !!    inverse sorted). Therefore, in many cases, the refined QuickSort
 !!    method is faster.
 !!
-!!    so ORDERVAL_SPECIAL() should be used when INORD is small and INVALS
+!!    so ORDERVAL_SPECIAL(3f) should be used when INORD is small and INVALS
 !!    is likely to be a random array, otherwise consider using INDNTH(3)
 !!    or VALNTH(3).
 !!

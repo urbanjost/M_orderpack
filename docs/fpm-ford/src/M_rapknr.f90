@@ -15,7 +15,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine prank_decreasing (INVALS, IRNGT, NORD)
+!!     Subroutine Prank_Decreasing (INVALS, IRNGT, NORD)
 !!
 !!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: IRNGT(:)
@@ -28,7 +28,7 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    Same as RANK(3f), but in decreasing order.
+!!    Same as PRANK(3f), but in decreasing order.
 !!
 !!    PRANK_DECREASING(3f) partially ranks input array INVALS() in decreasing
 !!    order up to order NORD, placing the indices pointing to the selected

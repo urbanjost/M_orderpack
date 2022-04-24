@@ -16,7 +16,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine rank_basic (INVALS, IRNGT)
+!!     Subroutine Rank_Basic (INVALS, IRNGT)
 !!
 !!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
 !!       Integer, Intent (Out)               :: IRNGT(:)

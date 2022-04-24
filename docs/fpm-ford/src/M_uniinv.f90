@@ -13,7 +13,7 @@ end interface nearless
 contains
 !>
 !!##NAME
-!!    rank_rank_decreasing(3f) - [orderpack:RANK:UNIQUE] ranks an array
+!!    Rank_Decreasing(3f) - [orderpack:RANK:UNIQUE] ranks an array
 !!    in decreasing order, with duplicate entries assigned the same
 !!    rank(MergeSort)
 !!
@@ -33,8 +33,8 @@ contains
 !!
 !!##DESCRIPTION
 !!
-!!    RANK_DECREASING(3f) generates an inverse ranking of an array, but with duplicate
-!!    entries assigned the same rank.
+!!    RANK_DECREASING(3f) generates an inverse ranking of an array, but
+!!    with duplicate entries assigned the same rank.
 !!
 !!    Internally, the routine is similar to pure merge-sort ranking, but on
 !!    the last pass, it sets indices in IGOEST to the rank of the original

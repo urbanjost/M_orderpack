@@ -992,9 +992,9 @@ integer(kind=int32) function \mbox{\hyperlink{interfacem__valnth_1_1valnth_af87a
 \doxysubsubsection{\texorpdfstring{real64\_valnth()}{real64\_valnth()}}
 {\footnotesize\ttfamily real (kind=real64) function m\+\_\+valnth\+::valnth\+::real64\+\_\+valnth (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__valnth_autotoc_md179}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__valnth_autotoc_md179}
-orderval(3f) -\/ \mbox{[}orderpack\+:F\+R\+A\+C\+T\+I\+LE\mbox{]} Return V\+A\+L\+UE of Nth ordered value of array, or \char`\"{}fractile of order N/\+S\+I\+Z\+E(array)\char`\"{}. (Quick\+Sort-\/like)\hypertarget{namespacem__valnth_autotoc_md180}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__valnth_autotoc_md180}
-\begin{DoxyVerb} Function orderval (INVALS, NORD) Result (orderval)
+\hypertarget{namespacem__valnth_autotoc_md184}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__valnth_autotoc_md184}
+orderval(3f) -\/ \mbox{[}orderpack\+:F\+R\+A\+C\+T\+I\+LE\mbox{]} Return V\+A\+L\+UE of Nth ordered value of array, or \char`\"{}fractile of order N/\+S\+I\+Z\+E(array)\char`\"{}. (Quick\+Sort-\/like)\hypertarget{namespacem__valnth_autotoc_md185}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__valnth_autotoc_md185}
+\begin{DoxyVerb} Function OrderVal (INVALS, NORD)
 
   ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
   ${TYPE} (Kind=${KIND})              :: orderval
@@ -1006,23 +1006,23 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
 \end{DoxyVerb}
-\hypertarget{namespacem__valnth_autotoc_md181}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__valnth_autotoc_md181}
-orderval(3f) returns the N\+O\+R\+Dth (ascending order) value of I\+N\+V\+A\+LS, i.\+e. fractile of order N\+O\+R\+D/\+S\+I\+ZE(I\+N\+V\+A\+LS).
+\hypertarget{namespacem__valnth_autotoc_md186}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__valnth_autotoc_md186}
+O\+R\+D\+E\+R\+V\+A\+L(3f) returns the N\+O\+R\+Dth (ascending order) value of I\+N\+V\+A\+LS, i.\+e. the fractile of order N\+O\+R\+D/\+S\+I\+ZE(I\+N\+V\+A\+LS).
 
-Internally, this subroutine simply calls I\+N\+D\+N\+TH.
+Internally, this subroutine simply calls I\+N\+D\+N\+T\+H(3f).
 
-This routine uses a pivoting strategy such as the one of finding the median based on the Quick\+Sort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (I\+L\+O\+WT), and the indices of values larger than the pivot that we might still need later on (I\+H\+I\+GT). It iterates until it can bring the number of values in I\+L\+O\+WT to exactly N\+O\+RD, and then finds the maximum of this set.\hypertarget{namespacem__valnth_autotoc_md182}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__valnth_autotoc_md182}
-I\+N\+V\+A\+LS array to search N\+O\+RD Nth lowest value to find \hypertarget{namespacem__valnth_autotoc_md183}{}\doxysubsubsection{R\+E\+T\+U\+R\+NS}\label{namespacem__valnth_autotoc_md183}
-orderval Nth lowest value \hypertarget{namespacem__valnth_autotoc_md184}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__valnth_autotoc_md184}
+This routine uses a pivoting strategy such as the one of finding the median based on the Quick\+Sort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (I\+L\+O\+WT), and the indices of values larger than the pivot that we might still need later on (I\+H\+I\+GT). It iterates until it can bring the number of values in I\+L\+O\+WT to exactly N\+O\+RD, and then finds the maximum of this set.\hypertarget{namespacem__valnth_autotoc_md187}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__valnth_autotoc_md187}
+I\+N\+V\+A\+LS array to search N\+O\+RD Nth lowest value to find \hypertarget{namespacem__valnth_autotoc_md188}{}\doxysubsubsection{R\+E\+T\+U\+R\+NS}\label{namespacem__valnth_autotoc_md188}
+orderval Nth lowest value \hypertarget{namespacem__valnth_autotoc_md189}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__valnth_autotoc_md189}
 Sample program\+:
 
 program demo\+\_\+orderval ! Return value of Nth lowest value of array use M\+\_\+orderpack, only \+: orderval implicit none character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{}, \char`\"{}))\textquotesingle{} character(len=$\ast$),parameter \+:: sp=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} real,parameter \+:: I\+N\+V\+A\+L\+S($\ast$)=\mbox{[}1.\+1,20.\+20,3.\+3,10.\+10,5.\+5,4.\+4,2.\+2\mbox{]} integer \+:: i integer \+:: imiddle write($\ast$,list) \textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+V\+A\+LS ! can return the same values as intrinsics minval() and maxval() print sp, \textquotesingle{}minval\textquotesingle{},orderval(\+I\+N\+V\+A\+L\+S,1), minval(\+I\+N\+V\+A\+L\+S) print sp, \textquotesingle{}maxval\textquotesingle{},orderval(\+I\+N\+V\+A\+L\+S,size(\+I\+N\+V\+A\+L\+S)), maxval(\+I\+N\+V\+A\+L\+S) ! but more generally it can return the Nth lowest value. print sp,\textquotesingle{}nord=\textquotesingle{},4, \textquotesingle{} fractile=\textquotesingle{},orderval(\+I\+N\+V\+A\+L\+S,4) ! so a value at the middle would be imiddle=(size(\+I\+N\+V\+A\+L\+S)+1)/2 print sp,\textquotesingle{}median\textquotesingle{},orderval(\+I\+N\+V\+A\+L\+S,imiddle) ! sorting the hard way do i=1,size(\+I\+N\+V\+A\+L\+S) write($\ast$,list)i,orderval(\+I\+N\+V\+A\+L\+S,i) enddo end program demo\+\_\+orderval
 
 Results\+:
 
-O\+R\+I\+G\+I\+N\+AL\+:, 1.\+1000, 20.\+200, 3.\+300, 10.\+100, 5.\+500, 4.\+400, 2.\+200 minval 1.\+100 1.\+100 maxval 20.\+200 20.\+200 nord= 4 fractile= 4.\+400 median 4.\+400 1, 1.\+100 2, 2.\+200 3, 3.\+300 4, 4.\+400 5, 5.\+500 6, 10.\+100 7, 20.\+200\hypertarget{namespacem__valnth_autotoc_md185}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__valnth_autotoc_md185}
-Michel Olagnon -\/ Aug. 2000 \hypertarget{namespacem__valnth_autotoc_md186}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__valnth_autotoc_md186}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__valnth_autotoc_md187}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__valnth_autotoc_md187}
+O\+R\+I\+G\+I\+N\+AL\+:, 1.\+1000, 20.\+200, 3.\+300, 10.\+100, 5.\+500, 4.\+400, 2.\+200 minval 1.\+100 1.\+100 maxval 20.\+200 20.\+200 nord= 4 fractile= 4.\+400 median 4.\+400 1, 1.\+100 2, 2.\+200 3, 3.\+300 4, 4.\+400 5, 5.\+500 6, 10.\+100 7, 20.\+200\hypertarget{namespacem__valnth_autotoc_md190}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__valnth_autotoc_md190}
+Michel Olagnon -\/ Aug. 2000 \hypertarget{namespacem__valnth_autotoc_md191}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__valnth_autotoc_md191}
+John Urban, 2022.\+04.\+16 \hypertarget{namespacem__valnth_autotoc_md192}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__valnth_autotoc_md192}
 C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{100 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}

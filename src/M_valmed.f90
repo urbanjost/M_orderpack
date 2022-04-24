@@ -14,7 +14,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Recursive Function medianval (INVALS) Result (RES_MED)
+!!     Recursive Function MedianVal (INVALS) Result (RES_MED)
 !!
 !!       ${TYPE} (kind=${KIND}),  Intent (In) :: INVALS(:)
 !!       ${TYPE} (kind=${KIND})               :: RES_MED

@@ -16,7 +16,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Subroutine psort (INOUTVALS, NORD)
+!!     Subroutine Psort (INOUTVALS, NORD)
 !!
 !!      ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
 !!      Integer, Intent (In)                   :: NORD
@@ -29,8 +29,8 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!    psort(3f) partially sorts INOUTVALS, bringing the NORD lowest values to the
-!!    beginning of the array.
+!!    PSORT(3f) partially sorts INOUTVALS, bringing the NORD lowest values
+!!    to the beginning of the array.
 !!
 !!    Internally, this subroutine uses an insertion sort, limiting insertion
 !!    to the first NORD values. It does not use any work array and is faster

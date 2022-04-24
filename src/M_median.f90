@@ -16,7 +16,7 @@ contains
 !!
 !!##SYNOPSIS
 !!
-!!     Function median (INVALS) Result (MEDIAN)
+!!     Function Median (INVALS)
 !!
 !!      ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
 !!      ${TYPE} (Kind=${KIND})              :: MEDIAN
@@ -28,7 +28,7 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    MEDIAN() calculates the median value of the array INVALS().
+!!    MEDIAN(3f) calculates the median value of the array INVALS().
 !!    It is a modified version of VALMED() that provides the average between the
 !!    two middle values in the case Size(INVALS) is even.
 !!

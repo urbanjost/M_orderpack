@@ -104,7 +104,7 @@ use M_ctrper, only : perturb=>ctrper          ! [PERMUTATION] perturbs an array 
 !!    many computations when users need only the M largest or smallest
 !!    elements out of a N-element vector.
 !!
-!!  SORTING
+!!##SORTING
 !!     FULL SORTING
 !!        Sort          Sorts array into ascending order (Quicksort)
 !!        Sort_Special  Sorts array into ascending order (Insertion sort,
@@ -117,9 +117,9 @@ use M_ctrper, only : perturb=>ctrper          ! [PERMUTATION] perturbs an array 
 !!        Orderval          Return VALUE of Nth lowest value of array
 !!                          (QuickSort)
 !!        MedianVal         finds the median of an array
-!!        Median            Return median value of array. If number of data
+!!        Median            Return median value of array. If number of elements
 !!                          is even, return average of the two "medians"
-!!  RANKING
+!!##RANKING
 !!     UNCONDITIONAL RANKING
 !!        Rank        ranks array (optimized merge-sort)
 !!        Rank_Basic  ranks array (basic merge-sort)
@@ -136,12 +136,12 @@ use M_ctrper, only : perturb=>ctrper          ! [PERMUTATION] perturbs an array 
 !!        Rank_Decreasing   an inverse ranking of an array,
 !!                          with duplicate entries assigned the same rank.
 !!        Prank_Unique      partially rank an array removing duplicates
-!!  UNIQUE
+!!##UNIQUE
 !!        Unique        Removes duplicates from an array
 !!                      otherwise retaining original order
-!!  MULTIPLICITY
+!!##MULTIPLICITY
 !!        Occurrances   Give the multiplicity for each array value
-!!  PERMUTATION
+!!##PERMUTATION
 !!        Perturb  a random permutation of an array, optionally leaving
 !!                 elements close to initial locations
 !!
