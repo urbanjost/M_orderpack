@@ -104,6 +104,19 @@ use M_ctrper, only : perturb=>ctrper          ! [PERMUTATION] perturbs an array 
 !!    many computations when users need only the M largest or smallest
 !!    elements out of a N-element vector.
 !!
+!!    All the specialized procedures have a range over which they far
+!!    outperform a basic sort, and most have a range where they dramatically
+!!    underperform. If you are not limited by memory requirements or have no
+!!    issues with runtimes the simplest solution may be just to use SORT(3f)
+!!    and RANK(3f).
+!!
+!!    Otherwise, your solution method may very well depend on the size of
+!!    the input arrays, whether the data is already close to the required
+!!    order, or how costly it is to create work arrays or an index array.
+!!
+!!    So, if you want the smallest value in an array call the intrinsic
+!!    MINVAL(3f), not ORDERVAL(3f).
+!!
 !!##SORTING
 !!     FULL SORTING
 !!        Sort          Sorts array into ascending order (Quicksort)
@@ -111,11 +124,11 @@ use M_ctrper, only : perturb=>ctrper          ! [PERMUTATION] perturbs an array 
 !!                      generally for small or nearly sorted arrays)
 !!     PARTIAL SORTING
 !!        Psort             partially sorts an array
+!!        Orderval          Return VALUE of Nth lowest value of array
+!!                          (QuickSort)
 !!        Orderval_Special  Return Nth lowest value of an array
 !!                          (Insert-sort, generally for small or nearly
 !!                          sorted arrays))
-!!        Orderval          Return VALUE of Nth lowest value of array
-!!                          (QuickSort)
 !!        MedianVal         finds the median of an array
 !!        Median            Return median value of array. If number of elements
 !!                          is even, return average of the two "medians"
@@ -140,7 +153,7 @@ use M_ctrper, only : perturb=>ctrper          ! [PERMUTATION] perturbs an array 
 !!        Unique        Removes duplicates from an array
 !!                      otherwise retaining original order
 !!##MULTIPLICITY
-!!        Occurrances   Give the multiplicity for each array value
+!!        Occurrences   Give the multiplicity for each array value
 !!##PERMUTATION
 !!        Perturb  a random permutation of an array, optionally leaving
 !!                 elements close to initial locations

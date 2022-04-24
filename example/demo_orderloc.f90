@@ -9,7 +9,7 @@
      integer :: indx
         iarr=[80,70,30,40,50,60,20,10,0,-100]
         print list, 'ORIGINAL:',iarr
-        ! like minloc() and maxloc()
+        ! like minloc(3f) and maxloc(3f)
         print sp,'minloc',orderloc(iarr,1),                minloc(iarr)
         print sp,'maxloc',orderloc(iarr,size(iarr)),       maxloc(iarr)
         ! can find median

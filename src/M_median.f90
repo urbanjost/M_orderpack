@@ -11,7 +11,7 @@ contains
 !>
 !!##NAME
 !!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If
-!!                 number of data is even, returns average of the two
+!!                 number of elements is even, returns average of the two
 !!                 "medians".
 !!
 !!##SYNOPSIS
@@ -29,7 +29,7 @@ contains
 !!
 !!##DESCRIPTION
 !!    MEDIAN(3f) calculates the median value of the array INVALS().
-!!    It is a modified version of VALMED() that provides the average between the
+!!    It is a modified version of MEDIANVAL(3f) that provides the average between the
 !!    two middle values in the case Size(INVALS) is even.
 !!
 !!    This routine uses a pivoting strategy similar to the method  of finding

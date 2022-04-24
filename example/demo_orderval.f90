@@ -8,7 +8,7 @@
      integer :: i
      integer :: imiddle
         write(*,list) 'ORIGINAL:',INVALS
-        ! can return the same values as intrinsics minval() and maxval()
+        ! can return the same values as intrinsics minval(3f) and maxval(3f)
         print sp, 'minval',orderval(INVALS,1),          minval(INVALS)
         print sp, 'maxval',orderval(INVALS,size(INVALS)), maxval(INVALS)
         ! but more generally it can return the Nth lowest value.

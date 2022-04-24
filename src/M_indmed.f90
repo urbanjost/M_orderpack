@@ -36,9 +36,9 @@ contains
 !!    Computer Programming, vol. 3, 5.3.3.
 !!
 !!    This procedure is linear in time, and does not require to be able
-!!    to interpolate in the set as the one used in INDNTH(3f), which can
+!!    to interpolate in the set as the one used in ORDERLOC(3f), which can
 !!    also be used to calculate a median. It also has better worst-case
-!!    behavior than INDNTH(3f), but is about 10% slower on average for
+!!    behavior than ORDERLOC(3f), but is about 10% slower on average for
 !!    random uniformly distributed values.
 !!
 !!##OPTIONS

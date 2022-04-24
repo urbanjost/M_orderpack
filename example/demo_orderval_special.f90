@@ -7,7 +7,7 @@
      integer :: i
         iarr=[80,70,30,40,-50,60,20,10]
         print sp, 'ORIGINAL:',iarr
-        ! can return the same values as intrinsics minval() and maxval()
+        ! can return the same values as intrinsics minval(3f) and maxval(3f)
         print sp, 'minval',orderval_special(iarr,1),          minval(iarr)
         print sp, 'maxval',orderval_special(iarr,size(iarr)), maxval(iarr)
         ! but more generally it can return the Nth lowest value.
