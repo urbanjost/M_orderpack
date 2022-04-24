@@ -45,8 +45,8 @@ contains
 !!    method is faster.
 !!
 !!    so ORDERVAL_SPECIAL(3f) should be used when INORD is small and INVALS
-!!    is likely to be a random array, otherwise consider using INDNTH(3)
-!!    or VALNTH(3).
+!!    is likely to be a random array, otherwise consider using ORDERLOC(3f)
+!!    or ORDERVAL(3f).
 !!
 !!##OPTIONS
 !!     INVALS              input array of values
@@ -68,11 +68,12 @@ contains
 !!    integer :: i
 !!       iarr=[80,70,30,40,-50,60,20,10]
 !!       print sp, 'ORIGINAL:',iarr
-!!       ! can return the same values as intrinsics minval() and maxval()
+!!       ! can return the same values as intrinsics minval(3f) and maxval(3f)
 !!       print sp, 'minval',orderval_special(iarr,1),          minval(iarr)
 !!       print sp, 'maxval',orderval_special(iarr,size(iarr)), maxval(iarr)
 !!       ! but more generally it can return the Nth lowest value.
-!!       print sp, 'median',orderval_special(iarr,(size(iarr+1))/2), medianval(iarr)
+!!       print sp, 'median',orderval_special(iarr,(size(iarr+1))/2), &
+!!       & medianval(iarr)
 !!       ! so only Nth ordered value can be found
 !!       print sp,'inord=',3, ' fractile=',orderval_special(iarr,3)
 !!       ! sorting the hard way
@@ -102,7 +103,7 @@ contains
 !!
 !!##SEE ALSO
 !!
-!!    indnth(3), valnth(3)
+!!    ORDERLOC(3f), ORDERVAL(3f)
 !!
 !!##AUTHOR
 !!    Michel Olagnon - Aug. 2000

@@ -270,20 +270,21 @@
 <a name="ln-7"></a>     <span class="kt">integer</span> <span class="kd">::</span> <span class="n">i</span>
 <a name="ln-8"></a>        <span class="n">iarr</span><span class="o">=</span><span class="p">[</span><span class="mi">80</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
 <a name="ln-9"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">iarr</span>
-<a name="ln-10"></a>        <span class="c">! can return the same values as intrinsics minval() and maxval()</span>
+<a name="ln-10"></a>        <span class="c">! can return the same values as intrinsics minval(3f) and maxval(3f)</span>
 <a name="ln-11"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;minval&#39;</span><span class="p">,</span><span class="n">orderval_special</span><span class="p">(</span><span class="n">iarr</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>          <span class="nb">minval</span><span class="p">(</span><span class="n">iarr</span><span class="p">)</span>
 <a name="ln-12"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;maxval&#39;</span><span class="p">,</span><span class="n">orderval_special</span><span class="p">(</span><span class="n">iarr</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">iarr</span><span class="p">)),</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">iarr</span><span class="p">)</span>
 <a name="ln-13"></a>        <span class="c">! but more generally it can return the Nth lowest value.</span>
-<a name="ln-14"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">,</span><span class="n">orderval_special</span><span class="p">(</span><span class="n">iarr</span><span class="p">,(</span><span class="n">size</span><span class="p">(</span><span class="n">iarr</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="n">medianval</span><span class="p">(</span><span class="n">iarr</span><span class="p">)</span>
-<a name="ln-15"></a>        <span class="c">! so only Nth ordered value can be found</span>
-<a name="ln-16"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span><span class="s1">&#39;inord=&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39; fractile=&#39;</span><span class="p">,</span><span class="n">orderval_special</span><span class="p">(</span><span class="n">iarr</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<a name="ln-17"></a>        <span class="c">! sorting the hard way</span>
-<a name="ln-18"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">iarr</span>
-<a name="ln-19"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">iarr</span><span class="p">)</span>
-<a name="ln-20"></a>           <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">list</span><span class="p">)</span><span class="n">i</span><span class="p">,</span><span class="n">orderval_special</span><span class="p">(</span><span class="n">iarr</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-<a name="ln-21"></a>        <span class="k">enddo</span>
-<a name="ln-22"></a><span class="k">        print</span> <span class="o">*</span>
-<a name="ln-23"></a>     <span class="k">end program </span><span class="n">demo_orderval_special</span>
+<a name="ln-14"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;median&#39;</span><span class="p">,</span><span class="n">orderval_special</span><span class="p">(</span><span class="n">iarr</span><span class="p">,(</span><span class="n">size</span><span class="p">(</span><span class="n">iarr</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="p">&amp;</span>
+<a name="ln-15"></a>        <span class="p">&amp;</span> <span class="n">medianval</span><span class="p">(</span><span class="n">iarr</span><span class="p">)</span>
+<a name="ln-16"></a>        <span class="c">! so only Nth ordered value can be found</span>
+<a name="ln-17"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span><span class="s1">&#39;inord=&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39; fractile=&#39;</span><span class="p">,</span><span class="n">orderval_special</span><span class="p">(</span><span class="n">iarr</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<a name="ln-18"></a>        <span class="c">! sorting the hard way</span>
+<a name="ln-19"></a>        <span class="k">print </span><span class="n">sp</span><span class="p">,</span> <span class="s1">&#39;ORIGINAL:&#39;</span><span class="p">,</span><span class="n">iarr</span>
+<a name="ln-20"></a>        <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">iarr</span><span class="p">)</span>
+<a name="ln-21"></a>           <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">list</span><span class="p">)</span><span class="n">i</span><span class="p">,</span><span class="n">orderval_special</span><span class="p">(</span><span class="n">iarr</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<a name="ln-22"></a>        <span class="k">enddo</span>
+<a name="ln-23"></a><span class="k">        print</span> <span class="o">*</span>
+<a name="ln-24"></a>     <span class="k">end program </span><span class="n">demo_orderval_special</span>
 </pre></div>
 
     </section>
@@ -302,7 +303,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-24 12:22  
+             on 2022-04-24 19:09  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

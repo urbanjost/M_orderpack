@@ -28,11 +28,11 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    MEDIAN(3f) calculates the median value of the array INVALS().
-!!    It is a modified version of MEDIANVAL(3f) that provides the average between the
-!!    two middle values in the case Size(INVALS) is even.
+!!    MEDIAN(3f) calculates the median value of the array INVALS().  It is
+!!    a modified version of MEDIANVAL(3f) that provides the average between
+!!    the two middle values in the case size(INVALS) is even.
 !!
-!!    This routine uses a pivoting strategy similar to the method  of finding
+!!    This routine uses a pivoting strategy similar to the method of finding
 !!    the median based on the Quick-sort algorithm, but we skew the pivot
 !!    choice to try to bring it to NORD as fast as possible. It uses two
 !!    temporary arrays, where it stores the indices of the values smaller

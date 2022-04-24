@@ -42,7 +42,7 @@ contains
 !!
 !!   Internally, the routine creates a real array of the indices of
 !!   INOUTVALS() perturbed by random values that are based on the size
-!!   of CLOSENESS. The new array is then ranked using MRGRNK(3f) and the
+!!   of CLOSENESS. The new array is then ranked using RANK(3f) and the
 !!   resulting index is used to permute the input array.
 !!
 !!##OPTIONS

@@ -11,7 +11,8 @@
         print sp, 'minval',orderval_special(iarr,1),          minval(iarr)
         print sp, 'maxval',orderval_special(iarr,size(iarr)), maxval(iarr)
         ! but more generally it can return the Nth lowest value.
-        print sp, 'median',orderval_special(iarr,(size(iarr+1))/2), medianval(iarr)
+        print sp, 'median',orderval_special(iarr,(size(iarr+1))/2), &
+        & medianval(iarr)
         ! so only Nth ordered value can be found
         print sp,'inord=',3, ' fractile=',orderval_special(iarr,3)
         ! sorting the hard way

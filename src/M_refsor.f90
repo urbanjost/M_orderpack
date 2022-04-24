@@ -46,7 +46,7 @@ contains
 !!
 !!        { values <= pivot} {pivot} {values > pivot}
 !!
-!!    It then recursively the procedure to sort each subset.  When the
+!!    It then recursively the procedure to sort each subset. When the
 !!    size of the subarray is small enough, it switches to an insertion
 !!    sort that is faster for very small sets.
 !!

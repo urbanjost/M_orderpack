@@ -35,7 +35,7 @@ contains
 !!
 !!    Internally, This subroutine uses Quick-sort in a recursive
 !!    implementation, and insertion sort for the last steps with small
-!!    subsets.  It does not use any work array.
+!!    subsets. It does not use any work array.
 !!
 !!    The Quick-sort
 !!    chooses a "pivot" in the set, and explores the array from
@@ -46,7 +46,7 @@ contains
 !!
 !!        { values <= pivot} {pivot} {values > pivot}
 !!
-!!    It then recursively the procedure to sort each subset.  When the
+!!    It then recursively the procedure to sort each subset. When the
 !!    size of the subarray is small enough, it switches to an insertion
 !!    sort that is faster for very small sets.
 !!
