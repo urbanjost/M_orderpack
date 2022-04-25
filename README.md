@@ -112,6 +112,19 @@ This will compile the Fortran module and basic example programs that exercise th
 
       + [manpages.zip](https://urbanjost.github.io/orderpack/manpages.zip)
       + [manpages.tgz](https://urbanjost.github.io/orderpack/manpages.tgz)
+
+   - fpm plugin fpm-orderpack(1). If you build the optional program
+     source in app/fpm-orderpack.f90.plugin and place it in your search-path
+     then commands like
+```bash
+     fpm orderpack manual|more
+```
+     will display the help-text manual for the procedures. For more
+     information enter
+```bash
+     fpm orderpack --help
+```
+
    - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 ---
 ### Developer
