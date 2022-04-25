@@ -190,7 +190,275 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking and Sorting Routines
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">Proc</span><span class="nv">edure</span> <span class="nv">names</span> <span class="nv">and</span> <span class="nv">syntax</span><span class="p">:</span>
+
+ <span class="nf">use</span> <span class="nv">M_orderpack</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="o">&amp;</span>
+  <span class="nf">Sort</span><span class="p">,</span>             <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Sort</span>             <span class="p">(</span><span class="nv">INOUTVALS</span><span class="p">)</span>
+  <span class="nf">Sort_Special</span><span class="p">,</span>     <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Sort_Special</span>     <span class="p">(</span><span class="nv">INOUTVALS</span><span class="p">)</span>
+  <span class="nf">Psort</span><span class="p">,</span>            <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Psort</span>            <span class="p">(</span><span class="nv">INOUTVALS</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+
+  <span class="nf">Rank</span><span class="p">,</span>             <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Rank</span>             <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">imult</span><span class="p">)</span>
+  <span class="nf">Rank_Basic</span><span class="p">,</span>       <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Rank_Basic</span>       <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">irngt</span><span class="p">)</span>
+  <span class="nf">Rank_Decreasing</span><span class="p">,</span>  <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Rank_Decreasing</span>  <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">igoest</span><span class="p">)</span>
+  <span class="nf">Rank_Unique</span><span class="p">,</span>      <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Rank_Unique</span>      <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">irngt</span><span class="p">,</span> <span class="nv">nuni</span><span class="p">)</span>
+
+  <span class="nf">Prank</span><span class="p">,</span>            <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Prank</span>            <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">irngt</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+  <span class="nf">Prank_Basic</span><span class="p">,</span>      <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Prank_Basic</span>      <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">irngt</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+  <span class="nf">Prank_Decreasing</span><span class="p">,</span> <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Prank_Decreasing</span> <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">irngt</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+  <span class="nf">Prank_Special</span><span class="p">,</span>    <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Prank_Special</span><span class="p">,</span>   <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">irngt</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+  <span class="nf">Prank_Unique</span><span class="p">,</span>     <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Prank_Unique</span>     <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">irngt</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+
+  <span class="nf">Median</span><span class="p">,</span>           <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Function</span> <span class="nv">Median</span>             <span class="p">(</span><span class="nv">INVALS</span><span class="p">)</span>
+  <span class="nf">MedianVal</span><span class="p">,</span>        <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Function</span> <span class="nv">MedianVal</span>          <span class="p">(</span><span class="nv">INVALS</span><span class="p">)</span>
+  <span class="nf">MedianLoc</span><span class="p">,</span>        <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">MedianLoc</span>        <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">indm</span><span class="p">)</span>
+
+  <span class="nf">Orderval</span><span class="p">,</span>         <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Function</span> <span class="nv">OrderVal</span>           <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+  <span class="nf">OrderLoc</span><span class="p">,</span>         <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Integer</span> <span class="nv">Function</span> <span class="nv">OrderLoc</span>   <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+  <span class="nf">Orderval_Special</span><span class="p">,</span> <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Function</span> <span class="nv">OrderVal_Special</span>   <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">nord</span><span class="p">)</span>
+
+  <span class="nf">Occurrences</span><span class="p">,</span>      <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Occurrences</span>      <span class="p">(</span><span class="nv">INVALS</span><span class="p">,</span> <span class="nv">imult</span><span class="p">)</span>
+  <span class="nf">Unique</span><span class="p">,</span>           <span class="o">&amp;</span> <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Unique</span>           <span class="p">(</span><span class="nv">INOUTVALS</span><span class="p">,</span> <span class="nv">nuni</span><span class="p">)</span>
+  <span class="nf">Perturb</span>             <span class="err">!</span> <span class="nv">Subroutine</span> <span class="nv">Perturb</span>          <span class="p">(</span><span class="nv">INOUTVALS</span><span class="p">,</span> <span class="nb">CL</span><span class="nv">OSENESS</span><span class="p">)</span>
+
+<span class="nf">The</span> <span class="nv">procedures</span> <span class="nv">may</span> <span class="nv">be</span> <span class="nv">accessed</span> <span class="nv">via</span> <span class="nv">their</span> <span class="nv">original</span> <span class="nv">names</span> <span class="nv">in</span> <span class="nv">ORDERPACK2.0</span>
+<span class="nf">as</span> <span class="nv">well</span><span class="p">,</span> <span class="nv">one</span> <span class="nv">per</span> <span class="nv">module</span><span class="p">:</span>
+
+ <span class="err">!</span> <span class="nf">previous</span> <span class="nv">ORDERPACK2.0</span> <span class="nv">name</span> <span class="err">!</span> <span class="nv">ORDERPACK</span> <span class="mf">2.1</span> <span class="nv">name</span>
+ <span class="nf">use</span> <span class="nv">M_refsor</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">refsor</span>  <span class="err">!</span> <span class="nv">Sort</span>
+ <span class="nf">use</span> <span class="nv">M_inssor</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">inssor</span>  <span class="err">!</span> <span class="nv">Sort_special</span>
+ <span class="nf">use</span> <span class="nv">M_inspar</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">inspar</span>  <span class="err">!</span> <span class="nv">psort</span>
+ <span class="nf">use</span> <span class="nv">M_mrgrnk</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">mrgrnk</span>  <span class="err">!</span> <span class="nv">rank</span>
+ <span class="nf">use</span> <span class="nv">M_mrgref</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">mrgref</span>  <span class="err">!</span> <span class="nv">rank_basic</span>
+ <span class="nf">use</span> <span class="nv">M_uniinv</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">uniinv</span>  <span class="err">!</span> <span class="nv">rank_decreasing</span>
+ <span class="nf">use</span> <span class="nv">M_unirnk</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">unirnk</span>  <span class="err">!</span> <span class="nv">rank_unique</span>
+ <span class="nf">use</span> <span class="nv">M_rnkpar</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">rnkpar</span>  <span class="err">!</span> <span class="nv">prank</span>
+ <span class="nf">use</span> <span class="nv">M_refpar</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">refpar</span>  <span class="err">!</span> <span class="nv">prank_basic</span>
+ <span class="nf">use</span> <span class="nv">M_rapknr</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">rapknr</span>  <span class="err">!</span> <span class="nv">prank_decreasing</span>
+ <span class="nf">use</span> <span class="nv">M_rinpar</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">rinpar</span>  <span class="err">!</span> <span class="nv">prank_special</span>
+ <span class="nf">use</span> <span class="nv">M_unipar</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">unipar</span>  <span class="err">!</span> <span class="nv">prank_unique</span>
+ <span class="nf">use</span> <span class="nv">M_median</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">median</span>  <span class="err">!</span> <span class="nv">median</span>
+ <span class="nf">use</span> <span class="nv">M_valmed</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">valmed</span>  <span class="err">!</span> <span class="nv">medianval</span>
+ <span class="nf">use</span> <span class="nv">M_indmed</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">indmed</span>  <span class="err">!</span> <span class="nv">medianloc</span>
+ <span class="nf">use</span> <span class="nv">M_valnth</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">valnth</span>  <span class="err">!</span> <span class="nv">orderval</span>
+ <span class="nf">use</span> <span class="nv">M_indnth</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">indnth</span>  <span class="err">!</span> <span class="nv">orderloc</span>
+ <span class="nf">use</span> <span class="nv">M_fndnth</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">fndnth</span>  <span class="err">!</span> <span class="nv">orderval_special</span>
+ <span class="nf">use</span> <span class="nv">M_mulcnt</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">mulcnt</span>  <span class="err">!</span> <span class="nv">occurrences</span>
+ <span class="nf">use</span> <span class="nv">M_unista</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">unista</span>  <span class="err">!</span> <span class="nv">unique</span>
+ <span class="nf">use</span> <span class="nv">M_ctrper</span><span class="p">,</span> <span class="nv">only</span> <span class="p">:</span> <span class="nv">ctrper</span>  <span class="err">!</span> <span class="nv">perturb</span>
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">ORDERPACK</span> <span class="mi">2</span>.<span class="mi">1</span> <span class="o">-</span> <span class="nv">Unconditional</span>, <span class="nv">Unique</span> <span class="nv">and</span> <span class="nv">Partial</span> <span class="nv">Ranking</span>, <span class="nv">Sorting</span>,
+                <span class="nv">and</span> <span class="nv">Permutation</span>
+
+<span class="nv">ORDERPACK</span> <span class="mi">2</span>.<span class="mi">1</span> <span class="nv">performs</span> <span class="nv">both</span> <span class="nv">conventional</span> <span class="nv">sorting</span> <span class="nv">and</span> <span class="nv">ranking</span> <span class="nv">as</span> <span class="nv">well</span> <span class="nv">as</span>
+<span class="nv">the</span> <span class="nv">rarer</span> <span class="nv">specialized</span> <span class="nv">ordering</span> <span class="nv">tasks</span> <span class="nv">such</span> <span class="nv">as</span> <span class="nv">partial</span> <span class="nv">sorting</span>, <span class="nv">partial</span>
+<span class="nv">ranking</span>, <span class="nv">unique</span> <span class="nv">sorting</span>, <span class="nv">unique</span> <span class="nv">ranking</span>, <span class="nv">inverse</span> <span class="nv">unique</span> <span class="nv">ranking</span>, <span class="nv">and</span>
+<span class="nv">more</span>. <span class="nv">These</span> <span class="nv">partial</span> <span class="nv">sort</span> <span class="nv">and</span> <span class="nv">ranking</span> <span class="nv">routines</span> <span class="nv">can</span> <span class="nv">greatly</span> <span class="nv">accelerate</span>
+<span class="nv">many</span> <span class="nv">computations</span> <span class="nv">when</span> <span class="nv">users</span> <span class="nv">need</span> <span class="nv">only</span> <span class="nv">the</span> <span class="nv">M</span> <span class="nv">largest</span> <span class="nv">or</span> <span class="nv">smallest</span>
+<span class="nv">elements</span> <span class="nv">out</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">N</span><span class="o">-</span><span class="nv">element</span> <span class="nv">vector</span>.
+
+<span class="nv">All</span> <span class="nv">the</span> <span class="nv">specialized</span> <span class="nv">procedures</span> <span class="nv">have</span> <span class="nv">a</span> <span class="nv">range</span> <span class="nv">over</span> <span class="nv">which</span> <span class="nv">they</span> <span class="nv">far</span>
+<span class="nv">outperform</span> <span class="nv">a</span> <span class="nv">basic</span> <span class="nv">sort</span>, <span class="nv">and</span> <span class="nv">most</span> <span class="nv">have</span> <span class="nv">a</span> <span class="nv">range</span> <span class="nv">where</span> <span class="nv">they</span> <span class="nv">dramatically</span>
+<span class="nv">underperform</span>. <span class="k">If</span> <span class="nv">you</span> <span class="nv">are</span> <span class="nv">not</span> <span class="nv">limited</span> <span class="nv">by</span> <span class="nv">memory</span> <span class="nv">requirements</span> <span class="nv">or</span> <span class="nv">have</span> <span class="nv">no</span>
+<span class="nv">issues</span> <span class="nv">with</span> <span class="nv">runtimes</span> <span class="nv">the</span> <span class="nv">simplest</span> <span class="nv">solution</span> <span class="nv">may</span> <span class="nv">be</span> <span class="nv">just</span> <span class="nv">to</span> <span class="nv">use</span> <span class="nv">SORT</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
+<span class="nv">and</span> <span class="nv">RANK</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>.
+
+<span class="nv">Otherwise</span>, <span class="nv">your</span> <span class="nv">solution</span> <span class="nv">method</span> <span class="nv">may</span> <span class="nv">very</span> <span class="nv">well</span> <span class="nv">depend</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">size</span> <span class="nv">of</span>
+<span class="nv">the</span> <span class="nv">input</span> <span class="nv">arrays</span>, <span class="nv">whether</span> <span class="nv">the</span> <span class="nv">data</span> <span class="nv">is</span> <span class="nv">already</span> <span class="nv">close</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">required</span>
+<span class="nv">order</span>, <span class="nv">or</span> <span class="nv">how</span> <span class="nv">costly</span> <span class="nv">it</span> <span class="nv">is</span> <span class="nv">to</span> <span class="nv">create</span> <span class="nv">work</span> <span class="nv">arrays</span> <span class="nv">or</span> <span class="nv">an</span> <span class="nv">index</span> <span class="nv">array</span>.
+
+<span class="nv">So</span>, <span class="k">if</span> <span class="nv">you</span> <span class="nv">want</span> <span class="nv">the</span> <span class="nv">smallest</span> <span class="nv">value</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">array</span> <span class="k">call</span> <span class="nl">the</span> <span class="nv">intrinsic</span>
+<span class="nv">MINVAL</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>, <span class="nv">not</span> <span class="nv">ORDERVAL</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>.
+</code></pre></div>
+
+<h2 id="sorting">SORTING</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">FULL</span> <span class="nv">SORTING</span>
+    <span class="nv">Sort</span>          <span class="nv">Sorts</span> <span class="nv">array</span> <span class="nv">into</span> <span class="nv">ascending</span> <span class="nv">order</span> <span class="ss">(</span><span class="nv">Quicksort</span><span class="ss">)</span>
+    <span class="nv">Sort_Special</span>  <span class="nv">Sorts</span> <span class="nv">array</span> <span class="nv">into</span> <span class="nv">ascending</span> <span class="nv">order</span> <span class="ss">(</span><span class="nv">Insertion</span> <span class="nv">sort</span>,
+                  <span class="nv">generally</span> <span class="k">for</span> <span class="nv">small</span> <span class="nv">or</span> <span class="nv">nearly</span> <span class="nv">sorted</span> <span class="nv">arrays</span><span class="ss">)</span>
+ <span class="nv">PARTIAL</span> <span class="nv">SORTING</span>
+    <span class="nv">Psort</span>             <span class="nv">partially</span> <span class="nv">sorts</span> <span class="nv">an</span> <span class="nv">array</span>
+    <span class="nv">Orderval</span>          <span class="k">Return</span> <span class="nv">VALUE</span> <span class="nv">of</span> <span class="nv">Nth</span> <span class="nv">lowest</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">array</span>
+                      <span class="ss">(</span><span class="nv">QuickSort</span><span class="ss">)</span>
+    <span class="nv">Orderval_Special</span>  <span class="k">Return</span> <span class="nv">Nth</span> <span class="nv">lowest</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">an</span> <span class="nv">array</span>
+                      <span class="ss">(</span><span class="nv">Insert</span><span class="o">-</span><span class="nv">sort</span>, <span class="nv">generally</span> <span class="k">for</span> <span class="nv">small</span> <span class="nv">or</span> <span class="nv">nearly</span>
+                      <span class="nv">sorted</span> <span class="nv">arrays</span><span class="ss">))</span>
+    <span class="nv">MedianVal</span>         <span class="nv">finds</span> <span class="nv">the</span> <span class="nv">median</span> <span class="nv">of</span> <span class="nv">an</span> <span class="nv">array</span>
+    <span class="nv">Median</span>            <span class="k">Return</span> <span class="nv">median</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">array</span>. <span class="k">If</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">elements</span>
+                      <span class="nv">is</span> <span class="nv">even</span>, <span class="k">return</span> <span class="nv">average</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">two</span> <span class="s2">&quot;</span><span class="s">medians</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<h2 id="ranking">RANKING</h2>
+<div class="codehilite"><pre><span></span><code> <span class="n">UNCONDITIONAL</span> <span class="n">RANKING</span>
+    <span class="n">Rank</span>        <span class="n">ranks</span> <span class="n">array</span> <span class="p">(</span><span class="n">optimized</span> <span class="n">merge</span><span class="o">-</span><span class="n">sort</span><span class="p">)</span>
+    <span class="n">Rank_Basic</span>  <span class="n">ranks</span> <span class="n">array</span> <span class="p">(</span><span class="n">basic</span> <span class="n">merge</span><span class="o">-</span><span class="n">sort</span><span class="p">)</span>
+ <span class="n">PARTIAL</span> <span class="n">RANKING</span>
+    <span class="n">Prank</span>             <span class="n">partially</span> <span class="n">ranks</span> <span class="n">array</span> <span class="p">(</span><span class="n">Optimized</span> <span class="n">QuickSort</span><span class="p">)</span>
+    <span class="n">Prank_Basic</span>       <span class="n">partially</span> <span class="n">ranks</span> <span class="n">array</span>
+    <span class="n">Prank_Decreasing</span>  <span class="n">partially</span> <span class="n">ranks</span> <span class="n">array</span> <span class="n">in</span> <span class="n">DECREASING</span> <span class="n">order</span>
+    <span class="n">Prank_Special</span>     <span class="n">partially</span> <span class="n">ranks</span> <span class="n">array</span> <span class="p">(</span><span class="n">Basic</span> <span class="n">Insert</span><span class="o">-</span><span class="n">Sort</span><span class="p">)</span>
+    <span class="n">Orderloc</span>          <span class="n">Return</span> <span class="n">INDEX</span> <span class="n">of</span> <span class="n">Nth</span> <span class="n">value</span> <span class="n">of</span> <span class="n">array</span> <span class="p">(</span><span class="n">QuickSort</span><span class="o">-</span><span class="n">like</span><span class="p">)</span>
+    <span class="n">MedianLoc</span>         <span class="n">Returns</span> <span class="n">INDEX</span> <span class="n">of</span> <span class="n">median</span> <span class="n">value</span> <span class="n">of</span> <span class="n">an</span> <span class="n">array</span><span class="p">.</span>
+ <span class="n">UNIQUE</span> <span class="n">RANKING</span>
+    <span class="n">Rank_Unique</span>       <span class="n">performs</span> <span class="n">a</span> <span class="n">MergeSort</span> <span class="n">ranking</span> <span class="n">of</span> <span class="n">an</span> <span class="n">array</span><span class="p">,</span>
+                      <span class="n">with</span> <span class="n">removal</span> <span class="n">of</span> <span class="n">duplicate</span> <span class="n">entries</span><span class="p">.</span>
+    <span class="n">Rank_Decreasing</span>   <span class="n">an</span> <span class="n">inverse</span> <span class="n">ranking</span> <span class="n">of</span> <span class="n">an</span> <span class="n">array</span><span class="p">,</span>
+                      <span class="n">with</span> <span class="n">duplicate</span> <span class="n">entries</span> <span class="n">assigned</span> <span class="n">the</span> <span class="n">same</span> <span class="n">rank</span><span class="p">.</span>
+    <span class="n">Prank_Unique</span>      <span class="n">partially</span> <span class="n">rank</span> <span class="n">an</span> <span class="n">array</span> <span class="n">removing</span> <span class="n">duplicates</span>
+</code></pre></div>
+
+<h2 id="unique">UNIQUE</h2>
+<div class="codehilite"><pre><span></span><code>    Unique        Removes duplicates from an array
+                  otherwise retaining original order
+</code></pre></div>
+
+<h2 id="multiplicity">MULTIPLICITY</h2>
+<div class="codehilite"><pre><span></span><code>    <span class="nv">Occurrences</span>   <span class="nv">Give</span> <span class="nv">the</span> <span class="nv">multiplicity</span> <span class="k">for</span> <span class="nv">each</span> <span class="nv">array</span> <span class="nv">value</span>
+</code></pre></div>
+
+<h2 id="permutation">PERMUTATION</h2>
+<div class="codehilite"><pre><span></span><code>    <span class="nv">Perturb</span>  <span class="nv">a</span> <span class="k">random</span> <span class="nv">permutation</span> <span class="nv">of</span> <span class="nv">an</span> <span class="nv">array</span>, <span class="nv">optionally</span> <span class="nv">leaving</span>
+             <span class="nv">elements</span> <span class="nv">close</span> <span class="nv">to</span> <span class="nv">initial</span> <span class="nv">locations</span>
+</code></pre></div>
+
+<h2 id="rationale">RATIONALE</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">While</span> <span class="n">Fortran</span> <span class="mi">90</span> <span class="ow">and</span> <span class="n">later</span> <span class="n">variants</span> <span class="n">have</span> <span class="n">made</span> <span class="n">life</span> <span class="n">much</span> <span class="n">easier</span> <span class="k">for</span>
+<span class="n">scientific</span> <span class="n">programmers</span> <span class="n">than</span> <span class="n">Fortran</span> <span class="mi">77</span><span class="p">,</span> <span class="n">the</span> <span class="n">language</span> <span class="n">still</span> <span class="n">lacks</span>
+<span class="n">depth</span> <span class="ow">in</span> <span class="n">public</span> <span class="n">domain</span> <span class="n">utilities</span><span class="o">.</span> <span class="n">The</span> <span class="n">following</span> <span class="n">package</span><span class="p">,</span> <span class="n">ORDERPACK</span>
+<span class="mf">2.1</span><span class="p">,</span> <span class="n">provides</span> <span class="n">important</span> <span class="n">but</span> <span class="n">uncommon</span> <span class="n">routines</span> <span class="n">needed</span> <span class="n">to</span> <span class="n">complete</span> <span class="n">the</span>
+<span class="n">Fortran</span> <span class="n">programming</span> <span class="n">environment</span><span class="o">.</span>
+</code></pre></div>
+
+<h2 id="introduction">INTRODUCTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">The</span> <span class="nv">existing</span> <span class="nv">fortran</span> <span class="nv">code</span> <span class="nv">base</span> <span class="nv">provides</span> <span class="nv">many</span> <span class="nv">conventional</span> <span class="nv">ranking</span>
+<span class="nv">or</span> <span class="nv">sorting</span> <span class="nv">routines</span>, <span class="nv">but</span> <span class="nv">very</span> <span class="nv">few</span> <span class="nv">specialized</span> <span class="nv">ranking</span> <span class="nv">or</span> <span class="nv">sorting</span>
+<span class="nv">routines</span>. <span class="nv">Specifically</span>, <span class="nv">we</span> <span class="nv">know</span> <span class="nv">of</span> <span class="nv">no</span> <span class="nv">other</span> <span class="nv">Fortran</span> <span class="nv">code</span> <span class="nv">which</span> <span class="nv">sorts</span>
+<span class="nv">or</span> <span class="nv">ranks</span> <span class="nv">only</span> <span class="nv">a</span> <span class="nv">small</span> <span class="nv">proportion</span> <span class="nv">of</span> <span class="nv">an</span> <span class="nv">array</span> <span class="ss">(</span><span class="nv">partial</span> <span class="nv">ordering</span><span class="ss">)</span>. <span class="nv">Such</span>
+<span class="nv">partial</span> <span class="nv">ranking</span> <span class="nv">routines</span> <span class="nv">have</span> <span class="nv">applications</span> <span class="nv">in</span> <span class="nv">statistics</span> <span class="k">for</span> <span class="nv">rapidly</span>
+<span class="nv">computing</span> <span class="nv">extreme</span> <span class="nv">order</span> <span class="nv">statistics</span>, <span class="nv">finding</span> <span class="nv">nearest</span> <span class="nv">neighbors</span>, <span class="nv">and</span>
+<span class="nv">other</span> <span class="nv">clustering</span> <span class="nv">operations</span>. <span class="nv">In</span> <span class="nv">addition</span>, <span class="nv">many</span> <span class="nv">applications</span> <span class="nv">need</span> <span class="nv">to</span>
+<span class="nv">work</span> <span class="nv">with</span> <span class="nv">only</span> <span class="nv">the</span> <span class="nv">unique</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">array</span> <span class="ss">(</span><span class="nv">unique</span> <span class="nv">ordering</span><span class="ss">)</span>. <span class="nv">Such</span>
+<span class="nv">unique</span> <span class="nv">ranking</span> <span class="nv">routines</span> <span class="nv">allow</span> <span class="nv">users</span> <span class="nv">to</span> <span class="nv">isolate</span> <span class="nv">individual</span> <span class="nv">cases</span> <span class="nv">out</span>
+<span class="nv">of</span> <span class="nv">a</span> <span class="nv">mass</span> <span class="nv">of</span> <span class="nv">discrete</span> <span class="nv">data</span>. <span class="nv">Many</span> <span class="nv">times</span> <span class="nv">the</span> <span class="nv">frequency</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">unique</span>
+<span class="nv">values</span> <span class="nv">proves</span> <span class="nv">interesting</span> <span class="ss">(</span><span class="nv">e</span>.<span class="nv">g</span>., <span class="nv">empirical</span> <span class="nv">distributions</span><span class="ss">)</span>.
+
+<span class="nv">ORDERPACK</span> <span class="nv">handles</span> <span class="nv">all</span> <span class="nv">of</span> <span class="nv">these</span> <span class="nv">ordering</span> <span class="nv">needs</span>.
+
+<span class="nv">Also</span>, <span class="nv">ORDERPACK</span> <span class="nv">contains</span> <span class="nv">a</span> <span class="nv">partial</span> <span class="nv">unique</span> <span class="nv">ranking</span> <span class="nv">routine</span>. <span class="nv">Such</span> <span class="nv">a</span>
+<span class="nv">routine</span> <span class="nv">would</span> <span class="nv">prove</span> <span class="nv">useful</span> <span class="nv">in</span> <span class="nv">finding</span> <span class="nv">a</span> <span class="nv">limited</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">unique</span>
+<span class="nv">values</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">array</span>.
+
+<span class="nv">Inversion</span> <span class="nv">of</span> <span class="nv">orderings</span> <span class="nv">becomes</span> <span class="nv">difficult</span> <span class="nv">when</span> <span class="nv">duplicates</span> <span class="nv">exist</span> <span class="ss">(</span><span class="nv">not</span>
+<span class="nv">a</span> <span class="nv">one</span><span class="o">-</span><span class="nv">to</span><span class="o">-</span><span class="nv">one</span> <span class="nv">relation</span><span class="ss">)</span>. <span class="nv">The</span> <span class="nv">ORDERPACK</span> <span class="nv">inverse</span> <span class="nv">ranking</span> <span class="nv">routine</span> <span class="nv">handles</span>
+<span class="nv">this</span> <span class="nv">difficult</span> <span class="nv">case</span>.
+
+<span class="nv">As</span> <span class="nv">an</span> <span class="nv">added</span> <span class="nv">bonus</span> <span class="nv">ORDERPACK</span> <span class="nv">provides</span> <span class="nv">an</span> <span class="nv">unusual</span> <span class="nv">routine</span> <span class="nv">which</span> <span class="nv">allows</span>
+<span class="nv">user</span> <span class="nv">controllable</span> <span class="nv">partial</span> <span class="k">random</span> <span class="nv">permutation</span> <span class="nv">of</span> <span class="nv">arrays</span>.
+
+<span class="nv">ORDERPACK</span> <span class="nv">of</span> <span class="nv">course</span> <span class="nv">contains</span> <span class="nv">conventional</span> <span class="nv">or</span> <span class="nv">unconditional</span> <span class="nv">sorting</span>
+<span class="nv">routines</span> <span class="nv">as</span> <span class="nv">well</span>.
+
+<span class="nv">Finally</span>, <span class="nv">many</span> <span class="nv">Fortran</span> <span class="nv">sorting</span> <span class="nv">or</span> <span class="nv">ranking</span> <span class="nv">routines</span> <span class="k">do</span> <span class="nv">not</span> <span class="nv">take</span> <span class="nv">advantage</span>
+<span class="nv">of</span> <span class="nv">available</span> <span class="nv">memory</span> <span class="nv">and</span> <span class="nv">cache</span> <span class="nv">to</span> <span class="nv">maximize</span> <span class="nv">performance</span>. <span class="nv">The</span> <span class="nv">routines</span>
+<span class="nv">in</span> <span class="nv">ORDERPACK</span> <span class="nv">have</span> <span class="nv">been</span> <span class="nv">designed</span> <span class="nv">to</span> <span class="nv">take</span> <span class="nv">advantage</span> <span class="nv">of</span> <span class="nv">modern</span> <span class="nv">machines</span>.
+</code></pre></div>
+
+<h2 id="ranking-versus-sorting">RANKING VERSUS SORTING</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Ranking</span> <span class="nv">consists</span> <span class="nv">in</span> <span class="nv">finding</span>, <span class="k">for</span> <span class="nv">each</span> <span class="nv">element</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">set</span>, <span class="nv">its</span> <span class="nv">order</span>
+<span class="ss">(</span><span class="nv">rank</span><span class="ss">)</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">sorted</span> <span class="nv">set</span>, <span class="nv">without</span> <span class="nv">effectively</span> <span class="nv">changing</span> <span class="nv">the</span> <span class="nv">initial</span>
+<span class="nv">order</span> <span class="ss">(</span><span class="nv">or</span> <span class="nv">disorder</span><span class="o">!</span> <span class="ss">)</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">set</span>. <span class="nv">In</span> <span class="nv">many</span> <span class="nv">instances</span>, <span class="nv">it</span> <span class="nv">better</span> <span class="nv">suits</span>
+<span class="nv">the</span> <span class="nv">actual</span> <span class="nv">need</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">user</span> <span class="nv">than</span> <span class="nv">sorting</span>, <span class="nv">as</span> <span class="nv">the</span> <span class="nv">ranks</span> <span class="nv">can</span> <span class="k">then</span> <span class="nv">be</span>
+<span class="nv">used</span> <span class="nv">to</span> <span class="nv">order</span> <span class="nv">other</span> <span class="nv">related</span> <span class="nv">sets</span> <span class="nv">or</span> <span class="nv">components</span> <span class="nv">of</span> <span class="nv">a</span> <span class="nv">user</span> <span class="nv">type</span>.
+
+<span class="nv">Ranking</span> <span class="nv">is</span> <span class="nv">especially</span> <span class="nv">needed</span> <span class="nv">when</span> <span class="nv">the</span> <span class="nv">sizes</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">elements</span> <span class="nv">are</span> <span class="nv">large</span>,
+<span class="nv">and</span> <span class="nv">therefore</span> <span class="nv">moving</span> <span class="nv">them</span> <span class="nv">around</span> <span class="nv">is</span> <span class="nv">resource</span><span class="o">-</span><span class="nv">consuming</span>.
+</code></pre></div>
+
+<h2 id="ranking_1">RANKING</h2>
+<div class="codehilite"><pre><span></span><code>In some instances, one is not actually interested in modifying the
+order of the elements in a set, but only in knowing how to access them
+in increasing -- or decreasing -- order. Ranking, as it is called,
+provides the index array I(:) such as the set S(I(:)) is ordered. One
+of the advantages of carrying out ranking rather than sorting is that
+the index array can be computed without the performance penalty of
+moving the elements around when they are of large sizes. A similar
+point is that the index array can be used to index other data.
+</code></pre></div>
+
+<h2 id="optimization-choices">OPTIMIZATION CHOICES</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">We</span> <span class="nv">tried</span> <span class="nv">to</span> <span class="nv">take</span> <span class="nv">into</span> <span class="nv">account</span> <span class="nv">the</span> <span class="nv">recent</span> <span class="nv">trends</span> <span class="nv">in</span> <span class="nv">computing</span> <span class="nv">to</span> <span class="nv">make</span>
+<span class="nv">our</span> <span class="nv">compromise</span> <span class="nv">choices</span>. <span class="nv">Of</span> <span class="nv">course</span>, <span class="nv">no</span> <span class="nv">two</span> <span class="nv">problems</span> <span class="nv">are</span> <span class="nv">the</span> <span class="nv">same</span>, <span class="nv">and</span>
+<span class="k">for</span> <span class="nv">some</span> <span class="nv">of</span> <span class="nv">them</span> <span class="nv">the</span> <span class="nv">following</span> <span class="nv">decisions</span> <span class="nv">may</span> <span class="nv">happen</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">wrong</span>. <span class="nv">We</span>
+<span class="nv">just</span> <span class="nv">hope</span> <span class="nv">that</span> <span class="k">for</span> <span class="nv">most</span> <span class="nv">cases</span>, <span class="nv">they</span> <span class="nv">will</span> <span class="nv">be</span> <span class="nv">right</span>.
+
+  <span class="o">*</span> <span class="nv">Make</span> <span class="nv">extensive</span> <span class="nv">use</span> <span class="nv">of</span> <span class="nv">work</span> <span class="nv">arrays</span>: <span class="nv">Memory</span> <span class="nv">can</span> <span class="nv">be</span> <span class="nv">extended</span>,
+    <span class="nv">time</span> <span class="nv">cannot</span>.
+  <span class="o">*</span> <span class="nv">Try</span> <span class="nv">to</span> <span class="nv">reduce</span> <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">operations</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">inner</span> <span class="nv">loops</span>, <span class="nv">even</span>
+    <span class="k">if</span> <span class="nv">it</span> <span class="nv">increases</span> <span class="nv">code</span> <span class="nv">size</span>.
+  <span class="o">*</span> <span class="nv">Assume</span> <span class="nv">that</span> <span class="nv">cache</span> <span class="nv">size</span> <span class="nv">is</span> <span class="nv">relatively</span> <span class="nv">small</span>, <span class="nv">and</span> <span class="nv">try</span> <span class="nv">to</span> <span class="nv">maximize</span>
+    <span class="nv">cache</span> <span class="nv">hits</span>.
+</code></pre></div>
+
+<h2 id="interface">INTERFACE</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Robust</span> <span class="n">routines</span> <span class="n">make</span> <span class="n">their</span> <span class="n">interface</span> <span class="n">known</span> <span class="n">to</span> <span class="n">the</span> <span class="n">calling</span>
+<span class="n">program</span><span class="o">.</span> <span class="n">There</span> <span class="n">are</span> <span class="n">three</span> <span class="n">main</span> <span class="n">ways</span> <span class="n">to</span> <span class="n">implement</span> <span class="n">this</span> <span class="ow">in</span> <span class="n">Fortran</span><span class="p">:</span>
+
+  <span class="o">*</span> <span class="n">Explicit</span> <span class="n">interfaces</span><span class="p">,</span> <span class="n">either</span> <span class="n">included</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">body</span> <span class="n">of</span> <span class="n">the</span> <span class="n">calling</span>
+    <span class="n">routine</span><span class="p">,</span> <span class="ow">or</span> <span class="n">gathered</span> <span class="ow">in</span> <span class="n">an</span> <span class="s1">&#39;interface module&#39;</span><span class="o">.</span> <span class="n">An</span> <span class="n">example</span> <span class="n">of</span>
+    <span class="n">including</span> <span class="n">an</span> <span class="n">interface</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">calling</span> <span class="n">program</span> <span class="n">can</span> <span class="n">be</span> <span class="n">found</span>
+    <span class="ow">in</span> <span class="n">the</span> <span class="n">sample</span> <span class="n">program</span> <span class="n">sort7</span><span class="o">.</span><span class="n">f90</span><span class="o">.</span>
+  <span class="o">*</span> <span class="n">Embedding</span> <span class="n">the</span> <span class="n">routine</span> <span class="n">of</span> <span class="n">interest</span> <span class="k">as</span> <span class="n">a</span> <span class="s2">&quot;contained routine&quot;</span> <span class="n">into</span>
+    <span class="n">the</span> <span class="n">calling</span> <span class="n">procedure</span><span class="o">.</span> <span class="n">An</span> <span class="n">example</span> <span class="n">of</span> <span class="n">such</span> <span class="n">way</span> <span class="n">can</span> <span class="n">be</span> <span class="n">found</span> <span class="ow">in</span>
+    <span class="n">the</span> <span class="n">follow</span><span class="o">.</span><span class="n">f90</span> <span class="n">program</span><span class="p">,</span> <span class="n">that</span> <span class="n">rebuilds</span> <span class="n">a</span> <span class="n">curve</span> <span class="n">from</span> <span class="n">a</span> <span class="n">set</span> <span class="n">of</span> <span class="n">X</span><span class="p">,</span>
+    <span class="n">Y</span> <span class="n">coordinates</span><span class="o">.</span>
+  <span class="o">*</span> <span class="n">Embedding</span> <span class="n">the</span> <span class="n">routine</span> <span class="n">of</span> <span class="n">interest</span> <span class="n">into</span> <span class="n">a</span> <span class="n">MODULE</span><span class="p">,</span> <span class="ow">and</span> <span class="n">USEing</span> <span class="n">that</span>
+    <span class="n">module</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">procedure</span> <span class="n">that</span> <span class="n">calls</span> <span class="n">the</span> <span class="n">routine</span><span class="o">.</span> <span class="n">This</span> <span class="n">creates</span>
+    <span class="n">order</span> <span class="n">dependencies</span> <span class="n">when</span> <span class="n">compiling</span> <span class="n">code</span><span class="p">,</span> <span class="n">generally</span> <span class="n">resulting</span> <span class="ow">in</span>
+    <span class="n">requiring</span> <span class="n">such</span> <span class="n">tools</span> <span class="k">as</span> <span class="n">Makefiles</span> <span class="n">but</span> <span class="n">has</span> <span class="n">many</span> <span class="n">other</span> <span class="n">benefits</span><span class="p">,</span>
+    <span class="n">such</span> <span class="k">as</span> <span class="n">most</span> <span class="n">easily</span> <span class="n">allowing</span> <span class="k">for</span> <span class="n">generic</span> <span class="n">versions</span> <span class="n">of</span> <span class="n">the</span> <span class="n">routines</span><span class="p">,</span>
+    <span class="n">This</span> <span class="k">is</span> <span class="n">the</span> <span class="n">way</span> <span class="n">we</span> <span class="n">used</span> <span class="n">here</span><span class="o">.</span> <span class="n">An</span> <span class="n">example</span> <span class="n">of</span> <span class="n">use</span> <span class="k">is</span> <span class="n">provided</span> <span class="k">as</span>
+    <span class="n">the</span> <span class="n">test</span> <span class="n">program</span> <span class="n">tstvalnth</span><span class="o">.</span><span class="n">f90</span><span class="o">.</span>
+</code></pre></div>
+
+<h2 id="a-word-of-apology">A WORD OF APOLOGY</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">When</span> <span class="n">one</span> <span class="n">looks</span> <span class="n">at</span> <span class="n">the</span> <span class="n">description</span> <span class="n">of</span> <span class="n">a</span> <span class="n">sorting</span> <span class="n">algorithm</span><span class="p">,</span> <span class="n">the</span>
+<span class="n">process</span> <span class="n">seems</span> <span class="n">pretty</span> <span class="n">simple</span><span class="p">,</span> <span class="ow">and</span> <span class="n">can</span> <span class="n">usually</span> <span class="n">be</span> <span class="n">held</span> <span class="ow">in</span> <span class="mi">10</span> <span class="n">to</span> <span class="mi">20</span>
+<span class="n">lines</span> <span class="n">of</span> <span class="n">pseudo</span><span class="o">-</span><span class="n">code</span><span class="o">.</span> <span class="n">But</span> <span class="k">if</span> <span class="n">one</span> <span class="n">wants</span> <span class="n">an</span> <span class="n">optimized</span> <span class="n">program</span><span class="p">,</span> <span class="n">one</span>
+<span class="n">takes</span> <span class="n">this</span> <span class="n">simple</span> <span class="n">implementation</span><span class="p">,</span> <span class="ow">and</span> <span class="n">looks</span> <span class="k">for</span> <span class="n">redundant</span> <span class="n">operations</span><span class="p">,</span>
+<span class="n">investigates</span> <span class="n">runs</span> <span class="n">with</span> <span class="n">sample</span> <span class="n">data</span> <span class="n">sets</span> <span class="n">with</span> <span class="n">a</span> <span class="n">profiling</span> <span class="k">tool</span><span class="p">,</span> <span class="ow">and</span>
+<span class="k">is</span> <span class="n">led</span> <span class="n">to</span> <span class="n">duplicate</span> <span class="n">code</span> <span class="n">with</span> <span class="n">slight</span> <span class="n">modifications</span> <span class="n">rather</span> <span class="n">than</span> <span class="n">use</span>
+<span class="n">tests</span> <span class="ow">in</span> <span class="n">inner</span> <span class="n">loops</span><span class="p">,</span> <span class="n">to</span> <span class="n">process</span> <span class="n">differently</span> <span class="n">the</span> <span class="n">first</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">last</span>
+<span class="n">iterations</span><span class="p">,</span> <span class="ow">or</span> <span class="n">to</span> <span class="n">take</span> <span class="n">into</span> <span class="n">account</span> <span class="n">some</span> <span class="n">special</span> <span class="n">cases</span> <span class="n">that</span> <span class="n">are</span> <span class="n">only</span>
+<span class="n">special</span> <span class="ow">in</span> <span class="n">that</span> <span class="n">they</span> <span class="n">can</span> <span class="n">be</span> <span class="n">done</span> <span class="n">faster</span><span class="o">.</span>
+
+<span class="n">In</span> <span class="n">the</span> <span class="n">end</span><span class="p">,</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">lines</span> <span class="n">of</span> <span class="n">source</span> <span class="n">code</span> <span class="n">may</span> <span class="n">be</span>
+<span class="n">multiplied</span> <span class="n">tenfold</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">readability</span> <span class="n">decreased</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">similar</span>
+<span class="n">proportion</span><span class="o">.</span> <span class="n">Unfortunately</span><span class="p">,</span> <span class="n">this</span> <span class="k">is</span> <span class="n">the</span> <span class="n">price</span> <span class="n">to</span> <span class="n">pay</span> <span class="k">for</span> <span class="n">speed</span> <span class="n">of</span>
+<span class="n">execution</span><span class="o">.</span> <span class="n">It</span> <span class="n">was</span> <span class="n">that</span> <span class="n">way</span> <span class="n">when</span> <span class="n">I</span> <span class="n">started</span> <span class="n">programming</span> <span class="n">more</span> <span class="n">than</span> <span class="mi">20</span>
+<span class="n">years</span> <span class="n">ago</span><span class="p">,</span> <span class="ow">and</span> <span class="n">I</span> <span class="n">have</span> <span class="n">forsaken</span> <span class="n">any</span> <span class="n">hope</span> <span class="n">that</span> <span class="n">it</span> <span class="n">might</span> <span class="n">become</span> <span class="n">otherwise</span>
+<span class="n">before</span> <span class="n">I</span> <span class="k">return</span> <span class="n">to</span> <span class="n">dust</span><span class="o">.</span> <span class="n">So</span> <span class="n">please</span> <span class="n">accept</span> <span class="n">my</span> <span class="n">apologies</span> <span class="n">that</span> <span class="n">this</span> <span class="n">code</span>
+<span class="k">is</span> <span class="n">often</span> <span class="n">complex</span> <span class="ow">and</span> <span class="n">difficult</span> <span class="n">to</span> <span class="n">read</span><span class="o">.</span>
+</code></pre></div>
+
+<h2 id="authors">AUTHORS</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">Michel</span> <span class="n">Olagnon</span> <span class="n">IFREMER</span> <span class="n">Brest</span> <span class="p">/</span> <span class="n">Michel</span><span class="p">.</span><span class="n">Olagnon@ifremer</span><span class="p">.</span><span class="n">fr</span>
+
+<span class="m">2000</span><span class="p">-</span> <span class="m">2013</span><span class="p">/</span><span class="m">11</span><span class="p">/</span><span class="m">06</span>
+</code></pre></div>
+
+<h2 id="maintainers">MAINTAINERS</h2>
+<div class="codehilite"><pre><span></span><code>John S. Urban, 2022-04-16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
       <br>
     
   
@@ -322,7 +590,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-24 19:09  
+             on 2022-04-24 19:37  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

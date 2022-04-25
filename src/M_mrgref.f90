@@ -8,7 +8,7 @@ interface mrgref
   module procedure real64_mrgref, real32_mrgref, int32_mrgref, f_char_mrgref
 end interface mrgref
 contains
-!>
+!!
 !!##NAME
 !!    rank_basic(3f) - [orderpack:RANK] create an INDEX that defines the
 !!                     order of array sorted in ascending order (basic

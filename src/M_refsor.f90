@@ -9,7 +9,7 @@ interface refsor
   module procedure real64_refsor, real32_refsor, int32_refsor, f_char_refsor
 end interface refsor
 contains
-!>
+!!
 !!##NAME
 !!    sort(3f) - [orderpack:SORT] Sorts array into ascending order
 !!                 (Quicksort)

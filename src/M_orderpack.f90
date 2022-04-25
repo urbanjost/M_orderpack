@@ -32,7 +32,7 @@ use M_fndnth, only : orderval_special=>fndnth ! [FRACTILE] Return VALUE of Nth o
 use M_unista, only : unique=>unista           ! [UNIQUE] Removes duplicates from an array otherwise retaining original order
 use M_mulcnt, only : occurrences=>mulcnt      ! [MULTIPLICITY] gives number of times that each value appears in the input
 use M_ctrper, only : perturb=>ctrper          ! [PERMUTATION] perturbs an array leaving elements close to initial locations
-!>
+!!
 !!##NAME
 !!    M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking and Sorting Routines
 !!##SYNOPSIS

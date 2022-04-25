@@ -8,7 +8,7 @@ interface rinpar
    module procedure real64_rinpar, real32_rinpar, int32_rinpar
 end interface rinpar
 contains
-!>
+!!
 !!##NAME
 !!    prank_special(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in
 !!                 ASCENDING order (Insertion Sort)

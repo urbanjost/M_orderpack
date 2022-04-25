@@ -9,7 +9,7 @@ interface indmed
   module procedure real64_indmed, real32_indmed, int32_indmed, f_char_indmed
 end interface indmed
 contains
-!>
+!!
 !!##NAME
 !!    medianloc(3f) - [orderpack:MEDIAN] Returns median value's INDEX.
 !!

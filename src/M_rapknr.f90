@@ -8,7 +8,7 @@ interface rapknr
   module procedure real64_rapknr, real32_rapknr, int32_rapknr !, f_char_rapknr
 end interface rapknr
 contains
-!>
+!!
 !!##NAME
 !!    prank_decreasing(3f) - [orderpack:RANK:PARTIAL] partially ranks an
 !!                          array in DECREASING order.

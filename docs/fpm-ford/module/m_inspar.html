@@ -200,7 +200,101 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">psort</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">orderpack</span>:<span class="nv">SORT</span>:<span class="nv">PARTIAL</span>] <span class="nv">partially</span> <span class="nv">sorts</span> <span class="nv">an</span> <span class="nv">array</span>
+            <span class="ss">(</span><span class="nv">Insertion</span> <span class="nv">Sort</span>, <span class="nv">generally</span> <span class="k">for</span> <span class="nv">small</span> <span class="nv">or</span> <span class="nv">nearly</span> <span class="nv">sorted</span>
+            <span class="nv">arrays</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Subroutine Psort (INOUTVALS, NORD)
+
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (InOut) :: INOUTVALS(:)
+  Integer, Intent (In)                   :: NORD
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>PSORT(3f) partially sorts INOUTVALS, bringing the NORD lowest values
+to the beginning of the array.
+
+Internally, this subroutine uses an insertion sort, limiting insertion
+to the first NORD values. It does not use any work array and is faster
+when NORD is very small (2-5), but worst case behavior can happen
+fairly probably (initially inverse sorted). Therefore, in many cases,
+the refined quicksort method is faster.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">INOUTVALS</span>      <span class="nv">The</span> <span class="nv">array</span> <span class="nv">to</span> <span class="nv">partially</span> <span class="nv">sort</span>
+ <span class="nv">NORD</span>       <span class="nv">number</span> <span class="nv">of</span> <span class="nv">sorted</span> <span class="nv">values</span> <span class="nv">to</span> <span class="k">return</span>.
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_psort</span>
+<span class="o">!</span> <span class="nv">partially</span> <span class="nv">sort</span> <span class="nv">an</span> <span class="nv">array</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">psort</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">integer</span> :: <span class="nv">nord</span>
+
+<span class="nv">int</span>: <span class="nv">block</span>
+   <span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">ia</span><span class="ss">(</span>:<span class="ss">)</span>
+   <span class="nv">ia</span><span class="o">=</span>[<span class="mi">10</span>,<span class="mi">5</span>,<span class="mi">7</span>,<span class="mi">1</span>,<span class="mi">4</span>,<span class="mi">5</span>,<span class="mi">6</span>,<span class="mi">8</span>,<span class="mi">9</span>,<span class="mi">10</span>,<span class="mi">1</span>]
+   <span class="nv">nord</span><span class="o">=</span><span class="mi">5</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Original.................:</span><span class="s1">&#39;</span>,<span class="nv">ia</span>
+   <span class="k">call</span> <span class="nl">psort</span><span class="ss">(</span><span class="nv">ia</span>,<span class="nv">nord</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Number of indices to sort:</span><span class="s1">&#39;</span>,<span class="nv">nord</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="nv">nord</span>,<span class="s1">&#39;</span><span class="s">Lowest values..........:</span><span class="s1">&#39;</span>,<span class="nv">ia</span><span class="ss">(</span>:<span class="nv">nord</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Entire array.............:</span><span class="s1">&#39;</span>,<span class="nv">ia</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span>
+<span class="nv">endblock</span> <span class="nv">int</span>
+<span class="nv">char</span>: <span class="nv">block</span>
+   <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">ca</span><span class="ss">(</span>:<span class="ss">)</span>
+   <span class="nv">integer</span> :: <span class="nv">i</span>
+   <span class="nv">ca</span><span class="o">=</span>[<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">20</span><span class="ss">)</span> :: <span class="s1">&#39;</span><span class="s">fan</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">a</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">car</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">be</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">egg</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">dam</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">gas</span><span class="s1">&#39;</span>]
+   <span class="nv">nord</span><span class="o">=</span><span class="mi">3</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Original.................:</span><span class="s1">&#39;</span>,<span class="ss">(</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">ca</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">ca</span><span class="ss">))</span>
+   <span class="k">call</span> <span class="nl">psort</span><span class="ss">(</span><span class="nv">ca</span>,<span class="nv">nord</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Number of indices to sort:</span><span class="s1">&#39;</span>,<span class="nv">nord</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="nv">nord</span>,<span class="s1">&#39;</span><span class="s">Lowest values..........:</span><span class="s1">&#39;</span>,<span class="ss">(</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">ca</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">nord</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Entire array.............:</span><span class="s1">&#39;</span>,<span class="ss">(</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">ca</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">ca</span><span class="ss">))</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span>
+<span class="nv">endblock</span> <span class="nv">char</span>
+
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_psort</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code>Original.................: 10 5 7 1 4 5 6 8 9 10 1
+Number of indices to sort: 5
+5 Lowest values..........: 1 1 4 5 5
+Entire array.............: 1 1 4 5 5 10 7 8 9 10 6
+
+Original.................: fan a car be egg dam gas
+Number of indices to sort: 3
+3 Lowest values..........: a be car
+Entire array.............: a be car fan egg dam gas
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon - Feb. 2000
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
       <br>
     
   
@@ -300,10 +394,6 @@ private subroutine real64_inspar(INOUTVALS, NORD)
    
 </h3>
     
-
-
-
-<p>Sample program:</p><a href="../proc/real64_inspar.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
     <h4>Arguments</h4>
     
@@ -579,7 +669,7 @@ private subroutine f_char_inspar(INOUTVALS, NORD)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-24 19:09  
+             on 2022-04-24 19:37  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

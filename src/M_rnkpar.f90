@@ -8,7 +8,7 @@ interface rnkpar
   module procedure real64_rnkpar, real32_rnkpar, int32_rnkpar !, f_char_rnkpar
 end interface rnkpar
 contains
-!>
+!!
 !!##NAME
 !!    prank(3f) - [orderpack:RANK:PARTIAL] partially ranks an array
 !!                (QuickSort-like)

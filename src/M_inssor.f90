@@ -8,7 +8,7 @@ interface inssor
   module procedure real64_inssor, real32_inssor, int32_inssor, f_char_inssor
 end interface inssor
 contains
-!>
+!!
 !!##NAME
 !!    sort_special(3f) - [orderpack:SORT] Sorts array into ascending order
 !!                 (Insertion sort, generally for small or nearly sorted

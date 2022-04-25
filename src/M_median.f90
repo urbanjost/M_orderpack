@@ -8,7 +8,7 @@ interface median
   module procedure real64_median, real32_median, int32_median
 end interface median
 contains
-!>
+!!
 !!##NAME
 !!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If
 !!                 number of elements is even, returns average of the two
@@ -28,7 +28,7 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!    MEDIAN(3f) calculates the median value of the array INVALS().  It is
+!!    MEDIAN(3f) calculates the median value of the array INVALS(). It is
 !!    a modified version of MEDIANVAL(3f) that provides the average between
 !!    the two middle values in the case size(INVALS) is even.
 !!

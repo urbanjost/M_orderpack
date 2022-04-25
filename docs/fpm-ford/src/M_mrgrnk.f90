@@ -8,7 +8,7 @@ interface mrgrnk
   module procedure real64_mrgrnk, real32_mrgrnk, int32_mrgrnk, f_char_mrgrnk
 end interface mrgrnk
 contains
-!>
+!!
 !!##NAME
 !!    rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input
 !!               array (optimized merge-sort)

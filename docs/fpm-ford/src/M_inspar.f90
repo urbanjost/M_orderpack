@@ -8,7 +8,7 @@ interface inspar
   module procedure real64_inspar, real32_inspar, int32_inspar, f_char_inspar
 end interface inspar
 contains
-!>
+!!
 !!##NAME
 !!    psort(3f) - [orderpack:SORT:PARTIAL] partially sorts an array
 !!                (Insertion Sort, generally for small or nearly sorted

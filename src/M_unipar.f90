@@ -8,7 +8,7 @@ interface unipar
    module procedure real64_unipar, real32_unipar, int32_unipar !, f_char_unipar
 end interface unipar
 contains
-!>
+!!
 !!##NAME
 !!    prank_unique(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially ranks
 !!                       an array removing duplicates

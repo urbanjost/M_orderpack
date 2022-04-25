@@ -8,7 +8,7 @@ interface median
   module procedure real64_median, real32_median, int32_median
 end interface median
 contains
-!>
+!!
 !!##NAME
 !!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If
 !!                 number of elements is even, returns average of the two

@@ -8,7 +8,7 @@ interface refpar
   module procedure real64_refpar, real32_refpar, int32_refpar
 end interface refpar
 contains
-!>
+!!
 !!##NAME
 !!    prank_basic(3f) - [orderpack:RANK:PARTIAL] partially ranks an array
 !!                 (QuickSort)

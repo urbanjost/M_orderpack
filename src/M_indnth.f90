@@ -8,7 +8,7 @@ interface indnth
   module procedure real64_indnth, real32_indnth, int32_indnth !, f_char_indnth
 end interface indnth
 contains
-!>
+!!
 !!##NAME
 !!    orderloc(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of
 !!                 array, or "fractile of order N/SIZE(array)" (QuickSort-like)

@@ -8,7 +8,7 @@ interface fndnth
   module procedure real64_fndnth, real32_fndnth, int32_fndnth !, f_char_fndnth
 end interface fndnth
 contains
-!>
+!!
 !!##NAME
 !!    orderval_special(3f) - [orderpack:FRACTILE] Return VALUE of Nth
 !!                           ordered element of array, or "fractile of

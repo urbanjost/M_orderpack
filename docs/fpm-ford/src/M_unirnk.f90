@@ -12,7 +12,7 @@ interface nearless
 end interface nearless
 
 contains
-!>
+!!
 !!##NAME
 !!    Rank_Unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal
 !!                      of duplicate entries (MergeSort)

@@ -8,9 +8,9 @@ interface valnth
   module procedure real64_valnth, real32_valnth, int32_valnth !, f_char_valnth
 end interface valnth
 contains
-!>
+!!
 !!##NAME
-!!    orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered value of
+!!    orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered element of
 !!                 array, or "fractile of order N/SIZE(array)". (QuickSort-like)
 !!
 !!##SYNOPSIS
@@ -28,7 +28,7 @@ contains
 !!       o Integer(kind=int32)
 !!
 !!##DESCRIPTION
-!!   ORDERVAL(3f) returns the  NORDth (ascending order) value of INVALS,
+!!   ORDERVAL(3f) returns the NORDth (ascending order) value of INVALS,
 !!   i.e. the fractile of order NORD/SIZE(INVALS).
 !!
 !!   Internally, this subroutine simply calls ORDERLOC(3f).

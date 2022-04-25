@@ -9,7 +9,7 @@ interface ctrper
   module procedure real64_ctrper, real32_ctrper, int32_ctrper, f_char_ctrper
 end interface ctrper
 contains
-!>
+!!
 !!##NAME
 !!    perturb(3f) - [orderpack:PERMUTATION] generate a random permutation
 !!                  of an array leaving elements close to initial locations

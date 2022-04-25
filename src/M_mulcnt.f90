@@ -9,7 +9,7 @@ interface mulcnt
   module procedure real64_mulcnt, real32_mulcnt, int32_mulcnt, f_char_mulcnt
 end interface mulcnt
 contains
-!>
+!!
 !!##NAME
 !!    occurrences(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each
 !!                 array value (number of times that it appears in the array)
@@ -29,13 +29,13 @@ contains
 !!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 !!
 !!##DESCRIPTION
-!!     OCCURRENCES(3f) Gives, for each array value, its multiplicity (number of
-!!     times that it appears in the array).
+!!     OCCURRENCES(3f) Gives, for each array element, its multiplicity
+!!     (number of times that it appears in the array).
 !!
-!!     Internally, the number of times that a value appears in the array
-!!     is computed by using inverse ranking, counting for each rank the
-!!     number of values that "collide" to this rank, and returning this sum
-!!     to the locations in the original set. It uses subroutine RANK_ORDERS(3f).
+!!     Internally, the number of times that a value appears in the array is
+!!     computed by using inverse ranking, counting for each rank the number
+!!     of values that "collide" to this rank, and returning this sum to
+!!     the locations in the original set. It uses subroutine RANK_ORDERS(3f).
 !!
 !!##OPTIONS
 !!     INVALS      input array

@@ -9,7 +9,7 @@ interface unista
   module procedure real64_unista, real32_unista, int32_unista, f_char_unista
 end interface unista
 contains
-!>
+!!
 !!##NAME
 !!    unique(3f) - [orderpack:UNIQUE] removes duplicates from an array
 !!                 otherwise retaining original order (i.e. it is "stable")

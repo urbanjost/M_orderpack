@@ -200,7 +200,89 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>prank(3f) - [orderpack:RANK:PARTIAL] partially ranks an array
+            (QuickSort-like)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Subroutine Prank (INVALS, IRNGT, NORD)
+
+   <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
+   Integer, Intent (Out)               :: IRNGT(:)
+   Integer, Intent (In)                :: NORD
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Partially</span> <span class="nv">ranks</span> <span class="nv">array</span> <span class="nv">INVALS</span><span class="ss">()</span>, <span class="nv">returning</span> <span class="nv">indices</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">requested</span>
+<span class="nv">number</span> <span class="nv">of</span> <span class="nv">elements</span> <span class="ss">(</span><span class="nv">NORD</span><span class="ss">)</span> <span class="nv">in</span> <span class="nv">index</span> <span class="nv">array</span> <span class="nv">IRNGT</span><span class="ss">()</span>, <span class="nv">where</span> <span class="nv">NORD</span> <span class="nv">is</span> <span class="nv">the</span>
+<span class="nv">order</span> <span class="ss">(</span> <span class="nv">aka</span>. <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">sorted</span> <span class="nv">elements</span> <span class="nv">requested</span><span class="ss">)</span>.
+
+<span class="nv">This</span> <span class="nv">routine</span> <span class="nv">is</span> <span class="nv">refined</span> <span class="k">for</span> <span class="nv">speed</span>, <span class="nv">and</span> <span class="nv">uses</span> <span class="nv">a</span> <span class="nv">pivoting</span> <span class="nv">strategy</span> <span class="nv">such</span>
+<span class="nv">as</span> <span class="nv">the</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">finding</span> <span class="nv">the</span> <span class="nv">median</span> <span class="nv">based</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">quicksort</span> <span class="nv">algorithm</span>,
+<span class="nv">but</span> <span class="nv">we</span> <span class="nv">skew</span> <span class="nv">the</span> <span class="nv">pivot</span> <span class="nv">choice</span> <span class="nv">to</span> <span class="nv">try</span> <span class="nv">to</span> <span class="nv">bring</span> <span class="nv">it</span> <span class="nv">to</span> <span class="nv">NORD</span> <span class="nv">as</span> <span class="nv">fast</span> <span class="nv">as</span>
+<span class="nv">possible</span>. <span class="nv">It</span> <span class="nv">uses</span> <span class="nv">two</span> <span class="nv">temporary</span> <span class="nv">arrays</span>, <span class="nv">where</span> <span class="nv">it</span> <span class="nv">stores</span> <span class="nv">the</span> <span class="nv">indices</span> <span class="nv">of</span>
+<span class="nv">the</span> <span class="nv">values</span> <span class="nv">smaller</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">pivot</span> <span class="ss">(</span><span class="nv">ILOWT</span><span class="ss">)</span>, <span class="nv">and</span> <span class="nv">the</span> <span class="nv">indices</span> <span class="nv">of</span> <span class="nv">values</span>
+<span class="nv">larger</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">pivot</span> <span class="nv">that</span> <span class="nv">we</span> <span class="nv">might</span> <span class="nv">still</span> <span class="nv">need</span> <span class="nv">later</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">IHIGT</span><span class="ss">)</span>. <span class="nv">It</span>
+<span class="nv">iterates</span> <span class="k">until</span> <span class="nv">it</span> <span class="nv">can</span> <span class="nv">bring</span> <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">ILOWT</span> <span class="nv">to</span> <span class="nv">exactly</span>
+<span class="nv">NORD</span>, <span class="nv">and</span> <span class="k">then</span> <span class="nv">uses</span> <span class="nv">an</span> <span class="nv">insertion</span> <span class="nv">sort</span> <span class="nv">to</span> <span class="nv">rank</span> <span class="nv">this</span> <span class="nv">set</span>, <span class="nv">since</span> <span class="nv">it</span> <span class="nv">is</span>
+<span class="nv">supposedly</span> <span class="nv">small</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">INVALS</span>      <span class="nv">array</span> <span class="nv">to</span> <span class="nv">rank</span> <span class="nv">the</span> <span class="nv">elements</span> <span class="nv">of</span>
+ <span class="nv">IRNGT</span>      <span class="nv">returned</span> <span class="nv">ranks</span>
+ <span class="nv">NORD</span>       <span class="nv">number</span> <span class="nv">of</span> <span class="nv">rank</span> <span class="nv">values</span> <span class="nv">to</span> <span class="k">return</span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_prank</span>
+<span class="o">!</span> <span class="nv">partially</span> <span class="nv">rank</span> <span class="nv">array</span>
+<span class="nv">use</span>,<span class="nv">intrinsic</span> :: <span class="nv">iso_fortran_env</span>, <span class="nv">only</span> : <span class="nv">int32</span>, <span class="nv">real32</span>, <span class="nv">real64</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">prank</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">integer</span>,<span class="nv">parameter</span> :: <span class="nv">ivals</span><span class="o">=</span><span class="mi">300</span>
+<span class="nv">real</span><span class="ss">(</span><span class="nv">kind</span><span class="o">=</span><span class="nv">real32</span><span class="ss">)</span> :: <span class="nv">valsr</span><span class="ss">(</span><span class="mi">2000</span><span class="ss">)</span>
+<span class="nv">real</span><span class="ss">(</span><span class="nv">kind</span><span class="o">=</span><span class="nv">real32</span><span class="ss">)</span> :: <span class="nv">out</span><span class="ss">(</span><span class="nv">ivals</span><span class="ss">)</span>
+<span class="nv">integer</span>           :: <span class="nv">indx</span><span class="ss">(</span><span class="mi">2000</span><span class="ss">)</span>
+<span class="nv">integer</span>           :: <span class="nv">i</span>
+   <span class="k">call</span> <span class="nl">random_seed</span><span class="ss">()</span>
+   <span class="k">call</span> <span class="nl">random_number</span><span class="ss">(</span><span class="nv">valsr</span><span class="ss">)</span>
+   <span class="nv">valsr</span><span class="o">=</span><span class="nv">valsr</span><span class="o">*</span><span class="mi">1000000</span>.<span class="mi">0</span><span class="o">-</span><span class="mi">500000</span>.<span class="mi">0</span>
+   <span class="k">call</span> <span class="nl">prank</span><span class="ss">(</span><span class="nv">valsr</span>,<span class="nv">indx</span>,<span class="nv">ivals</span><span class="ss">)</span>
+   <span class="nv">out</span><span class="o">=</span><span class="nv">valsr</span><span class="ss">(</span><span class="nv">indx</span><span class="ss">(</span>:<span class="nv">ivals</span><span class="ss">))</span>
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">ivals</span><span class="o">-</span><span class="mi">1</span>
+      <span class="k">if</span> <span class="ss">(</span><span class="nv">out</span><span class="ss">(</span><span class="nv">i</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>.<span class="nv">lt</span>.<span class="nv">out</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span><span class="k">then</span>
+         <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">not sorted</span><span class="s1">&#39;</span>
+         <span class="nv">stop</span> <span class="mi">1</span>
+      <span class="k">endif</span>
+   <span class="nv">enddo</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">random array now sorted</span><span class="s1">&#39;</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_prank</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code> <span class="k">random</span> <span class="nv">array</span> <span class="nv">now</span> <span class="nv">sorted</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon - Feb. 2000
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
       <br>
     
   
@@ -303,7 +385,9 @@ private subroutine real64_rnkpar(INVALS, IRNGT, NORD)
 
 
 
-<p>Sample program:</p><a href="../proc/real64_rnkpar.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+<p>!!!           CASE DEFAULT
+!!!              write (<em>,</em>) &ldquo;Assertion failed&rdquo;
+!!!              STOP</p><a href="../proc/real64_rnkpar.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
     <h4>Arguments</h4>
     
@@ -573,7 +657,7 @@ private subroutine int32_rnkpar(INVALS, IRNGT, NORD)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-24 19:09  
+             on 2022-04-24 19:37  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

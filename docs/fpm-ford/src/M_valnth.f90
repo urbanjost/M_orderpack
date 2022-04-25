@@ -8,7 +8,7 @@ interface valnth
   module procedure real64_valnth, real32_valnth, int32_valnth !, f_char_valnth
 end interface valnth
 contains
-!>
+!!
 !!##NAME
 !!    orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered value of
 !!                 array, or "fractile of order N/SIZE(array)". (QuickSort-like)

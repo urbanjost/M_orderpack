@@ -8,7 +8,7 @@ interface valmed
   module procedure real64_valmed, real32_valmed, int32_valmed
 end interface valmed
 contains
-!>
+!!
 !!##NAME
 !!    medianval(3f) - [orderpack:MEDIAN] Returns median VALUE.
 !!

@@ -200,7 +200,79 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    
+    <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>unique(3f) - [orderpack:UNIQUE] removes duplicates from an array
+             otherwise retaining original order (i.e. it is &quot;stable&quot;)
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Subroutine Unique (INOUTVALS, NUNI)
+
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (InOut) :: INOUTVALS(:)
+  Integer, Intent (Out)                  :: NUNI
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code>UNIQUE(3f) does a stable removal of duplicates from an array.
+
+It leaves in the initial set only those entries that are unique,
+packing the array, and leaving the order of the retained values
+unchanged.
+
+Internally this subroutine uses Merge-sort unique inverse ranking.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> INOUTVALS   input array to reduce to unique values
+ NUNI    number of values comprising the returned set of unique
+         values
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_unique</span>
+<span class="o">!</span> <span class="nv">remove</span> <span class="nv">duplicates</span> <span class="nv">with</span> <span class="nv">remaining</span> <span class="nv">elements</span> <span class="nv">remaining</span> <span class="nv">in</span> <span class="nv">initial</span> <span class="nv">order</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">unique</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">list</span><span class="o">=</span> <span class="s1">&#39;</span><span class="s">(*(g0:,&quot;, &quot;))</span><span class="s1">&#39;</span>,<span class="nv">sp</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">integer</span> :: <span class="nv">nuni</span>
+
+<span class="nv">int</span> : <span class="nv">block</span>
+<span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">INOUTVALS</span><span class="ss">(</span>:<span class="ss">)</span>
+ <span class="nv">INOUTVALS</span><span class="o">=</span>[<span class="mi">44</span>,<span class="mi">33</span>,<span class="mi">33</span>,<span class="mi">33</span>,<span class="mi">22</span>,<span class="mi">11</span>,<span class="mi">33</span>,<span class="mi">44</span>,<span class="mi">55</span>,<span class="mi">33</span>]
+ <span class="nv">print</span> <span class="nv">list</span>,<span class="s1">&#39;</span><span class="s">ORIGINAL:</span><span class="s1">&#39;</span>,<span class="nv">INOUTVALS</span>
+ <span class="k">call</span> <span class="nl">unique</span><span class="ss">(</span><span class="nv">INOUTVALS</span>,<span class="nv">nuni</span><span class="ss">)</span>
+ <span class="nv">INOUTVALS</span><span class="o">=</span><span class="nv">INOUTVALS</span><span class="ss">(</span>:<span class="nv">nuni</span><span class="ss">)</span>
+ <span class="nv">print</span> <span class="nv">list</span>,<span class="s1">&#39;</span><span class="s">UNIQUE:</span><span class="s1">&#39;</span>,<span class="nv">INOUTVALS</span>
+<span class="nv">endblock</span> <span class="nv">int</span>
+
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_unique</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code>ORIGINAL:, 44, 33, 33, 33, 22, 11, 33, 44, 55, 33
+UNIQUE:, 44, 33, 22, 11, 55
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon - Feb. 2000
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
       <br>
     
   
@@ -302,10 +374,6 @@ private subroutine real64_unista(INOUTVALS, NUNI)
    
 </h3>
     
-
-
-
-<p>Sample program:</p><a href="../proc/real64_unista.html" class="pull-right"><emph>Read more&hellip;</emph></a>
     
     <h4>Arguments</h4>
     
@@ -581,7 +649,7 @@ private subroutine f_char_unista(INOUTVALS, NUNI)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-24 19:09  
+             on 2022-04-24 19:37  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

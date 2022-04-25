@@ -11,7 +11,7 @@ interface nearless
   module procedure real64_nearless, real32_nearless, int32_nearless, f_char_nearless
 end interface nearless
 contains
-!>
+!!
 !!##NAME
 !!    Rank_Decreasing(3f) - [orderpack:RANK:UNIQUE] ranks an array
 !!    in decreasing order, with duplicate entries assigned the same

@@ -9,7 +9,7 @@ interface mulcnt
   module procedure real64_mulcnt, real32_mulcnt, int32_mulcnt, f_char_mulcnt
 end interface mulcnt
 contains
-!>
+!!
 !!##NAME
 !!    occurrences(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each
 !!                 array value (number of times that it appears in the array)
