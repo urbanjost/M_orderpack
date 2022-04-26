@@ -60,6 +60,8 @@ This will compile the Fortran module and basic example programs that exercise th
 
 ```bash
      git clone https://github.com/urbanjost/orderpack.git
+
+
      cd orderpack/src
      # change Makefile if not using one of the listed compilers
 
@@ -75,7 +77,10 @@ This will compile the Fortran module and basic example programs that exercise th
      make clean
      make nvfortran
 ```
-
+   Note that to specifically get get release 2.0.0 you would use
+```bash
+     git clone --branch 2.0.0 https://github.com/urbanjost/orderpack.git
+```
 ---
 ## Build and test with![fpm](docs/images/fpm_logo.gif)
 
