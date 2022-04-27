@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rinpar
-!!
+!>
 !!##NAME
 !!    prank_special(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in
 !!                 ASCENDING order (Insertion Sort)

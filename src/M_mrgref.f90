@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: mrgref
-!!
+!>
 !!##NAME
 !!    rank_basic(3f) - [orderpack:RANK] create an INDEX that defines the
 !!                     order of array sorted in ascending order (basic

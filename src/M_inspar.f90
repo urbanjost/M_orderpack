@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: inspar
-!!
+!>
 !!##NAME
 !!    psort(3f) - [orderpack:SORT:PARTIAL] partially sorts an array
 !!                (Insertion Sort, generally for small or nearly sorted

@@ -200,134 +200,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input
-           array (optimized merge-sort)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code> Subroutine Rank (INVALS, IRNGT)
-
-   <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IRNGT(:)
-
-Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code> <span class="nv">RANK</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">ranks</span> <span class="nv">an</span> <span class="nv">input</span> <span class="nv">array</span><span class="c1">; i.e. it produces an index of the input</span>
- <span class="nv">array</span> <span class="nv">elements</span> <span class="nv">that</span> <span class="nv">can</span> <span class="nv">order</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">array</span> <span class="nv">in</span> <span class="nv">ascending</span> <span class="nv">order</span>.
-
- <span class="nv">The</span> <span class="nv">ranks</span> <span class="nv">can</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">to</span> <span class="nv">sort</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">array</span>, <span class="nv">or</span> <span class="nv">other</span> <span class="nv">associated</span> <span class="nv">arrays</span>
- <span class="nv">or</span> <span class="nv">components</span> <span class="nv">of</span> <span class="nv">user</span> <span class="nv">types</span>.
-
- <span class="nv">Internally</span>, <span class="nv">it</span> <span class="nv">uses</span> <span class="nv">an</span> <span class="nv">optimized</span> <span class="nv">and</span> <span class="nv">modified</span> <span class="nv">version</span> <span class="nv">of</span> <span class="nv">merge</span><span class="o">-</span><span class="nv">sort</span>.
- <span class="k">For</span> <span class="nv">performance</span> <span class="nv">reasons</span>, <span class="nv">the</span> <span class="nv">first</span> <span class="nv">two</span> <span class="nv">passes</span> <span class="nv">are</span> <span class="nv">taken</span> <span class="nv">out</span> <span class="nv">of</span> <span class="nv">the</span>
- <span class="nv">standard</span> <span class="k">loop</span>, <span class="nv">and</span> <span class="nv">use</span> <span class="nv">dedicated</span> <span class="nv">coding</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> INVALS      The array to sort
- IRNGT      The rank index returned
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">program</span> <span class="nt">demo_rank</span>
-<span class="o">!</span> <span class="nt">create</span> <span class="nt">an</span> <span class="nt">index</span> <span class="nt">that</span> <span class="nt">can</span> <span class="nt">order</span> <span class="nt">an</span> <span class="nt">array</span> <span class="nt">in</span> <span class="nt">ascending</span> <span class="nt">order</span>
-<span class="nt">use</span> <span class="nt">M_orderpack</span><span class="o">,</span> <span class="nt">only</span> <span class="o">:</span> <span class="nt">rank</span>
-<span class="nt">implicit</span> <span class="nt">none</span>
-<span class="nt">character</span><span class="o">(</span><span class="nt">len</span><span class="o">=*),</span><span class="nt">parameter</span> <span class="o">::</span> <span class="nt">g</span><span class="o">=</span><span class="s1">&#39;(*(g0,1x))&#39;</span>
-<span class="nt">integer</span><span class="o">,</span><span class="nt">parameter</span>             <span class="o">::</span> <span class="nt">dp</span><span class="o">=</span><span class="nt">kind</span><span class="o">(</span><span class="nt">0</span><span class="p">.</span><span class="nc">0d0</span><span class="o">)</span>
-<span class="nt">integer</span><span class="o">,</span><span class="nt">parameter</span>             <span class="o">::</span> <span class="nt">isz</span><span class="o">=</span><span class="nt">10000</span>
-<span class="nt">real</span><span class="o">(</span><span class="nt">kind</span><span class="o">=</span><span class="nt">dp</span><span class="o">)</span>                 <span class="o">::</span> <span class="nt">dd</span><span class="o">(</span><span class="nt">isz</span><span class="o">)</span>
-<span class="nt">real</span><span class="o">(</span><span class="nt">kind</span><span class="o">=</span><span class="nt">dp</span><span class="o">)</span>                 <span class="o">::</span> <span class="nt">pp</span>
-<span class="nt">integer</span>                       <span class="o">::</span> <span class="nt">indx</span><span class="o">(</span><span class="nt">isz</span><span class="o">)</span>
-<span class="nt">integer</span>                       <span class="o">::</span> <span class="nt">i</span><span class="o">,</span><span class="nt">j</span><span class="o">,</span><span class="nt">k</span>
-<span class="nt">character</span><span class="o">(</span><span class="nt">len</span><span class="o">=:),</span><span class="nt">allocatable</span>  <span class="o">::</span> <span class="nt">strings</span><span class="o">(:)</span>
-<span class="nt">integer</span><span class="o">,</span><span class="nt">allocatable</span>           <span class="o">::</span> <span class="nt">cindx</span><span class="o">(:)</span>
-   <span class="o">!</span> <span class="nt">make</span> <span class="nt">some</span> <span class="nt">random</span> <span class="nt">numbers</span>
-   <span class="nt">call</span> <span class="nt">random_seed</span><span class="o">()</span>
-   <span class="nt">call</span> <span class="nt">random_number</span><span class="o">(</span><span class="nt">dd</span><span class="o">)</span>
-   <span class="nt">dd</span><span class="o">=</span><span class="nt">dd-0</span><span class="p">.</span><span class="nc">50_dp</span>
-   <span class="nt">k</span><span class="o">=</span><span class="nt">int</span><span class="o">(</span><span class="nt">log</span><span class="o">(</span><span class="nt">huge</span><span class="o">(</span><span class="nt">0</span><span class="p">.</span><span class="nc">0_dp</span><span class="o">))/</span><span class="nt">log</span><span class="o">(</span><span class="nt">2</span><span class="p">.</span><span class="nc">0_dp</span><span class="o">))</span><span class="nt">-1</span>
-   <span class="nt">do</span> <span class="nt">i</span><span class="o">=</span><span class="nt">1</span><span class="o">,</span><span class="nt">isz</span>
-      <span class="nt">call</span> <span class="nt">random_number</span><span class="o">(</span><span class="nt">pp</span><span class="o">)</span>
-      <span class="nt">j</span><span class="o">=</span><span class="nt">floor</span><span class="o">((</span><span class="nt">k</span><span class="o">+</span><span class="nt">1</span><span class="o">)*</span><span class="nt">pp</span><span class="o">)</span>
-      <span class="nt">dd</span><span class="o">(</span><span class="nt">i</span><span class="o">)=</span><span class="nt">dd</span><span class="o">(</span><span class="nt">i</span><span class="o">)*(</span><span class="nt">2</span><span class="p">.</span><span class="nc">0_dp</span><span class="o">**</span><span class="nt">j</span><span class="o">)</span>
-   <span class="nt">enddo</span>
-   <span class="o">!</span> <span class="nt">rank</span> <span class="nt">the</span> <span class="nt">numeric</span> <span class="nt">data</span>
-   <span class="nt">call</span> <span class="nt">rank</span><span class="o">(</span><span class="nt">dd</span><span class="o">,</span><span class="nt">indx</span><span class="o">)</span>
-   <span class="o">!</span> <span class="nt">check</span> <span class="nt">order</span>
-   <span class="nt">do</span> <span class="nt">i</span><span class="o">=</span><span class="nt">1</span><span class="o">,</span><span class="nt">isz-1</span>
-      <span class="nt">if</span><span class="o">(</span><span class="nt">dd</span><span class="o">(</span><span class="nt">indx</span><span class="o">(</span><span class="nt">i</span><span class="o">))</span><span class="p">.</span><span class="nc">gt</span><span class="p">.</span><span class="nc">dd</span><span class="o">(</span><span class="nt">indx</span><span class="o">(</span><span class="nt">i</span><span class="o">+</span><span class="nt">1</span><span class="o">)))</span><span class="nt">then</span>
-         <span class="nt">write</span><span class="o">(*,</span><span class="nt">g</span><span class="o">)</span><span class="s1">&#39;ERROR: data not sorted i=&#39;</span><span class="o">,</span><span class="nt">i</span><span class="o">,</span><span class="s1">&#39;index=&#39;</span><span class="o">,</span><span class="nt">indx</span><span class="o">(</span><span class="nt">i</span><span class="o">),</span> <span class="o">&amp;</span>
-         <span class="o">&amp;</span> <span class="s1">&#39;values &#39;</span><span class="o">,</span><span class="nt">dd</span><span class="o">(</span><span class="nt">indx</span><span class="o">(</span><span class="nt">i</span><span class="o">)),</span><span class="nt">dd</span><span class="o">(</span><span class="nt">indx</span><span class="o">(</span><span class="nt">i</span><span class="o">+</span><span class="nt">1</span><span class="o">))</span>
-         <span class="nt">stop</span> <span class="nt">1</span>
-      <span class="nt">endif</span>
-   <span class="nt">enddo</span>
-   <span class="o">!</span> <span class="nt">sort</span> <span class="nt">data</span> <span class="nt">using</span> <span class="nt">rank</span> <span class="nt">values</span>
-   <span class="nt">dd</span><span class="o">=</span><span class="nt">dd</span><span class="o">(</span><span class="nt">indx</span><span class="o">)</span>
-   <span class="nt">write</span><span class="o">(*,</span><span class="nt">g</span><span class="o">)</span><span class="s1">&#39;sorted &#39;</span><span class="o">,</span><span class="nt">isz</span><span class="o">,</span><span class="s1">&#39;values&#39;</span>
-   <span class="nt">write</span><span class="o">(*,</span><span class="nt">g</span><span class="o">)</span><span class="s1">&#39;from&#39;</span><span class="o">,</span><span class="nt">dd</span><span class="o">(</span><span class="nt">1</span><span class="o">),</span><span class="s1">&#39;to&#39;</span><span class="o">,</span><span class="nt">dd</span><span class="o">(</span><span class="nt">isz</span><span class="o">)</span>
-   <span class="nt">write</span><span class="o">(*,*)</span><span class="nt">minval</span><span class="o">(</span><span class="nt">dd</span><span class="o">)</span><span class="p">.</span><span class="nc">eq</span><span class="p">.</span><span class="nc">dd</span><span class="o">(</span><span class="nt">1</span><span class="o">)</span>
-   <span class="nt">write</span><span class="o">(*,*)</span><span class="nt">maxval</span><span class="o">(</span><span class="nt">dd</span><span class="o">)</span><span class="p">.</span><span class="nc">eq</span><span class="p">.</span><span class="nc">dd</span><span class="o">(</span><span class="nt">isz</span><span class="o">)</span>
-   <span class="nt">write</span><span class="o">(*,*)</span><span class="nt">minloc</span><span class="o">(</span><span class="nt">dd</span><span class="o">)</span><span class="p">.</span><span class="nc">eq</span><span class="p">.</span><span class="nc">1</span>
-   <span class="nt">write</span><span class="o">(*,*)</span><span class="nt">maxloc</span><span class="o">(</span><span class="nt">dd</span><span class="o">)</span><span class="p">.</span><span class="nc">eq</span><span class="p">.</span><span class="nc">isz</span>
-   <span class="o">!</span> <span class="nt">do</span> <span class="nt">a</span> <span class="nt">character</span> <span class="nt">sort</span>
-   <span class="nt">strings</span><span class="o">=</span> <span class="cp">[</span> <span class="nx">character</span><span class="p">(</span><span class="n">len</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> <span class="p">::</span>                               <span class="o">&amp;</span>
-   <span class="o">&amp;</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>    <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span>   <span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="o">&amp;</span>
-   <span class="o">&amp;</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span>  <span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;cyan&#39;</span><span class="p">,</span>   <span class="s1">&#39;magenta&#39;</span><span class="p">,</span>           <span class="o">&amp;</span>
-   <span class="o">&amp;</span> <span class="s1">&#39;purple&#39;</span><span class="cp">]</span>
-   <span class="nt">if</span><span class="o">(</span><span class="nt">allocated</span><span class="o">(</span><span class="nt">cindx</span><span class="o">))</span><span class="nt">deallocate</span><span class="o">(</span><span class="nt">cindx</span><span class="o">);</span><span class="nt">allocate</span><span class="o">(</span><span class="nt">cindx</span><span class="o">(</span><span class="nt">size</span><span class="o">(</span><span class="nt">strings</span><span class="o">)))</span>
-
-   <span class="nt">write</span><span class="o">(*,</span><span class="s1">&#39;(a,8(a:,&quot;,&quot;))&#39;</span><span class="o">)</span><span class="s1">&#39;BEFORE &#39;</span><span class="o">,&amp;</span>
-           <span class="o">&amp;</span> <span class="o">(</span><span class="nt">trim</span><span class="o">(</span><span class="nt">strings</span><span class="o">(</span><span class="nt">i</span><span class="o">)),</span><span class="nt">i</span><span class="o">=</span><span class="nt">1</span><span class="o">,</span><span class="nt">size</span><span class="o">(</span><span class="nt">strings</span><span class="o">))</span>
-
-   <span class="nt">call</span> <span class="nt">rank</span><span class="o">(</span><span class="nt">strings</span><span class="o">,</span><span class="nt">cindx</span><span class="o">)</span>
-
-   <span class="nt">write</span><span class="o">(*,</span><span class="s1">&#39;(a,8(a:,&quot;,&quot;))&#39;</span><span class="o">)</span><span class="s1">&#39;SORTED &#39;</span><span class="o">,&amp;</span>
-           <span class="o">&amp;</span> <span class="o">(</span><span class="nt">trim</span><span class="o">(</span><span class="nt">strings</span><span class="o">(</span><span class="nt">cindx</span><span class="o">(</span><span class="nt">i</span><span class="o">))),</span><span class="nt">i</span><span class="o">=</span><span class="nt">1</span><span class="o">,</span><span class="nt">size</span><span class="o">(</span><span class="nt">strings</span><span class="o">))</span>
-
-   <span class="nt">strings</span><span class="o">=</span><span class="nt">strings</span><span class="o">(</span><span class="nt">cindx</span><span class="o">)</span> <span class="o">!</span> <span class="nt">sort</span> <span class="nt">the</span> <span class="nt">array</span> <span class="nt">using</span> <span class="nt">the</span> <span class="nt">rank</span> <span class="nt">index</span>
-
-   <span class="nt">do</span> <span class="nt">i</span><span class="o">=</span><span class="nt">1</span><span class="o">,</span><span class="nt">size</span><span class="o">(</span><span class="nt">strings</span><span class="o">)</span><span class="nt">-1</span>
-      <span class="nt">if</span><span class="o">(</span><span class="nt">strings</span><span class="o">(</span><span class="nt">i</span><span class="o">)</span><span class="p">.</span><span class="nc">gt</span><span class="p">.</span><span class="nc">strings</span><span class="o">(</span><span class="nt">i</span><span class="o">+</span><span class="nt">1</span><span class="o">))</span><span class="nt">then</span>
-         <span class="nt">write</span><span class="o">(*,*)</span><span class="s1">&#39;Error in sorting strings a-z&#39;</span>
-      <span class="nt">endif</span>
-   <span class="nt">enddo</span>
-<span class="nt">end</span> <span class="nt">program</span> <span class="nt">demo_rank</span>
-</code></pre></div>
-
-<p>Results:</p>
-<div class="codehilite"><pre><span></span><code>sorted  10000 values
-from -.4206770472235745E+308 to .3500810518521505E+308
- T
- T
- T
- T
-BEFORE red,green,blue,yellow,orange,black,white,brown,
-gray,cyan,magenta,purple
-SORTED black,blue,brown,cyan,gray,green,magenta,orange,
-purple,red,white,yellow
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>Michel Olagnon, 2000-2012
-</code></pre></div>
-
-<h2 id="maintainer">MAINTAINER</h2>
-<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>CC0-1.0
-</code></pre></div>
+    
       <br>
     
   
@@ -412,6 +285,11 @@ purple,red,white,yellow
   <div class="panel-heading codesum"><span class="anchor" id="interface-mrgrnk"></span><h3>public interface <a href='../interface/mrgrnk.html'>mrgrnk</a>
     
   </h3></div>
+  
+  <div class="panel-body">
+    
+    <p>Sample program:</p><a href="../interface/mrgrnk.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  </div>
   
   <ul class="list-group">
   
@@ -702,7 +580,7 @@ private subroutine f_char_mrgrnk(INVALS, IRNGT)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-26 21:53  
+             on 2022-04-26 22:12  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

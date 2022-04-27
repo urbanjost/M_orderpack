@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: uniinv
-!!
+!>
 !!##NAME
 !!    Rank_Decreasing(3f) - [orderpack:RANK:UNIQUE] ranks an array
 !!    in decreasing order, with duplicate entries assigned the same

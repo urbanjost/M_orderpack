@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rapknr
-!!
+!>
 !!##NAME
 !!    prank_decreasing(3f) - [orderpack:RANK:PARTIAL] partially ranks an
 !!                          array in DECREASING order.

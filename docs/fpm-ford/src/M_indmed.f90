@@ -5,7 +5,7 @@ Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: indmed
 Integer, Allocatable, Dimension(:), Private, Save :: IDONT
-!!
+!>
 !!##NAME
 !!    medianloc(3f) - [orderpack:MEDIAN] Returns median value's INDEX.
 !!

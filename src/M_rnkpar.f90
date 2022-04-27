@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rnkpar
-!!
+!>
 !!##NAME
 !!    prank(3f) - [orderpack:RANK:PARTIAL] partially ranks an array
 !!                (QuickSort-like)

@@ -207,10 +207,113 @@
     
     <div class="col-md-9" id='text'>
       <h2>public interface unipar</h2>
-   
+   <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code>prank_unique(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially ranks
+                   an array removing duplicates
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Subroutine Prank_Unique (INVALS, IRNGT, NORD)
+
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
+  Integer, Intent (Out)               :: IRNGT(:)
+  Integer, Intent (InOut)             :: NORD
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Partially</span> <span class="nv">rank</span> <span class="nv">INVALS</span><span class="ss">()</span> <span class="nv">up</span> <span class="nv">to</span> <span class="nv">order</span> <span class="nv">NORD</span> <span class="nv">at</span> <span class="nv">most</span>, <span class="nv">removing</span> <span class="nv">duplicate</span>
+<span class="nv">entries</span>.
+
+<span class="nv">Internally</span>, <span class="nv">this</span> <span class="nv">routine</span> <span class="nv">uses</span> <span class="nv">a</span> <span class="nv">pivoting</span> <span class="nv">strategy</span> <span class="nv">such</span> <span class="nv">as</span> <span class="nv">the</span> <span class="nv">one</span> <span class="nv">of</span>
+<span class="nv">finding</span> <span class="nv">the</span> <span class="nv">median</span> <span class="nv">based</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">quicksort</span> <span class="nv">algorithm</span>, <span class="nv">but</span> <span class="nv">we</span> <span class="nv">skew</span> <span class="nv">the</span>
+<span class="nv">pivot</span> <span class="nv">choice</span> <span class="nv">to</span> <span class="nv">try</span> <span class="nv">to</span> <span class="nv">bring</span> <span class="nv">it</span> <span class="nv">to</span> <span class="nv">NORD</span> <span class="nv">as</span> <span class="nv">quickly</span> <span class="nv">as</span> <span class="nv">possible</span>. <span class="nv">It</span>
+<span class="nv">uses</span> <span class="nv">two</span> <span class="nv">temporary</span> <span class="nv">arrays</span>, <span class="nv">where</span> <span class="nv">it</span> <span class="nv">stores</span> <span class="nv">the</span> <span class="nv">indices</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">values</span>
+<span class="nv">smaller</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">pivot</span> <span class="ss">(</span><span class="nv">ILOWT</span><span class="ss">)</span>, <span class="nv">and</span> <span class="nv">the</span> <span class="nv">indices</span> <span class="nv">of</span> <span class="nv">values</span> <span class="nv">larger</span>
+<span class="nv">than</span> <span class="nv">the</span> <span class="nv">pivot</span> <span class="nv">that</span> <span class="nv">we</span> <span class="nv">might</span> <span class="nv">still</span> <span class="nv">need</span> <span class="nv">later</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">IHIGT</span><span class="ss">)</span>. <span class="nv">It</span> <span class="nv">iterates</span>
+<span class="k">until</span> <span class="nv">it</span> <span class="nv">can</span> <span class="nv">bring</span> <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">ILOWT</span> <span class="nv">to</span> <span class="nv">exactly</span> <span class="nv">NORD</span>, <span class="nv">and</span>
+<span class="k">then</span> <span class="nv">uses</span> <span class="nv">an</span> <span class="nv">insertion</span> <span class="nv">sort</span> <span class="nv">to</span> <span class="nv">rank</span> <span class="nv">this</span> <span class="nv">set</span>, <span class="nv">since</span> <span class="nv">it</span> <span class="nv">is</span> <span class="nv">supposedly</span>
+<span class="nv">small</span>. <span class="nv">At</span> <span class="nv">all</span> <span class="nv">times</span>, <span class="nv">the</span> <span class="nv">NORD</span> <span class="nv">first</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">ILOWT</span> <span class="nv">correspond</span> <span class="nv">to</span>
+<span class="nv">distinct</span> <span class="nv">values</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">input</span> <span class="nv">array</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> INVALS      array to partially sort
+ IRNGT      indices returned that point to lowest values
+ NORD       number of sorted values to determine before
+            eliminating duplicates
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">program</span><span class="w"> </span><span class="s">demo_prank_unique</span><span class="w"></span>
+<span class="sx">! ranks array, removing duplicates</span><span class="w"></span>
+<span class="n">use</span><span class="w"> </span><span class="s">M_orderpack,</span><span class="w"> </span><span class="s">only</span><span class="w"> </span><span class="s">:</span><span class="w"> </span><span class="s">prank_unique</span><span class="w"></span>
+<span class="n">implicit</span><span class="w"> </span><span class="s">none</span><span class="w"></span>
+<span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">parameter</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">g</span><span class="p">=</span><span class="s">&#39;(*(g0,1x))&#39;</span><span class="w"></span>
+<span class="n">integer</span><span class="p">,</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">INVALS</span><span class="p">(:)</span><span class="w"></span>
+<span class="n">integer</span><span class="p">,</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">irngt</span><span class="p">(:)</span><span class="w"></span>
+<span class="n">integer</span><span class="w"> </span><span class="s">::</span><span class="w"> </span><span class="s">nord</span><span class="w"></span>
+<span class="sx">!</span><span class="w"></span>
+<span class="nb">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="o">&#39;</span><span class="n">If</span><span class="w"> </span><span class="n">enough</span><span class="w"> </span><span class="nb">values</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="nb">unique</span><span class="p">,</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">NORD</span><span class="w"> </span><span class="n">indices</span><span class="o">&#39;</span><span class="w"></span>
+<span class="k">if</span><span class="p">(</span><span class="n">allocated</span><span class="p">(</span><span class="n">irngt</span><span class="p">))</span><span class="n">deallocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">)</span><span class="w"></span>
+<span class="n">INVALS</span><span class="p">=[</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
+<span class="n">nord</span><span class="p">=</span><span class="mi">5</span><span class="w"></span>
+<span class="n">allocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">(</span><span class="n">nord</span><span class="p">))</span><span class="w"></span>
+<span class="n">call</span><span class="w"> </span><span class="s">printme()</span><span class="w"></span>
+<span class="sx">!</span><span class="w"></span>
+<span class="sx">!BUG!write(*,g)&#39;If not enough values are unique, will change NORD&#39;</span><span class="w"></span>
+<span class="sx">!BUG!INVALS=[-1,0,-1,0,-1,0,-1]</span><span class="w"></span>
+<span class="sx">!BUG!nord=5</span><span class="w"></span>
+<span class="sx">!BUG!if(allocated(irngt))deallocate(irngt)</span><span class="w"></span>
+<span class="sx">!BUG!allocate(irngt(nord))</span><span class="w"></span>
+<span class="sx">!BUG!call printme()</span><span class="w"></span>
+<span class="nb">contains</span><span class="w"></span>
+<span class="n">subroutine</span><span class="w"> </span><span class="s">printme()</span><span class="w"></span>
+<span class="w">   </span><span class="nb">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="o">&#39;</span><span class="n">ORIGINAL</span><span class="p">:</span><span class="s">&#39;,INVALS</span>
+<span class="s">   write(*,g)&#39;</span><span class="n">NUMBER</span><span class="w"> </span><span class="n">OF</span><span class="w"> </span><span class="n">INDICES</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">SORT</span><span class="p">:</span><span class="s">&#39;,nord</span>
+<span class="s">   call prank_unique(INVALS,irngt,nord)</span>
+<span class="s">   write(*,g)&#39;</span><span class="n">NUMBER</span><span class="w"> </span><span class="n">OF</span><span class="w"> </span><span class="n">INDICES</span><span class="w"> </span><span class="n">RETURNED</span><span class="p">:</span><span class="s">&#39;,nord</span>
+<span class="s">   write(*,g)&#39;</span><span class="n">RETURNED</span><span class="w"> </span><span class="n">INDICES</span><span class="p">:</span><span class="s">&#39;,irngt(:nord)</span>
+<span class="s">   write(*,g)nord,&#39;</span><span class="n">SMALLEST</span><span class="w"> </span><span class="n">UNIQUE</span><span class="w"> </span><span class="n">VALUES</span><span class="p">:</span><span class="s">&#39;</span><span class="err">,INVALS(irngt(:nord))</span>
+<span class="k">end</span><span class="w"> </span><span class="n">subroutine</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_prank_unique</span><span class="w"></span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">If</span> <span class="nv">enough</span> <span class="nv">values</span> <span class="nv">are</span> <span class="nv">unique</span>, <span class="nv">will</span> <span class="k">return</span> <span class="nv">NORD</span> <span class="nv">indices</span>
+<span class="nv">ORIGINAL</span>: <span class="mi">10</span> <span class="mi">5</span> <span class="mi">7</span> <span class="mi">1</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">8</span> <span class="mi">9</span> <span class="mi">10</span> <span class="mi">1</span>
+<span class="nv">NUMBER</span> <span class="nv">OF</span> <span class="nv">INDICES</span> <span class="nv">TO</span> <span class="nv">SORT</span>: <span class="mi">5</span>
+<span class="nv">NUMBER</span> <span class="nv">OF</span> <span class="nv">INDICES</span> <span class="nv">RETURNED</span>: <span class="mi">5</span>
+<span class="nv">RETURNED</span> <span class="nv">INDICES</span>: <span class="mi">11</span> <span class="mi">5</span> <span class="mi">2</span> <span class="mi">7</span> <span class="mi">3</span>
+<span class="mi">5</span> <span class="nv">SMALLEST</span> <span class="nv">UNIQUE</span> <span class="nv">VALUES</span>: <span class="mi">1</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span>
+<span class="k">If</span> <span class="nv">not</span> <span class="nv">enough</span> <span class="nv">values</span> <span class="nv">are</span> <span class="nv">unique</span>, <span class="nv">will</span> <span class="nv">change</span> <span class="nv">NORD</span>
+<span class="nv">ORIGINAL</span>: <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nv">NUMBER</span> <span class="nv">OF</span> <span class="nv">INDICES</span> <span class="nv">TO</span> <span class="nv">SORT</span>: <span class="mi">5</span>
+<span class="nv">NUMBER</span> <span class="nv">OF</span> <span class="nv">INDICES</span> <span class="nv">RETURNED</span>: <span class="mi">2</span>
+<span class="nv">RETURNED</span> <span class="nv">INDICES</span>: <span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">2</span> <span class="nv">SMALLEST</span> <span class="nv">UNIQUE</span> <span class="nv">VALUES</span>: <span class="o">-</span><span class="mi">1</span> <span class="mi">0</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon - Feb. 2000
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
      
      
-    
+    <br>
 
      <section class="visible-xs visible-sm hidden-md">
        
@@ -524,7 +627,7 @@ private subroutine int32_unipar(INVALS, IRNGT, NORD)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-26 21:53  
+             on 2022-04-26 22:12  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

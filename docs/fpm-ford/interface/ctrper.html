@@ -209,10 +209,133 @@
     
     <div class="col-md-9" id='text'>
       <h2>public interface ctrper</h2>
-   
+   <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">perturb</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">orderpack</span>:<span class="nv">PERMUTATION</span>] <span class="nv">generate</span> <span class="nv">a</span> <span class="k">random</span> <span class="nv">permutation</span>
+              <span class="nv">of</span> <span class="nv">an</span> <span class="nv">array</span> <span class="nv">leaving</span> <span class="nv">elements</span> <span class="nv">close</span> <span class="nv">to</span> <span class="nv">initial</span> <span class="nv">locations</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Subroutine Perturb (INOUTVALS, CLOSENESS)
+
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (InOut) :: INOUTVALS(:)
+  Real, Intent (In)                      :: CLOSENESS
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<p>Shuffle the array INOUTVALS randomly, leaving elements close to their
+   initial locations.</p>
+<p>Nearbyness is controlled by CLOSENESS. The relative proportion of
+   initial order and random order is defined as 1-CLOSENESS / CLOSENESS,
+   thus when CLOSENESS = 0, there is no change in the order whereas the
+   new order is fully random when CLOSENESS = 1.</p>
+<p>Note this differs from adding random noise to the values. The original
+   values remain unchanged, their order is just perturbed.</p>
+<p>Internally, the routine creates a real array of the indices of
+   INOUTVALS() perturbed by random values that are based on the size
+   of CLOSENESS. The new array is then ranked using RANK(3f) and the
+   resulting index is used to permute the input array.</p>
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="n">INOUTVALS</span>   <span class="nb nb-Type">Array</span> <span class="n">of</span> <span class="n">values</span> <span class="n">to</span> <span class="n">perturb</span><span class="o">.</span>
+ <span class="n">CLOSENESS</span>   <span class="n">Proportion</span> <span class="n">of</span> <span class="n">closeness</span><span class="p">,</span> <span class="n">constrained</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">range</span> <span class="mf">0.0</span><span class="p">(</span><span class="n">no</span>
+             <span class="n">change</span><span class="p">)</span> <span class="n">to</span> <span class="mf">1.0</span><span class="p">(</span><span class="n">fully</span> <span class="n">random</span><span class="p">)</span><span class="o">.</span>
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_perturb</span>
+<span class="o">!</span> <span class="nv">generate</span> <span class="nv">a</span> <span class="k">random</span> <span class="nv">perturbation</span> <span class="nv">of</span> <span class="nv">an</span> <span class="nv">array</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">perturb</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">list</span><span class="o">=</span> <span class="s1">&#39;</span><span class="s">(*(g0:,&quot;, &quot;))</span><span class="s1">&#39;</span>
+<span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">xout</span><span class="ss">(</span>:,:<span class="ss">)</span>
+<span class="nv">integer</span>          :: <span class="nv">isz</span>, <span class="nv">i</span>, <span class="nv">j</span>
+<span class="nv">isz</span><span class="o">=</span><span class="mi">200</span>
+   <span class="o">!</span> <span class="nv">randomly</span> <span class="nv">perturb</span> <span class="nv">location</span> <span class="nv">of</span> <span class="nv">values</span>
+   <span class="o">!</span>
+   <span class="o">!</span> <span class="nv">make</span> <span class="nv">an</span> <span class="nv">array</span> <span class="nv">with</span> <span class="nv">three</span> <span class="nv">initially</span> <span class="nv">identical</span> <span class="nv">rows</span> <span class="nv">of</span>
+   <span class="o">!</span> <span class="nv">values</span> <span class="nv">perturbed</span> <span class="nv">by</span> <span class="nv">different</span> <span class="nv">amounts</span>
+   <span class="k">if</span><span class="ss">(</span><span class="nv">allocated</span><span class="ss">(</span><span class="nv">xout</span><span class="ss">))</span><span class="nv">deallocate</span><span class="ss">(</span><span class="nv">xout</span><span class="ss">)</span>
+   <span class="nv">allocate</span><span class="ss">(</span><span class="nv">xout</span><span class="ss">(</span><span class="mi">3</span>,<span class="nv">isz</span><span class="ss">))</span>
+   <span class="nv">xout</span><span class="ss">(</span><span class="mi">1</span>,:<span class="ss">)</span><span class="o">=</span>[<span class="ss">(</span><span class="nv">i</span>,<span class="nv">i</span><span class="o">=</span><span class="nv">isz</span>,<span class="mi">1</span>,<span class="o">-</span><span class="mi">1</span><span class="ss">)</span>]<span class="o">*</span><span class="mi">10</span>
+   <span class="nv">xout</span><span class="ss">(</span><span class="mi">2</span>,:<span class="ss">)</span><span class="o">=</span><span class="nv">xout</span><span class="ss">(</span><span class="mi">1</span>,:<span class="ss">)</span>
+   <span class="nv">xout</span><span class="ss">(</span><span class="mi">3</span>,:<span class="ss">)</span><span class="o">=</span><span class="nv">xout</span><span class="ss">(</span><span class="mi">1</span>,:<span class="ss">)</span>
+   <span class="o">!</span> <span class="nv">perturb</span> <span class="nv">each</span> <span class="nv">row</span> <span class="nv">a</span> <span class="nv">different</span> <span class="nv">amount</span>
+   <span class="k">call</span> <span class="nl">perturb</span><span class="ss">(</span><span class="nv">xout</span><span class="ss">(</span><span class="mi">1</span>,:<span class="ss">)</span>,<span class="mi">0</span>.<span class="mi">0</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">perturb</span><span class="ss">(</span><span class="nv">xout</span><span class="ss">(</span><span class="mi">2</span>,:<span class="ss">)</span>,<span class="mi">0</span>.<span class="mi">1</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">perturb</span><span class="ss">(</span><span class="nv">xout</span><span class="ss">(</span><span class="mi">3</span>,:<span class="ss">)</span>,<span class="mi">1</span>.<span class="mi">0</span><span class="ss">)</span>
+   <span class="o">!</span> <span class="k">show</span> <span class="nv">values</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(a)</span><span class="s1">&#39;</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">count    unchanged  perturbed  random</span><span class="s1">&#39;</span>
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">xout</span>,<span class="nv">dim</span><span class="o">=</span><span class="mi">2</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="s1">&#39;</span><span class="s">(*(i8,1x))</span><span class="s1">&#39;</span><span class="ss">)</span><span class="nv">i</span>,<span class="nv">xout</span><span class="ss">(</span>:,<span class="nv">i</span><span class="ss">)</span>
+   <span class="nv">enddo</span>
+<span class="nv">char</span>: <span class="nv">block</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">cdont</span><span class="ss">(</span>:<span class="ss">)</span>
+   <span class="nv">cdont</span><span class="o">=</span>[<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">20</span><span class="ss">)</span> :: <span class="s1">&#39;</span><span class="s">a</span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">be</span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">car</span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">dam</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">fan</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">gas</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">egg</span><span class="s1">&#39;</span>]
+   <span class="nv">isz</span><span class="o">=</span><span class="nv">size</span><span class="ss">(</span><span class="nv">cdont</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Original.................:</span><span class="s1">&#39;</span>,<span class="ss">(</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">cdont</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">isz</span><span class="ss">)</span>
+   <span class="k">call</span> <span class="nl">perturb</span><span class="ss">(</span><span class="nv">cdont</span>,<span class="mi">1</span>.<span class="mi">0</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">Perturbed ...............:</span><span class="s1">&#39;</span>,<span class="ss">(</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">cdont</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">isz</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span>
+<span class="nv">endblock</span> <span class="nv">char</span>
+
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_perturb</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">count</span>    <span class="nv">unchanged</span>  <span class="nv">perturbed</span>  <span class="k">random</span>
+       <span class="mi">1</span>     <span class="mi">2000</span>     <span class="mi">1980</span>       <span class="mi">80</span>
+       <span class="mi">2</span>     <span class="mi">1990</span>     <span class="mi">1990</span>      <span class="mi">580</span>
+       <span class="mi">3</span>     <span class="mi">1980</span>     <span class="mi">1890</span>     <span class="mi">1690</span>
+       <span class="mi">4</span>     <span class="mi">1970</span>     <span class="mi">1900</span>     <span class="mi">1340</span>
+       <span class="mi">5</span>     <span class="mi">1960</span>     <span class="mi">1920</span>     <span class="mi">1260</span>
+       <span class="mi">6</span>     <span class="mi">1950</span>     <span class="mi">1950</span>     <span class="mi">1220</span>
+       <span class="mi">7</span>     <span class="mi">1940</span>     <span class="mi">1880</span>      <span class="mi">160</span>
+       <span class="mi">8</span>     <span class="mi">1930</span>     <span class="mi">1960</span>     <span class="mi">1620</span>
+       <span class="mi">9</span>     <span class="mi">1920</span>     <span class="mi">1860</span>      <span class="mi">540</span>
+      <span class="mi">10</span>     <span class="mi">1910</span>     <span class="mi">1930</span>     <span class="mi">1300</span>
+      <span class="mi">11</span>     <span class="mi">1900</span>     <span class="mi">1940</span>     <span class="mi">1190</span>
+       .        .        .        .
+       .        .        .        .
+       .        .        .        .
+       .        .        .        .
+     <span class="mi">189</span>      <span class="mi">120</span>       <span class="mi">80</span>     <span class="mi">1200</span>
+     <span class="mi">190</span>      <span class="mi">110</span>      <span class="mi">150</span>      <span class="mi">800</span>
+     <span class="mi">191</span>      <span class="mi">100</span>      <span class="mi">120</span>     <span class="mi">1430</span>
+     <span class="mi">192</span>       <span class="mi">90</span>      <span class="mi">170</span>     <span class="mi">1410</span>
+     <span class="mi">193</span>       <span class="mi">80</span>      <span class="mi">140</span>      <span class="mi">370</span>
+     <span class="mi">194</span>       <span class="mi">70</span>       <span class="mi">90</span>     <span class="mi">1720</span>
+     <span class="mi">195</span>       <span class="mi">60</span>       <span class="mi">10</span>      <span class="mi">830</span>
+     <span class="mi">196</span>       <span class="mi">50</span>      <span class="mi">100</span>     <span class="mi">1670</span>
+     <span class="mi">197</span>       <span class="mi">40</span>       <span class="mi">20</span>      <span class="mi">470</span>
+     <span class="mi">198</span>       <span class="mi">30</span>       <span class="mi">70</span>     <span class="mi">1020</span>
+     <span class="mi">199</span>       <span class="mi">20</span>       <span class="mi">60</span>     <span class="mi">1540</span>
+     <span class="mi">200</span>       <span class="mi">10</span>       <span class="mi">30</span>     <span class="mi">1810</span>
+<span class="nv">Original</span>.................: <span class="nv">a</span> <span class="nv">be</span> <span class="nv">car</span> <span class="nv">dam</span> <span class="nv">fan</span> <span class="nv">gas</span> <span class="nv">egg</span>
+<span class="nv">Perturbed</span> ...............: <span class="nv">a</span> <span class="nv">be</span> <span class="nv">gas</span> <span class="nv">dam</span> <span class="nv">fan</span> <span class="nv">car</span> <span class="nv">egg</span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon, 2000-2012
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
      
      
-    
+    <br>
 
      <section class="visible-xs visible-sm hidden-md">
        
@@ -549,7 +672,7 @@ private subroutine f_char_CTRPER(INOUTVALS, CLOSENESS)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-26 21:53  
+             on 2022-04-26 22:12  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

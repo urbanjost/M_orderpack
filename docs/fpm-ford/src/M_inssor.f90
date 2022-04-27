@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: inssor
-!!
+!>
 !!##NAME
 !!    sort_special(3f) - [orderpack:SORT] Sorts array into ascending order
 !!                 (Insertion sort, generally for small or nearly sorted

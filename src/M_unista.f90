@@ -5,7 +5,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unista
-!!
+!>
 !!##NAME
 !!    unique(3f) - [orderpack:UNIQUE] removes duplicates from an array
 !!                 otherwise retaining original order (i.e. it is "stable")

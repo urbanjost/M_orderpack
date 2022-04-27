@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unirnk
-!!
+!>
 !!##NAME
 !!    Rank_Unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal
 !!                      of duplicate entries (MergeSort)

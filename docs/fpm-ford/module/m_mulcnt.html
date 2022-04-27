@@ -200,80 +200,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">occurrences</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">orderpack</span>:<span class="nv">MULTIPLICITY</span>] <span class="nv">Give</span> <span class="nv">the</span> <span class="nv">multiplicity</span> <span class="k">for</span> <span class="nv">each</span>
-             <span class="nv">array</span> <span class="nv">value</span> <span class="ss">(</span><span class="nv">number</span> <span class="nv">of</span> <span class="nv">times</span> <span class="nv">that</span> <span class="nv">it</span> <span class="nv">appears</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">array</span><span class="ss">)</span>
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code> Subroutine Occurrences (INVALS, IMULT)
-
-   <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IMULT(:)
-
-Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code> <span class="nv">OCCURRENCES</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">Gives</span>, <span class="k">for</span> <span class="nv">each</span> <span class="nv">array</span> <span class="nv">element</span>, <span class="nv">its</span> <span class="nv">multiplicity</span>
- <span class="ss">(</span><span class="nv">number</span> <span class="nv">of</span> <span class="nv">times</span> <span class="nv">that</span> <span class="nv">it</span> <span class="nv">appears</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">array</span><span class="ss">)</span>.
-
- <span class="nv">Internally</span>, <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">times</span> <span class="nv">that</span> <span class="nv">a</span> <span class="nv">value</span> <span class="nv">appears</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">array</span> <span class="nv">is</span>
- <span class="nv">computed</span> <span class="nv">by</span> <span class="nv">using</span> <span class="nv">inverse</span> <span class="nv">ranking</span>, <span class="nv">counting</span> <span class="k">for</span> <span class="nv">each</span> <span class="nv">rank</span> <span class="nv">the</span> <span class="nv">number</span>
- <span class="nv">of</span> <span class="nv">values</span> <span class="nv">that</span> <span class="s2">&quot;</span><span class="s">collide</span><span class="s2">&quot;</span> <span class="nv">to</span> <span class="nv">this</span> <span class="nv">rank</span>, <span class="nv">and</span> <span class="nv">returning</span> <span class="nv">this</span> <span class="nv">sum</span> <span class="nv">to</span>
- <span class="nv">the</span> <span class="nv">locations</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">original</span> <span class="nv">set</span>. <span class="nv">It</span> <span class="nv">uses</span> <span class="nv">subroutine</span> <span class="nv">RANK_ORDERS</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> INVALS      input array
- IMULT      array containing how often the value in INVALS
-            appears in INVALS
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code>  <span class="nv">program</span> <span class="nv">demo_occurrences</span>
-  <span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">occurrences</span>
-  <span class="o">!</span> <span class="nv">determine</span> <span class="nv">how</span> <span class="nv">many</span> <span class="nv">times</span> <span class="nv">each</span> <span class="nv">value</span> <span class="nv">appears</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">input</span> <span class="nv">array</span>
-  <span class="nv">implicit</span> <span class="nv">none</span>
-  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span>    :: <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
-  <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">20</span><span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">strings</span><span class="ss">(</span>:<span class="ss">)</span>
-  <span class="nv">integer</span>,<span class="nv">allocatable</span>           :: <span class="nv">cindx</span><span class="ss">(</span>:<span class="ss">)</span>
-  <span class="nv">integer</span>                       :: <span class="nv">csz</span>
-  <span class="nv">integer</span>                       :: <span class="nv">i</span>
-     <span class="o">!</span> <span class="nv">each</span> <span class="nv">name</span> <span class="nv">appears</span> <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">times</span> <span class="nv">its</span> <span class="nv">name</span> <span class="nv">represents</span>
-     <span class="nv">strings</span><span class="o">=</span> [ <span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">20</span><span class="ss">)</span> ::                           <span class="o">&amp;</span>
-     <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">two  </span><span class="s1">&#39;</span>,  <span class="s1">&#39;</span><span class="s">four </span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">three</span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">five</span><span class="s1">&#39;</span>,   <span class="s1">&#39;</span><span class="s">five</span><span class="s1">&#39;</span>,           <span class="o">&amp;</span>
-     <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">two  </span><span class="s1">&#39;</span>,  <span class="s1">&#39;</span><span class="s">four </span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">three</span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">five</span><span class="s1">&#39;</span>,   <span class="s1">&#39;</span><span class="s">five</span><span class="s1">&#39;</span>,           <span class="o">&amp;</span>
-     <span class="o">&amp;</span> <span class="s1">&#39;</span><span class="s">four </span><span class="s1">&#39;</span>,  <span class="s1">&#39;</span><span class="s">four </span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">three</span><span class="s1">&#39;</span>, <span class="s1">&#39;</span><span class="s">one  </span><span class="s1">&#39;</span>,  <span class="s1">&#39;</span><span class="s">five</span><span class="s1">&#39;</span>]
-     <span class="nv">csz</span><span class="o">=</span><span class="nv">size</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">)</span>
-     <span class="k">if</span><span class="ss">(</span><span class="nv">allocated</span><span class="ss">(</span><span class="nv">cindx</span><span class="ss">))</span><span class="nv">deallocate</span><span class="ss">(</span><span class="nv">cindx</span><span class="ss">)</span>
-     <span class="nv">allocate</span><span class="ss">(</span><span class="nv">cindx</span><span class="ss">(</span><span class="nv">csz</span><span class="ss">))</span>
-     <span class="k">call</span> <span class="nl">occurrences</span><span class="ss">(</span><span class="nv">strings</span>,<span class="nv">cindx</span><span class="ss">)</span>
-     <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)(</span><span class="nv">trim</span><span class="ss">(</span><span class="nv">strings</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span>,<span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">csz</span><span class="ss">)</span>
-     <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="nv">cindx</span>
-  <span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_occurrences</span>
-</code></pre></div>
-
-<p>Results:</p>
-<p>two four three five five two four three five five four four three one five
-  2   4    3     5    5    2   4    3     5    5    4    4    3     1   5</p>
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>Michel Olagnon, Mar 2000
-</code></pre></div>
-
-<h2 id="maintainer">MAINTAINER</h2>
-<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>CC0-1.0
-</code></pre></div>
+    
       <br>
     
   
@@ -360,6 +287,11 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
   <div class="panel-heading codesum"><span class="anchor" id="interface-mulcnt"></span><h3>public interface <a href='../interface/mulcnt.html'>mulcnt</a>
     
   </h3></div>
+  
+  <div class="panel-body">
+    
+    <p>Sample program:</p><a href="../interface/mulcnt.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+  </div>
   
   <ul class="list-group">
   
@@ -650,7 +582,7 @@ private subroutine f_char_mulcnt(INVALS, IMULT)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-26 21:53  
+             on 2022-04-26 22:12  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

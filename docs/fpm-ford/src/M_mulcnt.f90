@@ -5,7 +5,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: mulcnt
-!!
+!>
 !!##NAME
 !!    occurrences(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each
 !!                 array value (number of times that it appears in the array)

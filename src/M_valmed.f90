@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: valmed
-!!
+!>
 !!##NAME
 !!    medianval(3f) - [orderpack:MEDIAN] Returns median VALUE.
 !!

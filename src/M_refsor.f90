@@ -5,7 +5,7 @@ Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refsor
 private :: real64_inssor, real32_inssor, int32_inssor, f_char_inssor
-!!
+!>
 !!##NAME
 !!    sort(3f) - [orderpack:SORT] Sorts array into ascending order
 !!                 (Quicksort)

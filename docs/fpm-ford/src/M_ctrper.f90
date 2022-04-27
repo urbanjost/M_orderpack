@@ -5,7 +5,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: ctrper
-!!
+!>
 !!##NAME
 !!    perturb(3f) - [orderpack:PERMUTATION] generate a random permutation
 !!                  of an array leaving elements close to initial locations

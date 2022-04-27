@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: median
-!!
+!>
 !!##NAME
 !!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If
 !!                 number of elements is even, returns average of the two

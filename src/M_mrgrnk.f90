@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: mrgrnk
-!!
+!>
 !!##NAME
 !!    rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input
 !!               array (optimized merge-sort)

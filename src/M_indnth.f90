@@ -4,7 +4,7 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: indnth
-!!
+!>
 !!##NAME
 !!    orderloc(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of
 !!                 array, or "fractile of order N/SIZE(array)" (QuickSort-like)

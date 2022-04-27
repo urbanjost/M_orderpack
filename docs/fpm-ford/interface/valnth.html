@@ -207,10 +207,102 @@
     
     <div class="col-md-9" id='text'>
       <h2>public interface valnth</h2>
-   
+   <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">orderval</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">orderpack</span>:<span class="nv">FRACTILE</span>] <span class="k">Return</span> <span class="nv">VALUE</span> <span class="nv">of</span> <span class="nv">Nth</span> <span class="nv">ordered</span> <span class="nv">element</span> <span class="nv">of</span>
+             <span class="nv">array</span>, <span class="nv">or</span> <span class="s2">&quot;</span><span class="s">fractile of order N/SIZE(array)</span><span class="s2">&quot;</span>. <span class="ss">(</span><span class="nv">QuickSort</span><span class="o">-</span><span class="nv">like</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Function OrderVal (INVALS, NORD)
+
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (Kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (Kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>)              :: orderval
+  Integer, Intent (In)                :: NORD
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<p>ORDERVAL(3f) returns the NORDth (ascending order) value of INVALS,
+   i.e. the fractile of order NORD/SIZE(INVALS).</p>
+<p>Internally, this subroutine simply calls ORDERLOC(3f).</p>
+<p>This routine uses a pivoting strategy such as the one of finding the
+   median based on the QuickSort algorithm, but we skew the pivot choice
+   to try to bring it to NORD as fast as possible. It uses two temporary
+   arrays, where it stores the indices of the values smaller than the
+   pivot (ILOWT), and the indices of values larger than the pivot that we
+   might still need later on (IHIGT). It iterates until it can bring the
+   number of values in ILOWT to exactly NORD, and then finds the maximum
+   of this set.</p>
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> INVALS    array to search
+ NORD     Nth lowest value to find
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> orderval   Nth lowest value
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_orderval</span>
+<span class="o">!</span>  <span class="k">Return</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">Nth</span> <span class="nv">lowest</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">array</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">orderval</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">list</span><span class="o">=</span> <span class="s1">&#39;</span><span class="s">(*(g0:,&quot;, &quot;))</span><span class="s1">&#39;</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">sp</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">real</span>,<span class="nv">parameter</span> ::  <span class="nv">INVALS</span><span class="ss">(</span><span class="o">*</span><span class="ss">)</span><span class="o">=</span>[<span class="mi">1</span>.<span class="mi">1</span>,<span class="mi">20</span>.<span class="mi">20</span>,<span class="mi">3</span>.<span class="mi">3</span>,<span class="mi">10</span>.<span class="mi">10</span>,<span class="mi">5</span>.<span class="mi">5</span>,<span class="mi">4</span>.<span class="mi">4</span>,<span class="mi">2</span>.<span class="mi">2</span>]
+<span class="nv">integer</span> :: <span class="nv">i</span>
+<span class="nv">integer</span> :: <span class="nv">imiddle</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">list</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">ORIGINAL:</span><span class="s1">&#39;</span>,<span class="nv">INVALS</span>
+   <span class="o">!</span> <span class="nv">can</span> <span class="k">return</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">values</span> <span class="nv">as</span> <span class="nv">intrinsics</span> <span class="nv">minval</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">and</span> <span class="nv">maxval</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">sp</span>, <span class="s1">&#39;</span><span class="s">minval</span><span class="s1">&#39;</span>,<span class="nv">orderval</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="mi">1</span><span class="ss">)</span>,          <span class="nv">minval</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">sp</span>, <span class="s1">&#39;</span><span class="s">maxval</span><span class="s1">&#39;</span>,<span class="nv">orderval</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">))</span>, <span class="nv">maxval</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">)</span>
+   <span class="o">!</span> <span class="nv">but</span> <span class="nv">more</span> <span class="nv">generally</span> <span class="nv">it</span> <span class="nv">can</span> <span class="k">return</span> <span class="nv">the</span> <span class="nv">Nth</span> <span class="nv">lowest</span> <span class="nv">value</span>.
+   <span class="nv">print</span> <span class="nv">sp</span>,<span class="s1">&#39;</span><span class="s">nord=</span><span class="s1">&#39;</span>,<span class="mi">4</span>, <span class="s1">&#39;</span><span class="s"> fractile=</span><span class="s1">&#39;</span>,<span class="nv">orderval</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="mi">4</span><span class="ss">)</span>
+   <span class="o">!</span> <span class="nv">so</span> <span class="nv">a</span> <span class="nv">value</span> <span class="nv">at</span> <span class="nv">the</span> <span class="nv">middle</span> <span class="nv">would</span> <span class="nv">be</span>
+   <span class="nv">imiddle</span><span class="o">=</span><span class="ss">(</span><span class="nv">size</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">)</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span><span class="o">/</span><span class="mi">2</span>
+   <span class="nv">print</span> <span class="nv">sp</span>,<span class="s1">&#39;</span><span class="s">median</span><span class="s1">&#39;</span>,<span class="nv">orderval</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="nv">imiddle</span><span class="ss">)</span>
+   <span class="o">!</span> <span class="nv">sorting</span> <span class="nv">the</span> <span class="nv">hard</span> <span class="nv">way</span>
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">list</span><span class="ss">)</span><span class="nv">i</span>,<span class="nv">orderval</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="nv">i</span><span class="ss">)</span>
+   <span class="nv">enddo</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_orderval</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code>ORIGINAL:, 1.1000, 20.200, 3.300, 10.100, 5.500, 4.400, 2.200
+minval 1.100 1.100
+maxval 20.200 20.200
+nord= 4  fractile= 4.400
+median 4.400
+1, 1.100
+2, 2.200
+3, 3.300
+4, 4.400
+5, 5.500
+6, 10.100
+7, 20.200
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon - Aug. 2000
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
      
      
-    
+    <br>
 
      <section class="visible-xs visible-sm hidden-md">
        
@@ -524,7 +616,7 @@ private function int32_valnth(INVALS, NORD) result(valnth)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-26 21:53  
+             on 2022-04-26 22:12  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>
