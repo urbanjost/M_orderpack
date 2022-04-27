@@ -11,6 +11,46 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a902361f8438cf992d29a48
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__unirnk_1_1unirnk_autotoc_md159}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__unirnk_1_1unirnk_autotoc_md159}
+Rank\+\_\+\+Unique(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:U\+N\+I\+Q\+UE\mbox{]} ranks an array, with removal of duplicate entries (Merge\+Sort)\hypertarget{interfacem__unirnk_1_1unirnk_autotoc_md160}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__unirnk_1_1unirnk_autotoc_md160}
+\begin{DoxyVerb} Subroutine rank_unique (INVALS, IRNGT, NUNI)
+
+   ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
+   Integer, Intent (Out)               :: IRNGT(:)
+   Integer, Intent (Out)               :: NUNI
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+\end{DoxyVerb}
+\hypertarget{interfacem__unirnk_1_1unirnk_autotoc_md161}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__unirnk_1_1unirnk_autotoc_md161}
+\begin{DoxyVerb}Ranks an array, removing duplicate entries.
+
+Internally, RANK_UNIQUE(3f) performs a Merge-sort ranking of an array,
+with removal of duplicate entries.
+
+The routine is similar to pure merge-sort ranking, but on the last
+pass, it discards indices that correspond to duplicate entries.
+
+For performance reasons, the first two passes are taken out of the
+standard loop, and use dedicated coding.
+\end{DoxyVerb}
+\hypertarget{interfacem__unirnk_1_1unirnk_autotoc_md162}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__unirnk_1_1unirnk_autotoc_md162}
+I\+N\+V\+A\+LS array to index I\+R\+N\+GT rank index returned pointing to unique values N\+U\+NI the number of unique values found\hypertarget{interfacem__unirnk_1_1unirnk_autotoc_md163}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__unirnk_1_1unirnk_autotoc_md163}
+Sample program\+:
+
+program demo\+\_\+rank\+\_\+unique ! rank an array, with removal of duplicate entries. use M\+\_\+orderpack, only \+: rank\+\_\+unique implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) ! I\+N\+V\+A\+LS=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} call printme() I\+N\+V\+A\+LS=\mbox{[}-\/1,0,-\/2,0,-\/3,0,-\/4\mbox{]} call printme() contains subroutine printme() integer,allocatable \+:: irngt(\+:) integer \+:: nuni if(allocated(irngt))deallocate(irngt) allocate(irngt(size(\+I\+N\+V\+A\+L\+S))) write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+V\+A\+LS call rank\+\_\+unique(\+I\+N\+V\+A\+L\+S,irngt,nuni) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+:\textquotesingle{},nuni write($\ast$,g)\textquotesingle{}R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+:\textquotesingle{},irngt(\+:nuni) write($\ast$,g)\textquotesingle{}S\+O\+R\+T\+ED D\+A\+TA\+:\textquotesingle{},I\+N\+V\+A\+L\+S(irngt(\+:nuni)) end subroutine end program demo\+\_\+rank\+\_\+unique
+
+Results\+:
+
+O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+: 8 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 4 5 2 7 3 8 9 1 S\+O\+R\+T\+ED D\+A\+TA\+: 1 4 5 6 7 8 9 10 O\+R\+I\+G\+I\+N\+AL\+: -\/1 0 -\/2 0 -\/3 0 -\/4 N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+: 5 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 7 5 3 1 2 S\+O\+R\+T\+ED D\+A\+TA\+: -\/4 -\/3 -\/2 -\/1 0\hypertarget{interfacem__unirnk_1_1unirnk_autotoc_md164}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__unirnk_1_1unirnk_autotoc_md164}
+Michel Olagnon, 2000-\/2012 \hypertarget{interfacem__unirnk_1_1unirnk_autotoc_md165}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__unirnk_1_1unirnk_autotoc_md165}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__unirnk_1_1unirnk_autotoc_md166}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__unirnk_1_1unirnk_autotoc_md166}
+C\+C0-\/1.\+0 
+
 \doxysubsection{Member Function/\+Subroutine Documentation}
 \mbox{\Hypertarget{interfacem__unirnk_1_1unirnk_a902361f8438cf992d29a480311e7787e}\label{interfacem__unirnk_1_1unirnk_a902361f8438cf992d29a480311e7787e}} 
 \index{m\_unirnk::unirnk@{m\_unirnk::unirnk}!int32\_unirnk@{int32\_unirnk}}
@@ -508,44 +548,7 @@ subroutine \mbox{\hyperlink{interfacem__unirnk_1_1unirnk_a902361f8438cf992d29a48
 \doxysubsubsection{\texorpdfstring{real64\_unirnk()}{real64\_unirnk()}}
 {\footnotesize\ttfamily subroutine m\+\_\+unirnk\+::unirnk\+::real64\+\_\+unirnk (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__unirnk_autotoc_md159}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__unirnk_autotoc_md159}
-Rank\+\_\+\+Unique(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:U\+N\+I\+Q\+UE\mbox{]} ranks an array, with removal of duplicate entries (Merge\+Sort)\hypertarget{namespacem__unirnk_autotoc_md160}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__unirnk_autotoc_md160}
-\begin{DoxyVerb} Subroutine rank_unique (INVALS, IRNGT, NUNI)
 
-   ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IRNGT(:)
-   Integer, Intent (Out)               :: NUNI
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-\end{DoxyVerb}
-\hypertarget{namespacem__unirnk_autotoc_md161}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__unirnk_autotoc_md161}
-\begin{DoxyVerb}Ranks an array, removing duplicate entries.
-
-Internally, RANK_UNIQUE(3f) performs a Merge-sort ranking of an array,
-with removal of duplicate entries.
-
-The routine is similar to pure merge-sort ranking, but on the last
-pass, it discards indices that correspond to duplicate entries.
-
-For performance reasons, the first two passes are taken out of the
-standard loop, and use dedicated coding.
-\end{DoxyVerb}
-\hypertarget{namespacem__unirnk_autotoc_md162}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__unirnk_autotoc_md162}
-I\+N\+V\+A\+LS array to index I\+R\+N\+GT rank index returned pointing to unique values N\+U\+NI the number of unique values found\hypertarget{namespacem__unirnk_autotoc_md163}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__unirnk_autotoc_md163}
-Sample program\+:
-
-program demo\+\_\+rank\+\_\+unique ! rank an array, with removal of duplicate entries. use M\+\_\+orderpack, only \+: rank\+\_\+unique implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) ! I\+N\+V\+A\+LS=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} call printme() I\+N\+V\+A\+LS=\mbox{[}-\/1,0,-\/2,0,-\/3,0,-\/4\mbox{]} call printme() contains subroutine printme() integer,allocatable \+:: irngt(\+:) integer \+:: nuni if(allocated(irngt))deallocate(irngt) allocate(irngt(size(\+I\+N\+V\+A\+L\+S))) write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+V\+A\+LS call rank\+\_\+unique(\+I\+N\+V\+A\+L\+S,irngt,nuni) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+:\textquotesingle{},nuni write($\ast$,g)\textquotesingle{}R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+:\textquotesingle{},irngt(\+:nuni) write($\ast$,g)\textquotesingle{}S\+O\+R\+T\+ED D\+A\+TA\+:\textquotesingle{},I\+N\+V\+A\+L\+S(irngt(\+:nuni)) end subroutine end program demo\+\_\+rank\+\_\+unique
-
-Results\+:
-
-O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+: 8 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 4 5 2 7 3 8 9 1 S\+O\+R\+T\+ED D\+A\+TA\+: 1 4 5 6 7 8 9 10 O\+R\+I\+G\+I\+N\+AL\+: -\/1 0 -\/2 0 -\/3 0 -\/4 N\+U\+M\+B\+ER OF U\+N\+I\+Q\+UE I\+N\+D\+I\+C\+ES\+: 5 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 7 5 3 1 2 S\+O\+R\+T\+ED D\+A\+TA\+: -\/4 -\/3 -\/2 -\/1 0\hypertarget{namespacem__unirnk_autotoc_md164}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__unirnk_autotoc_md164}
-Michel Olagnon, 2000-\/2012 \hypertarget{namespacem__unirnk_autotoc_md165}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__unirnk_autotoc_md165}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__unirnk_autotoc_md166}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__unirnk_autotoc_md166}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{99 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
 \DoxyCodeLine{100       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}

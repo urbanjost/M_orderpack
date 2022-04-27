@@ -5,10 +5,6 @@ Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: indmed
 Integer, Allocatable, Dimension(:), Private, Save :: IDONT
-interface indmed
-  module procedure real64_indmed, real32_indmed, int32_indmed, f_char_indmed
-end interface indmed
-contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file medianloc.3orderpack.man
 NAME
@@ -92,6 +88,11 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+interface indmed
+  module procedure real64_indmed, real32_indmed, int32_indmed, f_char_indmed
+end interface indmed
+contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL INDMED
 Subroutine ${KIND}_indmed (INVALS, OUTORD)

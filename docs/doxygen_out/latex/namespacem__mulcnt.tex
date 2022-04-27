@@ -111,55 +111,7 @@ integer, parameter \mbox{\hyperlink{namespacem__mulcnt_a0e9d864236495fc623b113be
 \doxysubsubsection{\texorpdfstring{real64\_mulcnt()}{real64\_mulcnt()}}
 {\footnotesize\ttfamily subroutine m\+\_\+mulcnt\+::real64\+\_\+mulcnt (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+M\+U\+LT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__mulcnt_autotoc_md76}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__mulcnt_autotoc_md76}
-occurrences(3f) -\/ \mbox{[}orderpack\+:M\+U\+L\+T\+I\+P\+L\+I\+C\+I\+TY\mbox{]} Give the multiplicity for each array value (number of times that it appears in the array)\hypertarget{namespacem__mulcnt_autotoc_md77}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__mulcnt_autotoc_md77}
-\begin{DoxyVerb} Subroutine Occurrences (INVALS, IMULT)
 
-   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IMULT(:)
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-\end{DoxyVerb}
-\hypertarget{namespacem__mulcnt_autotoc_md78}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__mulcnt_autotoc_md78}
-O\+C\+C\+U\+R\+R\+E\+N\+C\+E\+S(3f) Gives, for each array element, its multiplicity (number of times that it appears in the array).
-
-Internally, the number of times that a value appears in the array is computed by using inverse ranking, counting for each rank the number of values that \char`\"{}collide\char`\"{} to this rank, and returning this sum to the locations in the original set. It uses subroutine R\+A\+N\+K\+\_\+\+O\+R\+D\+E\+R\+S(3f).\hypertarget{namespacem__mulcnt_autotoc_md79}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__mulcnt_autotoc_md79}
-I\+N\+V\+A\+LS input array I\+M\+U\+LT array containing how often the value in I\+N\+V\+A\+LS appears in I\+N\+V\+A\+LS\hypertarget{namespacem__mulcnt_autotoc_md80}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__mulcnt_autotoc_md80}
-Sample program\+: \begin{DoxyVerb} program demo_occurrences
- use M_orderpack, only : occurrences
- ! determine how many times each value appears in an input array
- implicit none
- character(len=*),parameter    :: g='(*(g0,1x))'
- character(len=20),allocatable :: strings(:)
- integer,allocatable           :: cindx(:)
- integer                       :: csz
- integer                       :: i
-    ! each name appears the number of times its name represents
-    strings= [ character(len=20) ::                           &
-    & 'two  ',  'four ', 'three', 'five',   'five',           &
-    & 'two  ',  'four ', 'three', 'five',   'five',           &
-    & 'four ',  'four ', 'three', 'one  ',  'five']
-    csz=size(strings)
-    if(allocated(cindx))deallocate(cindx)
-    allocate(cindx(csz))
-    call occurrences(strings,cindx)
-    write(*,g)(trim(strings(i)),i=1,csz)
-    write(*,g)cindx
- end program demo_occurrences
-\end{DoxyVerb}
-
-
-Results\+:
-
-two four three five five two four three five five four four three one five 2 4 3 5 5 2 4 3 5 5 4 4 3 1 5\hypertarget{namespacem__mulcnt_autotoc_md81}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__mulcnt_autotoc_md81}
-Michel Olagnon, Mar 2000 \hypertarget{namespacem__mulcnt_autotoc_md82}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__mulcnt_autotoc_md82}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__mulcnt_autotoc_md83}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__mulcnt_autotoc_md83}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{83 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
 \DoxyCodeLine{84 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}

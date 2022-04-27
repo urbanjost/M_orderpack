@@ -4,14 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unirnk
-interface unirnk
-  module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
-end interface unirnk
-interface nearless
-  module procedure real64_nearless, real32_nearless, int32_nearless !, f_char_nearless
-end interface nearless
-
-contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file rank_unique.3orderpack.man
 NAME
@@ -95,6 +87,15 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+interface unirnk
+  module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
+end interface unirnk
+interface nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless !, f_char_nearless
+end interface nearless
+
+contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL UNIRNK
 Subroutine ${KIND}_unirnk (INVALS, IRNGT, NUNI)

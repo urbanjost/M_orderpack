@@ -11,6 +11,40 @@ subroutine \mbox{\hyperlink{interfacem__refpar_1_1refpar_aa62b55da7396c467f22e9a
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__refpar_1_1refpar_autotoc_md110}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__refpar_1_1refpar_autotoc_md110}
+prank\+\_\+basic(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:P\+A\+R\+T\+I\+AL\mbox{]} partially ranks an array (Quick\+Sort)\hypertarget{interfacem__refpar_1_1refpar_autotoc_md111}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__refpar_1_1refpar_autotoc_md111}
+\begin{DoxyVerb} Subroutine Prank_Basic (INVALS, IRNGT, NORD)
+
+   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+   Integer, Intent (Out)               :: IRNGT(:)
+   Integer, Intent (In)                :: NORD
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
+\end{DoxyVerb}
+\hypertarget{interfacem__refpar_1_1refpar_autotoc_md112}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__refpar_1_1refpar_autotoc_md112}
+creates index I\+R\+N\+G\+T() which partially ranks input array I\+N\+V\+A\+L\+S(), up to order N\+O\+RD.
+
+This version is not optimized for performance, and is thus not as difficult to read as some other ones.
+
+Internally this routine uses a pivoting strategy such as the one used in finding the median based on the Quick\+Sort algorithm. It uses a temporary array, where it stores the partially ranked indices of the values. It iterates until it can bring the number of values lower than the pivot to exactly N\+O\+RD, and then uses an Insertion-\/\+Sort to rank this set, since it is supposedly small.\hypertarget{interfacem__refpar_1_1refpar_autotoc_md113}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__refpar_1_1refpar_autotoc_md113}
+I\+N\+V\+A\+LS array to partially rank I\+R\+N\+GT array to hold indices of ranked elements N\+O\+RD number of elements to rank\hypertarget{interfacem__refpar_1_1refpar_autotoc_md114}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__refpar_1_1refpar_autotoc_md114}
+Sample program\+:
+
+program demo\+\_\+prank ! create index to lowest N values in input array in ascending order use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+orderpack, only \+: prank\+\_\+basic implicit none real(kind=real32) \+:: valsr(2000) integer \+:: indx(2000) integer \+:: i real,allocatable \+:: results(\+:) ! create some random data call random\+\_\+seed() call random\+\_\+number(valsr) valsr=valsr$\ast$1000000.0-\/500000.\+0 ! get 300 lowest values sorted call prank\+\_\+basic(valsr,indx,300) ! results=valsr(indx(\+:300)) ! check if sorted do i=1,300-\/1 if (results(i+1).lt.\+results(i))then write($\ast$,$\ast$)\textquotesingle{}E\+R\+R\+OR\+: not sorted\textquotesingle{} stop 1 endif enddo write($\ast$,$\ast$)\textquotesingle{}random array now sorted\textquotesingle{} end program demo\+\_\+prank
+
+Results\+:
+
+random array now sorted\hypertarget{interfacem__refpar_1_1refpar_autotoc_md115}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__refpar_1_1refpar_autotoc_md115}
+Michel Olagnon -\/ Feb. 2000 \hypertarget{interfacem__refpar_1_1refpar_autotoc_md116}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__refpar_1_1refpar_autotoc_md116}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__refpar_1_1refpar_autotoc_md117}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__refpar_1_1refpar_autotoc_md117}
+C\+C0-\/1.\+0 
+
 \doxysubsection{Member Function/\+Subroutine Documentation}
 \mbox{\Hypertarget{interfacem__refpar_1_1refpar_aa62b55da7396c467f22e9ac24d0b6cb4}\label{interfacem__refpar_1_1refpar_aa62b55da7396c467f22e9ac24d0b6cb4}} 
 \index{m\_refpar::refpar@{m\_refpar::refpar}!int32\_refpar@{int32\_refpar}}
@@ -244,38 +278,7 @@ subroutine \mbox{\hyperlink{interfacem__refpar_1_1refpar_aa62b55da7396c467f22e9a
 \doxysubsubsection{\texorpdfstring{real64\_refpar()}{real64\_refpar()}}
 {\footnotesize\ttfamily subroutine m\+\_\+refpar\+::refpar\+::real64\+\_\+refpar (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__refpar_autotoc_md110}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__refpar_autotoc_md110}
-prank\+\_\+basic(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:P\+A\+R\+T\+I\+AL\mbox{]} partially ranks an array (Quick\+Sort)\hypertarget{namespacem__refpar_autotoc_md111}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__refpar_autotoc_md111}
-\begin{DoxyVerb} Subroutine Prank_Basic (INVALS, IRNGT, NORD)
 
-   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IRNGT(:)
-   Integer, Intent (In)                :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-\end{DoxyVerb}
-\hypertarget{namespacem__refpar_autotoc_md112}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__refpar_autotoc_md112}
-creates index I\+R\+N\+G\+T() which partially ranks input array I\+N\+V\+A\+L\+S(), up to order N\+O\+RD.
-
-This version is not optimized for performance, and is thus not as difficult to read as some other ones.
-
-Internally this routine uses a pivoting strategy such as the one used in finding the median based on the Quick\+Sort algorithm. It uses a temporary array, where it stores the partially ranked indices of the values. It iterates until it can bring the number of values lower than the pivot to exactly N\+O\+RD, and then uses an Insertion-\/\+Sort to rank this set, since it is supposedly small.\hypertarget{namespacem__refpar_autotoc_md113}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__refpar_autotoc_md113}
-I\+N\+V\+A\+LS array to partially rank I\+R\+N\+GT array to hold indices of ranked elements N\+O\+RD number of elements to rank\hypertarget{namespacem__refpar_autotoc_md114}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__refpar_autotoc_md114}
-Sample program\+:
-
-program demo\+\_\+prank ! create index to lowest N values in input array in ascending order use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+orderpack, only \+: prank\+\_\+basic implicit none real(kind=real32) \+:: valsr(2000) integer \+:: indx(2000) integer \+:: i real,allocatable \+:: results(\+:) ! create some random data call random\+\_\+seed() call random\+\_\+number(valsr) valsr=valsr$\ast$1000000.0-\/500000.\+0 ! get 300 lowest values sorted call prank\+\_\+basic(valsr,indx,300) ! results=valsr(indx(\+:300)) ! check if sorted do i=1,300-\/1 if (results(i+1).lt.\+results(i))then write($\ast$,$\ast$)\textquotesingle{}E\+R\+R\+OR\+: not sorted\textquotesingle{} stop 1 endif enddo write($\ast$,$\ast$)\textquotesingle{}random array now sorted\textquotesingle{} end program demo\+\_\+prank
-
-Results\+:
-
-random array now sorted\hypertarget{namespacem__refpar_autotoc_md115}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__refpar_autotoc_md115}
-Michel Olagnon -\/ Feb. 2000 \hypertarget{namespacem__refpar_autotoc_md116}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__refpar_autotoc_md116}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__refpar_autotoc_md117}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__refpar_autotoc_md117}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{92 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
 \DoxyCodeLine{93       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}

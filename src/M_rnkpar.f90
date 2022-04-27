@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rnkpar
-interface rnkpar
-  module procedure real64_rnkpar, real32_rnkpar, int32_rnkpar !, f_char_rnkpar
-end interface rnkpar
-contains
 !!
 !!##NAME
 !!    prank(3f) - [orderpack:RANK:PARTIAL] partially ranks an array
@@ -85,6 +81,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface rnkpar
+  module procedure real64_rnkpar, real32_rnkpar, int32_rnkpar !, f_char_rnkpar
+end interface rnkpar
+contains
 Subroutine real64_rnkpar (INVALS, IRNGT, NORD)
 !!__________________________________________________________
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS

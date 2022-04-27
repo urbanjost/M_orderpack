@@ -5,10 +5,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: mulcnt
-interface mulcnt
-  module procedure real64_mulcnt, real32_mulcnt, int32_mulcnt, f_char_mulcnt
-end interface mulcnt
-contains
 !!
 !!##NAME
 !!    occurrences(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each
@@ -79,6 +75,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface mulcnt
+  module procedure real64_mulcnt, real32_mulcnt, int32_mulcnt, f_char_mulcnt
+end interface mulcnt
+contains
 Subroutine real64_mulcnt (INVALS, IMULT)
 ! __________________________________________________________
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS

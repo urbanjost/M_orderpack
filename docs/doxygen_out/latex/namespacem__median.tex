@@ -1022,43 +1022,7 @@ integer, parameter \mbox{\hyperlink{namespacem__median_acca4a05ec62254b97c5c792a
 \doxysubsubsection{\texorpdfstring{real64\_median()}{real64\_median()}}
 {\footnotesize\ttfamily real (kind=real64) function m\+\_\+median\+::real64\+\_\+median (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__median_autotoc_md51}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__median_autotoc_md51}
-median(3f) -\/ \mbox{[}orderpack\+:M\+E\+D\+I\+AN\mbox{]} Calculates median V\+A\+L\+UE. If number of elements is even, returns average of the two \char`\"{}medians\char`\"{}.\hypertarget{namespacem__median_autotoc_md52}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__median_autotoc_md52}
-\begin{DoxyVerb} Function Median (INVALS)
 
-  ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
-  ${TYPE} (Kind=${KIND})              :: MEDIAN
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-\end{DoxyVerb}
-\hypertarget{namespacem__median_autotoc_md53}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__median_autotoc_md53}
-M\+E\+D\+I\+A\+N(3f) calculates the median value of the array I\+N\+V\+A\+L\+S(). It is a modified version of M\+E\+D\+I\+A\+N\+V\+A\+L(3f) that provides the average between the two middle values in the case size(\+I\+N\+V\+A\+L\+S) is even.
-
-This routine uses a pivoting strategy similar to the method of finding the median based on the Quick-\/sort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (I\+L\+O\+WT), and the indices of values larger than the pivot that we might still need later on (I\+H\+I\+GT). It iterates until it can bring the number of values in I\+L\+O\+WT to exactly N\+O\+RD, and then finds the maximum of this set.\hypertarget{namespacem__median_autotoc_md54}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__median_autotoc_md54}
-I\+N\+V\+A\+LS array to determine the median value of.\hypertarget{namespacem__median_autotoc_md55}{}\doxysubsubsection{R\+E\+T\+U\+R\+NS}\label{namespacem__median_autotoc_md55}
-M\+E\+D\+I\+AN median value. If I\+N\+V\+A\+LS contains an even number of elements the value is the average of the two \char`\"{}medians\char`\"{}.\hypertarget{namespacem__median_autotoc_md56}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__median_autotoc_md56}
-Sample program\+:
-
-program demo\+\_\+median ! calculate median value use M\+\_\+orderpack, only \+: median implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{}
-
-write($\ast$,g) \textquotesingle{}real \textquotesingle{},median(\& \mbox{[}80.\+0,70.\+0,20.\+0,10.\+0,1000.\+0\mbox{]} )
-
-write($\ast$,g) \textquotesingle{}integer\textquotesingle{},median(\& \mbox{[}11, 22, 33, 44, 55, 66, 77, 88\mbox{]} )
-
-write($\ast$,g) \textquotesingle{}double \textquotesingle{},median(\& \mbox{[}11.\+0d0,22.\+0d0,33.\+0d0,66.\+0d0,77.\+0d0,88.\+0d0\mbox{]})
-
-end program demo\+\_\+median
-
-Results\+:
-
-real 70.\+00000 integer 49 double 49.\+50000000000000\hypertarget{namespacem__median_autotoc_md57}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__median_autotoc_md57}
-Michel Olagnon -\/ Aug. 2000 \hypertarget{namespacem__median_autotoc_md58}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__median_autotoc_md58}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__median_autotoc_md59}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__median_autotoc_md59}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{86 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
 \DoxyCodeLine{87 \textcolor{keywordtype}{      Real} (Kind=real64) :: median}

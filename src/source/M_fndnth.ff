@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: fndnth
-interface fndnth
-  module procedure real64_fndnth, real32_fndnth, int32_fndnth !, f_char_fndnth
-end interface fndnth
-contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file orderval_special.3orderpack.man
 NAME
@@ -112,6 +108,11 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+interface fndnth
+  module procedure real64_fndnth, real32_fndnth, int32_fndnth !, f_char_fndnth
+end interface fndnth
+contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL FNDNTH
 Function ${KIND}_fndnth (INVALS, INORD) Result (FNDNTH)

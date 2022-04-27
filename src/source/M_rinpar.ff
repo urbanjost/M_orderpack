@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rinpar
-interface rinpar
-   module procedure real64_rinpar, real32_rinpar, int32_rinpar
-end interface rinpar
-contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file prank_special.3orderpack.man
 NAME
@@ -84,6 +80,11 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+interface rinpar
+   module procedure real64_rinpar, real32_rinpar, int32_rinpar
+end interface rinpar
+contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL RINPAR
 Subroutine ${KIND}_rinpar (INVALS, IRNGT, NORD)

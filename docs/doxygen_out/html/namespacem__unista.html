@@ -291,47 +291,6 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md167"></a>
-NAME</h2>
-<p>unique(3f) - [orderpack:UNIQUE] removes duplicates from an array otherwise retaining original order (i.e. it is "stable")</p>
-<h2><a class="anchor" id="autotoc_md168"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Subroutine Unique (INOUTVALS, NUNI)
-
-  ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
-  Integer, Intent (Out)                  :: NUNI
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-</pre><h2><a class="anchor" id="autotoc_md169"></a>
-DESCRIPTION</h2>
-<p>UNIQUE(3f) does a stable removal of duplicates from an array.</p>
-<p>It leaves in the initial set only those entries that are unique, packing the array, and leaving the order of the retained values unchanged.</p>
-<p>Internally this subroutine uses Merge-sort unique inverse ranking.</p>
-<h2><a class="anchor" id="autotoc_md170"></a>
-OPTIONS</h2>
-<p>INOUTVALS input array to reduce to unique values NUNI number of values comprising the returned set of unique values</p>
-<h2><a class="anchor" id="autotoc_md171"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_unique ! remove duplicates with remaining elements remaining in initial order use M_orderpack, only : unique implicit none character(len=*),parameter :: g='(*(g0,1x))' character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))' integer :: nuni</p>
-<p>int : block integer,allocatable :: INOUTVALS(:) INOUTVALS=[44,33,33,33,22,11,33,44,55,33] print list,'ORIGINAL:',INOUTVALS call unique(INOUTVALS,nuni) INOUTVALS=INOUTVALS(:nuni) print list,'UNIQUE:',INOUTVALS endblock int</p>
-<p>end program demo_unique</p>
-<p>Results:</p>
-<p>ORIGINAL:, 44, 33, 33, 33, 22, 11, 33, 44, 55, 33 UNIQUE:, 44, 33, 22, 11, 55</p>
-<h2><a class="anchor" id="autotoc_md172"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - Feb. 2000 </p>
-<h2><a class="anchor" id="autotoc_md173"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md174"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">! __________________________________________________________</span></div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">   Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (InOut)</span> :: inoutvals</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;   <span class="keywordtype">Integer</span>, <span class="keywordtype">Intent (Out)</span> :: NUNI</div>

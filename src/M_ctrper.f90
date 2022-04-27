@@ -5,10 +5,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: ctrper
-interface ctrper
-  module procedure real64_ctrper, real32_ctrper, int32_ctrper, f_char_ctrper
-end interface ctrper
-contains
 !!
 !!##NAME
 !!    perturb(3f) - [orderpack:PERMUTATION] generate a random permutation
@@ -132,6 +128,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface ctrper
+  module procedure real64_ctrper, real32_ctrper, int32_ctrper, f_char_ctrper
+end interface ctrper
+contains
 Subroutine real64_CTRPER (INOUTVALS, CLOSENESS)
 ! _________________________________________________________
       Real (kind=real64), Dimension (:), Intent (InOut) :: INOUTVALS

@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rapknr
-interface rapknr
-  module procedure real64_rapknr, real32_rapknr, int32_rapknr !, f_char_rapknr
-end interface rapknr
-contains
 !!
 !!##NAME
 !!    prank_decreasing(3f) - [orderpack:RANK:PARTIAL] partially ranks an
@@ -84,6 +80,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface rapknr
+  module procedure real64_rapknr, real32_rapknr, int32_rapknr !, f_char_rapknr
+end interface rapknr
+contains
 Subroutine real64_rapknr (INVALS, IRNGT, NORD)
 !!__________________________________________________________
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS

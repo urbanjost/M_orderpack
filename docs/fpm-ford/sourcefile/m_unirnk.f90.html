@@ -267,97 +267,97 @@
 <a name="ln-4"></a><span class="k">Private</span>
 <a name="ln-5"></a><span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">f_char</span><span class="o">=</span><span class="nb">selected_char_kind</span><span class="p">(</span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">)</span>
 <a name="ln-6"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">unirnk</span>
-<a name="ln-7"></a><span class="k">interface </span><span class="n">unirnk</span>
-<a name="ln-8"></a>  <span class="k">module procedure </span><span class="n">real64_unirnk</span><span class="p">,</span> <span class="n">real32_unirnk</span><span class="p">,</span> <span class="n">int32_unirnk</span> <span class="c">!, f_char_unirnk</span>
-<a name="ln-9"></a><span class="k">end interface </span><span class="n">unirnk</span>
-<a name="ln-10"></a><span class="k">interface </span><span class="n">nearless</span>
-<a name="ln-11"></a>  <span class="k">module procedure </span><span class="n">real64_nearless</span><span class="p">,</span> <span class="n">real32_nearless</span><span class="p">,</span> <span class="n">int32_nearless</span> <span class="c">!, f_char_nearless</span>
-<a name="ln-12"></a><span class="k">end interface </span><span class="n">nearless</span>
-<a name="ln-13"></a>
-<a name="ln-14"></a><span class="k">contains</span>
+<a name="ln-7"></a><span class="c">!!</span>
+<a name="ln-8"></a><span class="c">!!##NAME</span>
+<a name="ln-9"></a><span class="c">!!    Rank_Unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal</span>
+<a name="ln-10"></a><span class="c">!!                      of duplicate entries (MergeSort)</span>
+<a name="ln-11"></a><span class="c">!!</span>
+<a name="ln-12"></a><span class="c">!!##SYNOPSIS</span>
+<a name="ln-13"></a><span class="c">!!</span>
+<a name="ln-14"></a><span class="c">!!     Subroutine rank_unique (INVALS, IRNGT, NUNI)</span>
 <a name="ln-15"></a><span class="c">!!</span>
-<a name="ln-16"></a><span class="c">!!##NAME</span>
-<a name="ln-17"></a><span class="c">!!    Rank_Unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal</span>
-<a name="ln-18"></a><span class="c">!!                      of duplicate entries (MergeSort)</span>
+<a name="ln-16"></a><span class="c">!!       ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)</span>
+<a name="ln-17"></a><span class="c">!!       Integer, Intent (Out)               :: IRNGT(:)</span>
+<a name="ln-18"></a><span class="c">!!       Integer, Intent (Out)               :: NUNI</span>
 <a name="ln-19"></a><span class="c">!!</span>
-<a name="ln-20"></a><span class="c">!!##SYNOPSIS</span>
+<a name="ln-20"></a><span class="c">!!    Where ${TYPE}(kind=${KIND}) may be</span>
 <a name="ln-21"></a><span class="c">!!</span>
-<a name="ln-22"></a><span class="c">!!     Subroutine rank_unique (INVALS, IRNGT, NUNI)</span>
-<a name="ln-23"></a><span class="c">!!</span>
-<a name="ln-24"></a><span class="c">!!       ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)</span>
-<a name="ln-25"></a><span class="c">!!       Integer, Intent (Out)               :: IRNGT(:)</span>
-<a name="ln-26"></a><span class="c">!!       Integer, Intent (Out)               :: NUNI</span>
+<a name="ln-22"></a><span class="c">!!       o Real(kind=real32)</span>
+<a name="ln-23"></a><span class="c">!!       o Real(kind=real64)</span>
+<a name="ln-24"></a><span class="c">!!       o Integer(kind=int32)</span>
+<a name="ln-25"></a><span class="c">!!</span>
+<a name="ln-26"></a><span class="c">!!##DESCRIPTION</span>
 <a name="ln-27"></a><span class="c">!!</span>
-<a name="ln-28"></a><span class="c">!!    Where ${TYPE}(kind=${KIND}) may be</span>
+<a name="ln-28"></a><span class="c">!!    Ranks an array, removing duplicate entries.</span>
 <a name="ln-29"></a><span class="c">!!</span>
-<a name="ln-30"></a><span class="c">!!       o Real(kind=real32)</span>
-<a name="ln-31"></a><span class="c">!!       o Real(kind=real64)</span>
-<a name="ln-32"></a><span class="c">!!       o Integer(kind=int32)</span>
-<a name="ln-33"></a><span class="c">!!</span>
-<a name="ln-34"></a><span class="c">!!##DESCRIPTION</span>
+<a name="ln-30"></a><span class="c">!!    Internally, RANK_UNIQUE(3f) performs a Merge-sort ranking of an array,</span>
+<a name="ln-31"></a><span class="c">!!    with removal of duplicate entries.</span>
+<a name="ln-32"></a><span class="c">!!</span>
+<a name="ln-33"></a><span class="c">!!    The routine is similar to pure merge-sort ranking, but on the last</span>
+<a name="ln-34"></a><span class="c">!!    pass, it discards indices that correspond to duplicate entries.</span>
 <a name="ln-35"></a><span class="c">!!</span>
-<a name="ln-36"></a><span class="c">!!    Ranks an array, removing duplicate entries.</span>
-<a name="ln-37"></a><span class="c">!!</span>
-<a name="ln-38"></a><span class="c">!!    Internally, RANK_UNIQUE(3f) performs a Merge-sort ranking of an array,</span>
-<a name="ln-39"></a><span class="c">!!    with removal of duplicate entries.</span>
-<a name="ln-40"></a><span class="c">!!</span>
-<a name="ln-41"></a><span class="c">!!    The routine is similar to pure merge-sort ranking, but on the last</span>
-<a name="ln-42"></a><span class="c">!!    pass, it discards indices that correspond to duplicate entries.</span>
+<a name="ln-36"></a><span class="c">!!    For performance reasons, the first two passes are taken out of the</span>
+<a name="ln-37"></a><span class="c">!!    standard loop, and use dedicated coding.</span>
+<a name="ln-38"></a><span class="c">!!</span>
+<a name="ln-39"></a><span class="c">!!##OPTIONS</span>
+<a name="ln-40"></a><span class="c">!!     INVALS      array to index</span>
+<a name="ln-41"></a><span class="c">!!     IRNGT      rank index returned pointing to unique values</span>
+<a name="ln-42"></a><span class="c">!!     NUNI       the number of unique values found</span>
 <a name="ln-43"></a><span class="c">!!</span>
-<a name="ln-44"></a><span class="c">!!    For performance reasons, the first two passes are taken out of the</span>
-<a name="ln-45"></a><span class="c">!!    standard loop, and use dedicated coding.</span>
-<a name="ln-46"></a><span class="c">!!</span>
-<a name="ln-47"></a><span class="c">!!##OPTIONS</span>
-<a name="ln-48"></a><span class="c">!!     INVALS      array to index</span>
-<a name="ln-49"></a><span class="c">!!     IRNGT      rank index returned pointing to unique values</span>
-<a name="ln-50"></a><span class="c">!!     NUNI       the number of unique values found</span>
-<a name="ln-51"></a><span class="c">!!</span>
-<a name="ln-52"></a><span class="c">!!##EXAMPLES</span>
-<a name="ln-53"></a><span class="c">!!</span>
-<a name="ln-54"></a><span class="c">!!   Sample program:</span>
-<a name="ln-55"></a><span class="c">!!</span>
-<a name="ln-56"></a><span class="c">!!    program demo_rank_unique</span>
-<a name="ln-57"></a><span class="c">!!    ! rank an array, with removal of duplicate entries.</span>
-<a name="ln-58"></a><span class="c">!!    use M_orderpack, only : rank_unique</span>
-<a name="ln-59"></a><span class="c">!!    implicit none</span>
-<a name="ln-60"></a><span class="c">!!    character(len=*),parameter :: g=&#39;(*(g0,1x))&#39;</span>
-<a name="ln-61"></a><span class="c">!!    integer,allocatable :: INVALS(:)</span>
-<a name="ln-62"></a><span class="c">!!    !</span>
-<a name="ln-63"></a><span class="c">!!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]</span>
-<a name="ln-64"></a><span class="c">!!    call printme()</span>
-<a name="ln-65"></a><span class="c">!!    INVALS=[-1,0,-2,0,-3,0,-4]</span>
-<a name="ln-66"></a><span class="c">!!    call printme()</span>
-<a name="ln-67"></a><span class="c">!!    contains</span>
-<a name="ln-68"></a><span class="c">!!    subroutine printme()</span>
-<a name="ln-69"></a><span class="c">!!    integer,allocatable :: irngt(:)</span>
-<a name="ln-70"></a><span class="c">!!    integer :: nuni</span>
-<a name="ln-71"></a><span class="c">!!       if(allocated(irngt))deallocate(irngt)</span>
-<a name="ln-72"></a><span class="c">!!       allocate(irngt(size(INVALS)))</span>
-<a name="ln-73"></a><span class="c">!!       write(*,g)&#39;ORIGINAL:&#39;,INVALS</span>
-<a name="ln-74"></a><span class="c">!!       call rank_unique(INVALS,irngt,nuni)</span>
-<a name="ln-75"></a><span class="c">!!       write(*,g)&#39;NUMBER OF UNIQUE INDICES:&#39;,nuni</span>
-<a name="ln-76"></a><span class="c">!!       write(*,g)&#39;RETURNED INDICES:&#39;,irngt(:nuni)</span>
-<a name="ln-77"></a><span class="c">!!       write(*,g)&#39;SORTED DATA:&#39;,INVALS(irngt(:nuni))</span>
-<a name="ln-78"></a><span class="c">!!    end subroutine</span>
-<a name="ln-79"></a><span class="c">!!    end program demo_rank_unique</span>
-<a name="ln-80"></a><span class="c">!!</span>
-<a name="ln-81"></a><span class="c">!!   Results:</span>
-<a name="ln-82"></a><span class="c">!!</span>
-<a name="ln-83"></a><span class="c">!!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1</span>
-<a name="ln-84"></a><span class="c">!!    NUMBER OF UNIQUE INDICES: 8</span>
-<a name="ln-85"></a><span class="c">!!    RETURNED INDICES: 4 5 2 7 3 8 9 1</span>
-<a name="ln-86"></a><span class="c">!!    SORTED DATA: 1 4 5 6 7 8 9 10</span>
-<a name="ln-87"></a><span class="c">!!    ORIGINAL: -1 0 -2 0 -3 0 -4</span>
-<a name="ln-88"></a><span class="c">!!    NUMBER OF UNIQUE INDICES: 5</span>
-<a name="ln-89"></a><span class="c">!!    RETURNED INDICES: 7 5 3 1 2</span>
-<a name="ln-90"></a><span class="c">!!    SORTED DATA: -4 -3 -2 -1 0</span>
-<a name="ln-91"></a><span class="c">!!</span>
-<a name="ln-92"></a><span class="c">!!##AUTHOR</span>
-<a name="ln-93"></a><span class="c">!!    Michel Olagnon, 2000-2012</span>
-<a name="ln-94"></a><span class="c">!!##MAINTAINER</span>
-<a name="ln-95"></a><span class="c">!!    John Urban, 2022.04.16</span>
-<a name="ln-96"></a><span class="c">!!##LICENSE</span>
-<a name="ln-97"></a><span class="c">!!    CC0-1.0</span>
+<a name="ln-44"></a><span class="c">!!##EXAMPLES</span>
+<a name="ln-45"></a><span class="c">!!</span>
+<a name="ln-46"></a><span class="c">!!   Sample program:</span>
+<a name="ln-47"></a><span class="c">!!</span>
+<a name="ln-48"></a><span class="c">!!    program demo_rank_unique</span>
+<a name="ln-49"></a><span class="c">!!    ! rank an array, with removal of duplicate entries.</span>
+<a name="ln-50"></a><span class="c">!!    use M_orderpack, only : rank_unique</span>
+<a name="ln-51"></a><span class="c">!!    implicit none</span>
+<a name="ln-52"></a><span class="c">!!    character(len=*),parameter :: g=&#39;(*(g0,1x))&#39;</span>
+<a name="ln-53"></a><span class="c">!!    integer,allocatable :: INVALS(:)</span>
+<a name="ln-54"></a><span class="c">!!    !</span>
+<a name="ln-55"></a><span class="c">!!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]</span>
+<a name="ln-56"></a><span class="c">!!    call printme()</span>
+<a name="ln-57"></a><span class="c">!!    INVALS=[-1,0,-2,0,-3,0,-4]</span>
+<a name="ln-58"></a><span class="c">!!    call printme()</span>
+<a name="ln-59"></a><span class="c">!!    contains</span>
+<a name="ln-60"></a><span class="c">!!    subroutine printme()</span>
+<a name="ln-61"></a><span class="c">!!    integer,allocatable :: irngt(:)</span>
+<a name="ln-62"></a><span class="c">!!    integer :: nuni</span>
+<a name="ln-63"></a><span class="c">!!       if(allocated(irngt))deallocate(irngt)</span>
+<a name="ln-64"></a><span class="c">!!       allocate(irngt(size(INVALS)))</span>
+<a name="ln-65"></a><span class="c">!!       write(*,g)&#39;ORIGINAL:&#39;,INVALS</span>
+<a name="ln-66"></a><span class="c">!!       call rank_unique(INVALS,irngt,nuni)</span>
+<a name="ln-67"></a><span class="c">!!       write(*,g)&#39;NUMBER OF UNIQUE INDICES:&#39;,nuni</span>
+<a name="ln-68"></a><span class="c">!!       write(*,g)&#39;RETURNED INDICES:&#39;,irngt(:nuni)</span>
+<a name="ln-69"></a><span class="c">!!       write(*,g)&#39;SORTED DATA:&#39;,INVALS(irngt(:nuni))</span>
+<a name="ln-70"></a><span class="c">!!    end subroutine</span>
+<a name="ln-71"></a><span class="c">!!    end program demo_rank_unique</span>
+<a name="ln-72"></a><span class="c">!!</span>
+<a name="ln-73"></a><span class="c">!!   Results:</span>
+<a name="ln-74"></a><span class="c">!!</span>
+<a name="ln-75"></a><span class="c">!!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1</span>
+<a name="ln-76"></a><span class="c">!!    NUMBER OF UNIQUE INDICES: 8</span>
+<a name="ln-77"></a><span class="c">!!    RETURNED INDICES: 4 5 2 7 3 8 9 1</span>
+<a name="ln-78"></a><span class="c">!!    SORTED DATA: 1 4 5 6 7 8 9 10</span>
+<a name="ln-79"></a><span class="c">!!    ORIGINAL: -1 0 -2 0 -3 0 -4</span>
+<a name="ln-80"></a><span class="c">!!    NUMBER OF UNIQUE INDICES: 5</span>
+<a name="ln-81"></a><span class="c">!!    RETURNED INDICES: 7 5 3 1 2</span>
+<a name="ln-82"></a><span class="c">!!    SORTED DATA: -4 -3 -2 -1 0</span>
+<a name="ln-83"></a><span class="c">!!</span>
+<a name="ln-84"></a><span class="c">!!##AUTHOR</span>
+<a name="ln-85"></a><span class="c">!!    Michel Olagnon, 2000-2012</span>
+<a name="ln-86"></a><span class="c">!!##MAINTAINER</span>
+<a name="ln-87"></a><span class="c">!!    John Urban, 2022.04.16</span>
+<a name="ln-88"></a><span class="c">!!##LICENSE</span>
+<a name="ln-89"></a><span class="c">!!    CC0-1.0</span>
+<a name="ln-90"></a><span class="k">interface </span><span class="n">unirnk</span>
+<a name="ln-91"></a>  <span class="k">module procedure </span><span class="n">real64_unirnk</span><span class="p">,</span> <span class="n">real32_unirnk</span><span class="p">,</span> <span class="n">int32_unirnk</span> <span class="c">!, f_char_unirnk</span>
+<a name="ln-92"></a><span class="k">end interface </span><span class="n">unirnk</span>
+<a name="ln-93"></a><span class="k">interface </span><span class="n">nearless</span>
+<a name="ln-94"></a>  <span class="k">module procedure </span><span class="n">real64_nearless</span><span class="p">,</span> <span class="n">real32_nearless</span><span class="p">,</span> <span class="n">int32_nearless</span> <span class="c">!, f_char_nearless</span>
+<a name="ln-95"></a><span class="k">end interface </span><span class="n">nearless</span>
+<a name="ln-96"></a>
+<a name="ln-97"></a><span class="k">contains</span>
 <a name="ln-98"></a><span class="k">Subroutine </span><span class="n">real64_unirnk</span> <span class="p">(</span><span class="n">INVALS</span><span class="p">,</span> <span class="n">IRNGT</span><span class="p">,</span> <span class="n">NUNI</span><span class="p">)</span>
 <a name="ln-99"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">Kind</span><span class="o">=</span><span class="n">real64</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">In</span><span class="p">)</span> <span class="kd">::</span> <span class="n">INVALS</span>
 <a name="ln-100"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">IRNGT</span>
@@ -1116,7 +1116,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-24 19:37  
+             on 2022-04-26 21:53  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

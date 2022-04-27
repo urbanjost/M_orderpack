@@ -11,6 +11,37 @@ subroutine \mbox{\hyperlink{interfacem__unipar_1_1unipar_afd235e7ac0357c8bc8dc90
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__unipar_1_1unipar_autotoc_md151}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__unipar_1_1unipar_autotoc_md151}
+prank\+\_\+unique(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+N\+K\+:\+P\+A\+R\+T\+I\+AL\+:U\+N\+I\+Q\+UE\mbox{]} partially ranks an array removing duplicates\hypertarget{interfacem__unipar_1_1unipar_autotoc_md152}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__unipar_1_1unipar_autotoc_md152}
+\begin{DoxyVerb} Subroutine Prank_Unique (INVALS, IRNGT, NORD)
+
+  ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+  Integer, Intent (Out)               :: IRNGT(:)
+  Integer, Intent (InOut)             :: NORD
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+\end{DoxyVerb}
+\hypertarget{interfacem__unipar_1_1unipar_autotoc_md153}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__unipar_1_1unipar_autotoc_md153}
+Partially rank I\+N\+V\+A\+L\+S() up to order N\+O\+RD at most, removing duplicate entries.
+
+Internally, this routine uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as quickly as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (I\+L\+O\+WT), and the indices of values larger than the pivot that we might still need later on (I\+H\+I\+GT). It iterates until it can bring the number of values in I\+L\+O\+WT to exactly N\+O\+RD, and then uses an insertion sort to rank this set, since it is supposedly small. At all times, the N\+O\+RD first values in I\+L\+O\+WT correspond to distinct values of the input array.\hypertarget{interfacem__unipar_1_1unipar_autotoc_md154}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__unipar_1_1unipar_autotoc_md154}
+I\+N\+V\+A\+LS array to partially sort I\+R\+N\+GT indices returned that point to lowest values N\+O\+RD number of sorted values to determine before eliminating duplicates\hypertarget{interfacem__unipar_1_1unipar_autotoc_md155}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__unipar_1_1unipar_autotoc_md155}
+Sample program\+:
+
+program demo\+\_\+prank\+\_\+unique ! ranks array, removing duplicates use M\+\_\+orderpack, only \+: prank\+\_\+unique implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) integer,allocatable \+:: irngt(\+:) integer \+:: nord ! write($\ast$,g)\textquotesingle{}If enough values are unique, will return N\+O\+RD indices\textquotesingle{} if(allocated(irngt))deallocate(irngt) I\+N\+V\+A\+LS=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} nord=5 allocate(irngt(nord)) call printme() ! !\+B\+U\+G!write($\ast$,g)\textquotesingle{}If not enough values are unique, will change N\+O\+RD\textquotesingle{} !\+B\+U\+G!\+I\+N\+V\+A\+LS=\mbox{[}-\/1,0,-\/1,0,-\/1,0,-\/1\mbox{]} !\+B\+U\+G!nord=5 !\+B\+U\+G!if(allocated(irngt))deallocate(irngt) !\+B\+U\+G!allocate(irngt(nord)) !\+B\+U\+G!call printme() contains subroutine printme() write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+V\+A\+LS write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+:\textquotesingle{},nord call prank\+\_\+unique(\+I\+N\+V\+A\+L\+S,irngt,nord) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES R\+E\+T\+U\+R\+N\+ED\+:\textquotesingle{},nord write($\ast$,g)\textquotesingle{}R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+:\textquotesingle{},irngt(\+:nord) write($\ast$,g)nord,\textquotesingle{}S\+M\+A\+L\+L\+E\+ST U\+N\+I\+Q\+UE V\+A\+L\+U\+ES\+:\textquotesingle{},I\+N\+V\+A\+L\+S(irngt(\+:nord)) end subroutine end program demo\+\_\+prank\+\_\+unique
+
+Results\+:
+
+If enough values are unique, will return N\+O\+RD indices O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+: 5 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES R\+E\+T\+U\+R\+N\+ED\+: 5 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 11 5 2 7 3 5 S\+M\+A\+L\+L\+E\+ST U\+N\+I\+Q\+UE V\+A\+L\+U\+ES\+: 1 4 5 6 7 If not enough values are unique, will change N\+O\+RD O\+R\+I\+G\+I\+N\+AL\+: -\/1 0 -\/1 0 -\/1 0 -\/1 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+: 5 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES R\+E\+T\+U\+R\+N\+ED\+: 2 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 1 2 2 S\+M\+A\+L\+L\+E\+ST U\+N\+I\+Q\+UE V\+A\+L\+U\+ES\+: -\/1 0\hypertarget{interfacem__unipar_1_1unipar_autotoc_md156}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__unipar_1_1unipar_autotoc_md156}
+Michel Olagnon -\/ Feb. 2000 \hypertarget{interfacem__unipar_1_1unipar_autotoc_md157}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__unipar_1_1unipar_autotoc_md157}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__unipar_1_1unipar_autotoc_md158}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__unipar_1_1unipar_autotoc_md158}
+C\+C0-\/1.\+0 
+
 \doxysubsection{Member Function/\+Subroutine Documentation}
 \mbox{\Hypertarget{interfacem__unipar_1_1unipar_afd235e7ac0357c8bc8dc90cd21fb433c}\label{interfacem__unipar_1_1unipar_afd235e7ac0357c8bc8dc90cd21fb433c}} 
 \index{m\_unipar::unipar@{m\_unipar::unipar}!int32\_unipar@{int32\_unipar}}
@@ -1200,35 +1231,7 @@ subroutine \mbox{\hyperlink{interfacem__unipar_1_1unipar_afd235e7ac0357c8bc8dc90
 \doxysubsubsection{\texorpdfstring{real64\_unipar()}{real64\_unipar()}}
 {\footnotesize\ttfamily subroutine m\+\_\+unipar\+::unipar\+::real64\+\_\+unipar (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(inout)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__unipar_autotoc_md151}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__unipar_autotoc_md151}
-prank\+\_\+unique(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+N\+K\+:\+P\+A\+R\+T\+I\+AL\+:U\+N\+I\+Q\+UE\mbox{]} partially ranks an array removing duplicates\hypertarget{namespacem__unipar_autotoc_md152}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__unipar_autotoc_md152}
-\begin{DoxyVerb} Subroutine Prank_Unique (INVALS, IRNGT, NORD)
 
-  ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-  Integer, Intent (Out)               :: IRNGT(:)
-  Integer, Intent (InOut)             :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-\end{DoxyVerb}
-\hypertarget{namespacem__unipar_autotoc_md153}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__unipar_autotoc_md153}
-Partially rank I\+N\+V\+A\+L\+S() up to order N\+O\+RD at most, removing duplicate entries.
-
-Internally, this routine uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as quickly as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (I\+L\+O\+WT), and the indices of values larger than the pivot that we might still need later on (I\+H\+I\+GT). It iterates until it can bring the number of values in I\+L\+O\+WT to exactly N\+O\+RD, and then uses an insertion sort to rank this set, since it is supposedly small. At all times, the N\+O\+RD first values in I\+L\+O\+WT correspond to distinct values of the input array.\hypertarget{namespacem__unipar_autotoc_md154}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__unipar_autotoc_md154}
-I\+N\+V\+A\+LS array to partially sort I\+R\+N\+GT indices returned that point to lowest values N\+O\+RD number of sorted values to determine before eliminating duplicates\hypertarget{namespacem__unipar_autotoc_md155}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__unipar_autotoc_md155}
-Sample program\+:
-
-program demo\+\_\+prank\+\_\+unique ! ranks array, removing duplicates use M\+\_\+orderpack, only \+: prank\+\_\+unique implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) integer,allocatable \+:: irngt(\+:) integer \+:: nord ! write($\ast$,g)\textquotesingle{}If enough values are unique, will return N\+O\+RD indices\textquotesingle{} if(allocated(irngt))deallocate(irngt) I\+N\+V\+A\+LS=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} nord=5 allocate(irngt(nord)) call printme() ! !\+B\+U\+G!write($\ast$,g)\textquotesingle{}If not enough values are unique, will change N\+O\+RD\textquotesingle{} !\+B\+U\+G!\+I\+N\+V\+A\+LS=\mbox{[}-\/1,0,-\/1,0,-\/1,0,-\/1\mbox{]} !\+B\+U\+G!nord=5 !\+B\+U\+G!if(allocated(irngt))deallocate(irngt) !\+B\+U\+G!allocate(irngt(nord)) !\+B\+U\+G!call printme() contains subroutine printme() write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+V\+A\+LS write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+:\textquotesingle{},nord call prank\+\_\+unique(\+I\+N\+V\+A\+L\+S,irngt,nord) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES R\+E\+T\+U\+R\+N\+ED\+:\textquotesingle{},nord write($\ast$,g)\textquotesingle{}R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+:\textquotesingle{},irngt(\+:nord) write($\ast$,g)nord,\textquotesingle{}S\+M\+A\+L\+L\+E\+ST U\+N\+I\+Q\+UE V\+A\+L\+U\+ES\+:\textquotesingle{},I\+N\+V\+A\+L\+S(irngt(\+:nord)) end subroutine end program demo\+\_\+prank\+\_\+unique
-
-Results\+:
-
-If enough values are unique, will return N\+O\+RD indices O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+: 5 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES R\+E\+T\+U\+R\+N\+ED\+: 5 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 11 5 2 7 3 5 S\+M\+A\+L\+L\+E\+ST U\+N\+I\+Q\+UE V\+A\+L\+U\+ES\+: 1 4 5 6 7 If not enough values are unique, will change N\+O\+RD O\+R\+I\+G\+I\+N\+AL\+: -\/1 0 -\/1 0 -\/1 0 -\/1 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO S\+O\+RT\+: 5 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES R\+E\+T\+U\+R\+N\+ED\+: 2 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 1 2 2 S\+M\+A\+L\+L\+E\+ST U\+N\+I\+Q\+UE V\+A\+L\+U\+ES\+: -\/1 0\hypertarget{namespacem__unipar_autotoc_md156}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__unipar_autotoc_md156}
-Michel Olagnon -\/ Feb. 2000 \hypertarget{namespacem__unipar_autotoc_md157}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__unipar_autotoc_md157}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__unipar_autotoc_md158}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__unipar_autotoc_md158}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{111 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
 \DoxyCodeLine{112 \textcolor{keywordtype}{   Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}

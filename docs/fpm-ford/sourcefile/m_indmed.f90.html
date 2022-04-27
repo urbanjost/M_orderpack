@@ -268,93 +268,93 @@
 <a name="ln-5"></a><span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">f_char</span><span class="o">=</span><span class="nb">selected_char_kind</span><span class="p">(</span><span class="s2">&quot;DEFAULT&quot;</span><span class="p">)</span>
 <a name="ln-6"></a><span class="k">public</span> <span class="kd">::</span> <span class="n">indmed</span>
 <a name="ln-7"></a><span class="kt">Integer</span><span class="p">,</span> <span class="k">Allocatable</span><span class="p">,</span> <span class="k">Dimension</span><span class="p">(:),</span> <span class="k">Private</span><span class="p">,</span> <span class="k">Save</span> <span class="kd">::</span> <span class="n">IDONT</span>
-<a name="ln-8"></a><span class="k">interface </span><span class="n">indmed</span>
-<a name="ln-9"></a>  <span class="k">module procedure </span><span class="n">real64_indmed</span><span class="p">,</span> <span class="n">real32_indmed</span><span class="p">,</span> <span class="n">int32_indmed</span><span class="p">,</span> <span class="n">f_char_indmed</span>
-<a name="ln-10"></a><span class="k">end interface </span><span class="n">indmed</span>
-<a name="ln-11"></a><span class="k">contains</span>
-<a name="ln-12"></a><span class="c">!!</span>
-<a name="ln-13"></a><span class="c">!!##NAME</span>
-<a name="ln-14"></a><span class="c">!!    medianloc(3f) - [orderpack:MEDIAN] Returns median value&#39;s INDEX.</span>
+<a name="ln-8"></a><span class="c">!!</span>
+<a name="ln-9"></a><span class="c">!!##NAME</span>
+<a name="ln-10"></a><span class="c">!!    medianloc(3f) - [orderpack:MEDIAN] Returns median value&#39;s INDEX.</span>
+<a name="ln-11"></a><span class="c">!!</span>
+<a name="ln-12"></a><span class="c">!!##SYNOPSIS</span>
+<a name="ln-13"></a><span class="c">!!</span>
+<a name="ln-14"></a><span class="c">!!     Subroutine MedianLoc (INVALS, OUTORD)</span>
 <a name="ln-15"></a><span class="c">!!</span>
-<a name="ln-16"></a><span class="c">!!##SYNOPSIS</span>
-<a name="ln-17"></a><span class="c">!!</span>
-<a name="ln-18"></a><span class="c">!!     Subroutine MedianLoc (INVALS, OUTORD)</span>
-<a name="ln-19"></a><span class="c">!!</span>
-<a name="ln-20"></a><span class="c">!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)</span>
-<a name="ln-21"></a><span class="c">!!       Integer, Intent (Out)               :: OUTORD</span>
-<a name="ln-22"></a><span class="c">!!</span>
-<a name="ln-23"></a><span class="c">!!    Where ${TYPE}(kind=${KIND}) may be</span>
-<a name="ln-24"></a><span class="c">!!</span>
-<a name="ln-25"></a><span class="c">!!       o Real(kind=real32)</span>
-<a name="ln-26"></a><span class="c">!!       o Real(kind=real64)</span>
-<a name="ln-27"></a><span class="c">!!       o Integer(kind=int32)</span>
-<a name="ln-28"></a><span class="c">!!       o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)</span>
+<a name="ln-16"></a><span class="c">!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)</span>
+<a name="ln-17"></a><span class="c">!!       Integer, Intent (Out)               :: OUTORD</span>
+<a name="ln-18"></a><span class="c">!!</span>
+<a name="ln-19"></a><span class="c">!!    Where ${TYPE}(kind=${KIND}) may be</span>
+<a name="ln-20"></a><span class="c">!!</span>
+<a name="ln-21"></a><span class="c">!!       o Real(kind=real32)</span>
+<a name="ln-22"></a><span class="c">!!       o Real(kind=real64)</span>
+<a name="ln-23"></a><span class="c">!!       o Integer(kind=int32)</span>
+<a name="ln-24"></a><span class="c">!!       o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)</span>
+<a name="ln-25"></a><span class="c">!!</span>
+<a name="ln-26"></a><span class="c">!!##DESCRIPTION</span>
+<a name="ln-27"></a><span class="c">!!    MEDIANLOC(3f) Returns the index of the median (((Size(INVALS)+1))/2^th value).</span>
+<a name="ln-28"></a><span class="c">!!</span>
 <a name="ln-29"></a><span class="c">!!</span>
-<a name="ln-30"></a><span class="c">!!##DESCRIPTION</span>
-<a name="ln-31"></a><span class="c">!!    MEDIANLOC(3f) Returns the index of the median (((Size(INVALS)+1))/2^th value).</span>
-<a name="ln-32"></a><span class="c">!!</span>
+<a name="ln-30"></a><span class="c">!!    Internally, MEDIANLOC(3f) Finds the index of the median of the array</span>
+<a name="ln-31"></a><span class="c">!!    INVALS() using the recursive procedure described in Knuth, The Art of</span>
+<a name="ln-32"></a><span class="c">!!    Computer Programming, vol. 3, 5.3.3.</span>
 <a name="ln-33"></a><span class="c">!!</span>
-<a name="ln-34"></a><span class="c">!!    Internally, MEDIANLOC(3f) Finds the index of the median of the array</span>
-<a name="ln-35"></a><span class="c">!!    INVALS() using the recursive procedure described in Knuth, The Art of</span>
-<a name="ln-36"></a><span class="c">!!    Computer Programming, vol. 3, 5.3.3.</span>
-<a name="ln-37"></a><span class="c">!!</span>
-<a name="ln-38"></a><span class="c">!!    This procedure is linear in time, and does not require to be able</span>
-<a name="ln-39"></a><span class="c">!!    to interpolate in the set as the one used in ORDERLOC(3f), which can</span>
-<a name="ln-40"></a><span class="c">!!    also be used to calculate a median. It also has better worst-case</span>
-<a name="ln-41"></a><span class="c">!!    behavior than ORDERLOC(3f), but is about 10% slower on average for</span>
-<a name="ln-42"></a><span class="c">!!    random uniformly distributed values.</span>
+<a name="ln-34"></a><span class="c">!!    This procedure is linear in time, and does not require to be able</span>
+<a name="ln-35"></a><span class="c">!!    to interpolate in the set as the one used in ORDERLOC(3f), which can</span>
+<a name="ln-36"></a><span class="c">!!    also be used to calculate a median. It also has better worst-case</span>
+<a name="ln-37"></a><span class="c">!!    behavior than ORDERLOC(3f), but is about 10% slower on average for</span>
+<a name="ln-38"></a><span class="c">!!    random uniformly distributed values.</span>
+<a name="ln-39"></a><span class="c">!!</span>
+<a name="ln-40"></a><span class="c">!!##OPTIONS</span>
+<a name="ln-41"></a><span class="c">!!     INVALS     array to find the median value of.</span>
+<a name="ln-42"></a><span class="c">!!     OUTORD     index of the median value.</span>
 <a name="ln-43"></a><span class="c">!!</span>
-<a name="ln-44"></a><span class="c">!!##OPTIONS</span>
-<a name="ln-45"></a><span class="c">!!     INVALS     array to find the median value of.</span>
-<a name="ln-46"></a><span class="c">!!     OUTORD     index of the median value.</span>
+<a name="ln-44"></a><span class="c">!!##EXAMPLES</span>
+<a name="ln-45"></a><span class="c">!!</span>
+<a name="ln-46"></a><span class="c">!!   Sample program:</span>
 <a name="ln-47"></a><span class="c">!!</span>
-<a name="ln-48"></a><span class="c">!!##EXAMPLES</span>
-<a name="ln-49"></a><span class="c">!!</span>
-<a name="ln-50"></a><span class="c">!!   Sample program:</span>
-<a name="ln-51"></a><span class="c">!!</span>
-<a name="ln-52"></a><span class="c">!!    program demo_medianloc</span>
-<a name="ln-53"></a><span class="c">!!    ! return index of median value</span>
-<a name="ln-54"></a><span class="c">!!    use M_orderpack, only : medianloc</span>
-<a name="ln-55"></a><span class="c">!!    implicit none</span>
-<a name="ln-56"></a><span class="c">!!    real,allocatable :: INVALS(:)</span>
-<a name="ln-57"></a><span class="c">!!    character(len=:),allocatable :: cdont(:)</span>
-<a name="ln-58"></a><span class="c">!!    character(len=*),parameter :: fmt=&#39;(i5,t11,g0)&#39;</span>
-<a name="ln-59"></a><span class="c">!!    integer :: ii</span>
-<a name="ln-60"></a><span class="c">!!       write(*,*) &#39;location  median&#39;</span>
-<a name="ln-61"></a><span class="c">!!</span>
-<a name="ln-62"></a><span class="c">!!       INVALS=[80.0,70.0,20.0,10.0,1000.0]</span>
+<a name="ln-48"></a><span class="c">!!    program demo_medianloc</span>
+<a name="ln-49"></a><span class="c">!!    ! return index of median value</span>
+<a name="ln-50"></a><span class="c">!!    use M_orderpack, only : medianloc</span>
+<a name="ln-51"></a><span class="c">!!    implicit none</span>
+<a name="ln-52"></a><span class="c">!!    real,allocatable :: INVALS(:)</span>
+<a name="ln-53"></a><span class="c">!!    character(len=:),allocatable :: cdont(:)</span>
+<a name="ln-54"></a><span class="c">!!    character(len=*),parameter :: fmt=&#39;(i5,t11,g0)&#39;</span>
+<a name="ln-55"></a><span class="c">!!    integer :: ii</span>
+<a name="ln-56"></a><span class="c">!!       write(*,*) &#39;location  median&#39;</span>
+<a name="ln-57"></a><span class="c">!!</span>
+<a name="ln-58"></a><span class="c">!!       INVALS=[80.0,70.0,20.0,10.0,1000.0]</span>
+<a name="ln-59"></a><span class="c">!!       call medianloc(INVALS,ii)</span>
+<a name="ln-60"></a><span class="c">!!       write(*,fmt) ii,INVALS(ii)</span>
+<a name="ln-61"></a><span class="c">!!       !</span>
+<a name="ln-62"></a><span class="c">!!       INVALS=[11, 22, 33, 44, 55, 66, 77, 88]</span>
 <a name="ln-63"></a><span class="c">!!       call medianloc(INVALS,ii)</span>
 <a name="ln-64"></a><span class="c">!!       write(*,fmt) ii,INVALS(ii)</span>
 <a name="ln-65"></a><span class="c">!!       !</span>
-<a name="ln-66"></a><span class="c">!!       INVALS=[11, 22, 33, 44, 55, 66, 77, 88]</span>
+<a name="ln-66"></a><span class="c">!!       INVALS=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]</span>
 <a name="ln-67"></a><span class="c">!!       call medianloc(INVALS,ii)</span>
 <a name="ln-68"></a><span class="c">!!       write(*,fmt) ii,INVALS(ii)</span>
 <a name="ln-69"></a><span class="c">!!       !</span>
-<a name="ln-70"></a><span class="c">!!       INVALS=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]</span>
-<a name="ln-71"></a><span class="c">!!       call medianloc(INVALS,ii)</span>
-<a name="ln-72"></a><span class="c">!!       write(*,fmt) ii,INVALS(ii)</span>
-<a name="ln-73"></a><span class="c">!!       !</span>
-<a name="ln-74"></a><span class="c">!!       cdont=[character(len=20) :: &#39;apple&#39;,&#39;bee&#39;,&#39;cherry&#39;,&#39;duck&#39;,&amp;</span>
-<a name="ln-75"></a><span class="c">!!               &#39;elephant&#39;,&#39;finger&#39;,&#39;goose&#39;,&#39;h&#39;,&#39;insect&#39;,&#39;j&#39;]</span>
-<a name="ln-76"></a><span class="c">!!       call medianloc(cdont,ii)</span>
-<a name="ln-77"></a><span class="c">!!       write(*,fmt) ii,cdont(ii)</span>
-<a name="ln-78"></a><span class="c">!!       !</span>
-<a name="ln-79"></a><span class="c">!!    end program demo_medianloc</span>
-<a name="ln-80"></a><span class="c">!!</span>
-<a name="ln-81"></a><span class="c">!!   Results:</span>
-<a name="ln-82"></a><span class="c">!!</span>
-<a name="ln-83"></a><span class="c">!!     location  median</span>
-<a name="ln-84"></a><span class="c">!!        2     70.00000</span>
-<a name="ln-85"></a><span class="c">!!        4     44.00000</span>
-<a name="ln-86"></a><span class="c">!!        5     33.00000</span>
-<a name="ln-87"></a><span class="c">!!        5     elephant</span>
-<a name="ln-88"></a><span class="c">!!</span>
-<a name="ln-89"></a><span class="c">!!##AUTHOR</span>
-<a name="ln-90"></a><span class="c">!!    Michel Olagnon, 2000-2012</span>
-<a name="ln-91"></a><span class="c">!!##MAINTAINER</span>
-<a name="ln-92"></a><span class="c">!!    John Urban, 2022.04.16</span>
-<a name="ln-93"></a><span class="c">!!##LICENSE</span>
-<a name="ln-94"></a><span class="c">!!    CC0-1.0</span>
+<a name="ln-70"></a><span class="c">!!       cdont=[character(len=20) :: &#39;apple&#39;,&#39;bee&#39;,&#39;cherry&#39;,&#39;duck&#39;,&amp;</span>
+<a name="ln-71"></a><span class="c">!!               &#39;elephant&#39;,&#39;finger&#39;,&#39;goose&#39;,&#39;h&#39;,&#39;insect&#39;,&#39;j&#39;]</span>
+<a name="ln-72"></a><span class="c">!!       call medianloc(cdont,ii)</span>
+<a name="ln-73"></a><span class="c">!!       write(*,fmt) ii,cdont(ii)</span>
+<a name="ln-74"></a><span class="c">!!       !</span>
+<a name="ln-75"></a><span class="c">!!    end program demo_medianloc</span>
+<a name="ln-76"></a><span class="c">!!</span>
+<a name="ln-77"></a><span class="c">!!   Results:</span>
+<a name="ln-78"></a><span class="c">!!</span>
+<a name="ln-79"></a><span class="c">!!     location  median</span>
+<a name="ln-80"></a><span class="c">!!        2     70.00000</span>
+<a name="ln-81"></a><span class="c">!!        4     44.00000</span>
+<a name="ln-82"></a><span class="c">!!        5     33.00000</span>
+<a name="ln-83"></a><span class="c">!!        5     elephant</span>
+<a name="ln-84"></a><span class="c">!!</span>
+<a name="ln-85"></a><span class="c">!!##AUTHOR</span>
+<a name="ln-86"></a><span class="c">!!    Michel Olagnon, 2000-2012</span>
+<a name="ln-87"></a><span class="c">!!##MAINTAINER</span>
+<a name="ln-88"></a><span class="c">!!    John Urban, 2022.04.16</span>
+<a name="ln-89"></a><span class="c">!!##LICENSE</span>
+<a name="ln-90"></a><span class="c">!!    CC0-1.0</span>
+<a name="ln-91"></a><span class="k">interface </span><span class="n">indmed</span>
+<a name="ln-92"></a>  <span class="k">module procedure </span><span class="n">real64_indmed</span><span class="p">,</span> <span class="n">real32_indmed</span><span class="p">,</span> <span class="n">int32_indmed</span><span class="p">,</span> <span class="n">f_char_indmed</span>
+<a name="ln-93"></a><span class="k">end interface </span><span class="n">indmed</span>
+<a name="ln-94"></a><span class="k">contains</span>
 <a name="ln-95"></a><span class="k">Subroutine </span><span class="n">real64_indmed</span> <span class="p">(</span><span class="n">INVALS</span><span class="p">,</span> <span class="n">OUTORD</span><span class="p">)</span>
 <a name="ln-96"></a>      <span class="kt">Real</span> <span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real64</span><span class="p">),</span> <span class="k">Dimension</span> <span class="p">(:),</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">In</span><span class="p">)</span> <span class="kd">::</span> <span class="n">INVALS</span>
 <a name="ln-97"></a>      <span class="kt">Integer</span><span class="p">,</span> <span class="k">Intent</span> <span class="p">(</span><span class="n">Out</span><span class="p">)</span> <span class="kd">::</span> <span class="n">OUTORD</span>
@@ -1923,7 +1923,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-24 19:37  
+             on 2022-04-26 21:53  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

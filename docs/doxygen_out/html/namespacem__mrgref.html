@@ -594,51 +594,6 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md60"></a>
-NAME</h2>
-<p>rank_basic(3f) - [orderpack:RANK] create an INDEX that defines the order of array sorted in ascending order (basic merge-sort)</p>
-<h2><a class="anchor" id="autotoc_md61"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Subroutine Rank_Basic (INVALS, IRNGT)
-
-   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IRNGT(:)
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-</pre><h2><a class="anchor" id="autotoc_md62"></a>
-DESCRIPTION</h2>
-<p>Ranks array INVALS, filling array IRNGT with sorted indices.</p>
-<p>It uses a basic merge-sort.</p>
-<p>This version is not optimized for performance, and is thus not as difficult to read as some other ones.</p>
-<p>It uses Merge-sort.</p>
-<h2><a class="anchor" id="autotoc_md63"></a>
-OPTIONS</h2>
-<p>INVALS input array to rank IRNGT returned rank array</p>
-<h2><a class="anchor" id="autotoc_md64"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_rank_basic ! create an index that can order an array in ascending order use M_orderpack, only : rank_basic implicit none character(len=*),parameter :: g='(*(g0,1x))' integer,parameter :: dp=kind(0.0d0) integer,parameter :: isz=10000 real(kind=dp) :: dd(isz) real(kind=dp) :: pp integer :: indx(isz) integer :: i,j,k character(len=:),allocatable :: strings(:) integer,allocatable :: cindx(:) ! make some random numbers call random_seed() call random_number(dd) dd=dd-0.50_dp k=int(log(huge(0.0_dp))/log(2.0_dp))-1 do i=1,isz call random_number(pp) j=floor((k+1)*pp) dd(i)=dd(i)*(2.0_dp**j) enddo ! rank the numeric data call rank_basic(dd,indx) ! check order do i=1,isz-1 if(dd(indx(i)).gt.dd(indx(i+1)))then write(*,g)'ERROR: data not sorted i=',i,'index=',indx(i), &amp; &amp; 'values ',dd(indx(i)),dd(indx(i+1)) stop 1 endif enddo ! sort data using rank values dd=dd(indx) write(*,g)'sorted ',isz,'values' write(*,g)'from',dd(1),'to',dd(isz) write(*,*)minval(dd).eq.dd(1) write(*,*)maxval(dd).eq.dd(isz) write(*,*)minloc(dd).eq.1 write(*,*)maxloc(dd).eq.isz ! do a character sort strings= [ character(len=20) :: &amp; &amp; 'red', 'green', 'blue', 'yellow', 'orange', 'black', &amp; &amp; 'white', 'brown', 'gray', 'cyan', 'magenta', &amp; &amp; 'purple'] if(allocated(cindx))deallocate(cindx) allocate(cindx(size(strings)))</p>
-<p>write(*,'(a,8(a:,","))')'BEFORE ',&amp; &amp; (trim(strings(i)),i=1,size(strings))</p>
-<p>call rank_basic(strings,cindx)</p>
-<p>write(*,'(a,8(a:,","))')'SORTED ',&amp; &amp; (trim(strings(cindx(i))),i=1,size(strings))</p>
-<p>strings=strings(cindx) ! sort the array using the rank index</p>
-<p>do i=1,size(strings)-1 if(strings(i).gt.strings(i+1))then write(*,*)'Error in sorting strings a-z' endif enddo end program demo_rank_basic</p>
-<p>Results:</p>
-<p>sorted 10000 values from -.3393216923767161E+308 to .4341912370205701E+308 T T T T BEFORE red,green,blue,yellow,orange,black,white,brown, gray,cyan,magenta,purple SORTED black,blue,brown,cyan,gray,green,magenta,orange, purple,red,white,yellow</p>
-<h2><a class="anchor" id="autotoc_md65"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - April 2000 </p>
-<h2><a class="anchor" id="autotoc_md66"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md67"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment">!!__________________________________________________________</span></div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IRNGT</div>

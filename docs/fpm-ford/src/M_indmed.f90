@@ -5,10 +5,6 @@ Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: indmed
 Integer, Allocatable, Dimension(:), Private, Save :: IDONT
-interface indmed
-  module procedure real64_indmed, real32_indmed, int32_indmed, f_char_indmed
-end interface indmed
-contains
 !!
 !!##NAME
 !!    medianloc(3f) - [orderpack:MEDIAN] Returns median value's INDEX.
@@ -92,6 +88,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface indmed
+  module procedure real64_indmed, real32_indmed, int32_indmed, f_char_indmed
+end interface indmed
+contains
 Subroutine real64_indmed (INVALS, OUTORD)
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Intent (Out) :: OUTORD

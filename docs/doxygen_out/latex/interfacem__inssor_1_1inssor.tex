@@ -13,6 +13,38 @@ subroutine \mbox{\hyperlink{interfacem__inssor_1_1inssor_a35c3c6f6e685be9122de65
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__inssor_1_1inssor_autotoc_md43}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__inssor_1_1inssor_autotoc_md43}
+sort\+\_\+special(3f) -\/ \mbox{[}orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Insertion sort, generally for small or nearly sorted arrays) \hypertarget{interfacem__inssor_1_1inssor_autotoc_md44}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__inssor_1_1inssor_autotoc_md44}
+\begin{DoxyVerb}  Subroutine Sort_Special (INOUTVALS)
+
+   ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
+\end{DoxyVerb}
+\hypertarget{interfacem__inssor_1_1inssor_autotoc_md45}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__inssor_1_1inssor_autotoc_md45}
+Sorts I\+N\+O\+U\+T\+V\+A\+L\+S() into ascending order (Insertion sort).
+
+If certain requirements are met and performance is important this procedure can be far faster, but S\+O\+R\+T(3f) and ranking routines R\+A\+N\+K(3f) and R\+A\+N\+K\+\_\+\+B\+A\+S\+I\+C(3f) are recommended for the general case.
+
+This subroutine uses an Insertion sort. It does not use any work array and is faster when I\+N\+O\+U\+T\+V\+A\+L\+S() is of very small size ($<$ 20), or already almost sorted; but worst case behavior can be triggered by commonly encountered data order (e.\+g. initially inverse sorted). Therefore, in many cases the Quicksort or Mergesort method is faster.\hypertarget{interfacem__inssor_1_1inssor_autotoc_md46}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__inssor_1_1inssor_autotoc_md46}
+I\+N\+O\+U\+T\+V\+A\+LS array to sort\hypertarget{interfacem__inssor_1_1inssor_autotoc_md47}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__inssor_1_1inssor_autotoc_md47}
+Sample program\+:
+
+program demo\+\_\+sort\+\_\+special ! sort an array using insertion sort use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+orderpack, only \+: sort\+\_\+special implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. integer,parameter \+:: isz=2000 real(kind=real64) \+:: dd(isz), hi, low integer \+:: i ! make an array of random values call random\+\_\+seed() call random\+\_\+number(dd) dd=dd$\ast$1000000.0-\/500000.\+0 low= minval(dd) hi = maxval(dd) ! sort the data call sort\+\_\+special(dd) ! cursory checks if(any(dd(1\+:isz-\/1) .gt. dd(2\+:isz)))stop \textquotesingle{}E\+R\+R\+OR\+: array not sorted\textquotesingle{} write($\ast$,$\ast$)\textquotesingle{}check min\+:\textquotesingle{},dd(1).eq.\+low write($\ast$,$\ast$)\textquotesingle{}check max\+:\textquotesingle{},dd(isz).eq.\+hi write($\ast$,$\ast$)\textquotesingle{}P\+A\+S\+S\+ED\+: random array is now sorted\textquotesingle{} end program demo\+\_\+sort\+\_\+special
+
+Results\+:
+
+check min\+: T check max\+: T P\+A\+S\+S\+ED\+: random array is now sorted\hypertarget{interfacem__inssor_1_1inssor_autotoc_md48}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__inssor_1_1inssor_autotoc_md48}
+Michel Olagnon -\/ Apr. 2000 \hypertarget{interfacem__inssor_1_1inssor_autotoc_md49}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__inssor_1_1inssor_autotoc_md49}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__inssor_1_1inssor_autotoc_md50}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__inssor_1_1inssor_autotoc_md50}
+C\+C0-\/1.\+0 
+
 \doxysubsection{Member Function/\+Subroutine Documentation}
 \mbox{\Hypertarget{interfacem__inssor_1_1inssor_a35c3c6f6e685be9122de6507f8470885}\label{interfacem__inssor_1_1inssor_a35c3c6f6e685be9122de6507f8470885}} 
 \index{m\_inssor::inssor@{m\_inssor::inssor}!f\_char\_inssor@{f\_char\_inssor}}
@@ -194,36 +226,7 @@ subroutine \mbox{\hyperlink{interfacem__inssor_1_1inssor_a35c3c6f6e685be9122de65
 \doxysubsubsection{\texorpdfstring{real64\_inssor()}{real64\_inssor()}}
 {\footnotesize\ttfamily subroutine m\+\_\+inssor\+::inssor\+::real64\+\_\+inssor (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__inssor_autotoc_md43}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inssor_autotoc_md43}
-sort\+\_\+special(3f) -\/ \mbox{[}orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Insertion sort, generally for small or nearly sorted arrays) \hypertarget{namespacem__inssor_autotoc_md44}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inssor_autotoc_md44}
-\begin{DoxyVerb}  Subroutine Sort_Special (INOUTVALS)
 
-   ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-\end{DoxyVerb}
-\hypertarget{namespacem__inssor_autotoc_md45}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inssor_autotoc_md45}
-Sorts I\+N\+O\+U\+T\+V\+A\+L\+S() into ascending order (Insertion sort).
-
-If certain requirements are met and performance is important this procedure can be far faster, but S\+O\+R\+T(3f) and ranking routines R\+A\+N\+K(3f) and R\+A\+N\+K\+\_\+\+B\+A\+S\+I\+C(3f) are recommended for the general case.
-
-This subroutine uses an Insertion sort. It does not use any work array and is faster when I\+N\+O\+U\+T\+V\+A\+L\+S() is of very small size ($<$ 20), or already almost sorted; but worst case behavior can be triggered by commonly encountered data order (e.\+g. initially inverse sorted). Therefore, in many cases the Quicksort or Mergesort method is faster.\hypertarget{namespacem__inssor_autotoc_md46}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inssor_autotoc_md46}
-I\+N\+O\+U\+T\+V\+A\+LS array to sort\hypertarget{namespacem__inssor_autotoc_md47}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inssor_autotoc_md47}
-Sample program\+:
-
-program demo\+\_\+sort\+\_\+special ! sort an array using insertion sort use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+orderpack, only \+: sort\+\_\+special implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. integer,parameter \+:: isz=2000 real(kind=real64) \+:: dd(isz), hi, low integer \+:: i ! make an array of random values call random\+\_\+seed() call random\+\_\+number(dd) dd=dd$\ast$1000000.0-\/500000.\+0 low= minval(dd) hi = maxval(dd) ! sort the data call sort\+\_\+special(dd) ! cursory checks if(any(dd(1\+:isz-\/1) .gt. dd(2\+:isz)))stop \textquotesingle{}E\+R\+R\+OR\+: array not sorted\textquotesingle{} write($\ast$,$\ast$)\textquotesingle{}check min\+:\textquotesingle{},dd(1).eq.\+low write($\ast$,$\ast$)\textquotesingle{}check max\+:\textquotesingle{},dd(isz).eq.\+hi write($\ast$,$\ast$)\textquotesingle{}P\+A\+S\+S\+ED\+: random array is now sorted\textquotesingle{} end program demo\+\_\+sort\+\_\+special
-
-Results\+:
-
-check min\+: T check max\+: T P\+A\+S\+S\+ED\+: random array is now sorted\hypertarget{namespacem__inssor_autotoc_md48}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inssor_autotoc_md48}
-Michel Olagnon -\/ Apr. 2000 \hypertarget{namespacem__inssor_autotoc_md49}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__inssor_autotoc_md49}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__inssor_autotoc_md50}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inssor_autotoc_md50}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{87 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
 \DoxyCodeLine{88 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}

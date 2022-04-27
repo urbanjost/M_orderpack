@@ -11,6 +11,39 @@ subroutine \mbox{\hyperlink{interfacem__rapknr_1_1rapknr_a59e39d770e9a4f3138e1f0
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__rapknr_1_1rapknr_autotoc_md102}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__rapknr_1_1rapknr_autotoc_md102}
+prank\+\_\+decreasing(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:P\+A\+R\+T\+I\+AL\mbox{]} partially ranks an array in D\+E\+C\+R\+E\+A\+S\+I\+NG order.\hypertarget{interfacem__rapknr_1_1rapknr_autotoc_md103}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__rapknr_1_1rapknr_autotoc_md103}
+\begin{DoxyVerb} Subroutine Prank_Decreasing (INVALS, IRNGT, NORD)
+
+   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+   Integer, Intent (Out)               :: IRNGT(:)
+   Integer, Intent (In)                :: NORD
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+\end{DoxyVerb}
+\hypertarget{interfacem__rapknr_1_1rapknr_autotoc_md104}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__rapknr_1_1rapknr_autotoc_md104}
+Same as P\+R\+A\+N\+K(3f), but in decreasing order.
+
+P\+R\+A\+N\+K\+\_\+\+D\+E\+C\+R\+E\+A\+S\+I\+N\+G(3f) partially ranks input array I\+N\+V\+A\+L\+S() in decreasing order up to order N\+O\+RD, placing the indices pointing to the selected values into I\+R\+N\+G\+T().
+
+Internally this routine uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as fast as possible. It uses two temporary arrays, where it stores the indices of the values larger than the pivot (I\+H\+I\+GT), and the indices of values smaller than the pivot that we might still need later on (I\+L\+O\+WT). It iterates until it can bring the number of values in I\+H\+I\+GT to exactly N\+O\+RD, and then uses an insertion sort to rank this set, since it is supposedly small.\hypertarget{interfacem__rapknr_1_1rapknr_autotoc_md105}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__rapknr_1_1rapknr_autotoc_md105}
+I\+N\+V\+A\+LS Array to rank I\+R\+N\+GT returned rank array, indicating order of values in I\+N\+V\+A\+LS from largest to smallest N\+O\+RD number of values to return in I\+R\+N\+GT\hypertarget{interfacem__rapknr_1_1rapknr_autotoc_md106}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__rapknr_1_1rapknr_autotoc_md106}
+Sample program\+:
+
+program demo\+\_\+prank\+\_\+decreasing ! create index to lowest N values in input array in decreasing order use M\+\_\+orderpack, only \+: prank\+\_\+decreasing implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) integer,allocatable \+:: irngt(\+:) integer \+:: nord I\+N\+V\+A\+LS=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} nord=5 allocate(irngt(nord)) write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+V\+A\+LS call prank\+\_\+decreasing(\+I\+N\+V\+A\+L\+S,irngt,nord) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO R\+E\+T\+U\+RN\+:\textquotesingle{},nord write($\ast$,g)\textquotesingle{}R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+:\textquotesingle{},irngt write($\ast$,g)nord,\textquotesingle{}M\+A\+X\+I\+M\+UM V\+A\+L\+U\+ES\+:\textquotesingle{},I\+N\+V\+A\+L\+S(irngt(\+:nord)) end program demo\+\_\+prank\+\_\+decreasing
+
+Results\+:
+
+O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO R\+E\+T\+U\+RN\+: 5 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 1 10 9 8 7 5 M\+A\+X\+I\+M\+UM V\+A\+L\+U\+ES\+: 10 10 9 8 6\hypertarget{interfacem__rapknr_1_1rapknr_autotoc_md107}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__rapknr_1_1rapknr_autotoc_md107}
+Michel Olagnon -\/ Feb. 2011 \hypertarget{interfacem__rapknr_1_1rapknr_autotoc_md108}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__rapknr_1_1rapknr_autotoc_md108}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__rapknr_1_1rapknr_autotoc_md109}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__rapknr_1_1rapknr_autotoc_md109}
+C\+C0-\/1.\+0 
+
 \doxysubsection{Member Function/\+Subroutine Documentation}
 \mbox{\Hypertarget{interfacem__rapknr_1_1rapknr_a59e39d770e9a4f3138e1f0e5f0d23ae0}\label{interfacem__rapknr_1_1rapknr_a59e39d770e9a4f3138e1f0e5f0d23ae0}} 
 \index{m\_rapknr::rapknr@{m\_rapknr::rapknr}!int32\_rapknr@{int32\_rapknr}}
@@ -1042,37 +1075,7 @@ subroutine \mbox{\hyperlink{interfacem__rapknr_1_1rapknr_a59e39d770e9a4f3138e1f0
 \doxysubsubsection{\texorpdfstring{real64\_rapknr()}{real64\_rapknr()}}
 {\footnotesize\ttfamily subroutine m\+\_\+rapknr\+::rapknr\+::real64\+\_\+rapknr (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__rapknr_autotoc_md102}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__rapknr_autotoc_md102}
-prank\+\_\+decreasing(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:P\+A\+R\+T\+I\+AL\mbox{]} partially ranks an array in D\+E\+C\+R\+E\+A\+S\+I\+NG order.\hypertarget{namespacem__rapknr_autotoc_md103}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__rapknr_autotoc_md103}
-\begin{DoxyVerb} Subroutine Prank_Decreasing (INVALS, IRNGT, NORD)
 
-   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IRNGT(:)
-   Integer, Intent (In)                :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-\end{DoxyVerb}
-\hypertarget{namespacem__rapknr_autotoc_md104}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__rapknr_autotoc_md104}
-Same as P\+R\+A\+N\+K(3f), but in decreasing order.
-
-P\+R\+A\+N\+K\+\_\+\+D\+E\+C\+R\+E\+A\+S\+I\+N\+G(3f) partially ranks input array I\+N\+V\+A\+L\+S() in decreasing order up to order N\+O\+RD, placing the indices pointing to the selected values into I\+R\+N\+G\+T().
-
-Internally this routine uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to N\+O\+RD as fast as possible. It uses two temporary arrays, where it stores the indices of the values larger than the pivot (I\+H\+I\+GT), and the indices of values smaller than the pivot that we might still need later on (I\+L\+O\+WT). It iterates until it can bring the number of values in I\+H\+I\+GT to exactly N\+O\+RD, and then uses an insertion sort to rank this set, since it is supposedly small.\hypertarget{namespacem__rapknr_autotoc_md105}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__rapknr_autotoc_md105}
-I\+N\+V\+A\+LS Array to rank I\+R\+N\+GT returned rank array, indicating order of values in I\+N\+V\+A\+LS from largest to smallest N\+O\+RD number of values to return in I\+R\+N\+GT\hypertarget{namespacem__rapknr_autotoc_md106}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__rapknr_autotoc_md106}
-Sample program\+:
-
-program demo\+\_\+prank\+\_\+decreasing ! create index to lowest N values in input array in decreasing order use M\+\_\+orderpack, only \+: prank\+\_\+decreasing implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) integer,allocatable \+:: irngt(\+:) integer \+:: nord I\+N\+V\+A\+LS=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} nord=5 allocate(irngt(nord)) write($\ast$,g)\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+V\+A\+LS call prank\+\_\+decreasing(\+I\+N\+V\+A\+L\+S,irngt,nord) write($\ast$,g)\textquotesingle{}N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO R\+E\+T\+U\+RN\+:\textquotesingle{},nord write($\ast$,g)\textquotesingle{}R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+:\textquotesingle{},irngt write($\ast$,g)nord,\textquotesingle{}M\+A\+X\+I\+M\+UM V\+A\+L\+U\+ES\+:\textquotesingle{},I\+N\+V\+A\+L\+S(irngt(\+:nord)) end program demo\+\_\+prank\+\_\+decreasing
-
-Results\+:
-
-O\+R\+I\+G\+I\+N\+AL\+: 10 5 7 1 4 5 6 8 9 10 1 N\+U\+M\+B\+ER OF I\+N\+D\+I\+C\+ES TO R\+E\+T\+U\+RN\+: 5 R\+E\+T\+U\+R\+N\+ED I\+N\+D\+I\+C\+ES\+: 1 10 9 8 7 5 M\+A\+X\+I\+M\+UM V\+A\+L\+U\+ES\+: 10 10 9 8 6\hypertarget{namespacem__rapknr_autotoc_md107}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__rapknr_autotoc_md107}
-Michel Olagnon -\/ Feb. 2011 \hypertarget{namespacem__rapknr_autotoc_md108}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__rapknr_autotoc_md108}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__rapknr_autotoc_md109}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__rapknr_autotoc_md109}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{88 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
 \DoxyCodeLine{89 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}

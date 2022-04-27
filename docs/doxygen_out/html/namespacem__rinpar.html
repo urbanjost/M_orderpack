@@ -351,49 +351,6 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md126"></a>
-NAME</h2>
-<p>prank_special(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in ASCENDING order (Insertion Sort)</p>
-<h2><a class="anchor" id="autotoc_md127"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Subroutine Prank_Special (INVALS, IRNGT, NORD)
-
-  ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-  Integer, Intent (Out)               :: IRNGT(:)
-  Integer, Intent (In)                :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-o Real(kind=real32)
-o Real(kind=real64)
-o Integer(kind=int32)
-o Character(kind=selected_char_kind("DEFAULT"),len=*)
-</pre><h2><a class="anchor" id="autotoc_md128"></a>
-DESCRIPTION</h2>
-<p>Partially ranks INVALS(). Returns IRNGT(1:NORD) filled with the indices of the lowest values in the array INVALS. More technically, it does a partial ranking of the array INVALS of order NORD.</p>
-<p>NORD is restricted to the range 1 to size(IRNGT).</p>
-<p>Internally, this version is not optimized for performance, and is thus not as difficult to read as some other ones.</p>
-<p>The subroutine uses an insertion sort, limiting insertion to the first NORD values. It does not use any work array and is fastest when NORD is very small (2-5). but worst case behavior can easily happen (ie. if INVALS initially is inverse sorted). Therefore, In many cases, the refined Quicksort method is faster.</p>
-<h2><a class="anchor" id="autotoc_md129"></a>
-OPTIONS</h2>
-<p>INVALS array to partially sort NORD number of indices to return, restricted to 1 to size(IRNGT) </p>
-<h2><a class="anchor" id="autotoc_md130"></a>
-RETURNS</h2>
-<p>IRNGT indices of requested number (NORD) of lowest values in INVALS</p>
-<h2><a class="anchor" id="autotoc_md131"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_prank_special ! partially rank N lowest values in an array use M_orderpack, only : prank_special implicit none character(len=*),parameter :: g='(*(g0,1x))' integer,allocatable :: INVALS(:) integer,allocatable :: irngt(:) integer :: nord INVALS=[10,5,7,1,4,5,6,8,9,10,1] nord=5 allocate(irngt(nord)) write(*,g)'ORIGINAL:',INVALS call prank_special(INVALS,irngt,nord) write(*,g)'NUMBER OF INDICES TO RETURN:',nord write(*,g)'RETURNED INDICES:',irngt write(*,g)nord,'SMALLEST VALUES:',INVALS(irngt(:nord)) end program demo_prank_special</p>
-<p>Results:</p>
-<p>ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1 NUMBER OF INDICES TO RETURN: 5 RETURNED INDICES: 4 11 5 2 6 5 SMALLEST VALUES: 1 1 4 5 5</p>
-<h2><a class="anchor" id="autotoc_md132"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - Feb. 2000 </p>
-<h2><a class="anchor" id="autotoc_md133"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md134"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">!!__________________________________________________________</span></div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">   Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;   <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IRNGT</div>

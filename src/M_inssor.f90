@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: inssor
-interface inssor
-  module procedure real64_inssor, real32_inssor, int32_inssor, f_char_inssor
-end interface inssor
-contains
 !!
 !!##NAME
 !!    sort_special(3f) - [orderpack:SORT] Sorts array into ascending order
@@ -83,6 +79,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface inssor
+  module procedure real64_inssor, real32_inssor, int32_inssor, f_char_inssor
+end interface inssor
+contains
 Subroutine real64_inssor (INOUTVALS)
 ! __________________________________________________________
       Real (kind=real64), Dimension (:), Intent (InOut) :: INOUTVALS

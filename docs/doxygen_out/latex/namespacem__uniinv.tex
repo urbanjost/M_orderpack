@@ -848,42 +848,7 @@ integer, parameter \mbox{\hyperlink{namespacem__uniinv_aae3df561c217bf871a83bafb
 \doxysubsubsection{\texorpdfstring{real64\_uniinv()}{real64\_uniinv()}}
 {\footnotesize\ttfamily subroutine m\+\_\+uniinv\+::real64\+\_\+uniinv (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+G\+O\+E\+ST }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__uniinv_autotoc_md143}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__uniinv_autotoc_md143}
-Rank\+\_\+\+Decreasing(3f) -\/ \mbox{[}orderpack\+:\+R\+A\+NK\+:U\+N\+I\+Q\+UE\mbox{]} ranks an array in decreasing order, with duplicate entries assigned the same rank(\+Merge\+Sort)\hypertarget{namespacem__uniinv_autotoc_md144}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__uniinv_autotoc_md144}
-\begin{DoxyVerb} Subroutine Rank_Decreasing (INVALS, IGOEST)
 
-   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IGOEST(:)
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-\end{DoxyVerb}
-\hypertarget{namespacem__uniinv_autotoc_md145}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__uniinv_autotoc_md145}
-\begin{DoxyVerb}RANK_DECREASING(3f) generates an inverse ranking of an array, but
-with duplicate entries assigned the same rank.
-
-Internally, the routine is similar to pure merge-sort ranking, but on
-the last pass, it sets indices in IGOEST to the rank of the original
-value in an ordered set with duplicates removed. For performance
-reasons, the first two passes are taken out of the standard loop,
-and use dedicated coding.
-\end{DoxyVerb}
-\hypertarget{namespacem__uniinv_autotoc_md146}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__uniinv_autotoc_md146}
-I\+N\+V\+A\+LS array to rank I\+G\+O\+E\+ST returned rank array\hypertarget{namespacem__uniinv_autotoc_md147}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__uniinv_autotoc_md147}
-Sample program\+:
-
-program demo\+\_\+rank\+\_\+decreasing ! rank input array ranking duplicates the same use M\+\_\+orderpack, only \+: rank\+\_\+decreasing implicit none character(len=$\ast$),parameter \+:: fmt=\textquotesingle{}(a,$\ast$(g3.\+3,1x))\textquotesingle{} integer,allocatable,dimension(\+:) \+:: I\+N\+V\+A\+LS, igoest, distinct, count integer \+:: imx, i ! create an input array I\+N\+V\+A\+LS=\mbox{[}11, 11, 22, 11, 33, 33, 22, 33, 33\mbox{]} ! make an index array of the same size if(allocated(igoest))deallocate(igoest) allocate(igoest(size(\+I\+N\+V\+A\+L\+S))) print fmt, \textquotesingle{}Original\+: \textquotesingle{},I\+N\+V\+A\+LS print fmt, \textquotesingle{}Number of indices to sort\+:\textquotesingle{},size(\+I\+N\+V\+A\+L\+S) ! rank input array ranking duplicates the same call rank\+\_\+decreasing(\+I\+N\+V\+A\+L\+S,igoest) print fmt, \textquotesingle{}Returned Indices\+: \textquotesingle{},igoest(\+:) ! ! interrogate the results ! imx=maxval(igoest) print fmt, \textquotesingle{}Number of unique indices \+:\textquotesingle{},imx ! squeeze it down to just I\+MX unique values count=\mbox{[}(0,i=1,imx)\mbox{]} ! count how many times a value occurs distinct=count ! array to set of unique values do i=1,size(\+I\+N\+V\+A\+L\+S) distinct(igoest(i))=I\+N\+V\+A\+L\+S(i) count(igoest(i))= count(igoest(i))+1 enddo print fmt, \textquotesingle{}Sorted unique values\+: \textquotesingle{},distinct print fmt, \textquotesingle{}count of occurrences\+: \textquotesingle{},count end program demo\+\_\+rank\+\_\+decreasing
-
-Results\+:
-
-Original\+: 11 11 22 11 33 33 22 33 33 Number of indices to sort\+: 9 Returned Indices\+: 1 1 2 1 3 3 2 3 3 Number of unique indices \+: 3 Sorted unique values\+: 11 22 33 count of occurrences\+: 3 2 4\hypertarget{namespacem__uniinv_autotoc_md148}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__uniinv_autotoc_md148}
-Michel Olagnon, 2000-\/2012 \hypertarget{namespacem__uniinv_autotoc_md149}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__uniinv_autotoc_md149}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__uniinv_autotoc_md150}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__uniinv_autotoc_md150}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{102 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
 \DoxyCodeLine{103       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IGOEST}

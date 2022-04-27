@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: indnth
-interface indnth
-  module procedure real64_indnth, real32_indnth, int32_indnth !, f_char_indnth
-end interface indnth
-contains
 !!
 !!##NAME
 !!    orderloc(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of
@@ -101,6 +97,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface indnth
+  module procedure real64_indnth, real32_indnth, int32_indnth !, f_char_indnth
+end interface indnth
+contains
 Function real64_indnth (INVALS, NORD) Result (INDNTH)
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Intent (In) :: NORD

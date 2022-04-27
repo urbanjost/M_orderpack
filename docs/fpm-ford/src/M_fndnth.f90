@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: fndnth
-interface fndnth
-  module procedure real64_fndnth, real32_fndnth, int32_fndnth !, f_char_fndnth
-end interface fndnth
-contains
 !!
 !!##NAME
 !!    orderval_special(3f) - [orderpack:FRACTILE] Return VALUE of Nth
@@ -111,6 +107,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface fndnth
+  module procedure real64_fndnth, real32_fndnth, int32_fndnth !, f_char_fndnth
+end interface fndnth
+contains
 Function real64_fndnth (INVALS, INORD) Result (FNDNTH)
 ! __________________________________________________________
       Real (Kind=real64), Dimension (:), Intent (In) :: INVALS

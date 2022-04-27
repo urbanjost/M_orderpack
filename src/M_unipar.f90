@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unipar
-interface unipar
-   module procedure real64_unipar, real32_unipar, int32_unipar !, f_char_unipar
-end interface unipar
-contains
 !!
 !!##NAME
 !!    prank_unique(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially ranks
@@ -107,6 +103,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface unipar
+   module procedure real64_unipar, real32_unipar, int32_unipar !, f_char_unipar
+end interface unipar
+contains
 Subroutine real64_unipar (INVALS, IRNGT, NORD)
 ! __________________________________________________________
    Real (kind=real64), Dimension (:), Intent (In) :: INVALS

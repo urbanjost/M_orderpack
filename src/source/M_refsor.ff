@@ -5,10 +5,6 @@ Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refsor
 private :: real64_inssor, real32_inssor, int32_inssor, f_char_inssor
-interface refsor
-  module procedure real64_refsor, real32_refsor, int32_refsor, f_char_refsor
-end interface refsor
-contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sort.3orderpack.man
 NAME
@@ -89,6 +85,11 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+interface refsor
+  module procedure real64_refsor, real32_refsor, int32_refsor, f_char_refsor
+end interface refsor
+contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL REFSOR
 Subroutine ${KIND}_refsor (INOUTVALS)

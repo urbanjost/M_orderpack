@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: inspar
-interface inspar
-  module procedure real64_inspar, real32_inspar, int32_inspar, f_char_inspar
-end interface inspar
-contains
 !!
 !!##NAME
 !!    psort(3f) - [orderpack:SORT:PARTIAL] partially sorts an array
@@ -97,6 +93,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface inspar
+  module procedure real64_inspar, real32_inspar, int32_inspar, f_char_inspar
+end interface inspar
+contains
 Subroutine real64_inspar (INOUTVALS, NORD)
    Real (kind=real64), Dimension (:), Intent (InOut) :: INOUTVALS
    Integer, Intent (In) :: NORD

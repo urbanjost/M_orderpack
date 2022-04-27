@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: mrgrnk
-interface mrgrnk
-  module procedure real64_mrgrnk, real32_mrgrnk, int32_mrgrnk, f_char_mrgrnk
-end interface mrgrnk
-contains
 !!
 !!##NAME
 !!    rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input
@@ -130,6 +126,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface mrgrnk
+  module procedure real64_mrgrnk, real32_mrgrnk, int32_mrgrnk, f_char_mrgrnk
+end interface mrgrnk
+contains
 Subroutine real64_mrgrnk (INVALS, IRNGT)
 ! __________________________________________________________
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS

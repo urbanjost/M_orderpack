@@ -270,54 +270,6 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md8"></a>
-NAME</h2>
-<p>orderval_special(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered element of array, or "fractile of
-                           order N/SIZE(array)" (InsertSort-like)</p>
-<h2><a class="anchor" id="autotoc_md9"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Function Orderval_Special (INVALS, INORD)
-
-  ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
-  Integer, Intent (In)                :: INORD
-  ${TYPE} (Kind=${KIND})              :: orderval_special
-
-Where ${TYPE}(kind=${KIND}) may be
-
-o Real(kind=real32)
-o Real(kind=real64)
-o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md10"></a>
-DESCRIPTION</h2>
-<p>ORDERVAL_SPECIAL(3f) returns the INORDth lowest value of INVALS(), i.e. the fractile of order INORD/SIZE(INVALS).</p>
-<p>Internally, This subroutine uses an insertion sort, limiting insertion to the first INORD values and even less when one can know that the value that is considered will not be the INORDth.</p>
-<p>An insertion sort is very fast when INORD is very small (2-5). Additionally, internally it requires only a work array of size INORD (and type of INVALS),</p>
-<p>But worst case behavior can happen fairly probably (e.g., initially inverse sorted). Therefore, in many cases, the refined QuickSort method is faster.</p>
-<p>so ORDERVAL_SPECIAL(3f) should be used when INORD is small and INVALS is likely to be a random array, otherwise consider using ORDERLOC(3f) or ORDERVAL(3f).</p>
-<h2><a class="anchor" id="autotoc_md11"></a>
-OPTIONS</h2>
-<p>INVALS input array of values INORD specify Nth value of sorted INVALS array to return, from 1 to size(INVALS). </p>
-<h2><a class="anchor" id="autotoc_md12"></a>
-RETURNS</h2>
-<p>ORDERVAL_SPECIAL returned value</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_orderval_special ! return Nth ordered value of an array use M_orderpack, only : orderval_special, medianval implicit none character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))' integer,allocatable :: iarr(:) integer :: i iarr=[80,70,30,40,-50,60,20,10] print sp, 'ORIGINAL:',iarr ! can return the same values as intrinsics minval(3f) and maxval(3f) print sp, 'minval',orderval_special(iarr,1), minval(iarr) print sp, 'maxval',orderval_special(iarr,size(iarr)), maxval(iarr) ! but more generally it can return the Nth lowest value. print sp, 'median',orderval_special(iarr,(size(iarr+1))/2), &amp; &amp; medianval(iarr) ! so only Nth ordered value can be found print sp,'inord=',3, ' fractile=',orderval_special(iarr,3) ! sorting the hard way print sp, 'ORIGINAL:',iarr do i=1,size(iarr) write(*,list)i,orderval_special(iarr,i) enddo print * end program demo_orderval_special</p>
-<p>Results:</p>
-<p>ORIGINAL: 80 70 30 40 -50 60 20 10 minval -50 -50 maxval 80 80 median 30 30 inord= 3 fractile= 20 ORIGINAL: 80 70 30 40 -50 60 20 10 1, -50 2, 10 3, 20 4, 30 5, 40 6, 60 7, 70 8, 80</p>
-<h2><a class="anchor" id="autotoc_md14"></a>
-SEE ALSO</h2>
-<pre class="fragment">ORDERLOC(3f), ORDERVAL(3f)
-</pre><h2><a class="anchor" id="autotoc_md15"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - Aug. 2000 </p>
-<h2><a class="anchor" id="autotoc_md16"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md17"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">! __________________________________________________________</span></div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keywordtype">      Real</span> (Kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>
 <div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="keywordtype">      Real</span> (Kind=real64) :: fndnth</div>

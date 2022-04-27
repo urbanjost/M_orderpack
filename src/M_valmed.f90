@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: valmed
-interface valmed
-  module procedure real64_valmed, real32_valmed, int32_valmed
-end interface valmed
-contains
 !!
 !!##NAME
 !!    medianval(3f) - [orderpack:MEDIAN] Returns median VALUE.
@@ -73,6 +69,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface valmed
+  module procedure real64_valmed, real32_valmed, int32_valmed
+end interface valmed
+contains
 Recursive Function real64_valmed (INVALS) Result (res_med)
 !!__________________________________________________________
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS

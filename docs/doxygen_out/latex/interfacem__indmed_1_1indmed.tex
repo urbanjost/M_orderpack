@@ -13,6 +13,49 @@ subroutine \mbox{\hyperlink{interfacem__indmed_1_1indmed_aaf88c04803f14147063ddd
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__indmed_1_1indmed_autotoc_md18}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__indmed_1_1indmed_autotoc_md18}
+medianloc(3f) -\/ \mbox{[}orderpack\+:M\+E\+D\+I\+AN\mbox{]} Returns median value\textquotesingle{}s I\+N\+D\+EX.\hypertarget{interfacem__indmed_1_1indmed_autotoc_md19}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__indmed_1_1indmed_autotoc_md19}
+\begin{DoxyVerb} Subroutine MedianLoc (INVALS, OUTORD)
+
+   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+   Integer, Intent (Out)               :: OUTORD
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
+\end{DoxyVerb}
+\hypertarget{interfacem__indmed_1_1indmed_autotoc_md20}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__indmed_1_1indmed_autotoc_md20}
+M\+E\+D\+I\+A\+N\+L\+O\+C(3f) Returns the index of the median (((Size(\+I\+N\+V\+A\+L\+S)+1))/2$^\wedge$th value).
+
+\begin{DoxyVerb}Internally, MEDIANLOC(3f) Finds the index of the median of the array
+INVALS() using the recursive procedure described in Knuth, The Art of
+Computer Programming, vol. 3, 5.3.3.
+
+This procedure is linear in time, and does not require to be able
+to interpolate in the set as the one used in ORDERLOC(3f), which can
+also be used to calculate a median. It also has better worst-case
+behavior than ORDERLOC(3f), but is about 10% slower on average for
+random uniformly distributed values.
+\end{DoxyVerb}
+\hypertarget{interfacem__indmed_1_1indmed_autotoc_md21}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__indmed_1_1indmed_autotoc_md21}
+I\+N\+V\+A\+LS array to find the median value of. O\+U\+T\+O\+RD index of the median value.\hypertarget{interfacem__indmed_1_1indmed_autotoc_md22}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__indmed_1_1indmed_autotoc_md22}
+Sample program\+:
+
+program demo\+\_\+medianloc ! return index of median value use M\+\_\+orderpack, only \+: medianloc implicit none real,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) character(len=\+:),allocatable \+:: cdont(\+:) character(len=$\ast$),parameter \+:: fmt=\textquotesingle{}(i5,t11,g0)\textquotesingle{} integer \+:: ii write($\ast$,$\ast$) \textquotesingle{}location median\textquotesingle{}
+
+I\+N\+V\+A\+LS=\mbox{[}80.\+0,70.\+0,20.\+0,10.\+0,1000.\+0\mbox{]} call medianloc(\+I\+N\+V\+A\+L\+S,ii) write($\ast$,fmt) ii,I\+N\+V\+A\+L\+S(ii) ! I\+N\+V\+A\+LS=\mbox{[}11, 22, 33, 44, 55, 66, 77, 88\mbox{]} call medianloc(\+I\+N\+V\+A\+L\+S,ii) write($\ast$,fmt) ii,I\+N\+V\+A\+L\+S(ii) ! I\+N\+V\+A\+LS=\mbox{[}11.\+0d0,77.\+0d0,22.\+0d0,66.\+0d0,33.\+0d0,88.\+0d0\mbox{]} call medianloc(\+I\+N\+V\+A\+L\+S,ii) write($\ast$,fmt) ii,I\+N\+V\+A\+L\+S(ii) ! cdont=\mbox{[}character(len=20) \+:: \textquotesingle{}apple\textquotesingle{},\textquotesingle{}bee\textquotesingle{},\textquotesingle{}cherry\textquotesingle{},\textquotesingle{}duck\textquotesingle{},\& \textquotesingle{}elephant\textquotesingle{},\textquotesingle{}finger\textquotesingle{},\textquotesingle{}goose\textquotesingle{},\textquotesingle{}h\textquotesingle{},\textquotesingle{}insect\textquotesingle{},\textquotesingle{}j\textquotesingle{}\mbox{]} call medianloc(cdont,ii) write($\ast$,fmt) ii,cdont(ii) ! end program demo\+\_\+medianloc
+
+Results\+:
+
+location median 2 70.\+00000 4 44.\+00000 5 33.\+00000 5 elephant\hypertarget{interfacem__indmed_1_1indmed_autotoc_md23}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__indmed_1_1indmed_autotoc_md23}
+Michel Olagnon, 2000-\/2012 \hypertarget{interfacem__indmed_1_1indmed_autotoc_md24}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__indmed_1_1indmed_autotoc_md24}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__indmed_1_1indmed_autotoc_md25}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__indmed_1_1indmed_autotoc_md25}
+C\+C0-\/1.\+0 
+
 \doxysubsection{Member Function/\+Subroutine Documentation}
 \mbox{\Hypertarget{interfacem__indmed_1_1indmed_aaf88c04803f14147063ddd3d8cfd8a0d}\label{interfacem__indmed_1_1indmed_aaf88c04803f14147063ddd3d8cfd8a0d}} 
 \index{m\_indmed::indmed@{m\_indmed::indmed}!f\_char\_indmed@{f\_char\_indmed}}
@@ -89,47 +132,7 @@ subroutine \mbox{\hyperlink{interfacem__indmed_1_1indmed_aaf88c04803f14147063ddd
 \doxysubsubsection{\texorpdfstring{real64\_indmed()}{real64\_indmed()}}
 {\footnotesize\ttfamily subroutine m\+\_\+indmed\+::indmed\+::real64\+\_\+indmed (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, intent(out)}]{O\+U\+T\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__indmed_autotoc_md18}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__indmed_autotoc_md18}
-medianloc(3f) -\/ \mbox{[}orderpack\+:M\+E\+D\+I\+AN\mbox{]} Returns median value\textquotesingle{}s I\+N\+D\+EX.\hypertarget{namespacem__indmed_autotoc_md19}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__indmed_autotoc_md19}
-\begin{DoxyVerb} Subroutine MedianLoc (INVALS, OUTORD)
 
-   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: OUTORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-\end{DoxyVerb}
-\hypertarget{namespacem__indmed_autotoc_md20}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__indmed_autotoc_md20}
-M\+E\+D\+I\+A\+N\+L\+O\+C(3f) Returns the index of the median (((Size(\+I\+N\+V\+A\+L\+S)+1))/2$^\wedge$th value).
-
-\begin{DoxyVerb}Internally, MEDIANLOC(3f) Finds the index of the median of the array
-INVALS() using the recursive procedure described in Knuth, The Art of
-Computer Programming, vol. 3, 5.3.3.
-
-This procedure is linear in time, and does not require to be able
-to interpolate in the set as the one used in ORDERLOC(3f), which can
-also be used to calculate a median. It also has better worst-case
-behavior than ORDERLOC(3f), but is about 10% slower on average for
-random uniformly distributed values.
-\end{DoxyVerb}
-\hypertarget{namespacem__indmed_autotoc_md21}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__indmed_autotoc_md21}
-I\+N\+V\+A\+LS array to find the median value of. O\+U\+T\+O\+RD index of the median value.\hypertarget{namespacem__indmed_autotoc_md22}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__indmed_autotoc_md22}
-Sample program\+:
-
-program demo\+\_\+medianloc ! return index of median value use M\+\_\+orderpack, only \+: medianloc implicit none real,allocatable \+:: I\+N\+V\+A\+L\+S(\+:) character(len=\+:),allocatable \+:: cdont(\+:) character(len=$\ast$),parameter \+:: fmt=\textquotesingle{}(i5,t11,g0)\textquotesingle{} integer \+:: ii write($\ast$,$\ast$) \textquotesingle{}location median\textquotesingle{}
-
-I\+N\+V\+A\+LS=\mbox{[}80.\+0,70.\+0,20.\+0,10.\+0,1000.\+0\mbox{]} call medianloc(\+I\+N\+V\+A\+L\+S,ii) write($\ast$,fmt) ii,I\+N\+V\+A\+L\+S(ii) ! I\+N\+V\+A\+LS=\mbox{[}11, 22, 33, 44, 55, 66, 77, 88\mbox{]} call medianloc(\+I\+N\+V\+A\+L\+S,ii) write($\ast$,fmt) ii,I\+N\+V\+A\+L\+S(ii) ! I\+N\+V\+A\+LS=\mbox{[}11.\+0d0,77.\+0d0,22.\+0d0,66.\+0d0,33.\+0d0,88.\+0d0\mbox{]} call medianloc(\+I\+N\+V\+A\+L\+S,ii) write($\ast$,fmt) ii,I\+N\+V\+A\+L\+S(ii) ! cdont=\mbox{[}character(len=20) \+:: \textquotesingle{}apple\textquotesingle{},\textquotesingle{}bee\textquotesingle{},\textquotesingle{}cherry\textquotesingle{},\textquotesingle{}duck\textquotesingle{},\& \textquotesingle{}elephant\textquotesingle{},\textquotesingle{}finger\textquotesingle{},\textquotesingle{}goose\textquotesingle{},\textquotesingle{}h\textquotesingle{},\textquotesingle{}insect\textquotesingle{},\textquotesingle{}j\textquotesingle{}\mbox{]} call medianloc(cdont,ii) write($\ast$,fmt) ii,cdont(ii) ! end program demo\+\_\+medianloc
-
-Results\+:
-
-location median 2 70.\+00000 4 44.\+00000 5 33.\+00000 5 elephant\hypertarget{namespacem__indmed_autotoc_md23}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__indmed_autotoc_md23}
-Michel Olagnon, 2000-\/2012 \hypertarget{namespacem__indmed_autotoc_md24}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__indmed_autotoc_md24}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__indmed_autotoc_md25}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__indmed_autotoc_md25}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{96 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
 \DoxyCodeLine{97       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: OUTORD}

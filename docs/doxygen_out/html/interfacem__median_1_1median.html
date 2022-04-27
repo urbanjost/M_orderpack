@@ -83,7 +83,52 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:ad05352307bce13337ce0e73651ab889a"><td class="memItemLeft" align="right" valign="top">integer(kind=int32) function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacem__median_1_1median.html#ad05352307bce13337ce0e73651ab889a">int32_median</a> (INVALS)</td></tr>
 <tr class="separator:ad05352307bce13337ce0e73651ab889a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function/Subroutine Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md51"></a>
+NAME</h2>
+<p>median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If number of elements is even, returns average of the two "medians".</p>
+<h2><a class="anchor" id="autotoc_md52"></a>
+SYNOPSIS</h2>
+<pre class="fragment"> Function Median (INVALS)
+
+  ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
+  ${TYPE} (Kind=${KIND})              :: MEDIAN
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+</pre><h2><a class="anchor" id="autotoc_md53"></a>
+DESCRIPTION</h2>
+<p>MEDIAN(3f) calculates the median value of the array INVALS(). It is a modified version of MEDIANVAL(3f) that provides the average between the two middle values in the case where size(INVALS) is even.</p>
+<p>Internally, this routine uses a pivoting strategy similar to the method of finding the median based on the Quick-sort algorithm, but we skew the pivot choice to try to bring it to NORD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (ILOWT), and the indices of values larger than the pivot that we might still need later on (IHIGT). It iterates until it can bring the number of values in ILOWT to exactly NORD, and then finds the maximum of this set.</p>
+<h2><a class="anchor" id="autotoc_md54"></a>
+OPTIONS</h2>
+<p>INVALS array to determine the median value of.</p>
+<h2><a class="anchor" id="autotoc_md55"></a>
+RETURNS</h2>
+<p>MEDIAN median value. If INVALS contains an even number of elements the value is the average of the two "medians".</p>
+<h2><a class="anchor" id="autotoc_md56"></a>
+EXAMPLES</h2>
+<p>Sample program:</p>
+<p>program demo_median ! calculate median value use M_orderpack, only : median implicit none character(len=*),parameter :: g='(*(g0,1x))'</p>
+<p>write(*,g) 'real ',median(&amp; [80.0,70.0,20.0,10.0,1000.0] )</p>
+<p>write(*,g) 'integer',median(&amp; [11, 22, 33, 44, 55, 66, 77, 88] )</p>
+<p>write(*,g) 'double ',median(&amp; [11.0d0,22.0d0,33.0d0,66.0d0,77.0d0,88.0d0])</p>
+<p>end program demo_median</p>
+<p>Results:</p>
+<p>real 70.00000 integer 49 double 49.50000000000000</p>
+<h2><a class="anchor" id="autotoc_md57"></a>
+AUTHOR</h2>
+<p>Michel Olagnon - Aug. 2000 </p>
+<h2><a class="anchor" id="autotoc_md58"></a>
+MAINTAINER</h2>
+<p>John Urban, 2022.04.16 </p>
+<h2><a class="anchor" id="autotoc_md59"></a>
+LICENSE</h2>
+<p>CC0-1.0 </p>
+</div><h2 class="groupheader">Member Function/Subroutine Documentation</h2>
 <a id="ad05352307bce13337ce0e73651ab889a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad05352307bce13337ce0e73651ab889a">&#9670;&nbsp;</a></span>int32_median()</h2>
 
@@ -1133,50 +1178,6 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md51"></a>
-NAME</h2>
-<p>median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If number of elements is even, returns average of the two "medians".</p>
-<h2><a class="anchor" id="autotoc_md52"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Function Median (INVALS)
-
-  ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
-  ${TYPE} (Kind=${KIND})              :: MEDIAN
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md53"></a>
-DESCRIPTION</h2>
-<p>MEDIAN(3f) calculates the median value of the array INVALS(). It is a modified version of MEDIANVAL(3f) that provides the average between the two middle values in the case size(INVALS) is even.</p>
-<p>This routine uses a pivoting strategy similar to the method of finding the median based on the Quick-sort algorithm, but we skew the pivot choice to try to bring it to NORD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (ILOWT), and the indices of values larger than the pivot that we might still need later on (IHIGT). It iterates until it can bring the number of values in ILOWT to exactly NORD, and then finds the maximum of this set.</p>
-<h2><a class="anchor" id="autotoc_md54"></a>
-OPTIONS</h2>
-<p>INVALS array to determine the median value of.</p>
-<h2><a class="anchor" id="autotoc_md55"></a>
-RETURNS</h2>
-<p>MEDIAN median value. If INVALS contains an even number of elements the value is the average of the two "medians".</p>
-<h2><a class="anchor" id="autotoc_md56"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_median ! calculate median value use M_orderpack, only : median implicit none character(len=*),parameter :: g='(*(g0,1x))'</p>
-<p>write(*,g) 'real ',median(&amp; [80.0,70.0,20.0,10.0,1000.0] )</p>
-<p>write(*,g) 'integer',median(&amp; [11, 22, 33, 44, 55, 66, 77, 88] )</p>
-<p>write(*,g) 'double ',median(&amp; [11.0d0,22.0d0,33.0d0,66.0d0,77.0d0,88.0d0])</p>
-<p>end program demo_median</p>
-<p>Results:</p>
-<p>real 70.00000 integer 49 double 49.50000000000000</p>
-<h2><a class="anchor" id="autotoc_md57"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - Aug. 2000 </p>
-<h2><a class="anchor" id="autotoc_md58"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md59"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="keywordtype">      Real</span> (Kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">      Real</span> (Kind=real64) :: median</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">! __________________________________________________________</span></div>

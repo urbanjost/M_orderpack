@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: median
-interface median
-  module procedure real64_median, real32_median, int32_median
-end interface median
-contains
 !!
 !!##NAME
 !!    median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If
@@ -30,16 +26,16 @@ contains
 !!##DESCRIPTION
 !!    MEDIAN(3f) calculates the median value of the array INVALS(). It is
 !!    a modified version of MEDIANVAL(3f) that provides the average between
-!!    the two middle values in the case size(INVALS) is even.
+!!    the two middle values in the case where size(INVALS) is even.
 !!
-!!    This routine uses a pivoting strategy similar to the method of finding
-!!    the median based on the Quick-sort algorithm, but we skew the pivot
-!!    choice to try to bring it to NORD as fast as possible. It uses two
-!!    temporary arrays, where it stores the indices of the values smaller
-!!    than the pivot (ILOWT), and the indices of values larger than the
-!!    pivot that we might still need later on (IHIGT). It iterates until
-!!    it can bring the number of values in ILOWT to exactly NORD, and then
-!!    finds the maximum of this set.
+!!    Internally, this routine uses a pivoting strategy similar to the
+!!    method of finding the median based on the Quick-sort algorithm,
+!!    but we skew the pivot choice to try to bring it to NORD as fast as
+!!    possible. It uses two temporary arrays, where it stores the indices of
+!!    the values smaller than the pivot (ILOWT), and the indices of values
+!!    larger than the pivot that we might still need later on (IHIGT). It
+!!    iterates until it can bring the number of values in ILOWT to exactly
+!!    NORD, and then finds the maximum of this set.
 !!
 !!##OPTIONS
 !!     INVALS      array to determine the median value of.
@@ -82,6 +78,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface median
+  module procedure real64_median, real32_median, int32_median
+end interface median
+contains
 Function real64_median (INVALS) Result (median)
       Real (Kind=real64), Dimension (:), Intent (In) :: INVALS
       Real (Kind=real64) :: median

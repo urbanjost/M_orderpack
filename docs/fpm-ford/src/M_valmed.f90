@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: valmed
-interface valmed
-  module procedure real64_valmed, real32_valmed, int32_valmed
-end interface valmed
-contains
 !!
 !!##NAME
 !!    medianval(3f) - [orderpack:MEDIAN] Returns median VALUE.
@@ -33,10 +29,10 @@ contains
 !!    Internally, it uses the recursive procedure described in Knuth,
 !!    The Art of Computer Programming, vol. 3, 5.3.3 .
 !!
-!!    The procedure is linear in time, and does not require to be able
-!!    to interpolate in the set as the one used in VALNTH/INDNTH. It also
-!!    has better worst case behavior than VALNTH/INDNTH, and is about 20%
-!!    faster in average for random uniformly distributed values.
+!!    The procedure is linear in time, and does not require to be able to
+!!    interpolate in the set as the one used in ORDERVAL(3f)/ORDERLOC(3f). It
+!!    also has better worst case behavior than ORDERVAL(3f)/ORDERLOC(3f), and
+!!    is about 20% faster in average for random uniformly distributed values.
 !!
 !!##OPTIONS
 !!     INVALS      input array
@@ -73,6 +69,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface valmed
+  module procedure real64_valmed, real32_valmed, int32_valmed
+end interface valmed
+contains
 Recursive Function real64_valmed (INVALS) Result (res_med)
 !!__________________________________________________________
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS

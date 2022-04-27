@@ -1218,45 +1218,6 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md102"></a>
-NAME</h2>
-<p>prank_decreasing(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in DECREASING order.</p>
-<h2><a class="anchor" id="autotoc_md103"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Subroutine Prank_Decreasing (INVALS, IRNGT, NORD)
-
-   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: IRNGT(:)
-   Integer, Intent (In)                :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md104"></a>
-DESCRIPTION</h2>
-<p>Same as PRANK(3f), but in decreasing order.</p>
-<p>PRANK_DECREASING(3f) partially ranks input array INVALS() in decreasing order up to order NORD, placing the indices pointing to the selected values into IRNGT().</p>
-<p>Internally this routine uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to NORD as fast as possible. It uses two temporary arrays, where it stores the indices of the values larger than the pivot (IHIGT), and the indices of values smaller than the pivot that we might still need later on (ILOWT). It iterates until it can bring the number of values in IHIGT to exactly NORD, and then uses an insertion sort to rank this set, since it is supposedly small.</p>
-<h2><a class="anchor" id="autotoc_md105"></a>
-OPTIONS</h2>
-<p>INVALS Array to rank IRNGT returned rank array, indicating order of values in INVALS from largest to smallest NORD number of values to return in IRNGT</p>
-<h2><a class="anchor" id="autotoc_md106"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_prank_decreasing ! create index to lowest N values in input array in decreasing order use M_orderpack, only : prank_decreasing implicit none character(len=*),parameter :: g='(*(g0,1x))' integer,allocatable :: INVALS(:) integer,allocatable :: irngt(:) integer :: nord INVALS=[10,5,7,1,4,5,6,8,9,10,1] nord=5 allocate(irngt(nord)) write(*,g)'ORIGINAL:',INVALS call prank_decreasing(INVALS,irngt,nord) write(*,g)'NUMBER OF INDICES TO RETURN:',nord write(*,g)'RETURNED INDICES:',irngt write(*,g)nord,'MAXIMUM VALUES:',INVALS(irngt(:nord)) end program demo_prank_decreasing</p>
-<p>Results:</p>
-<p>ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1 NUMBER OF INDICES TO RETURN: 5 RETURNED INDICES: 1 10 9 8 7 5 MAXIMUM VALUES: 10 10 9 8 6</p>
-<h2><a class="anchor" id="autotoc_md107"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - Feb. 2011 </p>
-<h2><a class="anchor" id="autotoc_md108"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md109"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="comment">!!__________________________________________________________</span></div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IRNGT</div>

@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refpar
-interface refpar
-  module procedure real64_refpar, real32_refpar, int32_refpar
-end interface refpar
-contains
 !!
 !!##NAME
 !!    prank_basic(3f) - [orderpack:RANK:PARTIAL] partially ranks an array
@@ -88,6 +84,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface refpar
+  module procedure real64_refpar, real32_refpar, int32_refpar
+end interface refpar
+contains
 Subroutine real64_refpar (INVALS, IRNGT, NORD)
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT

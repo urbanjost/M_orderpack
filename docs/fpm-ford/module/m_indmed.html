@@ -200,95 +200,7 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>medianloc(3f) - [orderpack:MEDIAN] Returns median value&#39;s INDEX.
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code> Subroutine MedianLoc (INVALS, OUTORD)
-
-   <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
-   Integer, Intent (Out)               :: OUTORD
-
-Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">MEDIANLOC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">Returns</span> <span class="nv">the</span> <span class="nv">index</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">median</span> <span class="ss">(((</span><span class="nv">Size</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">)</span><span class="o">+</span><span class="mi">1</span><span class="ss">))</span><span class="o">/</span><span class="mi">2</span><span class="o">^</span><span class="nv">th</span> <span class="nv">value</span><span class="ss">)</span>.
-
-
-<span class="nv">Internally</span>, <span class="nv">MEDIANLOC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">Finds</span> <span class="nv">the</span> <span class="nv">index</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">median</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">array</span>
-<span class="nv">INVALS</span><span class="ss">()</span> <span class="nv">using</span> <span class="nv">the</span> <span class="nv">recursive</span> <span class="nv">procedure</span> <span class="nv">described</span> <span class="nv">in</span> <span class="nv">Knuth</span>, <span class="nv">The</span> <span class="nv">Art</span> <span class="nv">of</span>
-<span class="nv">Computer</span> <span class="nv">Programming</span>, <span class="nv">vol</span>. <span class="mi">3</span>, <span class="mi">5</span>.<span class="mi">3</span>.<span class="mi">3</span>.
-
-<span class="nv">This</span> <span class="nv">procedure</span> <span class="nv">is</span> <span class="nv">linear</span> <span class="nv">in</span> <span class="nv">time</span>, <span class="nv">and</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">require</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">able</span>
-<span class="nv">to</span> <span class="nv">interpolate</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">set</span> <span class="nv">as</span> <span class="nv">the</span> <span class="nv">one</span> <span class="nv">used</span> <span class="nv">in</span> <span class="nv">ORDERLOC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>, <span class="nv">which</span> <span class="nv">can</span>
-<span class="nv">also</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">to</span> <span class="nv">calculate</span> <span class="nv">a</span> <span class="nv">median</span>. <span class="nv">It</span> <span class="nv">also</span> <span class="nv">has</span> <span class="nv">better</span> <span class="nv">worst</span><span class="o">-</span><span class="nv">case</span>
-<span class="nv">behavior</span> <span class="nv">than</span> <span class="nv">ORDERLOC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>, <span class="nv">but</span> <span class="nv">is</span> <span class="nv">about</span> <span class="mi">10</span><span class="o">%</span> <span class="nv">slower</span> <span class="nv">on</span> <span class="nv">average</span> <span class="k">for</span>
-<span class="k">random</span> <span class="nv">uniformly</span> <span class="nv">distributed</span> <span class="nv">values</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> INVALS     array to find the median value of.
- OUTORD     index of the median value.
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_medianloc</span>
-<span class="o">!</span> <span class="k">return</span> <span class="nv">index</span> <span class="nv">of</span> <span class="nv">median</span> <span class="nv">value</span>
-<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">medianloc</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-<span class="nv">real</span>,<span class="nv">allocatable</span> :: <span class="nv">INVALS</span><span class="ss">(</span>:<span class="ss">)</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span>:<span class="ss">)</span>,<span class="nv">allocatable</span> :: <span class="nv">cdont</span><span class="ss">(</span>:<span class="ss">)</span>
-<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(i5,t11,g0)</span><span class="s1">&#39;</span>
-<span class="nv">integer</span> :: <span class="nv">ii</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span> <span class="s1">&#39;</span><span class="s">location  median</span><span class="s1">&#39;</span>
-
-   <span class="nv">INVALS</span><span class="o">=</span>[<span class="mi">80</span>.<span class="mi">0</span>,<span class="mi">70</span>.<span class="mi">0</span>,<span class="mi">20</span>.<span class="mi">0</span>,<span class="mi">10</span>.<span class="mi">0</span>,<span class="mi">1000</span>.<span class="mi">0</span>]
-   <span class="k">call</span> <span class="nl">medianloc</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="nv">ii</span><span class="ss">)</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">fmt</span><span class="ss">)</span> <span class="nv">ii</span>,<span class="nv">INVALS</span><span class="ss">(</span><span class="nv">ii</span><span class="ss">)</span>
-   <span class="o">!</span>
-   <span class="nv">INVALS</span><span class="o">=</span>[<span class="mi">11</span>, <span class="mi">22</span>, <span class="mi">33</span>, <span class="mi">44</span>, <span class="mi">55</span>, <span class="mi">66</span>, <span class="mi">77</span>, <span class="mi">88</span>]
-   <span class="k">call</span> <span class="nl">medianloc</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="nv">ii</span><span class="ss">)</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">fmt</span><span class="ss">)</span> <span class="nv">ii</span>,<span class="nv">INVALS</span><span class="ss">(</span><span class="nv">ii</span><span class="ss">)</span>
-   <span class="o">!</span>
-   <span class="nv">INVALS</span><span class="o">=</span>[<span class="mi">11</span>.<span class="mi">0</span><span class="nv">d0</span>,<span class="mi">77</span>.<span class="mi">0</span><span class="nv">d0</span>,<span class="mi">22</span>.<span class="mi">0</span><span class="nv">d0</span>,<span class="mi">66</span>.<span class="mi">0</span><span class="nv">d0</span>,<span class="mi">33</span>.<span class="mi">0</span><span class="nv">d0</span>,<span class="mi">88</span>.<span class="mi">0</span><span class="nv">d0</span>]
-   <span class="k">call</span> <span class="nl">medianloc</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="nv">ii</span><span class="ss">)</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">fmt</span><span class="ss">)</span> <span class="nv">ii</span>,<span class="nv">INVALS</span><span class="ss">(</span><span class="nv">ii</span><span class="ss">)</span>
-   <span class="o">!</span>
-   <span class="nv">cdont</span><span class="o">=</span>[<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=</span><span class="mi">20</span><span class="ss">)</span> :: <span class="s1">&#39;</span><span class="s">apple</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">bee</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">cherry</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">duck</span><span class="s1">&#39;</span>,<span class="o">&amp;</span>
-           <span class="s1">&#39;</span><span class="s">elephant</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">finger</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">goose</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">h</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">insect</span><span class="s1">&#39;</span>,<span class="s1">&#39;</span><span class="s">j</span><span class="s1">&#39;</span>]
-   <span class="k">call</span> <span class="nl">medianloc</span><span class="ss">(</span><span class="nv">cdont</span>,<span class="nv">ii</span><span class="ss">)</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">fmt</span><span class="ss">)</span> <span class="nv">ii</span>,<span class="nv">cdont</span><span class="ss">(</span><span class="nv">ii</span><span class="ss">)</span>
-   <span class="o">!</span>
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_medianloc</span>
-</code></pre></div>
-
-<p>Results:</p>
-<div class="codehilite"><pre><span></span><code> location  median
-    2     70.00000
-    4     44.00000
-    5     33.00000
-    5     elephant
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>Michel Olagnon, 2000-2012
-</code></pre></div>
-
-<h2 id="maintainer">MAINTAINER</h2>
-<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>CC0-1.0
-</code></pre></div>
+    
       <br>
     
   
@@ -663,7 +575,7 @@ private subroutine f_char_indmed(INVALS, OUTORD)
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-24 19:37  
+             on 2022-04-26 21:53  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

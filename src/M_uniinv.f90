@@ -4,13 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: uniinv
-interface uniinv
-  module procedure real64_uniinv, real32_uniinv, int32_uniinv, f_char_uniinv
-end interface uniinv
-interface nearless
-  module procedure real64_nearless, real32_nearless, int32_nearless, f_char_nearless
-end interface nearless
-contains
 !!
 !!##NAME
 !!    Rank_Decreasing(3f) - [orderpack:RANK:UNIQUE] ranks an array
@@ -98,6 +91,13 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface uniinv
+  module procedure real64_uniinv, real32_uniinv, int32_uniinv, f_char_uniinv
+end interface uniinv
+interface nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless, f_char_nearless
+end interface nearless
+contains
 Subroutine real64_uniinv (INVALS, IGOEST)
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IGOEST

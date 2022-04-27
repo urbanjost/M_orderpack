@@ -4,10 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: mrgref
-interface mrgref
-  module procedure real64_mrgref, real32_mrgref, int32_mrgref, f_char_mrgref
-end interface mrgref
-contains
 !!
 !!##NAME
 !!    rank_basic(3f) - [orderpack:RANK] create an INDEX that defines the
@@ -131,6 +127,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface mrgref
+  module procedure real64_mrgref, real32_mrgref, int32_mrgref, f_char_mrgref
+end interface mrgref
+contains
 Subroutine real64_mrgref (INVALS, IRNGT)
 !!__________________________________________________________
       Real (kind=real64), Dimension (:), Intent (In) :: INVALS

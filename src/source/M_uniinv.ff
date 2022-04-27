@@ -4,13 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: uniinv
-interface uniinv
-  module procedure real64_uniinv, real32_uniinv, int32_uniinv, f_char_uniinv
-end interface uniinv
-interface nearless
-  module procedure real64_nearless, real32_nearless, int32_nearless, f_char_nearless
-end interface nearless
-contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file rank_decreasing.3orderpack.man
 NAME
@@ -98,6 +91,14 @@ MAINTAINER
 LICENSE
    CC0-1.0
 $ENDBLOCK
+$!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+interface uniinv
+  module procedure real64_uniinv, real32_uniinv, int32_uniinv, f_char_uniinv
+end interface uniinv
+interface nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless, f_char_nearless
+end interface nearless
+contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $PARCEL UNIINV
 Subroutine ${KIND}_uniinv (INVALS, IGOEST)

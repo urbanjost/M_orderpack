@@ -13,6 +13,43 @@ subroutine \mbox{\hyperlink{interfacem__inspar_1_1inspar_af326b9123819a003c5ffb0
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__inspar_1_1inspar_autotoc_md35}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__inspar_1_1inspar_autotoc_md35}
+psort(3f) -\/ \mbox{[}orderpack\+:\+S\+O\+RT\+:P\+A\+R\+T\+I\+AL\mbox{]} partially sorts an array (Insertion Sort, generally for small or nearly sorted arrays)\hypertarget{interfacem__inspar_1_1inspar_autotoc_md36}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__inspar_1_1inspar_autotoc_md36}
+\begin{DoxyVerb} Subroutine Psort (INOUTVALS, NORD)
+
+  ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
+  Integer, Intent (In)                   :: NORD
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
+\end{DoxyVerb}
+\hypertarget{interfacem__inspar_1_1inspar_autotoc_md37}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__inspar_1_1inspar_autotoc_md37}
+P\+S\+O\+R\+T(3f) partially sorts I\+N\+O\+U\+T\+V\+A\+LS, bringing the N\+O\+RD lowest values to the beginning of the array.
+
+Internally, this subroutine uses an insertion sort, limiting insertion to the first N\+O\+RD values. It does not use any work array and is faster when N\+O\+RD is very small (2-\/5), but worst case behavior can happen fairly probably (initially inverse sorted). Therefore, in many cases, the refined quicksort method is faster.\hypertarget{interfacem__inspar_1_1inspar_autotoc_md38}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__inspar_1_1inspar_autotoc_md38}
+I\+N\+O\+U\+T\+V\+A\+LS The array to partially sort N\+O\+RD number of sorted values to return.\hypertarget{interfacem__inspar_1_1inspar_autotoc_md39}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__inspar_1_1inspar_autotoc_md39}
+Sample program\+:
+
+program demo\+\_\+psort ! partially sort an array use M\+\_\+orderpack, only \+: psort implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer \+:: nord
+
+int\+: block integer,allocatable \+:: ia(\+:) ia=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} nord=5 write($\ast$,g)\textquotesingle{}Original.................\+:\textquotesingle{},ia call psort(ia,nord) write($\ast$,g)\textquotesingle{}Number of indices to sort\+:\textquotesingle{},nord write($\ast$,g)nord,\textquotesingle{}Lowest values..........\+:\textquotesingle{},ia(\+:nord) write($\ast$,g)\textquotesingle{}Entire array.............\+:\textquotesingle{},ia write($\ast$,g) endblock int char\+: block character(len=\+:),allocatable \+:: ca(\+:) integer \+:: i ca=\mbox{[}character(len=20) \+:: \textquotesingle{}fan\textquotesingle{},\textquotesingle{}a\textquotesingle{},\textquotesingle{}car\textquotesingle{},\textquotesingle{}be\textquotesingle{},\textquotesingle{}egg\textquotesingle{},\textquotesingle{}dam\textquotesingle{},\textquotesingle{}gas\textquotesingle{}\mbox{]} nord=3 write($\ast$,g)\textquotesingle{}Original.................\+:\textquotesingle{},(trim(ca(i)),i=1,size(ca)) call psort(ca,nord) write($\ast$,g)\textquotesingle{}Number of indices to sort\+:\textquotesingle{},nord write($\ast$,g)nord,\textquotesingle{}Lowest values..........\+:\textquotesingle{},(trim(ca(i)),i=1,nord) write($\ast$,g)\textquotesingle{}Entire array.............\+:\textquotesingle{},(trim(ca(i)),i=1,size(ca)) write($\ast$,g) endblock char
+
+end program demo\+\_\+psort
+
+Results\+:
+
+Original.................\+: 10 5 7 1 4 5 6 8 9 10 1 Number of indices to sort\+: 5 5 Lowest values..........\+: 1 1 4 5 5 Entire array.............\+: 1 1 4 5 5 10 7 8 9 10 6
+
+Original.................\+: fan a car be egg dam gas Number of indices to sort\+: 3 3 Lowest values..........\+: a be car Entire array.............\+: a be car fan egg dam gas\hypertarget{interfacem__inspar_1_1inspar_autotoc_md40}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__inspar_1_1inspar_autotoc_md40}
+Michel Olagnon -\/ Feb. 2000 \hypertarget{interfacem__inspar_1_1inspar_autotoc_md41}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__inspar_1_1inspar_autotoc_md41}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__inspar_1_1inspar_autotoc_md42}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__inspar_1_1inspar_autotoc_md42}
+C\+C0-\/1.\+0 
+
 \doxysubsection{Member Function/\+Subroutine Documentation}
 \mbox{\Hypertarget{interfacem__inspar_1_1inspar_af326b9123819a003c5ffb070b2ce8b2d}\label{interfacem__inspar_1_1inspar_af326b9123819a003c5ffb070b2ce8b2d}} 
 \index{m\_inspar::inspar@{m\_inspar::inspar}!f\_char\_inspar@{f\_char\_inspar}}
@@ -137,41 +174,7 @@ subroutine \mbox{\hyperlink{interfacem__inspar_1_1inspar_af326b9123819a003c5ffb0
 \doxysubsubsection{\texorpdfstring{real64\_inspar()}{real64\_inspar()}}
 {\footnotesize\ttfamily subroutine m\+\_\+inspar\+::inspar\+::real64\+\_\+inspar (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__inspar_autotoc_md35}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__inspar_autotoc_md35}
-psort(3f) -\/ \mbox{[}orderpack\+:\+S\+O\+RT\+:P\+A\+R\+T\+I\+AL\mbox{]} partially sorts an array (Insertion Sort, generally for small or nearly sorted arrays)\hypertarget{namespacem__inspar_autotoc_md36}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__inspar_autotoc_md36}
-\begin{DoxyVerb} Subroutine Psort (INOUTVALS, NORD)
 
-  ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
-  Integer, Intent (In)                   :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-\end{DoxyVerb}
-\hypertarget{namespacem__inspar_autotoc_md37}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__inspar_autotoc_md37}
-P\+S\+O\+R\+T(3f) partially sorts I\+N\+O\+U\+T\+V\+A\+LS, bringing the N\+O\+RD lowest values to the beginning of the array.
-
-Internally, this subroutine uses an insertion sort, limiting insertion to the first N\+O\+RD values. It does not use any work array and is faster when N\+O\+RD is very small (2-\/5), but worst case behavior can happen fairly probably (initially inverse sorted). Therefore, in many cases, the refined quicksort method is faster.\hypertarget{namespacem__inspar_autotoc_md38}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__inspar_autotoc_md38}
-I\+N\+O\+U\+T\+V\+A\+LS The array to partially sort N\+O\+RD number of sorted values to return.\hypertarget{namespacem__inspar_autotoc_md39}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__inspar_autotoc_md39}
-Sample program\+:
-
-program demo\+\_\+psort ! partially sort an array use M\+\_\+orderpack, only \+: psort implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer \+:: nord
-
-int\+: block integer,allocatable \+:: ia(\+:) ia=\mbox{[}10,5,7,1,4,5,6,8,9,10,1\mbox{]} nord=5 write($\ast$,g)\textquotesingle{}Original.................\+:\textquotesingle{},ia call psort(ia,nord) write($\ast$,g)\textquotesingle{}Number of indices to sort\+:\textquotesingle{},nord write($\ast$,g)nord,\textquotesingle{}Lowest values..........\+:\textquotesingle{},ia(\+:nord) write($\ast$,g)\textquotesingle{}Entire array.............\+:\textquotesingle{},ia write($\ast$,g) endblock int char\+: block character(len=\+:),allocatable \+:: ca(\+:) integer \+:: i ca=\mbox{[}character(len=20) \+:: \textquotesingle{}fan\textquotesingle{},\textquotesingle{}a\textquotesingle{},\textquotesingle{}car\textquotesingle{},\textquotesingle{}be\textquotesingle{},\textquotesingle{}egg\textquotesingle{},\textquotesingle{}dam\textquotesingle{},\textquotesingle{}gas\textquotesingle{}\mbox{]} nord=3 write($\ast$,g)\textquotesingle{}Original.................\+:\textquotesingle{},(trim(ca(i)),i=1,size(ca)) call psort(ca,nord) write($\ast$,g)\textquotesingle{}Number of indices to sort\+:\textquotesingle{},nord write($\ast$,g)nord,\textquotesingle{}Lowest values..........\+:\textquotesingle{},(trim(ca(i)),i=1,nord) write($\ast$,g)\textquotesingle{}Entire array.............\+:\textquotesingle{},(trim(ca(i)),i=1,size(ca)) write($\ast$,g) endblock char
-
-end program demo\+\_\+psort
-
-Results\+:
-
-Original.................\+: 10 5 7 1 4 5 6 8 9 10 1 Number of indices to sort\+: 5 5 Lowest values..........\+: 1 1 4 5 5 Entire array.............\+: 1 1 4 5 5 10 7 8 9 10 6
-
-Original.................\+: fan a car be egg dam gas Number of indices to sort\+: 3 3 Lowest values..........\+: a be car Entire array.............\+: a be car fan egg dam gas\hypertarget{namespacem__inspar_autotoc_md40}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__inspar_autotoc_md40}
-Michel Olagnon -\/ Feb. 2000 \hypertarget{namespacem__inspar_autotoc_md41}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__inspar_autotoc_md41}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__inspar_autotoc_md42}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__inspar_autotoc_md42}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{101 \textcolor{keywordtype}{   Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
 \DoxyCodeLine{102    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}

@@ -5,10 +5,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unista
-interface unista
-  module procedure real64_unista, real32_unista, int32_unista, f_char_unista
-end interface unista
-contains
 !!
 !!##NAME
 !!    unique(3f) - [orderpack:UNIQUE] removes duplicates from an array
@@ -76,6 +72,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface unista
+  module procedure real64_unista, real32_unista, int32_unista, f_char_unista
+end interface unista
+contains
 Subroutine real64_unista (INOUTVALS, NUNI)
 ! __________________________________________________________
    Real (kind=real64), Dimension (:), Intent (InOut) :: INOUTVALS

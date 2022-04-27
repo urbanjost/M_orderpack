@@ -4,14 +4,6 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unirnk
-interface unirnk
-  module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
-end interface unirnk
-interface nearless
-  module procedure real64_nearless, real32_nearless, int32_nearless !, f_char_nearless
-end interface nearless
-
-contains
 !!
 !!##NAME
 !!    Rank_Unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal
@@ -95,6 +87,14 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface unirnk
+  module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
+end interface unirnk
+interface nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless !, f_char_nearless
+end interface nearless
+
+contains
 Subroutine real64_unirnk (INVALS, IRNGT, NUNI)
       Real (Kind=real64), Dimension (:), Intent (In) :: INVALS
       Integer, Dimension (:), Intent (Out) :: IRNGT

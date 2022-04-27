@@ -83,7 +83,50 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:af87a5ef628c9932ee60a67905836ce31"><td class="memItemLeft" align="right" valign="top">integer(kind=int32) function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacem__valnth_1_1valnth.html#af87a5ef628c9932ee60a67905836ce31">int32_valnth</a> (INVALS, NORD)</td></tr>
 <tr class="separator:af87a5ef628c9932ee60a67905836ce31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function/Subroutine Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md184"></a>
+NAME</h2>
+<p>orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered element of array, or "fractile of order N/SIZE(array)". (QuickSort-like)</p>
+<h2><a class="anchor" id="autotoc_md185"></a>
+SYNOPSIS</h2>
+<pre class="fragment"> Function OrderVal (INVALS, NORD)
+
+  ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
+  ${TYPE} (Kind=${KIND})              :: orderval
+  Integer, Intent (In)                :: NORD
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+</pre><h2><a class="anchor" id="autotoc_md186"></a>
+DESCRIPTION</h2>
+<p>ORDERVAL(3f) returns the NORDth (ascending order) value of INVALS, i.e. the fractile of order NORD/SIZE(INVALS).</p>
+<p>Internally, this subroutine simply calls ORDERLOC(3f).</p>
+<p>This routine uses a pivoting strategy such as the one of finding the median based on the QuickSort algorithm, but we skew the pivot choice to try to bring it to NORD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (ILOWT), and the indices of values larger than the pivot that we might still need later on (IHIGT). It iterates until it can bring the number of values in ILOWT to exactly NORD, and then finds the maximum of this set.</p>
+<h2><a class="anchor" id="autotoc_md187"></a>
+OPTIONS</h2>
+<p>INVALS array to search NORD Nth lowest value to find </p>
+<h2><a class="anchor" id="autotoc_md188"></a>
+RETURNS</h2>
+<p>orderval Nth lowest value </p>
+<h2><a class="anchor" id="autotoc_md189"></a>
+EXAMPLES</h2>
+<p>Sample program:</p>
+<p>program demo_orderval ! Return value of Nth lowest value of array use M_orderpack, only : orderval implicit none character(len=*),parameter :: list= '(*(g0:,", "))' character(len=*),parameter :: sp='(*(g0,1x))' real,parameter :: INVALS(*)=[1.1,20.20,3.3,10.10,5.5,4.4,2.2] integer :: i integer :: imiddle write(*,list) 'ORIGINAL:',INVALS ! can return the same values as intrinsics minval(3f) and maxval(3f) print sp, 'minval',orderval(INVALS,1), minval(INVALS) print sp, 'maxval',orderval(INVALS,size(INVALS)), maxval(INVALS) ! but more generally it can return the Nth lowest value. print sp,'nord=',4, ' fractile=',orderval(INVALS,4) ! so a value at the middle would be imiddle=(size(INVALS)+1)/2 print sp,'median',orderval(INVALS,imiddle) ! sorting the hard way do i=1,size(INVALS) write(*,list)i,orderval(INVALS,i) enddo end program demo_orderval</p>
+<p>Results:</p>
+<p>ORIGINAL:, 1.1000, 20.200, 3.300, 10.100, 5.500, 4.400, 2.200 minval 1.100 1.100 maxval 20.200 20.200 nord= 4 fractile= 4.400 median 4.400 1, 1.100 2, 2.200 3, 3.300 4, 4.400 5, 5.500 6, 10.100 7, 20.200</p>
+<h2><a class="anchor" id="autotoc_md190"></a>
+AUTHOR</h2>
+<p>Michel Olagnon - Aug. 2000 </p>
+<h2><a class="anchor" id="autotoc_md191"></a>
+MAINTAINER</h2>
+<p>John Urban, 2022.04.16 </p>
+<h2><a class="anchor" id="autotoc_md192"></a>
+LICENSE</h2>
+<p>CC0-1.0 </p>
+</div><h2 class="groupheader">Member Function/Subroutine Documentation</h2>
 <a id="af87a5ef628c9932ee60a67905836ce31"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af87a5ef628c9932ee60a67905836ce31">&#9670;&nbsp;</a></span>int32_valnth()</h2>
 
@@ -1143,48 +1186,6 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md184"></a>
-NAME</h2>
-<p>orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered element of array, or "fractile of order N/SIZE(array)". (QuickSort-like)</p>
-<h2><a class="anchor" id="autotoc_md185"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Function OrderVal (INVALS, NORD)
-
-  ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
-  ${TYPE} (Kind=${KIND})              :: orderval
-  Integer, Intent (In)                :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md186"></a>
-DESCRIPTION</h2>
-<p>ORDERVAL(3f) returns the NORDth (ascending order) value of INVALS, i.e. the fractile of order NORD/SIZE(INVALS).</p>
-<p>Internally, this subroutine simply calls ORDERLOC(3f).</p>
-<p>This routine uses a pivoting strategy such as the one of finding the median based on the QuickSort algorithm, but we skew the pivot choice to try to bring it to NORD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (ILOWT), and the indices of values larger than the pivot that we might still need later on (IHIGT). It iterates until it can bring the number of values in ILOWT to exactly NORD, and then finds the maximum of this set.</p>
-<h2><a class="anchor" id="autotoc_md187"></a>
-OPTIONS</h2>
-<p>INVALS array to search NORD Nth lowest value to find </p>
-<h2><a class="anchor" id="autotoc_md188"></a>
-RETURNS</h2>
-<p>orderval Nth lowest value </p>
-<h2><a class="anchor" id="autotoc_md189"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_orderval ! Return value of Nth lowest value of array use M_orderpack, only : orderval implicit none character(len=*),parameter :: list= '(*(g0:,", "))' character(len=*),parameter :: sp='(*(g0,1x))' real,parameter :: INVALS(*)=[1.1,20.20,3.3,10.10,5.5,4.4,2.2] integer :: i integer :: imiddle write(*,list) 'ORIGINAL:',INVALS ! can return the same values as intrinsics minval(3f) and maxval(3f) print sp, 'minval',orderval(INVALS,1), minval(INVALS) print sp, 'maxval',orderval(INVALS,size(INVALS)), maxval(INVALS) ! but more generally it can return the Nth lowest value. print sp,'nord=',4, ' fractile=',orderval(INVALS,4) ! so a value at the middle would be imiddle=(size(INVALS)+1)/2 print sp,'median',orderval(INVALS,imiddle) ! sorting the hard way do i=1,size(INVALS) write(*,list)i,orderval(INVALS,i) enddo end program demo_orderval</p>
-<p>Results:</p>
-<p>ORIGINAL:, 1.1000, 20.200, 3.300, 10.100, 5.500, 4.400, 2.200 minval 1.100 1.100 maxval 20.200 20.200 nord= 4 fractile= 4.400 median 4.400 1, 1.100 2, 2.200 3, 3.300 4, 4.400 5, 5.500 6, 10.100 7, 20.200</p>
-<h2><a class="anchor" id="autotoc_md190"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - Aug. 2000 </p>
-<h2><a class="anchor" id="autotoc_md191"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md192"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">! __________________________________________________________</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;real(kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;real(kind=real64) :: valnth</div>

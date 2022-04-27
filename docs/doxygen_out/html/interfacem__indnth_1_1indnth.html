@@ -83,7 +83,50 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a99773610e12c7ba1d143229533029970"><td class="memItemLeft" align="right" valign="top">integer function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interfacem__indnth_1_1indnth.html#a99773610e12c7ba1d143229533029970">int32_indnth</a> (INVALS, NORD)</td></tr>
 <tr class="separator:a99773610e12c7ba1d143229533029970"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function/Subroutine Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md26"></a>
+NAME</h2>
+<p>orderloc(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of array, or "fractile of order N/SIZE(array)" (QuickSort-like)</p>
+<h2><a class="anchor" id="autotoc_md27"></a>
+SYNOPSIS</h2>
+<pre class="fragment"> Function OrderLoc (INVALS, NORD)
+
+   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+   Integer                             :: orderloc
+   Integer, Intent (In)                :: NORD
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+</pre><h2><a class="anchor" id="autotoc_md28"></a>
+DESCRIPTION</h2>
+<p>orderloc(3f) returns the index of NORDth value of INVALS, i.e. the fractile of order NORD/SIZE(INVALS).</p>
+<p>That is, the result is the same as sorting the array first and then returning the value INVALS(NORD).</p>
+<p>Internally orderloc(3f) uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to NORD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (ILOWT), and the indices of values larger than the pivot that we might still need later on (IHIGT). It iterates until it can bring the number of values in ILOWT to exactly NORD, and then finds the maximum of this set.</p>
+<h2><a class="anchor" id="autotoc_md29"></a>
+OPTIONS</h2>
+<p>INVALS array to search NORD indicates the Nth ordered value to search for</p>
+<h2><a class="anchor" id="autotoc_md30"></a>
+RETURNS</h2>
+<p>orderloc the index of INVALS() that contains the requested value</p>
+<h2><a class="anchor" id="autotoc_md31"></a>
+EXAMPLES</h2>
+<p>Sample program:</p>
+<p>program demo_orderloc ! find Nth lowest ordered value in an array without sorting entire array use M_orderpack, only : orderloc use M_orderpack, only : medianloc implicit none integer,allocatable :: iarr(:) character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))' integer :: i integer :: indx iarr=[80,70,30,40,50,60,20,10,0,-100] print list, 'ORIGINAL:',iarr ! like minloc(3f) and maxloc(3f) print sp,'minloc',orderloc(iarr,1), minloc(iarr) print sp,'maxloc',orderloc(iarr,size(iarr)), maxloc(iarr) ! can find median call medianloc(iarr,indx) print sp,'median',orderloc(iarr,(size(iarr)+1)/2), indx ! but more general so can find location of the Nth lowest value ... ! ! sort the hard way, finding location of Nth value one at a time do i=1,size(iarr) write(*,sp,advance='no') iarr(orderloc(iarr,i)) enddo print * contains subroutine printme(n) integer,intent(in) :: n integer :: ii ii=orderloc(iarr,n) print sp,'nord=',n,' index=',ii,' fractile=',iarr(ii) end subroutine printme end program demo_orderloc</p>
+<p>Results:</p>
+<p>ORIGINAL:, 80, 70, 30, 40, 50, 60, 20, 10, 0, -100 minloc 10 10 maxloc 1 1 median 3 3 -100 0 10 20 30 40 50 60 70 80</p>
+<h2><a class="anchor" id="autotoc_md32"></a>
+AUTHOR</h2>
+<p>Michel Olagnon - Aug. 2000 </p>
+<h2><a class="anchor" id="autotoc_md33"></a>
+MAINTAINER</h2>
+<p>John Urban, 2022.04.16 </p>
+<h2><a class="anchor" id="autotoc_md34"></a>
+LICENSE</h2>
+<p>CC0-1.0 </p>
+</div><h2 class="groupheader">Member Function/Subroutine Documentation</h2>
 <a id="a99773610e12c7ba1d143229533029970"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a99773610e12c7ba1d143229533029970">&#9670;&nbsp;</a></span>int32_indnth()</h2>
 
@@ -1171,48 +1214,6 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md26"></a>
-NAME</h2>
-<p>orderloc(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of array, or "fractile of order N/SIZE(array)" (QuickSort-like)</p>
-<h2><a class="anchor" id="autotoc_md27"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Function OrderLoc (INVALS, NORD)
-
-   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-   Integer                             :: orderloc
-   Integer, Intent (In)                :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md28"></a>
-DESCRIPTION</h2>
-<p>orderloc(3f) returns the index of NORDth value of INVALS, i.e. the fractile of order NORD/SIZE(INVALS).</p>
-<p>That is, the result is the same as sorting the array first and then returning the value INVALS(NORD).</p>
-<p>Internally orderloc(3f) uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to NORD as fast as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (ILOWT), and the indices of values larger than the pivot that we might still need later on (IHIGT). It iterates until it can bring the number of values in ILOWT to exactly NORD, and then finds the maximum of this set.</p>
-<h2><a class="anchor" id="autotoc_md29"></a>
-OPTIONS</h2>
-<p>INVALS array to search NORD indicates the Nth ordered value to search for</p>
-<h2><a class="anchor" id="autotoc_md30"></a>
-RETURNS</h2>
-<p>orderloc the index of INVALS() that contains the requested value</p>
-<h2><a class="anchor" id="autotoc_md31"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_orderloc ! find Nth lowest ordered value in an array without sorting entire array use M_orderpack, only : orderloc use M_orderpack, only : medianloc implicit none integer,allocatable :: iarr(:) character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))' integer :: i integer :: indx iarr=[80,70,30,40,50,60,20,10,0,-100] print list, 'ORIGINAL:',iarr ! like minloc(3f) and maxloc(3f) print sp,'minloc',orderloc(iarr,1), minloc(iarr) print sp,'maxloc',orderloc(iarr,size(iarr)), maxloc(iarr) ! can find median call medianloc(iarr,indx) print sp,'median',orderloc(iarr,(size(iarr)+1)/2), indx ! but more general so can find location of the Nth lowest value ... ! ! sort the hard way, finding location of Nth value one at a time do i=1,size(iarr) write(*,sp,advance='no') iarr(orderloc(iarr,i)) enddo print * contains subroutine printme(n) integer,intent(in) :: n integer :: ii ii=orderloc(iarr,n) print sp,'nord=',n,' index=',ii,' fractile=',iarr(ii) end subroutine printme end program demo_orderloc</p>
-<p>Results:</p>
-<p>ORIGINAL:, 80, 70, 30, 40, 50, 60, 20, 10, 0, -100 minloc 10 10 maxloc 1 1 median 3 3 -100 0 10 20 30 40 50 60 70 80</p>
-<h2><a class="anchor" id="autotoc_md32"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - Aug. 2000 </p>
-<h2><a class="anchor" id="autotoc_md33"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md34"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">      Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;      <span class="keywordtype">Integer</span>, <span class="keywordtype">Intent (In)</span> :: NORD</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;      <span class="keywordtype">Integer</span> :: INDNTH</div>

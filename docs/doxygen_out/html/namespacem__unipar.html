@@ -1376,44 +1376,6 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<h2><a class="anchor" id="autotoc_md151"></a>
-NAME</h2>
-<p>prank_unique(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially ranks an array removing duplicates</p>
-<h2><a class="anchor" id="autotoc_md152"></a>
-SYNOPSIS</h2>
-<pre class="fragment"> Subroutine Prank_Unique (INVALS, IRNGT, NORD)
-
-  ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-  Integer, Intent (Out)               :: IRNGT(:)
-  Integer, Intent (InOut)             :: NORD
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-</pre><h2><a class="anchor" id="autotoc_md153"></a>
-DESCRIPTION</h2>
-<p>Partially rank INVALS() up to order NORD at most, removing duplicate entries.</p>
-<p>Internally, this routine uses a pivoting strategy such as the one of finding the median based on the quicksort algorithm, but we skew the pivot choice to try to bring it to NORD as quickly as possible. It uses two temporary arrays, where it stores the indices of the values smaller than the pivot (ILOWT), and the indices of values larger than the pivot that we might still need later on (IHIGT). It iterates until it can bring the number of values in ILOWT to exactly NORD, and then uses an insertion sort to rank this set, since it is supposedly small. At all times, the NORD first values in ILOWT correspond to distinct values of the input array.</p>
-<h2><a class="anchor" id="autotoc_md154"></a>
-OPTIONS</h2>
-<p>INVALS array to partially sort IRNGT indices returned that point to lowest values NORD number of sorted values to determine before eliminating duplicates</p>
-<h2><a class="anchor" id="autotoc_md155"></a>
-EXAMPLES</h2>
-<p>Sample program:</p>
-<p>program demo_prank_unique ! ranks array, removing duplicates use M_orderpack, only : prank_unique implicit none character(len=*),parameter :: g='(*(g0,1x))' integer,allocatable :: INVALS(:) integer,allocatable :: irngt(:) integer :: nord ! write(*,g)'If enough values are unique, will return NORD indices' if(allocated(irngt))deallocate(irngt) INVALS=[10,5,7,1,4,5,6,8,9,10,1] nord=5 allocate(irngt(nord)) call printme() ! !BUG!write(*,g)'If not enough values are unique, will change NORD' !BUG!INVALS=[-1,0,-1,0,-1,0,-1] !BUG!nord=5 !BUG!if(allocated(irngt))deallocate(irngt) !BUG!allocate(irngt(nord)) !BUG!call printme() contains subroutine printme() write(*,g)'ORIGINAL:',INVALS write(*,g)'NUMBER OF INDICES TO SORT:',nord call prank_unique(INVALS,irngt,nord) write(*,g)'NUMBER OF INDICES RETURNED:',nord write(*,g)'RETURNED INDICES:',irngt(:nord) write(*,g)nord,'SMALLEST UNIQUE VALUES:',INVALS(irngt(:nord)) end subroutine end program demo_prank_unique</p>
-<p>Results:</p>
-<p>If enough values are unique, will return NORD indices ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1 NUMBER OF INDICES TO SORT: 5 NUMBER OF INDICES RETURNED: 5 RETURNED INDICES: 11 5 2 7 3 5 SMALLEST UNIQUE VALUES: 1 4 5 6 7 If not enough values are unique, will change NORD ORIGINAL: -1 0 -1 0 -1 0 -1 NUMBER OF INDICES TO SORT: 5 NUMBER OF INDICES RETURNED: 2 RETURNED INDICES: 1 2 2 SMALLEST UNIQUE VALUES: -1 0</p>
-<h2><a class="anchor" id="autotoc_md156"></a>
-AUTHOR</h2>
-<p>Michel Olagnon - Feb. 2000 </p>
-<h2><a class="anchor" id="autotoc_md157"></a>
-MAINTAINER</h2>
-<p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md158"></a>
-LICENSE</h2>
-<p>CC0-1.0 </p>
 <div class="fragment"><div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">! __________________________________________________________</span></div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keywordtype">   Real</span> (kind=real64), <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (In)</span> :: invals</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;   <span class="keywordtype">Integer</span>, <span class="keywordtype">Dimension (:)</span>, <span class="keywordtype">Intent (Out)</span> :: IRNGT</div>

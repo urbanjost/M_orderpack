@@ -13,6 +13,43 @@ subroutine \mbox{\hyperlink{interfacem__unista_1_1unista_a5cb79e00534924cb0ee7d3
 \end{DoxyCompactItemize}
 
 
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__unista_1_1unista_autotoc_md167}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__unista_1_1unista_autotoc_md167}
+unique(3f) -\/ \mbox{[}orderpack\+:U\+N\+I\+Q\+UE\mbox{]} removes duplicates from an array otherwise retaining original order (i.\+e. it is \char`\"{}stable\char`\"{})\hypertarget{interfacem__unista_1_1unista_autotoc_md168}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__unista_1_1unista_autotoc_md168}
+\begin{DoxyVerb} Subroutine Unique (INOUTVALS, NUNI)
+
+  ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
+  Integer, Intent (Out)                  :: NUNI
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
+\end{DoxyVerb}
+\hypertarget{interfacem__unista_1_1unista_autotoc_md169}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__unista_1_1unista_autotoc_md169}
+U\+N\+I\+Q\+U\+E(3f) does a stable removal of duplicates from an array.
+
+It leaves in the initial set only those entries that are unique, packing the array, and leaving the order of the retained values unchanged.
+
+Internally this subroutine uses Merge-\/sort unique inverse ranking.\hypertarget{interfacem__unista_1_1unista_autotoc_md170}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__unista_1_1unista_autotoc_md170}
+I\+N\+O\+U\+T\+V\+A\+LS input array to reduce to unique values N\+U\+NI number of values comprising the returned set of unique values\hypertarget{interfacem__unista_1_1unista_autotoc_md171}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__unista_1_1unista_autotoc_md171}
+Sample program\+:
+
+program demo\+\_\+unique ! remove duplicates with remaining elements remaining in initial order use M\+\_\+orderpack, only \+: unique implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{}, \char`\"{}))\textquotesingle{},sp=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer \+:: nuni
+
+int \+: block integer,allocatable \+:: I\+N\+O\+U\+T\+V\+A\+L\+S(\+:) I\+N\+O\+U\+T\+V\+A\+LS=\mbox{[}44,33,33,33,22,11,33,44,55,33\mbox{]} print list,\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+O\+U\+T\+V\+A\+LS call unique(\+I\+N\+O\+U\+T\+V\+A\+L\+S,nuni) I\+N\+O\+U\+T\+V\+A\+LS=I\+N\+O\+U\+T\+V\+A\+L\+S(\+:nuni) print list,\textquotesingle{}U\+N\+I\+Q\+UE\+:\textquotesingle{},I\+N\+O\+U\+T\+V\+A\+LS endblock int
+
+end program demo\+\_\+unique
+
+Results\+:
+
+O\+R\+I\+G\+I\+N\+AL\+:, 44, 33, 33, 33, 22, 11, 33, 44, 55, 33 U\+N\+I\+Q\+UE\+:, 44, 33, 22, 11, 55\hypertarget{interfacem__unista_1_1unista_autotoc_md172}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__unista_1_1unista_autotoc_md172}
+Michel Olagnon -\/ Feb. 2000 \hypertarget{interfacem__unista_1_1unista_autotoc_md173}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__unista_1_1unista_autotoc_md173}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__unista_1_1unista_autotoc_md174}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__unista_1_1unista_autotoc_md174}
+C\+C0-\/1.\+0 
+
 \doxysubsection{Member Function/\+Subroutine Documentation}
 \mbox{\Hypertarget{interfacem__unista_1_1unista_a5cb79e00534924cb0ee7d3fa9d757f91}\label{interfacem__unista_1_1unista_a5cb79e00534924cb0ee7d3fa9d757f91}} 
 \index{m\_unista::unista@{m\_unista::unista}!f\_char\_unista@{f\_char\_unista}}
@@ -107,41 +144,7 @@ subroutine \mbox{\hyperlink{interfacem__unista_1_1unista_a5cb79e00534924cb0ee7d3
 \doxysubsubsection{\texorpdfstring{real64\_unista()}{real64\_unista()}}
 {\footnotesize\ttfamily subroutine m\+\_\+unista\+::unista\+::real64\+\_\+unista (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
 
-\hypertarget{namespacem__unista_autotoc_md167}{}\doxysubsubsection{N\+A\+ME}\label{namespacem__unista_autotoc_md167}
-unique(3f) -\/ \mbox{[}orderpack\+:U\+N\+I\+Q\+UE\mbox{]} removes duplicates from an array otherwise retaining original order (i.\+e. it is \char`\"{}stable\char`\"{})\hypertarget{namespacem__unista_autotoc_md168}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{namespacem__unista_autotoc_md168}
-\begin{DoxyVerb} Subroutine Unique (INOUTVALS, NUNI)
 
-  ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
-  Integer, Intent (Out)                  :: NUNI
-
-Where ${TYPE}(kind=${KIND}) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind("DEFAULT"),len=*)
-\end{DoxyVerb}
-\hypertarget{namespacem__unista_autotoc_md169}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{namespacem__unista_autotoc_md169}
-U\+N\+I\+Q\+U\+E(3f) does a stable removal of duplicates from an array.
-
-It leaves in the initial set only those entries that are unique, packing the array, and leaving the order of the retained values unchanged.
-
-Internally this subroutine uses Merge-\/sort unique inverse ranking.\hypertarget{namespacem__unista_autotoc_md170}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{namespacem__unista_autotoc_md170}
-I\+N\+O\+U\+T\+V\+A\+LS input array to reduce to unique values N\+U\+NI number of values comprising the returned set of unique values\hypertarget{namespacem__unista_autotoc_md171}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{namespacem__unista_autotoc_md171}
-Sample program\+:
-
-program demo\+\_\+unique ! remove duplicates with remaining elements remaining in initial order use M\+\_\+orderpack, only \+: unique implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{}, \char`\"{}))\textquotesingle{},sp=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer \+:: nuni
-
-int \+: block integer,allocatable \+:: I\+N\+O\+U\+T\+V\+A\+L\+S(\+:) I\+N\+O\+U\+T\+V\+A\+LS=\mbox{[}44,33,33,33,22,11,33,44,55,33\mbox{]} print list,\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+O\+U\+T\+V\+A\+LS call unique(\+I\+N\+O\+U\+T\+V\+A\+L\+S,nuni) I\+N\+O\+U\+T\+V\+A\+LS=I\+N\+O\+U\+T\+V\+A\+L\+S(\+:nuni) print list,\textquotesingle{}U\+N\+I\+Q\+UE\+:\textquotesingle{},I\+N\+O\+U\+T\+V\+A\+LS endblock int
-
-end program demo\+\_\+unique
-
-Results\+:
-
-O\+R\+I\+G\+I\+N\+AL\+:, 44, 33, 33, 33, 22, 11, 33, 44, 55, 33 U\+N\+I\+Q\+UE\+:, 44, 33, 22, 11, 55\hypertarget{namespacem__unista_autotoc_md172}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{namespacem__unista_autotoc_md172}
-Michel Olagnon -\/ Feb. 2000 \hypertarget{namespacem__unista_autotoc_md173}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{namespacem__unista_autotoc_md173}
-John Urban, 2022.\+04.\+16 \hypertarget{namespacem__unista_autotoc_md174}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{namespacem__unista_autotoc_md174}
-C\+C0-\/1.\+0 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{80 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
 \DoxyCodeLine{81 \textcolor{keywordtype}{   Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}

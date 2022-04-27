@@ -5,10 +5,6 @@ Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refsor
 private :: real64_inssor, real32_inssor, int32_inssor, f_char_inssor
-interface refsor
-  module procedure real64_refsor, real32_refsor, int32_refsor, f_char_refsor
-end interface refsor
-contains
 !!
 !!##NAME
 !!    sort(3f) - [orderpack:SORT] Sorts array into ascending order
@@ -89,6 +85,10 @@ contains
 !!    John Urban, 2022.04.16
 !!##LICENSE
 !!    CC0-1.0
+interface refsor
+  module procedure real64_refsor, real32_refsor, int32_refsor, f_char_refsor
+end interface refsor
+contains
 Subroutine real64_refsor (INOUTVALS)
 ! __________________________________________________________
       Real (kind=real64), Dimension (:), Intent (InOut) :: INOUTVALS
