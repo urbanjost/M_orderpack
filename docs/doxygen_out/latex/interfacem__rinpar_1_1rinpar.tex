@@ -8,6 +8,8 @@ subroutine \mbox{\hyperlink{interfacem__rinpar_1_1rinpar_a3a27ef7c3b00f18ee4f362
 subroutine \mbox{\hyperlink{interfacem__rinpar_1_1rinpar_ad9d362d85af6269cfbbc60132d1ee92c}{real32\+\_\+rinpar}} (I\+N\+V\+A\+LS, I\+R\+N\+GT, N\+O\+RD)
 \item 
 subroutine \mbox{\hyperlink{interfacem__rinpar_1_1rinpar_a3c4530357148275e59cc5f91302b4e5e}{int32\+\_\+rinpar}} (I\+N\+V\+A\+LS, I\+R\+N\+GT, N\+O\+RD)
+\item 
+subroutine \mbox{\hyperlink{interfacem__rinpar_1_1rinpar_a03675eca97c51ff3cb5aefbe714ec3f8}{f\+\_\+char\+\_\+rinpar}} (I\+N\+V\+A\+LS, I\+R\+N\+GT, N\+O\+RD)
 \end{DoxyCompactItemize}
 
 
@@ -48,6 +50,47 @@ John Urban, 2022.\+04.\+16 \hypertarget{interfacem__rinpar_1_1rinpar_autotoc_md1
 C\+C0-\/1.\+0 
 
 \doxysubsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__rinpar_1_1rinpar_a03675eca97c51ff3cb5aefbe714ec3f8}\label{interfacem__rinpar_1_1rinpar_a03675eca97c51ff3cb5aefbe714ec3f8}} 
+\index{m\_rinpar::rinpar@{m\_rinpar::rinpar}!f\_char\_rinpar@{f\_char\_rinpar}}
+\index{f\_char\_rinpar@{f\_char\_rinpar}!m\_rinpar::rinpar@{m\_rinpar::rinpar}}
+\doxysubsubsection{\texorpdfstring{f\_char\_rinpar()}{f\_char\_rinpar()}}
+{\footnotesize\ttfamily subroutine m\+\_\+rinpar\+::rinpar\+::f\+\_\+char\+\_\+rinpar (\begin{DoxyParamCaption}\item[{character (kind=\mbox{\hyperlink{namespacem__rinpar_a29e592ac6c368bfb828a115a9c1ca9cf}{f\+\_\+char}},len=$\ast$), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+R\+N\+GT,  }\item[{integer, intent(in)}]{N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{187 \textcolor{comment}{!!\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{188    \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: INVALS}
+\DoxyCodeLine{189    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IRNGT}
+\DoxyCodeLine{190    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: NORD}
+\DoxyCodeLine{191 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{192    \textcolor{keywordtype}{character (kind=f\_char,len=len(INVALS))} :: XWRK, XWRK1}
+\DoxyCodeLine{193    \textcolor{keywordtype}{Integer} :: ICRS, IDCR}
+\DoxyCodeLine{194 \textcolor{comment}{!}}
+\DoxyCodeLine{195     irngt(1) = 1}
+\DoxyCodeLine{196     \textcolor{keywordflow}{Do} icrs = 2, nord}
+\DoxyCodeLine{197        xwrk = invals(icrs)}
+\DoxyCodeLine{198        \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/1}
+\DoxyCodeLine{199           \textcolor{keywordflow}{If} (xwrk >= invals(irngt(idcr))) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{200           irngt(idcr+1) = irngt(idcr)}
+\DoxyCodeLine{201 \textcolor{keywordflow}{       End Do}}
+\DoxyCodeLine{202        irngt(idcr+1) = icrs}
+\DoxyCodeLine{203 \textcolor{keywordflow}{    End Do}}
+\DoxyCodeLine{204 \textcolor{comment}{!}}
+\DoxyCodeLine{205     xwrk1 = invals(irngt(nord))}
+\DoxyCodeLine{206     \textcolor{keywordflow}{Do} icrs = nord + 1, \textcolor{keyword}{SIZE} (invals)}
+\DoxyCodeLine{207        \textcolor{keywordflow}{If} (invals(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{208           xwrk = invals(icrs)}
+\DoxyCodeLine{209           \textcolor{keywordflow}{Do} idcr = nord -\/ 1, 1, -\/1}
+\DoxyCodeLine{210              \textcolor{keywordflow}{If} (xwrk >= invals(irngt(idcr))) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{211              irngt(idcr+1) = irngt(idcr)}
+\DoxyCodeLine{212 \textcolor{keywordflow}{          End Do}}
+\DoxyCodeLine{213           irngt(idcr+1) = icrs}
+\DoxyCodeLine{214           xwrk1 = invals(irngt(nord))}
+\DoxyCodeLine{215 \textcolor{keywordflow}{       End If}}
+\DoxyCodeLine{216 \textcolor{keywordflow}{    End Do}}
+\DoxyCodeLine{217 \textcolor{comment}{!}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{interfacem__rinpar_1_1rinpar_a3c4530357148275e59cc5f91302b4e5e}\label{interfacem__rinpar_1_1rinpar_a3c4530357148275e59cc5f91302b4e5e}} 
 \index{m\_rinpar::rinpar@{m\_rinpar::rinpar}!int32\_rinpar@{int32\_rinpar}}
 \index{int32\_rinpar@{int32\_rinpar}!m\_rinpar::rinpar@{m\_rinpar::rinpar}}

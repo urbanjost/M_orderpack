@@ -7,7 +7,7 @@ public :: mrgrnk
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file rank.3orderpack.man
 NAME
-   rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input 
+   rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input
               array (optimized merge-sort)
 
 SYNOPSIS
@@ -88,17 +88,17 @@ EXAMPLES
       & 'white',  'brown', 'gray', 'cyan',   'magenta',           &
       & 'purple']
       if(allocated(cindx))deallocate(cindx);allocate(cindx(size(strings)))
-    
+
       write(*,'(a,8(a:,","))')'BEFORE ',&
               & (trim(strings(i)),i=1,size(strings))
-   
+
       call rank(strings,cindx)
-   
+
       write(*,'(a,8(a:,","))')'SORTED ',&
               & (trim(strings(cindx(i))),i=1,size(strings))
-   
+
       strings=strings(cindx) ! sort the array using the rank index
-   
+
       do i=1,size(strings)-1
          if(strings(i).gt.strings(i+1))then
             write(*,*)'Error in sorting strings a-z'

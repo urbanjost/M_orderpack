@@ -37,7 +37,7 @@ Internally this subroutine uses Merge-\/sort unique inverse ranking.\hypertarget
 I\+N\+O\+U\+T\+V\+A\+LS input array to reduce to unique values N\+U\+NI number of values comprising the returned set of unique values\hypertarget{interfacem__unista_1_1unista_autotoc_md171}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__unista_1_1unista_autotoc_md171}
 Sample program\+:
 
-program demo\+\_\+unique ! remove duplicates with remaining elements remaining in initial order use M\+\_\+orderpack, only \+: unique implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{}, \char`\"{}))\textquotesingle{},sp=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer \+:: nuni
+program demo\+\_\+unique ! remove duplicates with remaining elements remaining in initial order use M\+\_\+orderpack, only \+: unique implicit none character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{}, \char`\"{}))\textquotesingle{} integer \+:: nuni
 
 int \+: block integer,allocatable \+:: I\+N\+O\+U\+T\+V\+A\+L\+S(\+:) I\+N\+O\+U\+T\+V\+A\+LS=\mbox{[}44,33,33,33,22,11,33,44,55,33\mbox{]} print list,\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+O\+U\+T\+V\+A\+LS call unique(\+I\+N\+O\+U\+T\+V\+A\+L\+S,nuni) I\+N\+O\+U\+T\+V\+A\+LS=I\+N\+O\+U\+T\+V\+A\+L\+S(\+:nuni) print list,\textquotesingle{}U\+N\+I\+Q\+UE\+:\textquotesingle{},I\+N\+O\+U\+T\+V\+A\+LS endblock int
 
@@ -59,25 +59,25 @@ C\+C0-\/1.\+0
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{143 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{144    \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
-\DoxyCodeLine{145    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
-\DoxyCodeLine{146 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{147    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
-\DoxyCodeLine{148    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
-\DoxyCodeLine{149    \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{150 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{151    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
-\DoxyCodeLine{152    ifmptyt = .true.}
-\DoxyCodeLine{153    nuni = 0}
-\DoxyCodeLine{154    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
-\DoxyCodeLine{155       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{156          ifmptyt(iwrkt(icrs)) = .false.}
-\DoxyCodeLine{157          nuni = nuni + 1}
-\DoxyCodeLine{158          inoutvals(nuni) = inoutvals(icrs)}
-\DoxyCodeLine{159 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{160 \textcolor{keywordflow}{   End Do}}
-\DoxyCodeLine{161 \textcolor{comment}{!}}
+\DoxyCodeLine{142 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{143    \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
+\DoxyCodeLine{144    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{145 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{146    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
+\DoxyCodeLine{147    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
+\DoxyCodeLine{148    \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{149 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{150    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
+\DoxyCodeLine{151    ifmptyt = .true.}
+\DoxyCodeLine{152    nuni = 0}
+\DoxyCodeLine{153    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
+\DoxyCodeLine{154       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{155          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{156          nuni = nuni + 1}
+\DoxyCodeLine{157          inoutvals(nuni) = inoutvals(icrs)}
+\DoxyCodeLine{158 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{159 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{160 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__unista_1_1unista_a3a252a3acafccce995d8394d42bd2bc9}\label{interfacem__unista_1_1unista_a3a252a3acafccce995d8394d42bd2bc9}} 
@@ -88,25 +88,25 @@ C\+C0-\/1.\+0
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{122 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{123    \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
-\DoxyCodeLine{124    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
-\DoxyCodeLine{125 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{126    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
-\DoxyCodeLine{127    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
-\DoxyCodeLine{128    \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{129 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{130    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
-\DoxyCodeLine{131    ifmptyt = .true.}
-\DoxyCodeLine{132    nuni = 0}
-\DoxyCodeLine{133    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
-\DoxyCodeLine{134       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{135          ifmptyt(iwrkt(icrs)) = .false.}
-\DoxyCodeLine{136          nuni = nuni + 1}
-\DoxyCodeLine{137          inoutvals(nuni) = inoutvals(icrs)}
-\DoxyCodeLine{138 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{139 \textcolor{keywordflow}{   End Do}}
-\DoxyCodeLine{140 \textcolor{comment}{!}}
+\DoxyCodeLine{121 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{122    \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
+\DoxyCodeLine{123    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{124 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{125    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
+\DoxyCodeLine{126    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
+\DoxyCodeLine{127    \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{128 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{129    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
+\DoxyCodeLine{130    ifmptyt = .true.}
+\DoxyCodeLine{131    nuni = 0}
+\DoxyCodeLine{132    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
+\DoxyCodeLine{133       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{134          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{135          nuni = nuni + 1}
+\DoxyCodeLine{136          inoutvals(nuni) = inoutvals(icrs)}
+\DoxyCodeLine{137 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{138 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{139 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__unista_1_1unista_a0cffd6f53f67181c17a3559c65dc5b1f}\label{interfacem__unista_1_1unista_a0cffd6f53f67181c17a3559c65dc5b1f}} 
@@ -117,25 +117,25 @@ C\+C0-\/1.\+0
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{101 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{102 \textcolor{keywordtype}{   Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
-\DoxyCodeLine{103    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
-\DoxyCodeLine{104 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{105    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
-\DoxyCodeLine{106    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
-\DoxyCodeLine{107    \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{108 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{109    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
-\DoxyCodeLine{110    ifmptyt = .true.}
-\DoxyCodeLine{111    nuni = 0}
-\DoxyCodeLine{112    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
-\DoxyCodeLine{113       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{114          ifmptyt(iwrkt(icrs)) = .false.}
-\DoxyCodeLine{115          nuni = nuni + 1}
-\DoxyCodeLine{116          inoutvals(nuni) = inoutvals(icrs)}
-\DoxyCodeLine{117 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{118 \textcolor{keywordflow}{   End Do}}
-\DoxyCodeLine{119 \textcolor{comment}{!}}
+\DoxyCodeLine{100 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{101 \textcolor{keywordtype}{   Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
+\DoxyCodeLine{102    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{103 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{104    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
+\DoxyCodeLine{105    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
+\DoxyCodeLine{106    \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{107 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{108    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
+\DoxyCodeLine{109    ifmptyt = .true.}
+\DoxyCodeLine{110    nuni = 0}
+\DoxyCodeLine{111    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
+\DoxyCodeLine{112       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{113          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{114          nuni = nuni + 1}
+\DoxyCodeLine{115          inoutvals(nuni) = inoutvals(icrs)}
+\DoxyCodeLine{116 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{117 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{118 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__unista_1_1unista_a866778535fef3dbcfd25cb747c97599f}\label{interfacem__unista_1_1unista_a866778535fef3dbcfd25cb747c97599f}} 
@@ -146,25 +146,25 @@ C\+C0-\/1.\+0
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{80 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{81 \textcolor{keywordtype}{   Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
-\DoxyCodeLine{82    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
-\DoxyCodeLine{83 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{84    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
-\DoxyCodeLine{85    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
-\DoxyCodeLine{86    \textcolor{keywordtype}{Integer} :: ICRS}
-\DoxyCodeLine{87 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{88    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
-\DoxyCodeLine{89    ifmptyt = .true.}
-\DoxyCodeLine{90    nuni = 0}
-\DoxyCodeLine{91    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
-\DoxyCodeLine{92       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
-\DoxyCodeLine{93          ifmptyt(iwrkt(icrs)) = .false.}
-\DoxyCodeLine{94          nuni = nuni + 1}
-\DoxyCodeLine{95          inoutvals(nuni) = inoutvals(icrs)}
-\DoxyCodeLine{96 \textcolor{keywordflow}{      End If}}
-\DoxyCodeLine{97 \textcolor{keywordflow}{   End Do}}
-\DoxyCodeLine{98 \textcolor{comment}{!}}
+\DoxyCodeLine{79 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{80 \textcolor{keywordtype}{   Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
+\DoxyCodeLine{81    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{82 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{83    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
+\DoxyCodeLine{84    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
+\DoxyCodeLine{85    \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{86 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{87    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
+\DoxyCodeLine{88    ifmptyt = .true.}
+\DoxyCodeLine{89    nuni = 0}
+\DoxyCodeLine{90    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
+\DoxyCodeLine{91       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{92          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{93          nuni = nuni + 1}
+\DoxyCodeLine{94          inoutvals(nuni) = inoutvals(icrs)}
+\DoxyCodeLine{95 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{96 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{97 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 

@@ -34,7 +34,6 @@ integer,parameter             :: par=8  ! order of partial sort
 integer                       :: ii(isz), jj(isz)
 integer                       :: indx(isz)
 real                          :: rr(isz)
-integer                       :: i,j,k
 !===================================================================================================================================
 call random_seed()
 call random_number(rr)
@@ -49,7 +48,7 @@ write(*,g)'         ',indx
 write(*,g)'         ',ii(indx)
 write(*,g)'rank_basic - [RANK] produces a sorted ranking index array of input array (basic merge-sort)'
 indx=-99
-call mrgref(ii,indx)
+call rank_basic(ii,indx)
 write(*,g)'         ',indx
 write(*,g)'         ',ii(indx)
 !===================================================================================================================================

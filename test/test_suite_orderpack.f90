@@ -69,7 +69,7 @@ contains
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_gen(name)
 character(len=*),intent(in)   :: name
-integer,parameter             :: isz=10000
+integer,parameter             :: isz=1000
 real                          :: rr(isz)
 real(kind=dp)                 :: dd(isz)
 integer                       :: ii(isz)
@@ -186,6 +186,7 @@ integer :: imiddle
    ! sort the hard way, one value at a time
    call unit_check('valnth', all([(valnth(iarr,i),i=1,size(iarr))].eq.[10,20,30,40,50,60,70,80]),'sort hard way')
    call unit_check_done('valnth',msg='test completed')
+   if(allocated(iarr))deallocate(iarr)
 end subroutine test_valnth
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
 subroutine test_indnth
@@ -457,16 +458,18 @@ integer :: i
    xdont=[10,20,30,10,20,30,10,20,30]
    if(allocated(igoest))deallocate(igoest)
    allocate(igoest(size(xdont)))
+
    call uniinv(xdont,igoest)
+
    call unit_check('uniinv',all(igoest .eq.  [ 1,2,3,1,2,3,1,2,3 ]) ,'returned indices')
    imx=maxval(igoest)
    call unit_check('unista',imx.eq.3,'unique indices. got',imx,'expected',3)
    if(allocated(out))deallocate(out)
    allocate(out(imx))
-   do i=1,size(xdont)
+   do i=1,imx
            out(igoest(i))=xdont(i)
    enddo
-   call unit_check('uniinv',all(xdont .eq.  [ 10,20,30 ]) ,'sorted unique values')
+   call unit_check('uniinv',all(out .eq.  [ 10,20,30 ]) ,'sorted unique values')
    call unit_check_done('uniinv',msg='test completed')
 end subroutine test_uniinv
 !TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT

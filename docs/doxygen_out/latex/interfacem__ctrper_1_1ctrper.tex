@@ -39,7 +39,7 @@ Internally, the routine creates a real array of the indices of I\+N\+O\+U\+T\+V\
 I\+N\+O\+U\+T\+V\+A\+LS Array of values to perturb. C\+L\+O\+S\+E\+N\+E\+SS Proportion of closeness, constrained to the range 0.\+0(no change) to 1.\+0(fully random).\hypertarget{interfacem__ctrper_1_1ctrper_autotoc_md4}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__ctrper_1_1ctrper_autotoc_md4}
 Sample program\+:
 
-program demo\+\_\+perturb ! generate a random perturbation of an array use M\+\_\+orderpack, only \+: perturb implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{}, \char`\"{}))\textquotesingle{} integer,allocatable \+:: xout(\+:,\+:) integer \+:: isz, i, j isz=200 ! randomly perturb location of values ! ! make an array with three initially identical rows of ! values perturbed by different amounts if(allocated(xout))deallocate(xout) allocate(xout(3,isz)) xout(1,\+:)=\mbox{[}(i,i=isz,1,-\/1)\mbox{]}$\ast$10 xout(2,\+:)=xout(1,\+:) xout(3,\+:)=xout(1,\+:) ! perturb each row a different amount call perturb(xout(1,\+:),0.\+0) call perturb(xout(2,\+:),0.\+1) call perturb(xout(3,\+:),1.\+0) ! show values write($\ast$,\textquotesingle{}(a)\textquotesingle{})\textquotesingle{}count unchanged perturbed random\textquotesingle{} do i=1,size(xout,dim=2) write($\ast$,\textquotesingle{}($\ast$(i8,1x))\textquotesingle{})i,xout(\+:,i) enddo char\+: block character(len=\+:),allocatable \+:: cdont(\+:) cdont=\mbox{[}character(len=20) \+:: \textquotesingle{}a\textquotesingle{}, \textquotesingle{}be\textquotesingle{}, \textquotesingle{}car\textquotesingle{}, \textquotesingle{}dam\textquotesingle{},\textquotesingle{}fan\textquotesingle{},\textquotesingle{}gas\textquotesingle{},\textquotesingle{}egg\textquotesingle{}\mbox{]} isz=size(cdont) write($\ast$,g)\textquotesingle{}Original.................\+:\textquotesingle{},(trim(cdont(i)),i=1,isz) call perturb(cdont,1.\+0) write($\ast$,g)\textquotesingle{}Perturbed ...............\+:\textquotesingle{},(trim(cdont(i)),i=1,isz) write($\ast$,g) endblock char
+program demo\+\_\+perturb ! generate a random perturbation of an array use M\+\_\+orderpack, only \+: perturb implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,allocatable \+:: xout(\+:,\+:) integer \+:: isz, i isz=200 ! randomly perturb location of values ! ! make an array with three initially identical rows of ! values perturbed by different amounts if(allocated(xout))deallocate(xout) allocate(xout(3,isz)) xout(1,\+:)=\mbox{[}(i,i=isz,1,-\/1)\mbox{]}$\ast$10 xout(2,\+:)=xout(1,\+:) xout(3,\+:)=xout(1,\+:) ! perturb each row a different amount call perturb(xout(1,\+:),0.\+0) call perturb(xout(2,\+:),0.\+1) call perturb(xout(3,\+:),1.\+0) ! show values write($\ast$,\textquotesingle{}(a)\textquotesingle{})\textquotesingle{}count unchanged perturbed random\textquotesingle{} do i=1,size(xout,dim=2) write($\ast$,\textquotesingle{}($\ast$(i8,1x))\textquotesingle{})i,xout(\+:,i) enddo char\+: block character(len=\+:),allocatable \+:: cdont(\+:) cdont=\mbox{[}character(len=20) \+:: \textquotesingle{}a\textquotesingle{}, \textquotesingle{}be\textquotesingle{}, \textquotesingle{}car\textquotesingle{}, \textquotesingle{}dam\textquotesingle{},\textquotesingle{}fan\textquotesingle{},\textquotesingle{}gas\textquotesingle{},\textquotesingle{}egg\textquotesingle{}\mbox{]} isz=size(cdont) write($\ast$,g)\textquotesingle{}Original.................\+:\textquotesingle{},(trim(cdont(i)),i=1,isz) call perturb(cdont,1.\+0) write($\ast$,g)\textquotesingle{}Perturbed ...............\+:\textquotesingle{},(trim(cdont(i)),i=1,isz) write($\ast$,g) endblock char
 
 end program demo\+\_\+perturb
 
@@ -59,23 +59,23 @@ C\+C0-\/1.\+0
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{193 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{194       \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
-\DoxyCodeLine{195 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: CLOSENESS}
-\DoxyCodeLine{196 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{197 \textcolor{comment}{!}}
-\DoxyCodeLine{198 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: XINDT}
-\DoxyCodeLine{199       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: JWRKT}
-\DoxyCodeLine{200 \textcolor{keywordtype}{      Real} :: PWRK}
-\DoxyCodeLine{201       \textcolor{keywordtype}{Integer} :: I}
-\DoxyCodeLine{202 \textcolor{comment}{!}}
-\DoxyCodeLine{203       \textcolor{keyword}{Call }random\_number (xindt(:))}
-\DoxyCodeLine{204       pwrk = min(max(0.0, closeness), 1.0)}
-\DoxyCodeLine{205       xindt = real(\textcolor{keyword}{Size}(inoutvals)) * xindt}
-\DoxyCodeLine{206       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(inoutvals)) ]}
-\DoxyCodeLine{207       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
-\DoxyCodeLine{208       inoutvals = inoutvals(jwrkt)}
-\DoxyCodeLine{209 \textcolor{comment}{!}}
+\DoxyCodeLine{192 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{193       \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
+\DoxyCodeLine{194 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: CLOSENESS}
+\DoxyCodeLine{195 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{196 \textcolor{comment}{!}}
+\DoxyCodeLine{197 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: XINDT}
+\DoxyCodeLine{198       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: JWRKT}
+\DoxyCodeLine{199 \textcolor{keywordtype}{      Real} :: PWRK}
+\DoxyCodeLine{200       \textcolor{keywordtype}{Integer} :: I}
+\DoxyCodeLine{201 \textcolor{comment}{!}}
+\DoxyCodeLine{202       \textcolor{keyword}{Call }random\_number (xindt(:))}
+\DoxyCodeLine{203       pwrk = min(max(0.0, closeness), 1.0)}
+\DoxyCodeLine{204       xindt = real(\textcolor{keyword}{Size}(inoutvals)) * xindt}
+\DoxyCodeLine{205       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(inoutvals)) ]}
+\DoxyCodeLine{206       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
+\DoxyCodeLine{207       inoutvals = inoutvals(jwrkt)}
+\DoxyCodeLine{208 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__ctrper_1_1ctrper_aa6a520ee67c000553e31ffee29e04546}\label{interfacem__ctrper_1_1ctrper_aa6a520ee67c000553e31ffee29e04546}} 
@@ -86,23 +86,23 @@ C\+C0-\/1.\+0
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{174 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{175       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
-\DoxyCodeLine{176 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: CLOSENESS}
-\DoxyCodeLine{177 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{178 \textcolor{comment}{!}}
-\DoxyCodeLine{179 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: XINDT}
-\DoxyCodeLine{180       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: JWRKT}
-\DoxyCodeLine{181 \textcolor{keywordtype}{      Real} :: PWRK}
-\DoxyCodeLine{182       \textcolor{keywordtype}{Integer} :: I}
-\DoxyCodeLine{183 \textcolor{comment}{!}}
-\DoxyCodeLine{184       \textcolor{keyword}{Call }random\_number (xindt(:))}
-\DoxyCodeLine{185       pwrk = min(max(0.0, closeness), 1.0)}
-\DoxyCodeLine{186       xindt = real(\textcolor{keyword}{Size}(inoutvals)) * xindt}
-\DoxyCodeLine{187       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(inoutvals)) ]}
-\DoxyCodeLine{188       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
-\DoxyCodeLine{189       inoutvals = inoutvals(jwrkt)}
-\DoxyCodeLine{190 \textcolor{comment}{!}}
+\DoxyCodeLine{173 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{174       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
+\DoxyCodeLine{175 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: CLOSENESS}
+\DoxyCodeLine{176 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{177 \textcolor{comment}{!}}
+\DoxyCodeLine{178 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: XINDT}
+\DoxyCodeLine{179       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: JWRKT}
+\DoxyCodeLine{180 \textcolor{keywordtype}{      Real} :: PWRK}
+\DoxyCodeLine{181       \textcolor{keywordtype}{Integer} :: I}
+\DoxyCodeLine{182 \textcolor{comment}{!}}
+\DoxyCodeLine{183       \textcolor{keyword}{Call }random\_number (xindt(:))}
+\DoxyCodeLine{184       pwrk = min(max(0.0, closeness), 1.0)}
+\DoxyCodeLine{185       xindt = real(\textcolor{keyword}{Size}(inoutvals)) * xindt}
+\DoxyCodeLine{186       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(inoutvals)) ]}
+\DoxyCodeLine{187       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
+\DoxyCodeLine{188       inoutvals = inoutvals(jwrkt)}
+\DoxyCodeLine{189 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__ctrper_1_1ctrper_ac7d3cb63528c4c23db92d0c9ce7f6fab}\label{interfacem__ctrper_1_1ctrper_ac7d3cb63528c4c23db92d0c9ce7f6fab}} 
@@ -113,23 +113,23 @@ C\+C0-\/1.\+0
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{155 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{156 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
-\DoxyCodeLine{157 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: CLOSENESS}
-\DoxyCodeLine{158 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{159 \textcolor{comment}{!}}
-\DoxyCodeLine{160 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: XINDT}
-\DoxyCodeLine{161       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: JWRKT}
-\DoxyCodeLine{162 \textcolor{keywordtype}{      Real} :: PWRK}
-\DoxyCodeLine{163       \textcolor{keywordtype}{Integer} :: I}
-\DoxyCodeLine{164 \textcolor{comment}{!}}
-\DoxyCodeLine{165       \textcolor{keyword}{Call }random\_number (xindt(:))}
-\DoxyCodeLine{166       pwrk = min(max(0.0, closeness), 1.0)}
-\DoxyCodeLine{167       xindt = real(\textcolor{keyword}{Size}(inoutvals)) * xindt}
-\DoxyCodeLine{168       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(inoutvals)) ]}
-\DoxyCodeLine{169       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
-\DoxyCodeLine{170       inoutvals = inoutvals(jwrkt)}
-\DoxyCodeLine{171 \textcolor{comment}{!}}
+\DoxyCodeLine{154 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{155 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
+\DoxyCodeLine{156 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: CLOSENESS}
+\DoxyCodeLine{157 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{158 \textcolor{comment}{!}}
+\DoxyCodeLine{159 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: XINDT}
+\DoxyCodeLine{160       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: JWRKT}
+\DoxyCodeLine{161 \textcolor{keywordtype}{      Real} :: PWRK}
+\DoxyCodeLine{162       \textcolor{keywordtype}{Integer} :: I}
+\DoxyCodeLine{163 \textcolor{comment}{!}}
+\DoxyCodeLine{164       \textcolor{keyword}{Call }random\_number (xindt(:))}
+\DoxyCodeLine{165       pwrk = min(max(0.0, closeness), 1.0)}
+\DoxyCodeLine{166       xindt = real(\textcolor{keyword}{Size}(inoutvals)) * xindt}
+\DoxyCodeLine{167       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(inoutvals)) ]}
+\DoxyCodeLine{168       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
+\DoxyCodeLine{169       inoutvals = inoutvals(jwrkt)}
+\DoxyCodeLine{170 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{interfacem__ctrper_1_1ctrper_a51b0cc9aad64f432043fbdad94503ce1}\label{interfacem__ctrper_1_1ctrper_a51b0cc9aad64f432043fbdad94503ce1}} 
@@ -140,23 +140,23 @@ C\+C0-\/1.\+0
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{136 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{137 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
-\DoxyCodeLine{138 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: CLOSENESS}
-\DoxyCodeLine{139 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
-\DoxyCodeLine{140 \textcolor{comment}{!}}
-\DoxyCodeLine{141 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: XINDT}
-\DoxyCodeLine{142       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: JWRKT}
-\DoxyCodeLine{143 \textcolor{keywordtype}{      Real} :: PWRK}
-\DoxyCodeLine{144       \textcolor{keywordtype}{Integer} :: I}
-\DoxyCodeLine{145 \textcolor{comment}{!}}
-\DoxyCodeLine{146       \textcolor{keyword}{Call }random\_number (xindt(:))}
-\DoxyCodeLine{147       pwrk = min(max(0.0, closeness), 1.0)}
-\DoxyCodeLine{148       xindt = real(\textcolor{keyword}{Size}(inoutvals)) * xindt}
-\DoxyCodeLine{149       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(inoutvals)) ]}
-\DoxyCodeLine{150       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
-\DoxyCodeLine{151       inoutvals = inoutvals(jwrkt)}
-\DoxyCodeLine{152 \textcolor{comment}{!}}
+\DoxyCodeLine{135 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{136 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
+\DoxyCodeLine{137 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Intent (In)} :: CLOSENESS}
+\DoxyCodeLine{138 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{139 \textcolor{comment}{!}}
+\DoxyCodeLine{140 \textcolor{keywordtype}{      Real}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: XINDT}
+\DoxyCodeLine{141       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: JWRKT}
+\DoxyCodeLine{142 \textcolor{keywordtype}{      Real} :: PWRK}
+\DoxyCodeLine{143       \textcolor{keywordtype}{Integer} :: I}
+\DoxyCodeLine{144 \textcolor{comment}{!}}
+\DoxyCodeLine{145       \textcolor{keyword}{Call }random\_number (xindt(:))}
+\DoxyCodeLine{146       pwrk = min(max(0.0, closeness), 1.0)}
+\DoxyCodeLine{147       xindt = real(\textcolor{keyword}{Size}(inoutvals)) * xindt}
+\DoxyCodeLine{148       xindt = pwrk*xindt + (1.0-\/pwrk)*[ (real(i), i=1,\textcolor{keyword}{size}(inoutvals)) ]}
+\DoxyCodeLine{149       \textcolor{keyword}{Call }mrgrnk (xindt, jwrkt)}
+\DoxyCodeLine{150       inoutvals = inoutvals(jwrkt)}
+\DoxyCodeLine{151 \textcolor{comment}{!}}
 
 \end{DoxyCode}
 

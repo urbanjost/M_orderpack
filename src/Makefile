@@ -56,8 +56,8 @@ nvfortran: all
 	@echo built with $(FC)
 
 ifort: FC=ifort
-ifort: FFLAGS := -warn all -traceback -check all -error-limit 1 -O0 -g -assume byterecl
-ifort: FFLAGS := -warn all -traceback -assume byterecl -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
+ifort: FFLAGS := -warn all -traceback -check all -assume byterecl -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC) -error-limit 1 -O0 -g
+ifort: FFLAGS := -warn all -traceback -check all -assume byterecl -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
 ifort: LDFLAGS := -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
 ifort: CC := icc
 ifort: all

@@ -2,7 +2,6 @@ program chrono
 use M_valnth
 use M_mrgrnk
       Integer, Parameter :: nbcl = 10000
-      Integer, Parameter :: nth = 31     
       Integer, Parameter :: kdp = selected_real_kind(15)
       Real(kind=kdp), Dimension (5001) :: dvalt
       Real, Dimension (5001) :: xvalt

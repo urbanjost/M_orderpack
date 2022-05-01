@@ -190,7 +190,6 @@ Subroutine real64_rapknr (INVALS, IRNGT, NORD)
 !  we stop filling in the ILOWT array as soon as we have more
 !  than enough values in IHIGT.
 !
-!
       If (INVALS(NDON) < XPIV) Then
          ICRS = 3
          Do
@@ -694,7 +693,6 @@ Subroutine real32_rapknr (INVALS, IRNGT, NORD)
 !  we stop filling in the ILOWT array as soon as we have more
 !  than enough values in IHIGT.
 !
-!
       If (INVALS(NDON) < XPIV) Then
          ICRS = 3
          Do
@@ -1197,7 +1195,6 @@ Subroutine int32_rapknr (INVALS, IRNGT, NORD)
 !  As we are also filling in the work arrays at the same time
 !  we stop filling in the ILOWT array as soon as we have more
 !  than enough values in IHIGT.
-!
 !
       If (INVALS(NDON) < XPIV) Then
          ICRS = 3

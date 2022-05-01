@@ -415,16 +415,18 @@ subroutine test_uniinv()
    <span class="n">xdont</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">]</span>
    <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">igoest</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">igoest</span><span class="p">)</span>
    <span class="k">allocate</span><span class="p">(</span><span class="n">igoest</span><span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)))</span>
+
    <span class="k">call </span><span class="n">uniinv</span><span class="p">(</span><span class="n">xdont</span><span class="p">,</span><span class="n">igoest</span><span class="p">)</span>
+
    <span class="k">call </span><span class="n">unit_check</span><span class="p">(</span><span class="s1">&#39;uniinv&#39;</span><span class="p">,</span><span class="k">all</span><span class="p">(</span><span class="n">igoest</span> <span class="p">.</span><span class="n">eq</span><span class="p">.</span>  <span class="p">[</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span> <span class="p">])</span> <span class="p">,</span><span class="s1">&#39;returned indices&#39;</span><span class="p">)</span>
    <span class="n">imx</span><span class="o">=</span><span class="nb">maxval</span><span class="p">(</span><span class="n">igoest</span><span class="p">)</span>
    <span class="k">call </span><span class="n">unit_check</span><span class="p">(</span><span class="s1">&#39;unista&#39;</span><span class="p">,</span><span class="n">imx</span><span class="p">.</span><span class="n">eq</span><span class="p">.</span><span class="mi">3</span><span class="p">,</span><span class="s1">&#39;unique indices. got&#39;</span><span class="p">,</span><span class="n">imx</span><span class="p">,</span><span class="s1">&#39;expected&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
    <span class="k">if</span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">out</span><span class="p">))</span><span class="k">deallocate</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
    <span class="k">allocate</span><span class="p">(</span><span class="n">out</span><span class="p">(</span><span class="n">imx</span><span class="p">))</span>
-   <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span><span class="p">(</span><span class="n">xdont</span><span class="p">)</span>
+   <span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">imx</span>
            <span class="n">out</span><span class="p">(</span><span class="n">igoest</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="o">=</span><span class="n">xdont</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
    <span class="k">enddo</span>
-<span class="k">   call </span><span class="n">unit_check</span><span class="p">(</span><span class="s1">&#39;uniinv&#39;</span><span class="p">,</span><span class="k">all</span><span class="p">(</span><span class="n">xdont</span> <span class="p">.</span><span class="n">eq</span><span class="p">.</span>  <span class="p">[</span> <span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span> <span class="p">])</span> <span class="p">,</span><span class="s1">&#39;sorted unique values&#39;</span><span class="p">)</span>
+<span class="k">   call </span><span class="n">unit_check</span><span class="p">(</span><span class="s1">&#39;uniinv&#39;</span><span class="p">,</span><span class="k">all</span><span class="p">(</span><span class="n">out</span> <span class="p">.</span><span class="n">eq</span><span class="p">.</span>  <span class="p">[</span> <span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span> <span class="p">])</span> <span class="p">,</span><span class="s1">&#39;sorted unique values&#39;</span><span class="p">)</span>
    <span class="k">call </span><span class="n">unit_check_done</span><span class="p">(</span><span class="s1">&#39;uniinv&#39;</span><span class="p">,</span><span class="n">msg</span><span class="o">=</span><span class="s1">&#39;test completed&#39;</span><span class="p">)</span>
 <span class="k">end subroutine </span><span class="n">test_uniinv</span>
 </pre></div>
@@ -448,7 +450,7 @@ subroutine test_uniinv()
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-26 22:12  
+             on 2022-05-01 18:49  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

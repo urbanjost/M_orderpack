@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.2% of total for source files.">23 statements</a>
+    title=" 0.2% of total for source files.">33 statements</a>
      </li> 
      
      
@@ -205,7 +205,8 @@
     </div>
     <div class="col-md-9" id='text'>
       <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking and Sorting Routines
+<div class="codehilite"><pre><span></span><code>M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking
+                  and Sorting Routines
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
@@ -563,261 +564,274 @@ point is that the index array can be used to index other data.
 <a name="ln-32"></a><span class="k">use </span><span class="n">M_unista</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">unique</span><span class="o">=&gt;</span><span class="n">unista</span>           <span class="c">! [UNIQUE] Removes duplicates from an array otherwise retaining original order</span>
 <a name="ln-33"></a><span class="k">use </span><span class="n">M_mulcnt</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">occurrences</span><span class="o">=&gt;</span><span class="n">mulcnt</span>      <span class="c">! [MULTIPLICITY] gives number of times that each value appears in the input</span>
 <a name="ln-34"></a><span class="k">use </span><span class="n">M_ctrper</span><span class="p">,</span> <span class="k">only</span> <span class="p">:</span> <span class="n">perturb</span><span class="o">=&gt;</span><span class="n">ctrper</span>          <span class="c">! [PERMUTATION] perturbs an array leaving elements close to initial locations</span>
-<a name="ln-35"></a><span class="c">!&gt;</span>
-<a name="ln-36"></a><span class="c">!!##NAME</span>
-<a name="ln-37"></a><span class="c">!!    M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking and Sorting Routines</span>
-<a name="ln-38"></a><span class="c">!!##SYNOPSIS</span>
-<a name="ln-39"></a><span class="c">!!</span>
-<a name="ln-40"></a><span class="c">!!    Procedure names and syntax:</span>
-<a name="ln-41"></a><span class="c">!!</span>
-<a name="ln-42"></a><span class="c">!!     use M_orderpack, only : &amp;</span>
-<a name="ln-43"></a><span class="c">!!      Sort,             &amp; ! Subroutine Sort             (INOUTVALS)</span>
-<a name="ln-44"></a><span class="c">!!      Sort_Special,     &amp; ! Subroutine Sort_Special     (INOUTVALS)</span>
-<a name="ln-45"></a><span class="c">!!      Psort,            &amp; ! Subroutine Psort            (INOUTVALS, nord)</span>
-<a name="ln-46"></a><span class="c">!!</span>
-<a name="ln-47"></a><span class="c">!!      Rank,             &amp; ! Subroutine Rank             (INVALS, imult)</span>
-<a name="ln-48"></a><span class="c">!!      Rank_Basic,       &amp; ! Subroutine Rank_Basic       (INVALS, irngt)</span>
-<a name="ln-49"></a><span class="c">!!      Rank_Decreasing,  &amp; ! Subroutine Rank_Decreasing  (INVALS, igoest)</span>
-<a name="ln-50"></a><span class="c">!!      Rank_Unique,      &amp; ! Subroutine Rank_Unique      (INVALS, irngt, nuni)</span>
-<a name="ln-51"></a><span class="c">!!</span>
-<a name="ln-52"></a><span class="c">!!      Prank,            &amp; ! Subroutine Prank            (INVALS, irngt, nord)</span>
-<a name="ln-53"></a><span class="c">!!      Prank_Basic,      &amp; ! Subroutine Prank_Basic      (INVALS, irngt, nord)</span>
-<a name="ln-54"></a><span class="c">!!      Prank_Decreasing, &amp; ! Subroutine Prank_Decreasing (INVALS, irngt, nord)</span>
-<a name="ln-55"></a><span class="c">!!      Prank_Special,    &amp; ! Subroutine Prank_Special,   (INVALS, irngt, nord)</span>
-<a name="ln-56"></a><span class="c">!!      Prank_Unique,     &amp; ! Subroutine Prank_Unique     (INVALS, irngt, nord)</span>
-<a name="ln-57"></a><span class="c">!!</span>
-<a name="ln-58"></a><span class="c">!!      Median,           &amp; ! Function Median             (INVALS)</span>
-<a name="ln-59"></a><span class="c">!!      MedianVal,        &amp; ! Function MedianVal          (INVALS)</span>
-<a name="ln-60"></a><span class="c">!!      MedianLoc,        &amp; ! Subroutine MedianLoc        (INVALS, indm)</span>
-<a name="ln-61"></a><span class="c">!!</span>
-<a name="ln-62"></a><span class="c">!!      Orderval,         &amp; ! Function OrderVal           (INVALS, nord)</span>
-<a name="ln-63"></a><span class="c">!!      OrderLoc,         &amp; ! Integer Function OrderLoc   (INVALS, nord)</span>
-<a name="ln-64"></a><span class="c">!!      Orderval_Special, &amp; ! Function OrderVal_Special   (INVALS, nord)</span>
-<a name="ln-65"></a><span class="c">!!</span>
-<a name="ln-66"></a><span class="c">!!      Occurrences,      &amp; ! Subroutine Occurrences      (INVALS, imult)</span>
-<a name="ln-67"></a><span class="c">!!      Unique,           &amp; ! Subroutine Unique           (INOUTVALS, nuni)</span>
-<a name="ln-68"></a><span class="c">!!      Perturb             ! Subroutine Perturb          (INOUTVALS, CLOSENESS)</span>
-<a name="ln-69"></a><span class="c">!!</span>
-<a name="ln-70"></a><span class="c">!!    The procedures may be accessed via their original names in ORDERPACK2.0</span>
-<a name="ln-71"></a><span class="c">!!    as well, one per module:</span>
-<a name="ln-72"></a><span class="c">!!</span>
-<a name="ln-73"></a><span class="c">!!     ! previous ORDERPACK2.0 name ! ORDERPACK 2.1 name</span>
-<a name="ln-74"></a><span class="c">!!     use M_refsor, only : refsor  ! Sort</span>
-<a name="ln-75"></a><span class="c">!!     use M_inssor, only : inssor  ! Sort_special</span>
-<a name="ln-76"></a><span class="c">!!     use M_inspar, only : inspar  ! psort</span>
-<a name="ln-77"></a><span class="c">!!     use M_mrgrnk, only : mrgrnk  ! rank</span>
-<a name="ln-78"></a><span class="c">!!     use M_mrgref, only : mrgref  ! rank_basic</span>
-<a name="ln-79"></a><span class="c">!!     use M_uniinv, only : uniinv  ! rank_decreasing</span>
-<a name="ln-80"></a><span class="c">!!     use M_unirnk, only : unirnk  ! rank_unique</span>
-<a name="ln-81"></a><span class="c">!!     use M_rnkpar, only : rnkpar  ! prank</span>
-<a name="ln-82"></a><span class="c">!!     use M_refpar, only : refpar  ! prank_basic</span>
-<a name="ln-83"></a><span class="c">!!     use M_rapknr, only : rapknr  ! prank_decreasing</span>
-<a name="ln-84"></a><span class="c">!!     use M_rinpar, only : rinpar  ! prank_special</span>
-<a name="ln-85"></a><span class="c">!!     use M_unipar, only : unipar  ! prank_unique</span>
-<a name="ln-86"></a><span class="c">!!     use M_median, only : median  ! median</span>
-<a name="ln-87"></a><span class="c">!!     use M_valmed, only : valmed  ! medianval</span>
-<a name="ln-88"></a><span class="c">!!     use M_indmed, only : indmed  ! medianloc</span>
-<a name="ln-89"></a><span class="c">!!     use M_valnth, only : valnth  ! orderval</span>
-<a name="ln-90"></a><span class="c">!!     use M_indnth, only : indnth  ! orderloc</span>
-<a name="ln-91"></a><span class="c">!!     use M_fndnth, only : fndnth  ! orderval_special</span>
-<a name="ln-92"></a><span class="c">!!     use M_mulcnt, only : mulcnt  ! occurrences</span>
-<a name="ln-93"></a><span class="c">!!     use M_unista, only : unista  ! unique</span>
-<a name="ln-94"></a><span class="c">!!     use M_ctrper, only : ctrper  ! perturb</span>
-<a name="ln-95"></a><span class="c">!!</span>
-<a name="ln-96"></a><span class="c">!!##DESCRIPTION</span>
-<a name="ln-97"></a><span class="c">!!    ORDERPACK 2.1 - Unconditional, Unique and Partial Ranking, Sorting,</span>
-<a name="ln-98"></a><span class="c">!!                    and Permutation</span>
-<a name="ln-99"></a><span class="c">!!</span>
-<a name="ln-100"></a><span class="c">!!    ORDERPACK 2.1 performs both conventional sorting and ranking as well as</span>
-<a name="ln-101"></a><span class="c">!!    the rarer specialized ordering tasks such as partial sorting, partial</span>
-<a name="ln-102"></a><span class="c">!!    ranking, unique sorting, unique ranking, inverse unique ranking, and</span>
-<a name="ln-103"></a><span class="c">!!    more. These partial sort and ranking routines can greatly accelerate</span>
-<a name="ln-104"></a><span class="c">!!    many computations when users need only the M largest or smallest</span>
-<a name="ln-105"></a><span class="c">!!    elements out of a N-element vector.</span>
-<a name="ln-106"></a><span class="c">!!</span>
-<a name="ln-107"></a><span class="c">!!    All the specialized procedures have a range over which they far</span>
-<a name="ln-108"></a><span class="c">!!    outperform a basic sort, and most have a range where they dramatically</span>
-<a name="ln-109"></a><span class="c">!!    underperform. If you are not limited by memory requirements or have no</span>
-<a name="ln-110"></a><span class="c">!!    issues with runtimes the simplest solution may be just to use SORT(3f)</span>
-<a name="ln-111"></a><span class="c">!!    and RANK(3f).</span>
+<a name="ln-35"></a>
+<a name="ln-36"></a><span class="c">! BUG: without explicitly adding this section ifort(1) fails</span>
+<a name="ln-37"></a><span class="k">private</span>
+<a name="ln-38"></a><span class="k">public </span><span class="n">sort</span><span class="p">,</span> <span class="n">sort_special</span>
+<a name="ln-39"></a><span class="k">public </span><span class="n">psort</span>
+<a name="ln-40"></a><span class="k">public </span><span class="n">rank</span><span class="p">,</span> <span class="n">rank_basic</span><span class="p">,</span> <span class="n">rank_decreasing</span><span class="p">,</span> <span class="n">rank_unique</span>
+<a name="ln-41"></a><span class="k">public </span><span class="n">prank</span><span class="p">,</span> <span class="n">prank_basic</span><span class="p">,</span> <span class="n">prank_special</span><span class="p">,</span> <span class="n">prank_decreasing</span><span class="p">,</span> <span class="n">prank_unique</span>
+<a name="ln-42"></a><span class="k">public </span><span class="n">median</span><span class="p">,</span> <span class="n">medianval</span><span class="p">,</span> <span class="n">medianloc</span>
+<a name="ln-43"></a><span class="k">public </span><span class="n">orderloc</span><span class="p">,</span> <span class="n">orderval</span><span class="p">,</span> <span class="n">orderval_special</span>
+<a name="ln-44"></a><span class="k">public </span><span class="n">unique</span>
+<a name="ln-45"></a><span class="k">public </span><span class="n">occurrences</span>
+<a name="ln-46"></a><span class="k">public </span><span class="n">perturb</span>
+<a name="ln-47"></a><span class="c">!&gt;</span>
+<a name="ln-48"></a><span class="c">!!##NAME</span>
+<a name="ln-49"></a><span class="c">!!    M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking</span>
+<a name="ln-50"></a><span class="c">!!                      and Sorting Routines</span>
+<a name="ln-51"></a><span class="c">!!##SYNOPSIS</span>
+<a name="ln-52"></a><span class="c">!!</span>
+<a name="ln-53"></a><span class="c">!!    Procedure names and syntax:</span>
+<a name="ln-54"></a><span class="c">!!</span>
+<a name="ln-55"></a><span class="c">!!     use M_orderpack, only : &amp;</span>
+<a name="ln-56"></a><span class="c">!!      Sort,             &amp; ! Subroutine Sort             (INOUTVALS)</span>
+<a name="ln-57"></a><span class="c">!!      Sort_Special,     &amp; ! Subroutine Sort_Special     (INOUTVALS)</span>
+<a name="ln-58"></a><span class="c">!!      Psort,            &amp; ! Subroutine Psort            (INOUTVALS, nord)</span>
+<a name="ln-59"></a><span class="c">!!</span>
+<a name="ln-60"></a><span class="c">!!      Rank,             &amp; ! Subroutine Rank             (INVALS, imult)</span>
+<a name="ln-61"></a><span class="c">!!      Rank_Basic,       &amp; ! Subroutine Rank_Basic       (INVALS, irngt)</span>
+<a name="ln-62"></a><span class="c">!!      Rank_Decreasing,  &amp; ! Subroutine Rank_Decreasing  (INVALS, igoest)</span>
+<a name="ln-63"></a><span class="c">!!      Rank_Unique,      &amp; ! Subroutine Rank_Unique      (INVALS, irngt, nuni)</span>
+<a name="ln-64"></a><span class="c">!!</span>
+<a name="ln-65"></a><span class="c">!!      Prank,            &amp; ! Subroutine Prank            (INVALS, irngt, nord)</span>
+<a name="ln-66"></a><span class="c">!!      Prank_Basic,      &amp; ! Subroutine Prank_Basic      (INVALS, irngt, nord)</span>
+<a name="ln-67"></a><span class="c">!!      Prank_Decreasing, &amp; ! Subroutine Prank_Decreasing (INVALS, irngt, nord)</span>
+<a name="ln-68"></a><span class="c">!!      Prank_Special,    &amp; ! Subroutine Prank_Special,   (INVALS, irngt, nord)</span>
+<a name="ln-69"></a><span class="c">!!      Prank_Unique,     &amp; ! Subroutine Prank_Unique     (INVALS, irngt, nord)</span>
+<a name="ln-70"></a><span class="c">!!</span>
+<a name="ln-71"></a><span class="c">!!      Median,           &amp; ! Function Median             (INVALS)</span>
+<a name="ln-72"></a><span class="c">!!      MedianVal,        &amp; ! Function MedianVal          (INVALS)</span>
+<a name="ln-73"></a><span class="c">!!      MedianLoc,        &amp; ! Subroutine MedianLoc        (INVALS, indm)</span>
+<a name="ln-74"></a><span class="c">!!</span>
+<a name="ln-75"></a><span class="c">!!      Orderval,         &amp; ! Function OrderVal           (INVALS, nord)</span>
+<a name="ln-76"></a><span class="c">!!      OrderLoc,         &amp; ! Integer Function OrderLoc   (INVALS, nord)</span>
+<a name="ln-77"></a><span class="c">!!      Orderval_Special, &amp; ! Function OrderVal_Special   (INVALS, nord)</span>
+<a name="ln-78"></a><span class="c">!!</span>
+<a name="ln-79"></a><span class="c">!!      Occurrences,      &amp; ! Subroutine Occurrences      (INVALS, imult)</span>
+<a name="ln-80"></a><span class="c">!!      Unique,           &amp; ! Subroutine Unique           (INOUTVALS, nuni)</span>
+<a name="ln-81"></a><span class="c">!!      Perturb             ! Subroutine Perturb          (INOUTVALS, CLOSENESS)</span>
+<a name="ln-82"></a><span class="c">!!</span>
+<a name="ln-83"></a><span class="c">!!    The procedures may be accessed via their original names in ORDERPACK2.0</span>
+<a name="ln-84"></a><span class="c">!!    as well, one per module:</span>
+<a name="ln-85"></a><span class="c">!!</span>
+<a name="ln-86"></a><span class="c">!!     ! previous ORDERPACK2.0 name ! ORDERPACK 2.1 name</span>
+<a name="ln-87"></a><span class="c">!!     use M_refsor, only : refsor  ! Sort</span>
+<a name="ln-88"></a><span class="c">!!     use M_inssor, only : inssor  ! Sort_special</span>
+<a name="ln-89"></a><span class="c">!!     use M_inspar, only : inspar  ! psort</span>
+<a name="ln-90"></a><span class="c">!!     use M_mrgrnk, only : mrgrnk  ! rank</span>
+<a name="ln-91"></a><span class="c">!!     use M_mrgref, only : mrgref  ! rank_basic</span>
+<a name="ln-92"></a><span class="c">!!     use M_uniinv, only : uniinv  ! rank_decreasing</span>
+<a name="ln-93"></a><span class="c">!!     use M_unirnk, only : unirnk  ! rank_unique</span>
+<a name="ln-94"></a><span class="c">!!     use M_rnkpar, only : rnkpar  ! prank</span>
+<a name="ln-95"></a><span class="c">!!     use M_refpar, only : refpar  ! prank_basic</span>
+<a name="ln-96"></a><span class="c">!!     use M_rapknr, only : rapknr  ! prank_decreasing</span>
+<a name="ln-97"></a><span class="c">!!     use M_rinpar, only : rinpar  ! prank_special</span>
+<a name="ln-98"></a><span class="c">!!     use M_unipar, only : unipar  ! prank_unique</span>
+<a name="ln-99"></a><span class="c">!!     use M_median, only : median  ! median</span>
+<a name="ln-100"></a><span class="c">!!     use M_valmed, only : valmed  ! medianval</span>
+<a name="ln-101"></a><span class="c">!!     use M_indmed, only : indmed  ! medianloc</span>
+<a name="ln-102"></a><span class="c">!!     use M_valnth, only : valnth  ! orderval</span>
+<a name="ln-103"></a><span class="c">!!     use M_indnth, only : indnth  ! orderloc</span>
+<a name="ln-104"></a><span class="c">!!     use M_fndnth, only : fndnth  ! orderval_special</span>
+<a name="ln-105"></a><span class="c">!!     use M_mulcnt, only : mulcnt  ! occurrences</span>
+<a name="ln-106"></a><span class="c">!!     use M_unista, only : unista  ! unique</span>
+<a name="ln-107"></a><span class="c">!!     use M_ctrper, only : ctrper  ! perturb</span>
+<a name="ln-108"></a><span class="c">!!</span>
+<a name="ln-109"></a><span class="c">!!##DESCRIPTION</span>
+<a name="ln-110"></a><span class="c">!!    ORDERPACK 2.1 - Unconditional, Unique and Partial Ranking, Sorting,</span>
+<a name="ln-111"></a><span class="c">!!                    and Permutation</span>
 <a name="ln-112"></a><span class="c">!!</span>
-<a name="ln-113"></a><span class="c">!!    Otherwise, your solution method may very well depend on the size of</span>
-<a name="ln-114"></a><span class="c">!!    the input arrays, whether the data is already close to the required</span>
-<a name="ln-115"></a><span class="c">!!    order, or how costly it is to create work arrays or an index array.</span>
-<a name="ln-116"></a><span class="c">!!</span>
-<a name="ln-117"></a><span class="c">!!    So, if you want the smallest value in an array call the intrinsic</span>
-<a name="ln-118"></a><span class="c">!!    MINVAL(3f), not ORDERVAL(3f).</span>
+<a name="ln-113"></a><span class="c">!!    ORDERPACK 2.1 performs both conventional sorting and ranking as well as</span>
+<a name="ln-114"></a><span class="c">!!    the rarer specialized ordering tasks such as partial sorting, partial</span>
+<a name="ln-115"></a><span class="c">!!    ranking, unique sorting, unique ranking, inverse unique ranking, and</span>
+<a name="ln-116"></a><span class="c">!!    more. These partial sort and ranking routines can greatly accelerate</span>
+<a name="ln-117"></a><span class="c">!!    many computations when users need only the M largest or smallest</span>
+<a name="ln-118"></a><span class="c">!!    elements out of a N-element vector.</span>
 <a name="ln-119"></a><span class="c">!!</span>
-<a name="ln-120"></a><span class="c">!!##SORTING</span>
-<a name="ln-121"></a><span class="c">!!     FULL SORTING</span>
-<a name="ln-122"></a><span class="c">!!        Sort          Sorts array into ascending order (Quicksort)</span>
-<a name="ln-123"></a><span class="c">!!        Sort_Special  Sorts array into ascending order (Insertion sort,</span>
-<a name="ln-124"></a><span class="c">!!                      generally for small or nearly sorted arrays)</span>
-<a name="ln-125"></a><span class="c">!!     PARTIAL SORTING</span>
-<a name="ln-126"></a><span class="c">!!        Psort             partially sorts an array</span>
-<a name="ln-127"></a><span class="c">!!        Orderval          Return VALUE of Nth lowest value of array</span>
-<a name="ln-128"></a><span class="c">!!                          (QuickSort)</span>
-<a name="ln-129"></a><span class="c">!!        Orderval_Special  Return Nth lowest value of an array</span>
-<a name="ln-130"></a><span class="c">!!                          (Insert-sort, generally for small or nearly</span>
-<a name="ln-131"></a><span class="c">!!                          sorted arrays))</span>
-<a name="ln-132"></a><span class="c">!!        MedianVal         finds the median of an array</span>
-<a name="ln-133"></a><span class="c">!!        Median            Return median value of array. If number of elements</span>
-<a name="ln-134"></a><span class="c">!!                          is even, return average of the two &quot;medians&quot;</span>
-<a name="ln-135"></a><span class="c">!!##RANKING</span>
-<a name="ln-136"></a><span class="c">!!     UNCONDITIONAL RANKING</span>
-<a name="ln-137"></a><span class="c">!!        Rank        ranks array (optimized merge-sort)</span>
-<a name="ln-138"></a><span class="c">!!        Rank_Basic  ranks array (basic merge-sort)</span>
-<a name="ln-139"></a><span class="c">!!     PARTIAL RANKING</span>
-<a name="ln-140"></a><span class="c">!!        Prank             partially ranks array (Optimized QuickSort)</span>
-<a name="ln-141"></a><span class="c">!!        Prank_Basic       partially ranks array</span>
-<a name="ln-142"></a><span class="c">!!        Prank_Decreasing  partially ranks array in DECREASING order</span>
-<a name="ln-143"></a><span class="c">!!        Prank_Special     partially ranks array (Basic Insert-Sort)</span>
-<a name="ln-144"></a><span class="c">!!        Orderloc          Return INDEX of Nth value of array (QuickSort-like)</span>
-<a name="ln-145"></a><span class="c">!!        MedianLoc         Returns INDEX of median value of an array.</span>
-<a name="ln-146"></a><span class="c">!!     UNIQUE RANKING</span>
-<a name="ln-147"></a><span class="c">!!        Rank_Unique       performs a MergeSort ranking of an array,</span>
-<a name="ln-148"></a><span class="c">!!                          with removal of duplicate entries.</span>
-<a name="ln-149"></a><span class="c">!!        Rank_Decreasing   an inverse ranking of an array,</span>
-<a name="ln-150"></a><span class="c">!!                          with duplicate entries assigned the same rank.</span>
-<a name="ln-151"></a><span class="c">!!        Prank_Unique      partially rank an array removing duplicates</span>
-<a name="ln-152"></a><span class="c">!!##UNIQUE</span>
-<a name="ln-153"></a><span class="c">!!        Unique        Removes duplicates from an array</span>
-<a name="ln-154"></a><span class="c">!!                      otherwise retaining original order</span>
-<a name="ln-155"></a><span class="c">!!##MULTIPLICITY</span>
-<a name="ln-156"></a><span class="c">!!        Occurrences   Give the multiplicity for each array value</span>
-<a name="ln-157"></a><span class="c">!!##PERMUTATION</span>
-<a name="ln-158"></a><span class="c">!!        Perturb  a random permutation of an array, optionally leaving</span>
-<a name="ln-159"></a><span class="c">!!                 elements close to initial locations</span>
-<a name="ln-160"></a><span class="c">!!</span>
-<a name="ln-161"></a><span class="c">!!##RATIONALE</span>
-<a name="ln-162"></a><span class="c">!!</span>
-<a name="ln-163"></a><span class="c">!!    While Fortran 90 and later variants have made life much easier for</span>
-<a name="ln-164"></a><span class="c">!!    scientific programmers than Fortran 77, the language still lacks</span>
-<a name="ln-165"></a><span class="c">!!    depth in public domain utilities. The following package, ORDERPACK</span>
-<a name="ln-166"></a><span class="c">!!    2.1, provides important but uncommon routines needed to complete the</span>
-<a name="ln-167"></a><span class="c">!!    Fortran programming environment.</span>
-<a name="ln-168"></a><span class="c">!!</span>
-<a name="ln-169"></a><span class="c">!!##INTRODUCTION</span>
-<a name="ln-170"></a><span class="c">!!</span>
-<a name="ln-171"></a><span class="c">!!    The existing fortran code base provides many conventional ranking</span>
-<a name="ln-172"></a><span class="c">!!    or sorting routines, but very few specialized ranking or sorting</span>
-<a name="ln-173"></a><span class="c">!!    routines. Specifically, we know of no other Fortran code which sorts</span>
-<a name="ln-174"></a><span class="c">!!    or ranks only a small proportion of an array (partial ordering). Such</span>
-<a name="ln-175"></a><span class="c">!!    partial ranking routines have applications in statistics for rapidly</span>
-<a name="ln-176"></a><span class="c">!!    computing extreme order statistics, finding nearest neighbors, and</span>
-<a name="ln-177"></a><span class="c">!!    other clustering operations. In addition, many applications need to</span>
-<a name="ln-178"></a><span class="c">!!    work with only the unique values in an array (unique ordering). Such</span>
-<a name="ln-179"></a><span class="c">!!    unique ranking routines allow users to isolate individual cases out</span>
-<a name="ln-180"></a><span class="c">!!    of a mass of discrete data. Many times the frequency of the unique</span>
-<a name="ln-181"></a><span class="c">!!    values proves interesting (e.g., empirical distributions).</span>
-<a name="ln-182"></a><span class="c">!!</span>
-<a name="ln-183"></a><span class="c">!!    ORDERPACK handles all of these ordering needs.</span>
-<a name="ln-184"></a><span class="c">!!</span>
-<a name="ln-185"></a><span class="c">!!    Also, ORDERPACK contains a partial unique ranking routine. Such a</span>
-<a name="ln-186"></a><span class="c">!!    routine would prove useful in finding a limited number of unique</span>
-<a name="ln-187"></a><span class="c">!!    values in an array.</span>
-<a name="ln-188"></a><span class="c">!!</span>
-<a name="ln-189"></a><span class="c">!!    Inversion of orderings becomes difficult when duplicates exist (not</span>
-<a name="ln-190"></a><span class="c">!!    a one-to-one relation). The ORDERPACK inverse ranking routine handles</span>
-<a name="ln-191"></a><span class="c">!!    this difficult case.</span>
-<a name="ln-192"></a><span class="c">!!</span>
-<a name="ln-193"></a><span class="c">!!    As an added bonus ORDERPACK provides an unusual routine which allows</span>
-<a name="ln-194"></a><span class="c">!!    user controllable partial random permutation of arrays.</span>
+<a name="ln-120"></a><span class="c">!!    All the specialized procedures have a range over which they far</span>
+<a name="ln-121"></a><span class="c">!!    outperform a basic sort, and most have a range where they dramatically</span>
+<a name="ln-122"></a><span class="c">!!    underperform. If you are not limited by memory requirements or have no</span>
+<a name="ln-123"></a><span class="c">!!    issues with runtimes the simplest solution may be just to use SORT(3f)</span>
+<a name="ln-124"></a><span class="c">!!    and RANK(3f).</span>
+<a name="ln-125"></a><span class="c">!!</span>
+<a name="ln-126"></a><span class="c">!!    Otherwise, your solution method may very well depend on the size of</span>
+<a name="ln-127"></a><span class="c">!!    the input arrays, whether the data is already close to the required</span>
+<a name="ln-128"></a><span class="c">!!    order, or how costly it is to create work arrays or an index array.</span>
+<a name="ln-129"></a><span class="c">!!</span>
+<a name="ln-130"></a><span class="c">!!    So, if you want the smallest value in an array call the intrinsic</span>
+<a name="ln-131"></a><span class="c">!!    MINVAL(3f), not ORDERVAL(3f).</span>
+<a name="ln-132"></a><span class="c">!!</span>
+<a name="ln-133"></a><span class="c">!!##SORTING</span>
+<a name="ln-134"></a><span class="c">!!     FULL SORTING</span>
+<a name="ln-135"></a><span class="c">!!        Sort          Sorts array into ascending order (Quicksort)</span>
+<a name="ln-136"></a><span class="c">!!        Sort_Special  Sorts array into ascending order (Insertion sort,</span>
+<a name="ln-137"></a><span class="c">!!                      generally for small or nearly sorted arrays)</span>
+<a name="ln-138"></a><span class="c">!!     PARTIAL SORTING</span>
+<a name="ln-139"></a><span class="c">!!        Psort             partially sorts an array</span>
+<a name="ln-140"></a><span class="c">!!        Orderval          Return VALUE of Nth lowest value of array</span>
+<a name="ln-141"></a><span class="c">!!                          (QuickSort)</span>
+<a name="ln-142"></a><span class="c">!!        Orderval_Special  Return Nth lowest value of an array</span>
+<a name="ln-143"></a><span class="c">!!                          (Insert-sort, generally for small or nearly</span>
+<a name="ln-144"></a><span class="c">!!                          sorted arrays))</span>
+<a name="ln-145"></a><span class="c">!!        MedianVal         finds the median of an array</span>
+<a name="ln-146"></a><span class="c">!!        Median            Return median value of array. If number of elements</span>
+<a name="ln-147"></a><span class="c">!!                          is even, return average of the two &quot;medians&quot;</span>
+<a name="ln-148"></a><span class="c">!!##RANKING</span>
+<a name="ln-149"></a><span class="c">!!     UNCONDITIONAL RANKING</span>
+<a name="ln-150"></a><span class="c">!!        Rank        ranks array (optimized merge-sort)</span>
+<a name="ln-151"></a><span class="c">!!        Rank_Basic  ranks array (basic merge-sort)</span>
+<a name="ln-152"></a><span class="c">!!     PARTIAL RANKING</span>
+<a name="ln-153"></a><span class="c">!!        Prank             partially ranks array (Optimized QuickSort)</span>
+<a name="ln-154"></a><span class="c">!!        Prank_Basic       partially ranks array</span>
+<a name="ln-155"></a><span class="c">!!        Prank_Decreasing  partially ranks array in DECREASING order</span>
+<a name="ln-156"></a><span class="c">!!        Prank_Special     partially ranks array (Basic Insert-Sort)</span>
+<a name="ln-157"></a><span class="c">!!        Orderloc          Return INDEX of Nth value of array (QuickSort-like)</span>
+<a name="ln-158"></a><span class="c">!!        MedianLoc         Returns INDEX of median value of an array.</span>
+<a name="ln-159"></a><span class="c">!!     UNIQUE RANKING</span>
+<a name="ln-160"></a><span class="c">!!        Rank_Unique       performs a MergeSort ranking of an array,</span>
+<a name="ln-161"></a><span class="c">!!                          with removal of duplicate entries.</span>
+<a name="ln-162"></a><span class="c">!!        Rank_Decreasing   an inverse ranking of an array,</span>
+<a name="ln-163"></a><span class="c">!!                          with duplicate entries assigned the same rank.</span>
+<a name="ln-164"></a><span class="c">!!        Prank_Unique      partially rank an array removing duplicates</span>
+<a name="ln-165"></a><span class="c">!!##UNIQUE</span>
+<a name="ln-166"></a><span class="c">!!        Unique        Removes duplicates from an array</span>
+<a name="ln-167"></a><span class="c">!!                      otherwise retaining original order</span>
+<a name="ln-168"></a><span class="c">!!##MULTIPLICITY</span>
+<a name="ln-169"></a><span class="c">!!        Occurrences   Give the multiplicity for each array value</span>
+<a name="ln-170"></a><span class="c">!!##PERMUTATION</span>
+<a name="ln-171"></a><span class="c">!!        Perturb  a random permutation of an array, optionally leaving</span>
+<a name="ln-172"></a><span class="c">!!                 elements close to initial locations</span>
+<a name="ln-173"></a><span class="c">!!</span>
+<a name="ln-174"></a><span class="c">!!##RATIONALE</span>
+<a name="ln-175"></a><span class="c">!!</span>
+<a name="ln-176"></a><span class="c">!!    While Fortran 90 and later variants have made life much easier for</span>
+<a name="ln-177"></a><span class="c">!!    scientific programmers than Fortran 77, the language still lacks</span>
+<a name="ln-178"></a><span class="c">!!    depth in public domain utilities. The following package, ORDERPACK</span>
+<a name="ln-179"></a><span class="c">!!    2.1, provides important but uncommon routines needed to complete the</span>
+<a name="ln-180"></a><span class="c">!!    Fortran programming environment.</span>
+<a name="ln-181"></a><span class="c">!!</span>
+<a name="ln-182"></a><span class="c">!!##INTRODUCTION</span>
+<a name="ln-183"></a><span class="c">!!</span>
+<a name="ln-184"></a><span class="c">!!    The existing fortran code base provides many conventional ranking</span>
+<a name="ln-185"></a><span class="c">!!    or sorting routines, but very few specialized ranking or sorting</span>
+<a name="ln-186"></a><span class="c">!!    routines. Specifically, we know of no other Fortran code which sorts</span>
+<a name="ln-187"></a><span class="c">!!    or ranks only a small proportion of an array (partial ordering). Such</span>
+<a name="ln-188"></a><span class="c">!!    partial ranking routines have applications in statistics for rapidly</span>
+<a name="ln-189"></a><span class="c">!!    computing extreme order statistics, finding nearest neighbors, and</span>
+<a name="ln-190"></a><span class="c">!!    other clustering operations. In addition, many applications need to</span>
+<a name="ln-191"></a><span class="c">!!    work with only the unique values in an array (unique ordering). Such</span>
+<a name="ln-192"></a><span class="c">!!    unique ranking routines allow users to isolate individual cases out</span>
+<a name="ln-193"></a><span class="c">!!    of a mass of discrete data. Many times the frequency of the unique</span>
+<a name="ln-194"></a><span class="c">!!    values proves interesting (e.g., empirical distributions).</span>
 <a name="ln-195"></a><span class="c">!!</span>
-<a name="ln-196"></a><span class="c">!!    ORDERPACK of course contains conventional or unconditional sorting</span>
-<a name="ln-197"></a><span class="c">!!    routines as well.</span>
-<a name="ln-198"></a><span class="c">!!</span>
-<a name="ln-199"></a><span class="c">!!    Finally, many Fortran sorting or ranking routines do not take advantage</span>
-<a name="ln-200"></a><span class="c">!!    of available memory and cache to maximize performance. The routines</span>
-<a name="ln-201"></a><span class="c">!!    in ORDERPACK have been designed to take advantage of modern machines.</span>
-<a name="ln-202"></a><span class="c">!!</span>
-<a name="ln-203"></a><span class="c">!!##RANKING VERSUS SORTING</span>
-<a name="ln-204"></a><span class="c">!!</span>
-<a name="ln-205"></a><span class="c">!!    Ranking consists in finding, for each element of a set, its order</span>
-<a name="ln-206"></a><span class="c">!!    (rank) in the sorted set, without effectively changing the initial</span>
-<a name="ln-207"></a><span class="c">!!    order (or disorder! ) of the set. In many instances, it better suits</span>
-<a name="ln-208"></a><span class="c">!!    the actual need of the user than sorting, as the ranks can then be</span>
-<a name="ln-209"></a><span class="c">!!    used to order other related sets or components of a user type.</span>
-<a name="ln-210"></a><span class="c">!!</span>
-<a name="ln-211"></a><span class="c">!!    Ranking is especially needed when the sizes of the elements are large,</span>
-<a name="ln-212"></a><span class="c">!!    and therefore moving them around is resource-consuming.</span>
-<a name="ln-213"></a><span class="c">!!</span>
-<a name="ln-214"></a><span class="c">!!##RANKING</span>
+<a name="ln-196"></a><span class="c">!!    ORDERPACK handles all of these ordering needs.</span>
+<a name="ln-197"></a><span class="c">!!</span>
+<a name="ln-198"></a><span class="c">!!    Also, ORDERPACK contains a partial unique ranking routine. Such a</span>
+<a name="ln-199"></a><span class="c">!!    routine would prove useful in finding a limited number of unique</span>
+<a name="ln-200"></a><span class="c">!!    values in an array.</span>
+<a name="ln-201"></a><span class="c">!!</span>
+<a name="ln-202"></a><span class="c">!!    Inversion of orderings becomes difficult when duplicates exist (not</span>
+<a name="ln-203"></a><span class="c">!!    a one-to-one relation). The ORDERPACK inverse ranking routine handles</span>
+<a name="ln-204"></a><span class="c">!!    this difficult case.</span>
+<a name="ln-205"></a><span class="c">!!</span>
+<a name="ln-206"></a><span class="c">!!    As an added bonus ORDERPACK provides an unusual routine which allows</span>
+<a name="ln-207"></a><span class="c">!!    user controllable partial random permutation of arrays.</span>
+<a name="ln-208"></a><span class="c">!!</span>
+<a name="ln-209"></a><span class="c">!!    ORDERPACK of course contains conventional or unconditional sorting</span>
+<a name="ln-210"></a><span class="c">!!    routines as well.</span>
+<a name="ln-211"></a><span class="c">!!</span>
+<a name="ln-212"></a><span class="c">!!    Finally, many Fortran sorting or ranking routines do not take advantage</span>
+<a name="ln-213"></a><span class="c">!!    of available memory and cache to maximize performance. The routines</span>
+<a name="ln-214"></a><span class="c">!!    in ORDERPACK have been designed to take advantage of modern machines.</span>
 <a name="ln-215"></a><span class="c">!!</span>
-<a name="ln-216"></a><span class="c">!!    In some instances, one is not actually interested in modifying the</span>
-<a name="ln-217"></a><span class="c">!!    order of the elements in a set, but only in knowing how to access them</span>
-<a name="ln-218"></a><span class="c">!!    in increasing -- or decreasing -- order. Ranking, as it is called,</span>
-<a name="ln-219"></a><span class="c">!!    provides the index array I(:) such as the set S(I(:)) is ordered. One</span>
-<a name="ln-220"></a><span class="c">!!    of the advantages of carrying out ranking rather than sorting is that</span>
-<a name="ln-221"></a><span class="c">!!    the index array can be computed without the performance penalty of</span>
-<a name="ln-222"></a><span class="c">!!    moving the elements around when they are of large sizes. A similar</span>
-<a name="ln-223"></a><span class="c">!!    point is that the index array can be used to index other data.</span>
-<a name="ln-224"></a><span class="c">!!</span>
-<a name="ln-225"></a><span class="c">!!##OPTIMIZATION CHOICES</span>
+<a name="ln-216"></a><span class="c">!!##RANKING VERSUS SORTING</span>
+<a name="ln-217"></a><span class="c">!!</span>
+<a name="ln-218"></a><span class="c">!!    Ranking consists in finding, for each element of a set, its order</span>
+<a name="ln-219"></a><span class="c">!!    (rank) in the sorted set, without effectively changing the initial</span>
+<a name="ln-220"></a><span class="c">!!    order (or disorder! ) of the set. In many instances, it better suits</span>
+<a name="ln-221"></a><span class="c">!!    the actual need of the user than sorting, as the ranks can then be</span>
+<a name="ln-222"></a><span class="c">!!    used to order other related sets or components of a user type.</span>
+<a name="ln-223"></a><span class="c">!!</span>
+<a name="ln-224"></a><span class="c">!!    Ranking is especially needed when the sizes of the elements are large,</span>
+<a name="ln-225"></a><span class="c">!!    and therefore moving them around is resource-consuming.</span>
 <a name="ln-226"></a><span class="c">!!</span>
-<a name="ln-227"></a><span class="c">!!    We tried to take into account the recent trends in computing to make</span>
-<a name="ln-228"></a><span class="c">!!    our compromise choices. Of course, no two problems are the same, and</span>
-<a name="ln-229"></a><span class="c">!!    for some of them the following decisions may happen to be wrong. We</span>
-<a name="ln-230"></a><span class="c">!!    just hope that for most cases, they will be right.</span>
-<a name="ln-231"></a><span class="c">!!</span>
-<a name="ln-232"></a><span class="c">!!      * Make extensive use of work arrays: Memory can be extended,</span>
-<a name="ln-233"></a><span class="c">!!        time cannot.</span>
-<a name="ln-234"></a><span class="c">!!      * Try to reduce the number of operations in the inner loops, even</span>
-<a name="ln-235"></a><span class="c">!!        if it increases code size.</span>
-<a name="ln-236"></a><span class="c">!!      * Assume that cache size is relatively small, and try to maximize</span>
-<a name="ln-237"></a><span class="c">!!        cache hits.</span>
-<a name="ln-238"></a><span class="c">!!</span>
-<a name="ln-239"></a><span class="c">!!##INTERFACE</span>
-<a name="ln-240"></a><span class="c">!!</span>
-<a name="ln-241"></a><span class="c">!!    Robust routines make their interface known to the calling</span>
-<a name="ln-242"></a><span class="c">!!    program. There are three main ways to implement this in Fortran:</span>
-<a name="ln-243"></a><span class="c">!!</span>
-<a name="ln-244"></a><span class="c">!!      * Explicit interfaces, either included in the body of the calling</span>
-<a name="ln-245"></a><span class="c">!!        routine, or gathered in an &#39;interface module&#39;. An example of</span>
-<a name="ln-246"></a><span class="c">!!        including an interface block in the calling program can be found</span>
-<a name="ln-247"></a><span class="c">!!        in the sample program sort7.f90.</span>
-<a name="ln-248"></a><span class="c">!!      * Embedding the routine of interest as a &quot;contained routine&quot; into</span>
-<a name="ln-249"></a><span class="c">!!        the calling procedure. An example of such way can be found in</span>
-<a name="ln-250"></a><span class="c">!!        the follow.f90 program, that rebuilds a curve from a set of X,</span>
-<a name="ln-251"></a><span class="c">!!        Y coordinates.</span>
-<a name="ln-252"></a><span class="c">!!      * Embedding the routine of interest into a MODULE, and USEing that</span>
-<a name="ln-253"></a><span class="c">!!        module in the procedure that calls the routine. This creates</span>
-<a name="ln-254"></a><span class="c">!!        order dependencies when compiling code, generally resulting in</span>
-<a name="ln-255"></a><span class="c">!!        requiring such tools as Makefiles but has many other benefits,</span>
-<a name="ln-256"></a><span class="c">!!        such as most easily allowing for generic versions of the routines,</span>
-<a name="ln-257"></a><span class="c">!!        This is the way we used here. An example of use is provided as</span>
-<a name="ln-258"></a><span class="c">!!        the test program tstvalnth.f90.</span>
-<a name="ln-259"></a><span class="c">!!</span>
-<a name="ln-260"></a><span class="c">!!##A WORD OF APOLOGY</span>
-<a name="ln-261"></a><span class="c">!!</span>
-<a name="ln-262"></a><span class="c">!!    When one looks at the description of a sorting algorithm, the</span>
-<a name="ln-263"></a><span class="c">!!    process seems pretty simple, and can usually be held in 10 to 20</span>
-<a name="ln-264"></a><span class="c">!!    lines of pseudo-code. But if one wants an optimized program, one</span>
-<a name="ln-265"></a><span class="c">!!    takes this simple implementation, and looks for redundant operations,</span>
-<a name="ln-266"></a><span class="c">!!    investigates runs with sample data sets with a profiling tool, and</span>
-<a name="ln-267"></a><span class="c">!!    is led to duplicate code with slight modifications rather than use</span>
-<a name="ln-268"></a><span class="c">!!    tests in inner loops, to process differently the first and the last</span>
-<a name="ln-269"></a><span class="c">!!    iterations, or to take into account some special cases that are only</span>
-<a name="ln-270"></a><span class="c">!!    special in that they can be done faster.</span>
-<a name="ln-271"></a><span class="c">!!</span>
-<a name="ln-272"></a><span class="c">!!    In the end, the number of lines of source code may be</span>
-<a name="ln-273"></a><span class="c">!!    multiplied tenfold, and the readability decreased in a similar</span>
-<a name="ln-274"></a><span class="c">!!    proportion. Unfortunately, this is the price to pay for speed of</span>
-<a name="ln-275"></a><span class="c">!!    execution. It was that way when I started programming more than 20</span>
-<a name="ln-276"></a><span class="c">!!    years ago, and I have forsaken any hope that it might become otherwise</span>
-<a name="ln-277"></a><span class="c">!!    before I return to dust. So please accept my apologies that this code</span>
-<a name="ln-278"></a><span class="c">!!    is often complex and difficult to read.</span>
-<a name="ln-279"></a><span class="c">!!</span>
-<a name="ln-280"></a><span class="c">!!##AUTHORS</span>
-<a name="ln-281"></a><span class="c">!!    Michel Olagnon IFREMER Brest / Michel.Olagnon@ifremer.fr</span>
-<a name="ln-282"></a><span class="c">!!</span>
-<a name="ln-283"></a><span class="c">!!    2000- 2013/11/06</span>
-<a name="ln-284"></a><span class="c">!!##MAINTAINERS</span>
-<a name="ln-285"></a><span class="c">!!    John S. Urban, 2022-04-16</span>
-<a name="ln-286"></a><span class="c">!!</span>
-<a name="ln-287"></a><span class="c">!!##LICENSE</span>
-<a name="ln-288"></a><span class="c">!!    CC0-1.0</span>
-<a name="ln-289"></a><span class="k">end module </span><span class="n">M_orderpack</span>
+<a name="ln-227"></a><span class="c">!!##RANKING</span>
+<a name="ln-228"></a><span class="c">!!</span>
+<a name="ln-229"></a><span class="c">!!    In some instances, one is not actually interested in modifying the</span>
+<a name="ln-230"></a><span class="c">!!    order of the elements in a set, but only in knowing how to access them</span>
+<a name="ln-231"></a><span class="c">!!    in increasing -- or decreasing -- order. Ranking, as it is called,</span>
+<a name="ln-232"></a><span class="c">!!    provides the index array I(:) such as the set S(I(:)) is ordered. One</span>
+<a name="ln-233"></a><span class="c">!!    of the advantages of carrying out ranking rather than sorting is that</span>
+<a name="ln-234"></a><span class="c">!!    the index array can be computed without the performance penalty of</span>
+<a name="ln-235"></a><span class="c">!!    moving the elements around when they are of large sizes. A similar</span>
+<a name="ln-236"></a><span class="c">!!    point is that the index array can be used to index other data.</span>
+<a name="ln-237"></a><span class="c">!!</span>
+<a name="ln-238"></a><span class="c">!!##OPTIMIZATION CHOICES</span>
+<a name="ln-239"></a><span class="c">!!</span>
+<a name="ln-240"></a><span class="c">!!    We tried to take into account the recent trends in computing to make</span>
+<a name="ln-241"></a><span class="c">!!    our compromise choices. Of course, no two problems are the same, and</span>
+<a name="ln-242"></a><span class="c">!!    for some of them the following decisions may happen to be wrong. We</span>
+<a name="ln-243"></a><span class="c">!!    just hope that for most cases, they will be right.</span>
+<a name="ln-244"></a><span class="c">!!</span>
+<a name="ln-245"></a><span class="c">!!      * Make extensive use of work arrays: Memory can be extended,</span>
+<a name="ln-246"></a><span class="c">!!        time cannot.</span>
+<a name="ln-247"></a><span class="c">!!      * Try to reduce the number of operations in the inner loops, even</span>
+<a name="ln-248"></a><span class="c">!!        if it increases code size.</span>
+<a name="ln-249"></a><span class="c">!!      * Assume that cache size is relatively small, and try to maximize</span>
+<a name="ln-250"></a><span class="c">!!        cache hits.</span>
+<a name="ln-251"></a><span class="c">!!</span>
+<a name="ln-252"></a><span class="c">!!##INTERFACE</span>
+<a name="ln-253"></a><span class="c">!!</span>
+<a name="ln-254"></a><span class="c">!!    Robust routines make their interface known to the calling</span>
+<a name="ln-255"></a><span class="c">!!    program. There are three main ways to implement this in Fortran:</span>
+<a name="ln-256"></a><span class="c">!!</span>
+<a name="ln-257"></a><span class="c">!!      * Explicit interfaces, either included in the body of the calling</span>
+<a name="ln-258"></a><span class="c">!!        routine, or gathered in an &#39;interface module&#39;. An example of</span>
+<a name="ln-259"></a><span class="c">!!        including an interface block in the calling program can be found</span>
+<a name="ln-260"></a><span class="c">!!        in the sample program sort7.f90.</span>
+<a name="ln-261"></a><span class="c">!!      * Embedding the routine of interest as a &quot;contained routine&quot; into</span>
+<a name="ln-262"></a><span class="c">!!        the calling procedure. An example of such way can be found in</span>
+<a name="ln-263"></a><span class="c">!!        the follow.f90 program, that rebuilds a curve from a set of X,</span>
+<a name="ln-264"></a><span class="c">!!        Y coordinates.</span>
+<a name="ln-265"></a><span class="c">!!      * Embedding the routine of interest into a MODULE, and USEing that</span>
+<a name="ln-266"></a><span class="c">!!        module in the procedure that calls the routine. This creates</span>
+<a name="ln-267"></a><span class="c">!!        order dependencies when compiling code, generally resulting in</span>
+<a name="ln-268"></a><span class="c">!!        requiring such tools as Makefiles but has many other benefits,</span>
+<a name="ln-269"></a><span class="c">!!        such as most easily allowing for generic versions of the routines,</span>
+<a name="ln-270"></a><span class="c">!!        This is the way we used here. An example of use is provided as</span>
+<a name="ln-271"></a><span class="c">!!        the test program tstvalnth.f90.</span>
+<a name="ln-272"></a><span class="c">!!</span>
+<a name="ln-273"></a><span class="c">!!##A WORD OF APOLOGY</span>
+<a name="ln-274"></a><span class="c">!!</span>
+<a name="ln-275"></a><span class="c">!!    When one looks at the description of a sorting algorithm, the</span>
+<a name="ln-276"></a><span class="c">!!    process seems pretty simple, and can usually be held in 10 to 20</span>
+<a name="ln-277"></a><span class="c">!!    lines of pseudo-code. But if one wants an optimized program, one</span>
+<a name="ln-278"></a><span class="c">!!    takes this simple implementation, and looks for redundant operations,</span>
+<a name="ln-279"></a><span class="c">!!    investigates runs with sample data sets with a profiling tool, and</span>
+<a name="ln-280"></a><span class="c">!!    is led to duplicate code with slight modifications rather than use</span>
+<a name="ln-281"></a><span class="c">!!    tests in inner loops, to process differently the first and the last</span>
+<a name="ln-282"></a><span class="c">!!    iterations, or to take into account some special cases that are only</span>
+<a name="ln-283"></a><span class="c">!!    special in that they can be done faster.</span>
+<a name="ln-284"></a><span class="c">!!</span>
+<a name="ln-285"></a><span class="c">!!    In the end, the number of lines of source code may be</span>
+<a name="ln-286"></a><span class="c">!!    multiplied tenfold, and the readability decreased in a similar</span>
+<a name="ln-287"></a><span class="c">!!    proportion. Unfortunately, this is the price to pay for speed of</span>
+<a name="ln-288"></a><span class="c">!!    execution. It was that way when I started programming more than 20</span>
+<a name="ln-289"></a><span class="c">!!    years ago, and I have forsaken any hope that it might become otherwise</span>
+<a name="ln-290"></a><span class="c">!!    before I return to dust. So please accept my apologies that this code</span>
+<a name="ln-291"></a><span class="c">!!    is often complex and difficult to read.</span>
+<a name="ln-292"></a><span class="c">!!</span>
+<a name="ln-293"></a><span class="c">!!##AUTHORS</span>
+<a name="ln-294"></a><span class="c">!!    Michel Olagnon IFREMER Brest / Michel.Olagnon@ifremer.fr</span>
+<a name="ln-295"></a><span class="c">!!</span>
+<a name="ln-296"></a><span class="c">!!    2000- 2013/11/06</span>
+<a name="ln-297"></a><span class="c">!!##MAINTAINERS</span>
+<a name="ln-298"></a><span class="c">!!    John S. Urban, 2022-04-16</span>
+<a name="ln-299"></a><span class="c">!!</span>
+<a name="ln-300"></a><span class="c">!!##LICENSE</span>
+<a name="ln-301"></a><span class="c">!!    CC0-1.0</span>
+<a name="ln-302"></a><span class="k">end module </span><span class="n">M_orderpack</span>
 </pre></div>
 
     </section>
@@ -836,7 +850,7 @@ point is that the index array can be used to index other data.
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-26 22:12  
+             on 2022-05-01 18:49  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

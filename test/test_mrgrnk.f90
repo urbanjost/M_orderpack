@@ -7,7 +7,7 @@ program test_mrgrnk
 use M_mrgrnk, only : mrgrnk
 implicit none
 integer,parameter            :: dp=kind(0.0d0)
-integer,parameter            :: isz=10000000
+integer                      :: isz
 real(kind=dp),allocatable    :: dd(:)
 real(kind=dp)                :: pp
 integer,allocatable          :: indx(:)
@@ -16,6 +16,7 @@ real(kind=dp) :: start, finish
    !
    ! set up storage
    !
+   isz=1000000 ! if make this a parameter, nvfortran fails
    if(allocated(indx))deallocate(indx)
    allocate(indx(isz))
    if(allocated(dd))deallocate(dd)
@@ -54,7 +55,7 @@ real(kind=dp) :: start, finish
       endif
    enddo
    ! time if already sorted
-   dd=dd(indx)
+   dd(:)=dd(indx) ! ifort bug where dd=dd(indx) fails, must use dd(:)=
    call cpu_time(start)
    call mrgrnk(dd,indx)
    call cpu_time(finish)

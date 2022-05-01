@@ -126,7 +126,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 0.1% of total for source files.">18 statements</a>
+    title=" 0.1% of total for source files.">17 statements</a>
      </li> 
      
      
@@ -270,21 +270,20 @@
 <a name="ln-7"></a>     <span class="c">! but generally slower than methods like quicksort and mergesort.</span>
 <a name="ln-8"></a>     <span class="kt">integer</span><span class="p">,</span><span class="k">parameter</span> <span class="kd">::</span> <span class="n">isz</span><span class="o">=</span><span class="mi">2000</span>
 <a name="ln-9"></a>     <span class="kt">real</span><span class="p">(</span><span class="nb">kind</span><span class="o">=</span><span class="n">real64</span><span class="p">)</span> <span class="kd">::</span> <span class="n">dd</span><span class="p">(</span><span class="n">isz</span><span class="p">),</span> <span class="n">hi</span><span class="p">,</span> <span class="n">low</span>
-<a name="ln-10"></a>     <span class="kt">integer</span>           <span class="kd">::</span> <span class="n">i</span>
-<a name="ln-11"></a>        <span class="c">! make an array of random values</span>
-<a name="ln-12"></a>        <span class="k">call </span><span class="nb">random_seed</span><span class="p">()</span>
-<a name="ln-13"></a>        <span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
-<a name="ln-14"></a>        <span class="n">dd</span><span class="o">=</span><span class="n">dd</span><span class="o">*</span><span class="mi">100000</span><span class="mf">0.0</span><span class="o">-</span><span class="mi">50000</span><span class="mf">0.0</span>
-<a name="ln-15"></a>        <span class="n">low</span><span class="o">=</span> <span class="nb">minval</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
-<a name="ln-16"></a>        <span class="n">hi</span> <span class="o">=</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
-<a name="ln-17"></a>        <span class="c">! sort the data</span>
-<a name="ln-18"></a>        <span class="k">call </span><span class="n">sort_special</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
-<a name="ln-19"></a>        <span class="c">! cursory checks</span>
-<a name="ln-20"></a>        <span class="k">if</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">dd</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">isz</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">.</span><span class="n">gt</span><span class="p">.</span> <span class="n">dd</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">isz</span><span class="p">)))</span><span class="k">stop</span> <span class="s1">&#39;ERROR: array not sorted&#39;</span>
-<a name="ln-21"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;check min:&#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">low</span>
-<a name="ln-22"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;check max:&#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="n">isz</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">hi</span>
-<a name="ln-23"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;PASSED: random array is now sorted&#39;</span>
-<a name="ln-24"></a>     <span class="k">end program </span><span class="n">demo_sort_special</span>
+<a name="ln-10"></a>        <span class="c">! make an array of random values</span>
+<a name="ln-11"></a>        <span class="k">call </span><span class="nb">random_seed</span><span class="p">()</span>
+<a name="ln-12"></a>        <span class="k">call </span><span class="nb">random_number</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
+<a name="ln-13"></a>        <span class="n">dd</span><span class="o">=</span><span class="n">dd</span><span class="o">*</span><span class="mi">100000</span><span class="mf">0.0</span><span class="o">-</span><span class="mi">50000</span><span class="mf">0.0</span>
+<a name="ln-14"></a>        <span class="n">low</span><span class="o">=</span> <span class="nb">minval</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
+<a name="ln-15"></a>        <span class="n">hi</span> <span class="o">=</span> <span class="nb">maxval</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
+<a name="ln-16"></a>        <span class="c">! sort the data</span>
+<a name="ln-17"></a>        <span class="k">call </span><span class="n">sort_special</span><span class="p">(</span><span class="n">dd</span><span class="p">)</span>
+<a name="ln-18"></a>        <span class="c">! cursory checks</span>
+<a name="ln-19"></a>        <span class="k">if</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">dd</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">isz</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">.</span><span class="n">gt</span><span class="p">.</span> <span class="n">dd</span><span class="p">(</span><span class="mi">2</span><span class="p">:</span><span class="n">isz</span><span class="p">)))</span><span class="k">stop</span> <span class="s1">&#39;ERROR: array not sorted&#39;</span>
+<a name="ln-20"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;check min:&#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">low</span>
+<a name="ln-21"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;check max:&#39;</span><span class="p">,</span><span class="n">dd</span><span class="p">(</span><span class="n">isz</span><span class="p">).</span><span class="n">eq</span><span class="p">.</span><span class="n">hi</span>
+<a name="ln-22"></a>        <span class="k">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="o">*</span><span class="p">)</span><span class="s1">&#39;PASSED: random array is now sorted&#39;</span>
+<a name="ln-23"></a>     <span class="k">end program </span><span class="n">demo_sort_special</span>
 </pre></div>
 
     </section>
@@ -303,7 +302,7 @@
           <p class="text-right">
             Documentation generated by 
             <a href="https://github.com/cmacmackin/ford">FORD</a>
-             on 2022-04-26 22:12  
+             on 2022-05-01 18:49  
           </p>
         </div>
         <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> orderpack was developed by Michel Olagnon</p></div>

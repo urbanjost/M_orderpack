@@ -42,8 +42,8 @@ private :: real64_inssor, real32_inssor, int32_inssor, f_char_inssor
 !!
 !!        { values <= pivot} {pivot} {values > pivot}
 !!
-!!    It then recursively the procedure to sort each subset. When the
-!!    size of the subarray is small enough, it switches to an insertion
+!!    It then recursively calls the procedure to sort each subset. When
+!!    the size of the subarray is small enough, it switches to an insertion
 !!    sort that is faster for very small sets.
 !!
 !!##OPTIONS
