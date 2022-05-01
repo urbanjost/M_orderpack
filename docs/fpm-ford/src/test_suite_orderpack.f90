@@ -308,7 +308,6 @@ subroutine test_inspar()
 implicit none
 integer,parameter :: big=2000, little=300
 real              :: valsr(big)
-integer           :: i
    call unit_check_start('inspar', '-library orderpack') ! start tests
    call random_seed()
    call random_number(valsr)
@@ -323,7 +322,6 @@ implicit none
 integer,parameter :: big=2000, little=300
 real              :: valsr(big)
 integer           :: indx(little)
-integer           :: i
    call unit_check_start('rapknr', '-library orderpack') ! start tests
    call random_seed()
    call random_number(valsr)
@@ -339,7 +337,6 @@ implicit none
 integer,parameter :: big=2000, little=300
 real              :: valsr(big)
 integer           :: indx(little)
-integer           :: i
    call unit_check_start('rnkpar', '-library orderpack') ! start tests
    call random_seed()
    call random_number(valsr)
@@ -355,7 +352,6 @@ implicit none
 integer,parameter :: big=2000, little=300
 real              :: valsr(big)
 integer           :: indx(little)
-integer           :: i
    call unit_check_start('rinpar', '-library orderpack') ! start tests
    call random_seed()
    call random_number(valsr)
@@ -371,7 +367,6 @@ implicit none
 integer,parameter :: big=2000, little=300
 real              :: valsr(big)
 integer           :: indx(little)
-integer           :: i
    call unit_check_start('refpar', '-library orderpack') ! start tests
    call random_seed()
    call random_number(valsr)
@@ -408,7 +403,6 @@ subroutine test_mulcnt()
 character(len=20),allocatable :: strings(:)
 integer,allocatable :: cindx(:)
 integer :: csz
-integer :: i
    call unit_check_start('mulcnt', '-library orderpack') ! start tests
    !
    strings= [ character(len=20) ::                   &

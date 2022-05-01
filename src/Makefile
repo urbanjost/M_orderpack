@@ -198,4 +198,8 @@ man:
 M_ctrper.o: M_mrgrnk.o 
 M_mulcnt.o: M_uniinv.o 
 M_unista.o: M_uniinv.o 
+M_orderpack.o: M_ctrper.o M_fndnth.o M_indmed.o M_indnth.o M_inspar.o \
+               M_inssor.o M_median.o M_mrgref.o M_mrgrnk.o M_mulcnt.o \
+               M_rapknr.o M_refpar.o M_refsor.o M_rinpar.o M_rnkpar.o \
+               M_uniinv.o M_unipar.o M_unirnk.o M_unista.o M_valmed.o M_valnth.o
 #-------------------------------------------------------------------------------
