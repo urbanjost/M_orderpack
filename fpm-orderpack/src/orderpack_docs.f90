@@ -1,7 +1,7 @@
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
-module M_orderpack_docs
+module orderpack_docs
 implicit none
 private
 public help_intrinsics
@@ -154,16 +154,16 @@ textblock=[character(len=256) :: &
 'DESCRIPTION', &
 '   MEDIAN(3f) calculates the median value of the array INVALS(). It is', &
 '   a modified version of MEDIANVAL(3f) that provides the average between', &
-'   the two middle values in the case size(INVALS) is even.', &
+'   the two middle values in the case where size(INVALS) is even.', &
 '', &
-'   This routine uses a pivoting strategy similar to the method of finding', &
-'   the median based on the Quick-sort algorithm, but we skew the pivot', &
-'   choice to try to bring it to NORD as fast as possible. It uses two', &
-'   temporary arrays, where it stores the indices of the values smaller', &
-'   than the pivot (ILOWT), and the indices of values larger than the', &
-'   pivot that we might still need later on (IHIGT). It iterates until', &
-'   it can bring the number of values in ILOWT to exactly NORD, and then', &
-'   finds the maximum of this set.', &
+'   Internally, this routine uses a pivoting strategy similar to the', &
+'   method of finding the median based on the Quick-sort algorithm,', &
+'   but we skew the pivot choice to try to bring it to one-half the values  as fast as', &
+'   possible. It uses two temporary arrays, where it stores the indices of', &
+'   the values smaller than the pivot (ILOWT), and the indices of values', &
+'   larger than the pivot that we might still need later on (IHIGT). It', &
+'   iterates until it can bring the number of values in ILOWT to exactly', &
+'   NORD, and then finds the maximum of this set.', &
 '', &
 'OPTIONS', &
 '    INVALS      array to determine the median value of.', &
@@ -381,7 +381,8 @@ case('4','M_orderpack')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking and Sorting Routines', &
+'   M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking', &
+'                     and Sorting Routines', &
 'SYNOPSIS', &
 '   Procedure names and syntax:', &
 '', &
@@ -723,7 +724,7 @@ textblock=[character(len=256) :: &
 '', &
 'NAME', &
 '   orderloc(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of', &
-'                array, or "fractile of order N/SIZE(array)" (QuickSort-like)', &
+'                  array (QuickSort-like)', &
 '', &
 'SYNOPSIS', &
 '    Function OrderLoc (INVALS, NORD)', &
@@ -788,13 +789,6 @@ textblock=[character(len=256) :: &
 '         write(*,sp,advance=''no'') iarr(orderloc(iarr,i))', &
 '      enddo', &
 '      print *', &
-'   contains', &
-'   subroutine printme(n)', &
-'   integer,intent(in) :: n', &
-'   integer :: ii', &
-'      ii=orderloc(iarr,n)', &
-'      print sp,''nord='',n,'' index='',ii,'' fractile='',iarr(ii)', &
-'   end subroutine printme', &
 '   end program demo_orderloc', &
 '', &
 '  Results:', &
@@ -823,8 +817,8 @@ case('7','orderval')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered element of', &
-'                array, or "fractile of order N/SIZE(array)". (QuickSort-like)', &
+'   orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered', &
+'                  element of array (QuickSort-like)', &
 '', &
 'SYNOPSIS', &
 '    Function OrderVal (INVALS, NORD)', &
@@ -920,8 +914,7 @@ textblock=[character(len=256) :: &
 '', &
 'NAME', &
 '   orderval_special(3f) - [orderpack:FRACTILE] Return VALUE of Nth', &
-'                          ordered element of array, or "fractile of', &
-'                          order N/SIZE(array)" (InsertSort-like)', &
+'                          ordered element of array (InsertSort-like)', &
 '', &
 'SYNOPSIS', &
 '    Function Orderval_Special (INVALS, INORD)', &
@@ -1076,9 +1069,8 @@ textblock=[character(len=256) :: &
 '   use M_orderpack, only : perturb', &
 '   implicit none', &
 '   character(len=*),parameter :: g=''(*(g0,1x))''', &
-'   character(len=*),parameter :: list= ''(*(g0:,", "))''', &
 '   integer,allocatable :: xout(:,:)', &
-'   integer          :: isz, i, j', &
+'   integer          :: isz, i', &
 '   isz=200', &
 '      ! randomly perturb location of values', &
 '      !', &
@@ -2187,8 +2179,8 @@ textblock=[character(len=256) :: &
 '', &
 '       { values <= pivot} {pivot} {values > pivot}', &
 '', &
-'   It then recursively the procedure to sort each subset. When the', &
-'   size of the subarray is small enough, it switches to an insertion', &
+'   It then recursively calls the procedure to sort each subset. When', &
+'   the size of the subarray is small enough, it switches to an insertion', &
 '   sort that is faster for very small sets.', &
 '', &
 'OPTIONS', &
@@ -2284,7 +2276,6 @@ textblock=[character(len=256) :: &
 '   ! but generally slower than methods like quicksort and mergesort.', &
 '   integer,parameter :: isz=2000', &
 '   real(kind=real64) :: dd(isz), hi, low', &
-'   integer           :: i', &
 '      ! make an array of random values', &
 '      call random_seed()', &
 '      call random_number(dd)', &
@@ -2361,8 +2352,7 @@ textblock=[character(len=256) :: &
 '   ! remove duplicates with remaining elements remaining in initial order', &
 '   use M_orderpack, only : unique', &
 '   implicit none', &
-'   character(len=*),parameter :: g=''(*(g0,1x))''', &
-'   character(len=*),parameter :: list= ''(*(g0:,", "))'',sp=''(*(g0,1x))''', &
+'   character(len=*),parameter :: list= ''(*(g0:,", "))''', &
 '   integer :: nuni', &
 '', &
 '   int : block', &
@@ -2461,7 +2451,7 @@ end subroutine sort_name
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
 elemental pure function lower(str) result (string)
-!@(#) M_strings::lower(3f): Changes a string to lowercase over specified range
+!@(#) ${PACKAGE}::lower(3f): Changes a string to lowercase over specified range
 character(*), intent(In)     :: str
 character(len(str))          :: string
 integer                      :: i
@@ -2480,7 +2470,7 @@ end function lower
 !elemental pure function compact(str,char) result (outstr)
 function compact(str,char) result (outstr)
 
-!$@(#) M_strings::compact(3f): Converts white-space to single spaces; removes leading spaces
+!$@(#) ${PACKAGE}::compact(3f): Converts white-space to single spaces; removes leading spaces
 
 character(len=*),intent(in)          :: str
 character(len=*),intent(in),optional :: char
@@ -2530,7 +2520,7 @@ end function compact
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
-end module M_orderpack_docs
+end module orderpack_docs
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================

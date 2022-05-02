@@ -1,5 +1,5 @@
 program fpm_orderpack
-use M_orderpack_docs, only : help_intrinsics
+use orderpack_docs, only : help_intrinsics
 use M_CLI2,       only : set_args, sget, lget, topics=>unnamed
 use M_match,      only : getpat, match, regex_pattern
 use M_match,      only : YES, ERR
