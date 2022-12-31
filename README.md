@@ -139,6 +139,14 @@ This will compile the Fortran module and basic example programs that exercise th
 ---
 ## See also ![-](docs/images/demos.gif)
    - [parallel mrgrnk](https://github.com/cphyc/Fortran-parallel-sort)
+
+   * [M_sort](https://github.com/urbanjost/M_sort)
+   * [ORDERPACK2.0](http://www.fortran-2000.com/rank/)
+   * [orderpack](https://github.com/urbanjost/orderpack)
+   * [sortff](https://gitlab.com/everythingfunctional/sortff)
+#### general packages containing sorting
+   * [commonTools](https://github.com/wtdailey/commonTools)
+   * [Beliavsky List](https://github.com/Beliavsky/Fortran-code-on-GitHub#sorting)
 ---
 ## References ![-](docs/images/ref.gif)
 

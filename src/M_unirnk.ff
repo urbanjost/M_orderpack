@@ -1,123 +1,84 @@
-Module M_mrgrnk
+Module M_unirnk
 use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real64, real128
 implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
-public :: mrgrnk
+public :: unirnk
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$BLOCK COMMENT --file rank.3orderpack.man
+$BLOCK COMMENT --file rank_unique.3orderpack.man
 NAME
-   rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input
-              array (optimized merge-sort)
+   Rank_Unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal
+                     of duplicate entries (MergeSort)
 
 SYNOPSIS
-    Subroutine Rank (INVALS, IRNGT)
+    Subroutine rank_unique (INVALS, IRNGT, NUNI)
 
-      ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+      ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
       Integer, Intent (Out)               :: IRNGT(:)
+      Integer, Intent (Out)               :: NUNI
 
    Where ${TYPE}(kind=${KIND}) may be
 
       o Real(kind=real32)
       o Real(kind=real64)
       o Integer(kind=int32)
-      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
-    RANK(3f) ranks an input array; i.e. it produces an index of the input
-    array elements that can order the input array in ascending order.
 
-    The ranks can be used to sort the input array, or other associated
-    arrays or components of user types.
+   Ranks an array, removing duplicate entries.
 
-    Internally, it uses an optimized and modified version of merge-sort.
-    For performance reasons, the first two passes are taken out of the
-    standard loop, and use dedicated coding.
+   Internally, RANK_UNIQUE(3f) performs a Merge-sort ranking of an array,
+   with removal of duplicate entries.
+
+   The routine is similar to pure merge-sort ranking, but on the last
+   pass, it discards indices that correspond to duplicate entries.
+
+   For performance reasons, the first two passes are taken out of the
+   standard loop, and use dedicated coding.
 
 OPTIONS
-    INVALS      The array to sort
-    IRNGT      The rank index returned
+    INVALS      array to index
+    IRNGT      rank index returned pointing to unique values
+    NUNI       the number of unique values found
 
 EXAMPLES
   Sample program:
 
-   program demo_rank
-   ! create an index that can order an array in ascending order
-   use M_orderpack, only : rank
+   program demo_rank_unique
+   ! rank an array, with removal of duplicate entries.
+   use M_orderpack, only : rank_unique
    implicit none
    character(len=*),parameter :: g='(*(g0,1x))'
-   integer,parameter             :: dp=kind(0.0d0)
-   integer,parameter             :: isz=10000
-   real(kind=dp)                 :: dd(isz)
-   real(kind=dp)                 :: pp
-   integer                       :: indx(isz)
-   integer                       :: i,j,k
-   character(len=:),allocatable  :: strings(:)
-   integer,allocatable           :: cindx(:)
-      ! make some random numbers
-      call random_seed()
-      call random_number(dd)
-      dd=dd-0.50_dp
-      k=int(log(huge(0.0_dp))/log(2.0_dp))-1
-      do i=1,isz
-         call random_number(pp)
-         j=floor((k+1)*pp)
-         dd(i)=dd(i)*(2.0_dp**j)
-      enddo
-      ! rank the numeric data
-      call rank(dd,indx)
-      ! check order
-      do i=1,isz-1
-         if(dd(indx(i)).gt.dd(indx(i+1)))then
-            write(*,g)'ERROR: data not sorted i=',i,'index=',indx(i), &
-            & 'values ',dd(indx(i)),dd(indx(i+1))
-            stop 1
-         endif
-      enddo
-      ! sort data using rank values
-      dd=dd(indx)
-      write(*,g)'sorted ',isz,'values'
-      write(*,g)'from',dd(1),'to',dd(isz)
-      write(*,*)minval(dd).eq.dd(1)
-      write(*,*)maxval(dd).eq.dd(isz)
-      write(*,*)minloc(dd).eq.1
-      write(*,*)maxloc(dd).eq.isz
-      ! do a character sort
-      strings= [ character(len=20) ::                               &
-      & 'red',    'green', 'blue', 'yellow', 'orange',   'black', &
-      & 'white',  'brown', 'gray', 'cyan',   'magenta',           &
-      & 'purple']
-      if(allocated(cindx))deallocate(cindx);allocate(cindx(size(strings)))
-
-      write(*,'(a,8(a:,","))')'BEFORE ',&
-              & (trim(strings(i)),i=1,size(strings))
-
-      call rank(strings,cindx)
-
-      write(*,'(a,8(a:,","))')'SORTED ',&
-              & (trim(strings(cindx(i))),i=1,size(strings))
-
-      strings=strings(cindx) ! sort the array using the rank index
-
-      do i=1,size(strings)-1
-         if(strings(i).gt.strings(i+1))then
-            write(*,*)'Error in sorting strings a-z'
-         endif
-      enddo
-   end program demo_rank
+   integer,allocatable :: INVALS(:)
+   !
+   INVALS=[10,5,7,1,4,5,6,8,9,10,1]
+   call printme()
+   INVALS=[-1,0,-2,0,-3,0,-4]
+   call printme()
+   contains
+   subroutine printme()
+   integer,allocatable :: irngt(:)
+   integer :: nuni
+      if(allocated(irngt))deallocate(irngt)
+      allocate(irngt(size(INVALS)))
+      write(*,g)'ORIGINAL:',INVALS
+      call rank_unique(INVALS,irngt,nuni)
+      write(*,g)'NUMBER OF UNIQUE INDICES:',nuni
+      write(*,g)'RETURNED INDICES:',irngt(:nuni)
+      write(*,g)'SORTED DATA:',INVALS(irngt(:nuni))
+   end subroutine
+   end program demo_rank_unique
 
   Results:
 
-   sorted  10000 values
-   from -.4206770472235745E+308 to .3500810518521505E+308
-    T
-    T
-    T
-    T
-   BEFORE red,green,blue,yellow,orange,black,white,brown,
-   gray,cyan,magenta,purple
-   SORTED black,blue,brown,cyan,gray,green,magenta,orange,
-   purple,red,white,yellow
+   ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
+   NUMBER OF UNIQUE INDICES: 8
+   RETURNED INDICES: 4 5 2 7 3 8 9 1
+   SORTED DATA: 1 4 5 6 7 8 9 10
+   ORIGINAL: -1 0 -2 0 -3 0 -4
+   NUMBER OF UNIQUE INDICES: 5
+   RETURNED INDICES: 7 5 3 1 2
+   SORTED DATA: -4 -3 -2 -1 0
 
 AUTHOR
    Michel Olagnon, 2000-2012
@@ -127,32 +88,38 @@ LICENSE
    CC0-1.0
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-interface mrgrnk
-  module procedure real64_mrgrnk, real32_mrgrnk, int32_mrgrnk, f_char_mrgrnk
-end interface mrgrnk
+interface unirnk
+  module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
+end interface unirnk
+interface nearless
+  module procedure real64_nearless, real32_nearless, int32_nearless !, f_char_nearless
+end interface nearless
+
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$PARCEL MRGRNK
-Subroutine ${KIND}_mrgrnk (INVALS, IRNGT)
-! __________________________________________________________
+$PARCEL UNIRNK
+Subroutine ${KIND}_unirnk (INVALS, IRNGT, NUNI)
 $IFDEF CHARACTER
-      ${TYPE} (kind=${KIND},len=*), Dimension (:), Intent (In) :: INVALS
+      ${TYPE} (Kind=${KIND},len=*), Dimension (:), Intent (In) :: INVALS
 $ELSE
-      ${TYPE} (kind=${KIND}), Dimension (:), Intent (In) :: INVALS
+      ${TYPE} (Kind=${KIND}), Dimension (:), Intent (In) :: INVALS
 $ENDIF
       Integer, Dimension (:), Intent (Out) :: IRNGT
+      Integer, Intent (Out) :: NUNI
 ! __________________________________________________________
+      Integer, Dimension (SIZE(IRNGT)) :: JWRKT
+      Integer :: LMTNA, LMTNC, IRNG, IRNG1, IRNG2
+      Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 $IFDEF CHARACTER
-      ${TYPE} (kind=${KIND},len=len(INVALS)) :: XVALA, XVALB
+      ${TYPE} (Kind=${KIND},len=len(INVALS)) :: XTST, XVALA, XVALB
 $ELSE
-      ${TYPE} (kind=${KIND}) :: XVALA, XVALB
+      ${TYPE} (Kind=${KIND}) :: XTST, XVALA, XVALB
 $ENDIF
 !
-      Integer, Dimension (SIZE(IRNGT)) :: JWRKT
-      Integer :: LMTNA, LMTNC, IRNG1, IRNG2
-      Integer :: NVAL, IIND, IWRKD, IWRK, IWRKF, JINDA, IINDA, IINDB
 !
       NVAL = Min (SIZE(INVALS), SIZE(IRNGT))
+      NUNI = NVAL
+!
       Select Case (NVAL)
       Case (:0)
          Return
@@ -166,7 +133,7 @@ $ENDIF
 !  Fill-in the index array, creating ordered couples
 !
       Do IIND = 2, NVAL, 2
-         If (INVALS(IIND-1) <= INVALS(IIND)) Then
+         If (INVALS(IIND-1) < INVALS(IIND)) Then
             IRNGT (IIND-1) = IIND - 1
             IRNGT (IIND) = IIND
          Else
@@ -187,7 +154,7 @@ $ENDIF
 !  First iteration. The length of the ordered subsets goes from 2 to 4
 !
       Do
-         If (NVAL <= 2) Exit
+         If (NVAL <= 4) Exit
 !
 !   Loop on merges of A and B into C
 !
@@ -270,7 +237,7 @@ $ENDIF
 !  is doubled.
 !
       Do
-         If (LMTNA >= NVAL) Exit
+         If (2*LMTNA >= NVAL) Exit
          IWRKF = 0
          LMTNC = 2 * LMTNC
 !
@@ -288,18 +255,11 @@ $ENDIF
             IINDA = 1
             IINDB = JINDA + 1
 !
-!   Shortcut for the case when the max of A is smaller
-!   than the min of B. This line may be activated when the
-!   initial set is already close to sorted.
+!  One steps in the C subset, that we create in the final rank array
 !
-!          IF (INVALS(IRNGT(JINDA)) <= INVALS(IRNGT(IINDB))) CYCLE
-!
-!  One steps in the C subset, that we build in the final rank array
-!
-!  Make a copy of the rank array for the merge iteration
+!  Make a copy of the rank array for the iteration
 !
             JWRKT (1:LMTNA) = IRNGT (IWRKD:JINDA)
-!
             XVALA = INVALS (JWRKT(IINDA))
             XVALB = INVALS (IRNGT(IINDB))
 !
@@ -332,28 +292,100 @@ $ENDIF
          LMTNA = 2 * LMTNA
       End Do
 !
+!   Last merge of A and B into C, with removal of duplicates.
+!
+      IINDA = 1
+      IINDB = LMTNA + 1
+      NUNI = 0
+!
+!  One steps in the C subset, that we create in the final rank array
+!
+      JWRKT (1:LMTNA) = IRNGT (1:LMTNA)
+      If (IINDB <= NVAL) Then
+        XTST = NEARLESS (Min(INVALS(JWRKT(1)), INVALS(IRNGT(IINDB))))
+      Else
+        XTST = NEARLESS (INVALS(JWRKT(1)))
+      Endif
+      Do IWRK = 1, NVAL
+!
+!  We still have unprocessed values in both A and B
+!
+         If (IINDA <= LMTNA) Then
+            If (IINDB <= NVAL) Then
+               If (INVALS(JWRKT(IINDA)) > INVALS(IRNGT(IINDB))) Then
+                  IRNG = IRNGT (IINDB)
+                  IINDB = IINDB + 1
+               Else
+                  IRNG = JWRKT (IINDA)
+                  IINDA = IINDA + 1
+               End If
+            Else
+!
+!  Only A still with unprocessed values
+!
+               IRNG = JWRKT (IINDA)
+               IINDA = IINDA + 1
+            End If
+         Else
+!
+!  Only B still with unprocessed values
+!
+            IRNG = IRNGT (IWRK)
+         End If
+         If (INVALS(IRNG) > XTST) Then
+            XTST = INVALS (IRNG)
+            NUNI = NUNI + 1
+            IRNGT (NUNI) = IRNG
+         End If
+!
+      End Do
+!
       Return
 !
-End Subroutine ${KIND}_mrgrnk
+End Subroutine ${KIND}_unirnk
+Function ${KIND}_nearless (XVAL) result (${KIND}_nl)
+!! Nearest value less than given value
+! __________________________________________________________
+$IFDEF CHARACTER
+      ${TYPE} (kind=${KIND},len=*), Intent (In) :: XVAL
+      ${TYPE} (kind=${KIND},len=len(XVAL)) :: ${KIND}_nl
+$ELSE
+      ${TYPE} (kind=${KIND}), Intent (In) :: XVAL
+      ${TYPE} (kind=${KIND}) :: ${KIND}_nl
+$ENDIF
+! __________________________________________________________
+$IF DEFINED(INTEGER)
+      ${KIND}_nl = XVAL -1_${KIND}
+$ELSEIF DEFINED(CHARACTER)
+      ${KIND}_nl = XVAL
+$ELSE
+      ${KIND}_nl = nearest (XVAL, -1.0_${KIND})
+$ENDIF
+!
+End Function ${KIND}_nearless
 $ENDPARCEL
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-$UNDEFINE CHARACTER INTEGER
+$UNDEFINE INTEGER CHARACTER ! make sure conditional for IFDEF is not taken inadvertently
+$
 $SET KIND real64
 $SET TYPE Real
-$POST MRGRNK
+$POST UNIRNK
 $
 $SET KIND real32
 $SET TYPE Real
-$POST MRGRNK
+$POST UNIRNK
 $
+$DEFINE INTEGER   ! there is a call to intrinsic NEAREST(3f) only for REAL values
 $SET KIND int32
 $SET TYPE Integer
-$POST MRGRNK
+$POST UNIRNK
+$UNDEFINE INTEGER ! make sure conditional for IFDEF INTEGER is not taken
 $
-$DEFINE CHARACTER
-$SET KIND f_char
-$SET TYPE character
-$POST MRGRNK
-$UNDEFINE CHARACTER
+$!$DEFINE CHARACTER
+$!$SET KIND f_char
+$!$SET TYPE character
+$!$POST UNIRNK
+$!$UNDEFINE CHARACTER
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-end module M_mrgrnk
+
+end module M_unirnk

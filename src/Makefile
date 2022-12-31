@@ -5,7 +5,7 @@ NULL=
 #PROGFILES = $(wildcard ../app/*.f90) $(wildcard ../example/*.f90) $(wildcard ../example/*/*.f90)
 PROGFILES =  $(wildcard ../example/*.f90) $(wildcard ../example/*/*.f90)
 PROG = ${PROGFILES:.f90=}
-SRCS = $(wildcard ./*.f90) $(wildcard ./*.c ) $(wildcard ./*.h )
+SRCS = $(wildcard ./*.ff) $(wildcard ./*.f90) $(wildcard ./*.c ) $(wildcard ./*.h )
 LIBS := -Llib -lorderpack
 
 CPROGFILES = 
@@ -13,9 +13,14 @@ CPROGFILES =
 CPROG = ${CPROGFILES:.c=}
 # create a list of corresponding object files
 COBJS_FILES = $(wildcard ./*.c )
-FOBJS_FILES = $(wildcard ./*.f90 )
-OBJS = $(patsubst %.c,%.o,$(COBJS_FILES)) $(patsubst %.f90,%.o,$(FOBJS_FILES))
-LIBOBJS = $(patsubst %.f90,$(LIBRARY)(%.o),$(SRCS)) $(patsubst %.c,$(LIBRARY)(%.o),$(SRCS))
+FOBJS_FILES = $(wildcard ./*.f90 ) 
+PREPOBJS_FILES = $(wildcard ./*.ff ) 
+OBJS = $(patsubst %.c,%.o,$(COBJS_FILES)) \
+       $(patsubst %.ff,%.o,$(PREPOBJS_FILES)) \
+       $(patsubst %.f90,%.o,$(FOBJS_FILES))
+LIBOBJS = $(patsubst %.f90,$(LIBRARY)(%.o),$(wildcard ./*.f90)) \
+          $(patsubst %.ff,$(LIBRARY)(%.o),$(wildcard ./*.ff)) \
+          $(patsubst %.c,$(LIBRARY)(%.o),$(wildcard ./*.c))
 
 INSTALL=./lib
 # ########################################################################################
@@ -79,7 +84,13 @@ LIBRARY=$(INSTALL)/$(FC)/lib$(LIBNAME).a
 #-------------------------------------------------------------------------------
 # list what to run and then do any teardown. Do not leave this empty
 all: directorysetup $(OBJS) $(LIBRARY) $(CPROG) $(PROG) $(TPROG)
-	#@test -f test_suite_log.txt || $(MAKE) test
+	@#echo 'OBJS     $(OBJS)'
+	@#echo 'LIBOBJS  $(LIBOBJS)'
+	@#echo 'LIBRARY  $(LIBRARY)'
+	@#echo 'CPROG    $(CPROG)'
+	@#echo 'PROG     $(PROG)'
+	@#echo 'TPROG    $(TPROG)'
+	@#test -f test_suite_log.txt || $(MAKE) test
 	@echo "That's all Folks!"
 #-------------------------------------------------------------------------------
 # what to do before you start compiling
@@ -137,17 +148,20 @@ clean:
 # Assumes .F90 file does not exist previously, as it will overwrite it.
 .FF.F90:
 	@# run thru prep(1) preprocessor with system commands allowed
-	prep -D F90 `uname -o` -verbose -system .true. -i $(<) -o $(*F).F90
+	prep -D F90 `uname -s` -verbose -system .true. -i $(<) -o $(*F).F90
 	@[ -s $(*F).F90 ] || echo "error: $(*F).F90 is empty"
 	#-------------------------------------------------------------------------------
 	# Fortran free format file known to have prep(1) preprocessor directives
 	# run thru prep(1) preprocessor with no system commands allowed, variable F90
 	# defined. Assumes .F90 file does not exist previously, as it will overwrite it.
 #-------------------------------------------------------------------------------
+#.ff.f90:
+#	prep -D F90 `uname -s` --verbose -i  $< -o $@
+#-------------------------------------------------------------------------------
 .ff.f90:
 	@# run thru prep(1) preprocessor with system commands allowed
-	prep -D F90 `uname -o` -verbose -i $(<) -o $(*F).F90
-	@[ -s $(*F).F90 ] || echo "error: $(*F).F90 is empty"
+	prep -D F90 `uname -s` -verbose -i $(<) -o $(*F).f90
+	@[ -s $(*F).f90 ] || echo "error: $(*F).f90 is empty"
 .f90.a: $(OBJS) $(LIBRARY)
 	@echo '==>.f90.a'
 	@echo "LIBRARY is $(LIBRARY)"
@@ -199,7 +213,7 @@ M_ctrper.o: M_mrgrnk.o
 M_mulcnt.o: M_uniinv.o 
 M_unista.o: M_uniinv.o 
 M_orderpack.o: M_ctrper.o M_fndnth.o M_indmed.o M_indnth.o M_inspar.o \
-               M_inssor.o M_median.o M_mrgref.o M_mrgrnk.o M_mulcnt.o \
-               M_rapknr.o M_refpar.o M_refsor.o M_rinpar.o M_rnkpar.o \
-               M_uniinv.o M_unipar.o M_unirnk.o M_unista.o M_valmed.o M_valnth.o
+	M_inssor.o M_median.o M_mrgref.o M_mrgrnk.o M_mulcnt.o \
+	M_rapknr.o M_refpar.o M_refsor.o M_rinpar.o M_rnkpar.o \
+	M_uniinv.o M_unipar.o M_unirnk.o M_unista.o M_valmed.o M_valnth.o
 #-------------------------------------------------------------------------------
