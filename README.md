@@ -77,7 +77,7 @@ This will compile the Fortran module and basic example programs that exercise th
      make clean
      make nvfortran
 ```
-   Note that to specifically get get release 2.0.0 you would use
+   Note that to specifically get release 2.0.0 you would use
 ```bash
      git clone --branch 2.0.0 https://github.com/urbanjost/orderpack.git
 ```
