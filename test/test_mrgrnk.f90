@@ -4,7 +4,7 @@ program test_mrgrnk
 ! compiler to put arrays on heap.
 !
 !    ulimit -s unlimited # bash shell
-use M_mrgrnk, only : mrgrnk
+use M_orderpack__mrgrnk, only : mrgrnk
 implicit none
 integer,parameter            :: dp=kind(0.0d0)
 integer                      :: isz

@@ -1,0 +1,180 @@
+\hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt}{}\doxysection{m\+\_\+orderpack\+\_\+\+\_\+mulcnt\+::mulcnt Interface Reference}
+\label{interfacem__orderpack____mulcnt_1_1mulcnt}\index{m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____mulcnt_1_1mulcnt_afb620a281a24f4e91b9b1d75e01a72bb}{real64\+\_\+mulcnt}} (I\+N\+V\+A\+LS, I\+M\+U\+LT)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____mulcnt_1_1mulcnt_a69358a8d03f3c1fd314367bab057da81}{real32\+\_\+mulcnt}} (I\+N\+V\+A\+LS, I\+M\+U\+LT)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____mulcnt_1_1mulcnt_a544022d24df45b199f311d010ab3932f}{int32\+\_\+mulcnt}} (I\+N\+V\+A\+LS, I\+M\+U\+LT)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____mulcnt_1_1mulcnt_a8d8d5b6ff5a788ec942109c76fab72b3}{f\+\_\+char\+\_\+mulcnt}} (I\+N\+V\+A\+LS, I\+M\+U\+LT)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md50}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md50}
+occurrences(3f) -\/ \mbox{[}M\+\_\+orderpack\+:M\+U\+L\+T\+I\+P\+L\+I\+C\+I\+TY\mbox{]} Give the multiplicity for each array value (number of times that it appears in the array)\hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md51}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md51}
+\begin{DoxyVerb} Subroutine Occurrences (INVALS, IMULT)
+
+   ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+   Integer, Intent (Out)               :: IMULT(:)
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
+\end{DoxyVerb}
+\hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md52}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md52}
+O\+C\+C\+U\+R\+R\+E\+N\+C\+E\+S(3f) Gives, for each array element, its multiplicity (number of times that it appears in the array).
+
+Internally, the number of times that a value appears in the array is computed by using inverse ranking, counting for each rank the number of values that \char`\"{}collide\char`\"{} to this rank, and returning this sum to the locations in the original set. It uses subroutine R\+A\+N\+K\+\_\+\+O\+R\+D\+E\+R\+S(3f).\hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md53}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md53}
+I\+N\+V\+A\+LS input array I\+M\+U\+LT array containing how often the value in I\+N\+V\+A\+LS appears in I\+N\+V\+A\+LS\hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md54}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md54}
+Sample program\+: \begin{DoxyVerb} program demo_occurrences
+ use M_orderpack, only : occurrences
+ ! determine how many times each value appears in an input array
+ implicit none
+ character(len=*),parameter    :: g='(*(g0,1x))'
+ character(len=20),allocatable :: strings(:)
+ integer,allocatable           :: cindx(:)
+ integer                       :: csz
+ integer                       :: i
+    ! each name appears the number of times its name represents
+    strings= [ character(len=20) ::                           &
+    & 'two  ',  'four ', 'three', 'five',   'five',           &
+    & 'two  ',  'four ', 'three', 'five',   'five',           &
+    & 'four ',  'four ', 'three', 'one  ',  'five']
+    csz=size(strings)
+    if(allocated(cindx))deallocate(cindx)
+    allocate(cindx(csz))
+    call occurrences(strings,cindx)
+    write(*,g)(trim(strings(i)),i=1,csz)
+    write(*,g)cindx
+ end program demo_occurrences
+\end{DoxyVerb}
+
+
+Results\+:
+
+two four three five five two four three five five four four three one five 2 4 3 5 5 2 4 3 5 5 4 4 3 1 5\hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md55}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md55}
+Michel Olagnon, Mar 2000 \hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md56}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md56}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md57}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__orderpack____mulcnt_1_1mulcnt_autotoc_md57}
+C\+C0-\/1.\+0 
+
+\doxysubsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_a8d8d5b6ff5a788ec942109c76fab72b3}\label{interfacem__orderpack____mulcnt_1_1mulcnt_a8d8d5b6ff5a788ec942109c76fab72b3}} 
+\index{m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}!f\_char\_mulcnt@{f\_char\_mulcnt}}
+\index{f\_char\_mulcnt@{f\_char\_mulcnt}!m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}}
+\doxysubsubsection{\texorpdfstring{f\_char\_mulcnt()}{f\_char\_mulcnt()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+mulcnt\+::mulcnt\+::f\+\_\+char\+\_\+mulcnt (\begin{DoxyParamCaption}\item[{character (kind=\mbox{\hyperlink{namespacem__orderpack____mulcnt_ac69d1cc32fe89cb254b1b54dfe9417f8}{f\+\_\+char}},len=$\ast$), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+M\+U\+LT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{140 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{141       \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: INVALS}
+\DoxyCodeLine{142       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
+\DoxyCodeLine{143 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{144       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INVALS))} :: IWRKT}
+\DoxyCodeLine{145       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INVALS))} :: ICNTT}
+\DoxyCodeLine{146       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{147 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{148       \textcolor{keyword}{Call }uniinv (invals, iwrkt)}
+\DoxyCodeLine{149       icntt = 0}
+\DoxyCodeLine{150       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(invals)}
+\DoxyCodeLine{151             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
+\DoxyCodeLine{152 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{153       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(invals)}
+\DoxyCodeLine{154             imult(icrs) = icntt(iwrkt(icrs))}
+\DoxyCodeLine{155 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{156 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_a544022d24df45b199f311d010ab3932f}\label{interfacem__orderpack____mulcnt_1_1mulcnt_a544022d24df45b199f311d010ab3932f}} 
+\index{m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}!int32\_mulcnt@{int32\_mulcnt}}
+\index{int32\_mulcnt@{int32\_mulcnt}!m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}}
+\doxysubsubsection{\texorpdfstring{int32\_mulcnt()}{int32\_mulcnt()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+mulcnt\+::mulcnt\+::int32\+\_\+mulcnt (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+M\+U\+LT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{121 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{122       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: INVALS}
+\DoxyCodeLine{123       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
+\DoxyCodeLine{124 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{125       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INVALS))} :: IWRKT}
+\DoxyCodeLine{126       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INVALS))} :: ICNTT}
+\DoxyCodeLine{127       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{128 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{129       \textcolor{keyword}{Call }uniinv (invals, iwrkt)}
+\DoxyCodeLine{130       icntt = 0}
+\DoxyCodeLine{131       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(invals)}
+\DoxyCodeLine{132             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
+\DoxyCodeLine{133 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{134       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(invals)}
+\DoxyCodeLine{135             imult(icrs) = icntt(iwrkt(icrs))}
+\DoxyCodeLine{136 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{137 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_a69358a8d03f3c1fd314367bab057da81}\label{interfacem__orderpack____mulcnt_1_1mulcnt_a69358a8d03f3c1fd314367bab057da81}} 
+\index{m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}!real32\_mulcnt@{real32\_mulcnt}}
+\index{real32\_mulcnt@{real32\_mulcnt}!m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}}
+\doxysubsubsection{\texorpdfstring{real32\_mulcnt()}{real32\_mulcnt()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+mulcnt\+::mulcnt\+::real32\+\_\+mulcnt (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+M\+U\+LT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{102 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{103 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
+\DoxyCodeLine{104       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
+\DoxyCodeLine{105 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{106       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INVALS))} :: IWRKT}
+\DoxyCodeLine{107       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INVALS))} :: ICNTT}
+\DoxyCodeLine{108       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{109 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{110       \textcolor{keyword}{Call }uniinv (invals, iwrkt)}
+\DoxyCodeLine{111       icntt = 0}
+\DoxyCodeLine{112       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(invals)}
+\DoxyCodeLine{113             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
+\DoxyCodeLine{114 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{115       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(invals)}
+\DoxyCodeLine{116             imult(icrs) = icntt(iwrkt(icrs))}
+\DoxyCodeLine{117 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{118 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____mulcnt_1_1mulcnt_afb620a281a24f4e91b9b1d75e01a72bb}\label{interfacem__orderpack____mulcnt_1_1mulcnt_afb620a281a24f4e91b9b1d75e01a72bb}} 
+\index{m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}!real64\_mulcnt@{real64\_mulcnt}}
+\index{real64\_mulcnt@{real64\_mulcnt}!m\_orderpack\_\_mulcnt::mulcnt@{m\_orderpack\_\_mulcnt::mulcnt}}
+\doxysubsubsection{\texorpdfstring{real64\_mulcnt()}{real64\_mulcnt()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+mulcnt\+::mulcnt\+::real64\+\_\+mulcnt (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, dimension (\+:), intent(out)}]{I\+M\+U\+LT }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{83 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{84 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
+\DoxyCodeLine{85       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (Out)} :: IMULT}
+\DoxyCodeLine{86 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{87       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INVALS))} :: IWRKT}
+\DoxyCodeLine{88       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INVALS))} :: ICNTT}
+\DoxyCodeLine{89       \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{90 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{91       \textcolor{keyword}{Call }uniinv (invals, iwrkt)}
+\DoxyCodeLine{92       icntt = 0}
+\DoxyCodeLine{93       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(invals)}
+\DoxyCodeLine{94             icntt(iwrkt(icrs)) = icntt(iwrkt(icrs)) + 1}
+\DoxyCodeLine{95 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{96       \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(invals)}
+\DoxyCodeLine{97             imult(icrs) = icntt(iwrkt(icrs))}
+\DoxyCodeLine{98 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{99 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/urbanjs/venus/\+V600/github/\+M\+\_\+orderpack/src/\mbox{\hyperlink{M__orderpack____mulcnt_8f90}{M\+\_\+orderpack\+\_\+\+\_\+mulcnt.\+f90}}\end{DoxyCompactItemize}

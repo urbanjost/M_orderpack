@@ -3,13 +3,13 @@ src_dir: src
          example
          test
 output_dir: docs/fpm-ford
-project: orderpack
+project: M_orderpack
 summary: sorting and ordering procedures in Fortran
-project_github: https://github.com/urbanjost/orderpack
+project_github: https://github.com/urbanjost/M_orderpack
 project_download:
 author: Michel Olagnon
 author_email: urbanjost@comcast.net
-github: https://github.com/urbanjost/orderpack
+github: https://github.com/urbanjost/M_orderpack
 media_dir: docs/images
 exclude_dir: archive
              FODDER

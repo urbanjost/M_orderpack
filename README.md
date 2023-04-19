@@ -1,6 +1,6 @@
-![ORDERPACK](docs/images/orderpack.gif)
+![_M_ORDERPACK](docs/images/M_orderpack.gif)
 ## Name
-   **orderpack**(3f) - general and specialized ranking and sorting routines
+   **M_orderpack**(3f) - general and specialized ranking and sorting routines
 
 ## Description
 
@@ -15,7 +15,7 @@ that additionally
    added.
  - contains a growing set of unit tests.
 
-ORDERPACK 2.1 performs both conventional sorting and ranking as well as
+M_ORDERPACK 2.1 performs both conventional sorting and ranking as well as
 the rarer specialized ordering tasks such as partial sorting, partial
 ranking, unique sorting, unique ranking, inverse unique ranking, and
 more. These partial sort and ranking routines can greatly accelerate
@@ -37,7 +37,7 @@ MINVAL(3f), not ORDERVAL(3f).
 **Authors**: 
 
 - Michel Olagnon date: 2000-2013 wrote the original ORDERPACK 2.0
-- John S. Urban, date: 2022 derived ORDERPACK 2.1 from ORDERPACK 2.0
+- John S. Urban, date: 2022 derived M_ORDERPACK 2.1 from ORDERPACK 2.0
 
 **LICENSE**:
 
@@ -59,10 +59,10 @@ CC0-1.0
 This will compile the Fortran module and basic example programs that exercise the routines:
 
 ```bash
-     git clone https://github.com/urbanjost/orderpack.git
+     git clone https://github.com/urbanjost/M_orderpack.git
 
 
-     cd orderpack/src
+     cd M_orderpack/src
      # change Makefile if not using one of the listed compilers
 
      # for gfortran
@@ -79,7 +79,7 @@ This will compile the Fortran module and basic example programs that exercise th
 ```
    Note that to specifically get release 2.0.0 you would use
 ```bash
-     git clone --branch 2.0.0 https://github.com/urbanjost/orderpack.git
+     git clone --branch 2.0.0 https://github.com/urbanjost/M_orderpack.git
 ```
 ---
 ## Build and test with![fpm](docs/images/fpm_logo.gif)
@@ -87,8 +87,8 @@ This will compile the Fortran module and basic example programs that exercise th
    Download the github repository and build it with
    fpm ( as described at [Fortran Package Manager](https://github.com/fortran-lang/fpm) )
 ```bash
-        git clone https://github.com/urbanjost/orderpack.git
-        cd orderpack
+        git clone https://github.com/urbanjost/M_orderpack.git
+        cd M_orderpack
         fpm build
 ```
 
@@ -96,45 +96,45 @@ This will compile the Fortran module and basic example programs that exercise th
 
 ```toml
         [dependencies]
-        orderpack        = { git = "https://github.com/urbanjost/orderpack.git" }
+        M_orderpack        = { git = "https://github.com/urbanjost/M_orderpack.git" }
 ```
 ---
 ## Documentation ![docs](docs/images/docs.gif)
 
 ### User
-   - [routines](https://urbanjost.github.io/orderpack/man3.html) 
+   - [routines](https://urbanjost.github.io/M_orderpack/man3.html) 
      are described in HTML form using the format of man-pages.
 <!--
-     and [programs](https://urbanjost.github.io/orderpack/man1.html)
+     and [programs](https://urbanjost.github.io/M_orderpack/man1.html)
    - A single page that uses javascript to combine all the HTML
      descriptions of the man-pages is at
-     [BOOK_orderpack](https://urbanjost.github.io/orderpack/BOOK_orderpack.html).
+     [BOOK_M_orderpack](https://urbanjost.github.io/M_orderpack/BOOK_M_orderpack.html).
 -->
 
    - ![man-pages](docs/images/manpages.gif)
      There are man-pages in the repository download in the docs/ directory
      that may be installed on ULS (Unix-Like Systems).
 
-      + [manpages.zip](https://urbanjost.github.io/orderpack/manpages.zip)
-      + [manpages.tgz](https://urbanjost.github.io/orderpack/manpages.tgz)
+      + [manpages.zip](https://urbanjost.github.io/M_orderpack/manpages.zip)
+      + [manpages.tgz](https://urbanjost.github.io/M_orderpack/manpages.tgz)
 
-   - fpm plugin fpm-orderpack(1). If you build the optional program
-     source in app/fpm-orderpack.f90.plugin and place it in your search-path
+   - fpm plugin fpm-m_orderpack(1). If you build the optional program
+     source in app/fpm-m_orderpack.f90.plugin and place it in your search-path
      then commands like
 ```bash
-     fpm orderpack manual|more
+     fpm m_orderpack manual|more
 ```
      will display the help-text manual for the procedures. For more
      information enter
 ```bash
-     fpm orderpack --help
+     fpm m_orderpack --help
 ```
 
    - [CHANGELOG](docs/CHANGELOG.md) provides a history of significant changes
 ---
 ### Developer
-   - [ford(1) output](https://urbanjost.github.io/orderpack/fpm-ford/index.html).
-   - [doxygen(1) output](https://urbanjost.github.io/orderpack/doxygen_out/html/index.html).
+   - [ford(1) output](https://urbanjost.github.io/M_orderpack/fpm-ford/index.html).
+   - [doxygen(1) output](https://urbanjost.github.io/M_orderpack/doxygen_out/html/index.html).
    - [github action status](docs/STATUS.md)
 ---
 ## See also ![-](docs/images/demos.gif)
@@ -142,7 +142,7 @@ This will compile the Fortran module and basic example programs that exercise th
 
    * [M_sort](https://github.com/urbanjost/M_sort)
    * [ORDERPACK2.0](http://www.fortran-2000.com/rank/)
-   * [orderpack](https://github.com/urbanjost/orderpack)
+   * [M_orderpack](https://github.com/urbanjost/M_orderpack)
    * [sortff](https://gitlab.com/everythingfunctional/sortff)
 #### general packages containing sorting
    * [commonTools](https://github.com/wtdailey/commonTools)

@@ -6,21 +6,16 @@ NULL=
 PROGFILES =  $(wildcard ../example/*.f90) $(wildcard ../example/*/*.F90)
 PROG = ${PROGFILES:.f90=}
 SRCS = $(wildcard ./*.ff) $(wildcard ./*.f90) $(wildcard ./*.c ) $(wildcard ./*.h )
-LIBS := -Llib -lorderpack
 
-CPROGFILES = 
+CPROGFILES =
 
 CPROG = ${CPROGFILES:.c=}
 # create a list of corresponding object files
 COBJS_FILES = $(wildcard ./*.c )
-FOBJS_FILES = $(wildcard ./*.f90 ) 
-PREPOBJS_FILES = $(wildcard ./*.ff ) 
-OBJS = $(patsubst %.c,%.o,$(COBJS_FILES)) \
-       $(patsubst %.ff,%.o,$(PREPOBJS_FILES)) \
-       $(patsubst %.f90,%.o,$(FOBJS_FILES))
-LIBOBJS = $(patsubst %.f90,$(LIBRARY)(%.o),$(wildcard ./*.f90)) \
-          $(patsubst %.ff,$(LIBRARY)(%.o),$(wildcard ./*.ff)) \
-          $(patsubst %.c,$(LIBRARY)(%.o),$(wildcard ./*.c))
+FOBJS_FILES = $(wildcard ./*.f90 )
+PREPOBJS_FILES = $(wildcard ./*.ff )
+OBJS = $(patsubst %.c,%.o,$(COBJS_FILES))        $(patsubst %.ff,%.o,$(PREPOBJS_FILES))        $(patsubst %.f90,%.o,$(FOBJS_FILES))
+LIBOBJS = $(patsubst %.f90,$(LIBRARY)(%.o),$(wildcard ./*.f90))           $(patsubst %.ff,$(LIBRARY)(%.o),$(wildcard ./*.ff))           $(patsubst %.c,$(LIBRARY)(%.o),$(wildcard ./*.c))
 
 INSTALL=./lib
 # ########################################################################################
@@ -30,10 +25,9 @@ TESTFILES =
 
 TPROG = ${TESTFILES:.f90=}
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # platform-specific values you will probably change
-# 
-LIBS := 
+#
 CC := cc
 CFLAGS := -O
 FC := gfortran
@@ -44,18 +38,14 @@ ARFLAGS=rU
 RANLIB=ranlib
 
 gfortran: FC=gfortran
-gfortran: FFLAGS := -g -O -std=f2018  \
-	  -Wall -Wextra -Wno-maybe-uninitialized -Wno-uninitialized \
-          -I $(INSTALL)/$(FC) -J $(INSTALL)/$(FC)
-gfortran: FFLAGS := \
-          -I $(INSTALL)/$(FC) -J $(INSTALL)/$(FC)
+gfortran: FFLAGS := -g -O -std=f2018      -Wall -Wextra -Wno-maybe-uninitialized -Wno-uninitialized           -I $(INSTALL)/$(FC) -J $(INSTALL)/$(FC)
+gfortran: FFLAGS :=           -I $(INSTALL)/$(FC) -J $(INSTALL)/$(FC)
 LDFLAGS := -I $(INSTALL)/$(FC)
 gfortran: all
 	@echo built with $(FC)
 
 nvfortran: FC=nvfortran
-nvfortran: FFLAGS := -Minform=inform -Mbackslash -traceback \
-          -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
+nvfortran: FFLAGS := -Minform=inform -Mbackslash -traceback           -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
 nvfortran: LDFLAGS := -I $(INSTALL)/$(FC) -module $(INSTALL)/$(FC)
 nvfortran: all
 	@echo built with $(FC)
@@ -75,10 +65,11 @@ nagfor: all
 	@echo built with $(FC)
 
 # name of library to build of the form lib$NAME.a
-LIBNAME=orderpack
+LIBNAME = M_orderpack
+LIBS = -Llib/$(FC) -l$(LIBNAME)
 # directory to place output files in
 LIBRARY=$(INSTALL)/$(FC)/lib$(LIBNAME).a
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # set the '.RECIPEPREFIX' variable to an alternate character
 #.RECIPEPREFIX = >
 #-------------------------------------------------------------------------------
@@ -91,22 +82,22 @@ all: directorysetup $(OBJS) $(LIBRARY) $(CPROG) $(PROG) $(TPROG)
 	@#echo 'PROG     $(PROG)'
 	@#echo 'TPROG    $(TPROG)'
 	@#test -f test_suite_log.txt || $(MAKE) test
-	@echo "That's all Folks!"
+	@#echo "That's all Folks!"
 #-------------------------------------------------------------------------------
 # what to do before you start compiling
 directorysetup:
 	@ echo "MAKING LIBRARY:   $(LIBRARY)"
-	@[ -d "$(INSTALL)/$(FC)" ] || \
-	(echo "making directory $(INSTALL)/$(FC)"; \
-	mkdir -p $(INSTALL)/$(FC))
+	@[ -d "$(INSTALL)/$(FC)" ] ||   (echo "making directory $(INSTALL)/$(FC)";      mkdir -p $(INSTALL)/$(FC))
 #-------------------------------------------------------------------------------
 $(PROG): $(OBJS) $(LIBRARY)
 	@echo '==>PROG'
-	-$(FC) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS)||echo "ouch: $@.f90 "
+#-$(FC) $(LDFLAGS) $@.f90 -o $@ $(OBJS) $(LIBS)||echo "ouch: $@.f90 "
+	-$(FC) $(LDFLAGS) $@.f90 -o $@ $(LIBS)||echo "ouch: $@.f90 "
 #-------------------------------------------------------------------------------
 # what to do after you have built the library
 $(LIBRARY): $(LIBOBJS)
 	@echo '==>LIBRARY'
+#@ $(AR) $(ARFLAGS) $(LIBRARY) $(LIBOBJS)
 	@ $(RANLIB) $(LIBRARY)
 	@ echo "TARGETS FOR $(LIBRARY) UP TO DATE"
 	#-$(FC) $(FFLAGS) $(LDFLAGS) $@.f90 -o $@ $(LIBS)
@@ -126,9 +117,9 @@ clean:
 	-rm -fv $(PROG) $(CPROG) $(TPROG) $(OBJS) *.mod *.o
 #-------------------------------------------------------------------------------
 .SUFFIXES: $(SUFFIXES) .f90 .F90 .ff .FF .shf
-	# .shf -- assumed to write Fortran code to stdout when executed
-	# .FF -- run thru prep(1) with    $system directives allowed
-	# .ff -- run thru prep(1) without $system directives allowed
+        # .shf -- assumed to write Fortran code to stdout when executed
+        # .FF -- run thru prep(1) with    $system directives allowed
+        # .ff -- run thru prep(1) without $system directives allowed
 #-------------------------------------------------------------------------------
 # override built-in implicit make rule that tells make it can make object files
 # from modula-2 .mod files by running m2c
@@ -156,7 +147,7 @@ clean:
 	# defined. Assumes .F90 file does not exist previously, as it will overwrite it.
 #-------------------------------------------------------------------------------
 #.ff.f90:
-#	prep -D F90 `uname -s` --verbose -i  $< -o $@
+#       prep -D F90 `uname -s` --verbose -i  $< -o $@
 #-------------------------------------------------------------------------------
 .ff.f90:
 	@# run thru prep(1) preprocessor with system commands allowed
@@ -166,19 +157,19 @@ clean:
 	@echo '==>.f90.a'
 	@echo "LIBRARY is $(LIBRARY)"
 	$(FC) -c $(FFLAGS) $< -o $%
-	@ $(AR) $(ARFLAGS) $(LIBRARY) $% 
+	@ $(AR) $(ARFLAGS) $(LIBRARY) $%
 	@ $(AR) $(ARFLAGS) $(LIBRARY) $<  # optionally store the source code too
 	#@ /bin/rm -f ${?F:.f90=.o} $%
 .c.a:
 	@echo '==>.c.a'
 	$(CC) -c $(CFLAGS) $< -o $%
-	@ $(AR) $(ARFLAGS) $(LIBRARY) $% 
+	@ $(AR) $(ARFLAGS) $(LIBRARY) $%
 	@ $(AR) $(ARFLAGS) $(LIBRARY) $<  # optionally store the source code too
 	#@ /bin/rm -f ${?F:.c=.o} $%
 #-------------------------------------------------------------------------------
 .PHONY: help
 help:
-	: all     '-- build ORDERPACK module'
+	: all     '-- build M_ORDERPACK module'
 	: run     '-- run manpage demo programs'
 	: man     '-- show all manpages as text'
 	: clean   '-- clean directory of object files and executables'
@@ -192,11 +183,11 @@ run: $(PROG)
 	echo $? |xargs -n 1|xargs -iXX time XX
 #-------------------------------------------------------------------------------
 .PHONY: doxygen
-doxygen: 
+doxygen:
 	doxygen dox.in
 #-------------------------------------------------------------------------------
 .PHONY: ford
-ford: 
+ford:
 	cd ..;ford ford.md
 #-------------------------------------------------------------------------------
 .PHONY: man
@@ -209,11 +200,13 @@ man:
 	: SPELLING
 	@env MANPATH=../man MANWIDTH=80  man -Tutf8 --regex '.*'|col -b|spell|xargs -n 5|column -t
 #-------------------------------------------------------------------------------
-M_ctrper.o: M_mrgrnk.o 
-M_mulcnt.o: M_uniinv.o 
-M_unista.o: M_uniinv.o 
-M_orderpack.o: M_ctrper.o M_fndnth.o M_indmed.o M_indnth.o M_inspar.o \
-	M_inssor.o M_median.o M_mrgref.o M_mrgrnk.o M_mulcnt.o \
-	M_rapknr.o M_refpar.o M_refsor.o M_rinpar.o M_rnkpar.o \
-	M_uniinv.o M_unipar.o M_unirnk.o M_unista.o M_valmed.o M_valnth.o
+M_orderpack__ctrper.o: M_orderpack__mrgrnk.o
+M_orderpack__mulcnt.o: M_orderpack__uniinv.o
+M_orderpack__unista.o: M_orderpack__uniinv.o
+M_orderpack.o: M_orderpack__ctrper.o M_orderpack__fndnth.o M_orderpack__indmed.o \
+	M_orderpack__indnth.o M_orderpack__inspar.o \
+	M_orderpack__inssor.o M_orderpack__median.o M_orderpack__mrgref.o M_orderpack__mrgrnk.o \
+	M_orderpack__mulcnt.o M_orderpack__rapknr.o M_orderpack__refpar.o M_orderpack__refsor.o \
+	M_orderpack__rinpar.o M_orderpack__rnkpar.o M_orderpack__uniinv.o M_orderpack__unipar.o \
+	M_orderpack__unirnk.o M_orderpack__unista.o M_orderpack__valmed.o M_orderpack__valnth.o
 #-------------------------------------------------------------------------------

@@ -1,0 +1,24 @@
+function loadthem(){
+append("M_orderpack.3m_orderpack.html");
+append("median.3m_orderpack.html");
+append("medianloc.3m_orderpack.html");
+append("medianval.3m_orderpack.html");
+append("occurrences.3m_orderpack.html");
+append("orderloc.3m_orderpack.html");
+append("orderval.3m_orderpack.html");
+append("orderval_special.3m_orderpack.html");
+append("perturb.3m_orderpack.html");
+append("prank.3m_orderpack.html");
+append("prank_basic.3m_orderpack.html");
+append("prank_decreasing.3m_orderpack.html");
+append("prank_special.3m_orderpack.html");
+append("prank_unique.3m_orderpack.html");
+append("psort.3m_orderpack.html");
+append("rank.3m_orderpack.html");
+append("rank_basic.3m_orderpack.html");
+append("rank_decreasing.3m_orderpack.html");
+append("rank_unique.3m_orderpack.html");
+append("sort.3m_orderpack.html");
+append("sort_special.3m_orderpack.html");
+append("unique.3m_orderpack.html");
+}

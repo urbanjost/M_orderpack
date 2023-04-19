@@ -1,0 +1,174 @@
+\hypertarget{interfacem__orderpack____unista_1_1unista}{}\doxysection{m\+\_\+orderpack\+\_\+\+\_\+unista\+::unista Interface Reference}
+\label{interfacem__orderpack____unista_1_1unista}\index{m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____unista_1_1unista_a806a17cb83c4502820c6f1500c54d934}{real64\+\_\+unista}} (I\+N\+O\+U\+T\+V\+A\+LS, N\+U\+NI)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____unista_1_1unista_ae6573c8e2811d827c0f076cbb8b1220b}{real32\+\_\+unista}} (I\+N\+O\+U\+T\+V\+A\+LS, N\+U\+NI)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____unista_1_1unista_af471e97fe98b5a2620a24b1116ad33e6}{int32\+\_\+unista}} (I\+N\+O\+U\+T\+V\+A\+LS, N\+U\+NI)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____unista_1_1unista_a7f4d1e3941b838e3d0fccadfbbe3fcd5}{f\+\_\+char\+\_\+unista}} (I\+N\+O\+U\+T\+V\+A\+LS, N\+U\+NI)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__orderpack____unista_1_1unista_autotoc_md90}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__orderpack____unista_1_1unista_autotoc_md90}
+unique(3f) -\/ \mbox{[}M\+\_\+orderpack\+:U\+N\+I\+Q\+UE\mbox{]} removes duplicates from an array otherwise retaining original order (i.\+e. it is \char`\"{}stable\char`\"{})\hypertarget{interfacem__orderpack____unista_1_1unista_autotoc_md91}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____unista_1_1unista_autotoc_md91}
+\begin{DoxyVerb} Subroutine Unique (INOUTVALS, NUNI)
+
+  ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
+  Integer, Intent (Out)                  :: NUNI
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
+\end{DoxyVerb}
+\hypertarget{interfacem__orderpack____unista_1_1unista_autotoc_md92}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__orderpack____unista_1_1unista_autotoc_md92}
+U\+N\+I\+Q\+U\+E(3f) does a stable removal of duplicates from an array.
+
+It leaves in the initial set only those entries that are unique, packing the array, and leaving the order of the retained values unchanged.
+
+Internally this subroutine uses Merge-\/sort unique inverse ranking.\hypertarget{interfacem__orderpack____unista_1_1unista_autotoc_md93}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__orderpack____unista_1_1unista_autotoc_md93}
+I\+N\+O\+U\+T\+V\+A\+LS input array to reduce to unique values N\+U\+NI number of values comprising the returned set of unique values\hypertarget{interfacem__orderpack____unista_1_1unista_autotoc_md94}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__orderpack____unista_1_1unista_autotoc_md94}
+Sample program\+:
+
+program demo\+\_\+unique ! remove duplicates with remaining elements remaining in initial order use M\+\_\+orderpack, only \+: unique implicit none character(len=$\ast$),parameter \+:: list= \textquotesingle{}($\ast$(g0\+:,\char`\"{}, \char`\"{}))\textquotesingle{} integer \+:: nuni
+
+int \+: block integer,allocatable \+:: I\+N\+O\+U\+T\+V\+A\+L\+S(\+:) I\+N\+O\+U\+T\+V\+A\+LS=\mbox{[}44,33,33,33,22,11,33,44,55,33\mbox{]} print list,\textquotesingle{}O\+R\+I\+G\+I\+N\+AL\+:\textquotesingle{},I\+N\+O\+U\+T\+V\+A\+LS call unique(\+I\+N\+O\+U\+T\+V\+A\+L\+S,nuni) I\+N\+O\+U\+T\+V\+A\+LS=I\+N\+O\+U\+T\+V\+A\+L\+S(\+:nuni) print list,\textquotesingle{}U\+N\+I\+Q\+UE\+:\textquotesingle{},I\+N\+O\+U\+T\+V\+A\+LS endblock int
+
+end program demo\+\_\+unique
+
+Results\+:
+
+O\+R\+I\+G\+I\+N\+AL\+:, 44, 33, 33, 33, 22, 11, 33, 44, 55, 33 U\+N\+I\+Q\+UE\+:, 44, 33, 22, 11, 55\hypertarget{interfacem__orderpack____unista_1_1unista_autotoc_md95}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__orderpack____unista_1_1unista_autotoc_md95}
+Michel Olagnon -\/ Feb. 2000 \hypertarget{interfacem__orderpack____unista_1_1unista_autotoc_md96}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__orderpack____unista_1_1unista_autotoc_md96}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__orderpack____unista_1_1unista_autotoc_md97}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__orderpack____unista_1_1unista_autotoc_md97}
+C\+C0-\/1.\+0 
+
+\doxysubsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__orderpack____unista_1_1unista_a7f4d1e3941b838e3d0fccadfbbe3fcd5}\label{interfacem__orderpack____unista_1_1unista_a7f4d1e3941b838e3d0fccadfbbe3fcd5}} 
+\index{m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}!f\_char\_unista@{f\_char\_unista}}
+\index{f\_char\_unista@{f\_char\_unista}!m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}}
+\doxysubsubsection{\texorpdfstring{f\_char\_unista()}{f\_char\_unista()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+unista\+::unista\+::f\+\_\+char\+\_\+unista (\begin{DoxyParamCaption}\item[{character (kind=\mbox{\hyperlink{namespacem__orderpack____unista_a9b21a1b125f700c136f0f202459aabd8}{f\+\_\+char}},len=$\ast$), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{142 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{143    \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
+\DoxyCodeLine{144    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{145 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{146    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
+\DoxyCodeLine{147    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
+\DoxyCodeLine{148    \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{149 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{150    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
+\DoxyCodeLine{151    ifmptyt = .true.}
+\DoxyCodeLine{152    nuni = 0}
+\DoxyCodeLine{153    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
+\DoxyCodeLine{154       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{155          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{156          nuni = nuni + 1}
+\DoxyCodeLine{157          inoutvals(nuni) = inoutvals(icrs)}
+\DoxyCodeLine{158 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{159 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{160 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____unista_1_1unista_af471e97fe98b5a2620a24b1116ad33e6}\label{interfacem__orderpack____unista_1_1unista_af471e97fe98b5a2620a24b1116ad33e6}} 
+\index{m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}!int32\_unista@{int32\_unista}}
+\index{int32\_unista@{int32\_unista}!m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}}
+\doxysubsubsection{\texorpdfstring{int32\_unista()}{int32\_unista()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+unista\+::unista\+::int32\+\_\+unista (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{121 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{122    \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
+\DoxyCodeLine{123    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{124 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{125    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
+\DoxyCodeLine{126    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
+\DoxyCodeLine{127    \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{128 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{129    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
+\DoxyCodeLine{130    ifmptyt = .true.}
+\DoxyCodeLine{131    nuni = 0}
+\DoxyCodeLine{132    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
+\DoxyCodeLine{133       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{134          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{135          nuni = nuni + 1}
+\DoxyCodeLine{136          inoutvals(nuni) = inoutvals(icrs)}
+\DoxyCodeLine{137 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{138 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{139 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____unista_1_1unista_ae6573c8e2811d827c0f076cbb8b1220b}\label{interfacem__orderpack____unista_1_1unista_ae6573c8e2811d827c0f076cbb8b1220b}} 
+\index{m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}!real32\_unista@{real32\_unista}}
+\index{real32\_unista@{real32\_unista}!m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}}
+\doxysubsubsection{\texorpdfstring{real32\_unista()}{real32\_unista()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+unista\+::unista\+::real32\+\_\+unista (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{100 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{101 \textcolor{keywordtype}{   Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
+\DoxyCodeLine{102    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{103 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{104    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
+\DoxyCodeLine{105    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
+\DoxyCodeLine{106    \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{107 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{108    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
+\DoxyCodeLine{109    ifmptyt = .true.}
+\DoxyCodeLine{110    nuni = 0}
+\DoxyCodeLine{111    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
+\DoxyCodeLine{112       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{113          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{114          nuni = nuni + 1}
+\DoxyCodeLine{115          inoutvals(nuni) = inoutvals(icrs)}
+\DoxyCodeLine{116 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{117 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{118 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____unista_1_1unista_a806a17cb83c4502820c6f1500c54d934}\label{interfacem__orderpack____unista_1_1unista_a806a17cb83c4502820c6f1500c54d934}} 
+\index{m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}!real64\_unista@{real64\_unista}}
+\index{real64\_unista@{real64\_unista}!m\_orderpack\_\_unista::unista@{m\_orderpack\_\_unista::unista}}
+\doxysubsubsection{\texorpdfstring{real64\_unista()}{real64\_unista()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+unista\+::unista\+::real64\+\_\+unista (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS,  }\item[{integer, intent(out)}]{N\+U\+NI }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{79 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{80 \textcolor{keywordtype}{   Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
+\DoxyCodeLine{81    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (Out)} :: NUNI}
+\DoxyCodeLine{82 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{83    \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IWRKT}
+\DoxyCodeLine{84    \textcolor{keywordtype}{Logical}, \textcolor{keywordtype}{Dimension (Size(INOUTVALS))} :: IFMPTYT}
+\DoxyCodeLine{85    \textcolor{keywordtype}{Integer} :: ICRS}
+\DoxyCodeLine{86 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{87    \textcolor{keyword}{Call }uniinv (inoutvals, iwrkt)}
+\DoxyCodeLine{88    ifmptyt = .true.}
+\DoxyCodeLine{89    nuni = 0}
+\DoxyCodeLine{90    \textcolor{keywordflow}{Do} icrs = 1, \textcolor{keyword}{Size}(inoutvals)}
+\DoxyCodeLine{91       \textcolor{keywordflow}{If} (ifmptyt(iwrkt(icrs))) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{92          ifmptyt(iwrkt(icrs)) = .false.}
+\DoxyCodeLine{93          nuni = nuni + 1}
+\DoxyCodeLine{94          inoutvals(nuni) = inoutvals(icrs)}
+\DoxyCodeLine{95 \textcolor{keywordflow}{      End If}}
+\DoxyCodeLine{96 \textcolor{keywordflow}{   End Do}}
+\DoxyCodeLine{97 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/urbanjs/venus/\+V600/github/\+M\+\_\+orderpack/src/\mbox{\hyperlink{M__orderpack____unista_8f90}{M\+\_\+orderpack\+\_\+\+\_\+unista.\+f90}}\end{DoxyCompactItemize}

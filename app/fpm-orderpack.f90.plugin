@@ -1,9 +1,9 @@
- 
-!>>>>> ././src/orderpack_docs.f90
+
+!>>>>> ././src/M_orderpack__docs.f90
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
-module orderpack_docs
+module M_orderpack__docs
 implicit none
 private
 public help_intrinsics
@@ -24,7 +24,7 @@ character(len=256),allocatable                    :: textblock(:)
 character(len=:),allocatable                      :: a, b, c
 integer                                           :: i, p, pg
    select case(name)
-   case('','manual','orderpack')
+   case('','manual','M_orderpack')
       textblock=help_intrinsics_all(prefix,topic,m_help)
    case('fortran','toc')
       textblock=help_intrinsics_section()
@@ -137,7 +137,7 @@ case('1','median')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   median(3f) - [orderpack:MEDIAN] Calculates median VALUE. If', &
+'   median(3f) - [M_orderpack:MEDIAN] Calculates median VALUE. If', &
 '                number of elements is even, returns average of the two', &
 '                "medians".', &
 '', &
@@ -219,7 +219,7 @@ case('2','medianloc')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   medianloc(3f) - [orderpack:MEDIAN] Returns median value''s INDEX.', &
+'   medianloc(3f) - [M_orderpack:MEDIAN] Returns median value''s INDEX.', &
 '', &
 'SYNOPSIS', &
 '    Subroutine MedianLoc (INVALS, OUTORD)', &
@@ -310,7 +310,7 @@ case('3','medianval')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   medianval(3f) - [orderpack:MEDIAN] Returns median VALUE.', &
+'   medianval(3f) - [M_orderpack:MEDIAN] Returns median VALUE.', &
 '', &
 'SYNOPSIS', &
 '    Recursive Function MedianVal (INVALS) Result (RES_MED)', &
@@ -383,7 +383,7 @@ case('4','M_orderpack')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   M_orderpack(3f) - [orderpack::INTRO]General and Specialized Ranking', &
+'   M_orderpack(3f) - [M_orderpack::INTRO]General and Specialized Ranking', &
 '                     and Sorting Routines', &
 'SYNOPSIS', &
 '   Procedure names and syntax:', &
@@ -420,27 +420,27 @@ textblock=[character(len=256) :: &
 '   as well, one per module:', &
 '', &
 '    ! previous ORDERPACK2.0 name ! ORDERPACK 2.1 name', &
-'    use M_refsor, only : refsor  ! Sort', &
-'    use M_inssor, only : inssor  ! Sort_special', &
-'    use M_inspar, only : inspar  ! psort', &
-'    use M_mrgrnk, only : mrgrnk  ! rank', &
-'    use M_mrgref, only : mrgref  ! rank_basic', &
-'    use M_uniinv, only : uniinv  ! rank_decreasing', &
-'    use M_unirnk, only : unirnk  ! rank_unique', &
-'    use M_rnkpar, only : rnkpar  ! prank', &
-'    use M_refpar, only : refpar  ! prank_basic', &
-'    use M_rapknr, only : rapknr  ! prank_decreasing', &
-'    use M_rinpar, only : rinpar  ! prank_special', &
-'    use M_unipar, only : unipar  ! prank_unique', &
-'    use M_median, only : median  ! median', &
-'    use M_valmed, only : valmed  ! medianval', &
-'    use M_indmed, only : indmed  ! medianloc', &
-'    use M_valnth, only : valnth  ! orderval', &
-'    use M_indnth, only : indnth  ! orderloc', &
-'    use M_fndnth, only : fndnth  ! orderval_special', &
-'    use M_mulcnt, only : mulcnt  ! occurrences', &
-'    use M_unista, only : unista  ! unique', &
-'    use M_ctrper, only : ctrper  ! perturb', &
+'    use M_orderpack__refsor, only : refsor  ! Sort', &
+'    use M_orderpack__inssor, only : inssor  ! Sort_special', &
+'    use M_orderpack__inspar, only : inspar  ! psort', &
+'    use M_orderpack__mrgrnk, only : mrgrnk  ! rank', &
+'    use M_orderpack__mrgref, only : mrgref  ! rank_basic', &
+'    use M_orderpack__uniinv, only : uniinv  ! rank_decreasing', &
+'    use M_orderpack__unirnk, only : unirnk  ! rank_unique', &
+'    use M_orderpack__rnkpar, only : rnkpar  ! prank', &
+'    use M_orderpack__refpar, only : refpar  ! prank_basic', &
+'    use M_orderpack__rapknr, only : rapknr  ! prank_decreasing', &
+'    use M_orderpack__rinpar, only : rinpar  ! prank_special', &
+'    use M_orderpack__unipar, only : unipar  ! prank_unique', &
+'    use M_orderpack__median, only : median  ! median', &
+'    use M_orderpack__valmed, only : valmed  ! medianval', &
+'    use M_orderpack__indmed, only : indmed  ! medianloc', &
+'    use M_orderpack__valnth, only : valnth  ! orderval', &
+'    use M_orderpack__indnth, only : indnth  ! orderloc', &
+'    use M_orderpack__fndnth, only : fndnth  ! orderval_special', &
+'    use M_orderpack__mulcnt, only : mulcnt  ! occurrences', &
+'    use M_orderpack__unista, only : unista  ! unique', &
+'    use M_orderpack__ctrper, only : ctrper  ! perturb', &
 '', &
 'DESCRIPTION', &
 '   ORDERPACK 2.1 - Unconditional, Unique and Partial Ranking, Sorting,', &
@@ -511,7 +511,7 @@ textblock=[character(len=256) :: &
 '', &
 '   While Fortran 90 and later variants have made life much easier for', &
 '   scientific programmers than Fortran 77, the language still lacks', &
-'   depth in public domain utilities. The following package, ORDERPACK', &
+'   depth in public domain utilities. The following package, M_ORDERPACK', &
 '   2.1, provides important but uncommon routines needed to complete the', &
 '   Fortran programming environment.', &
 '', &
@@ -529,25 +529,25 @@ textblock=[character(len=256) :: &
 '   of a mass of discrete data. Many times the frequency of the unique', &
 '   values proves interesting (e.g., empirical distributions).', &
 '', &
-'   ORDERPACK handles all of these ordering needs.', &
+'   M_ORDERPACK handles all of these ordering needs.', &
 '', &
-'   Also, ORDERPACK contains a partial unique ranking routine. Such a', &
+'   Also, M_ORDERPACK contains a partial unique ranking routine. Such a', &
 '   routine would prove useful in finding a limited number of unique', &
 '   values in an array.', &
 '', &
 '   Inversion of orderings becomes difficult when duplicates exist (not', &
-'   a one-to-one relation). The ORDERPACK inverse ranking routine handles', &
+'   a one-to-one relation). The M_ORDERPACK inverse ranking routine handles', &
 '   this difficult case.', &
 '', &
-'   As an added bonus ORDERPACK provides an unusual routine which allows', &
+'   As an added bonus M_ORDERPACK provides an unusual routine which allows', &
 '   user controllable partial random permutation of arrays.', &
 '', &
-'   ORDERPACK of course contains conventional or unconditional sorting', &
+'   M_ORDERPACK of course contains conventional or unconditional sorting', &
 '   routines as well.', &
 '', &
 '   Finally, many Fortran sorting or ranking routines do not take advantage', &
 '   of available memory and cache to maximize performance. The routines', &
-'   in ORDERPACK have been designed to take advantage of modern machines.', &
+'   in M_ORDERPACK have been designed to take advantage of modern machines.', &
 '', &
 'RANKING VERSUS SORTING', &
 '', &
@@ -647,7 +647,7 @@ case('5','occurrences')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   occurrences(3f) - [orderpack:MULTIPLICITY] Give the multiplicity for each', &
+'   occurrences(3f) - [M_orderpack:MULTIPLICITY] Give the multiplicity for each', &
 '                array value (number of times that it appears in the array)', &
 '', &
 'SYNOPSIS', &
@@ -725,7 +725,7 @@ case('6','orderloc')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   orderloc(3f) - [orderpack:FRACTILE] Return INDEX of Nth ordered value of', &
+'   orderloc(3f) - [M_orderpack:FRACTILE] Return INDEX of Nth ordered value of', &
 '                  array (QuickSort-like)', &
 '', &
 'SYNOPSIS', &
@@ -819,7 +819,7 @@ case('7','orderval')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   orderval(3f) - [orderpack:FRACTILE] Return VALUE of Nth ordered', &
+'   orderval(3f) - [M_orderpack:FRACTILE] Return VALUE of Nth ordered', &
 '                  element of array (QuickSort-like)', &
 '', &
 'SYNOPSIS', &
@@ -915,7 +915,7 @@ case('8','orderval_special')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   orderval_special(3f) - [orderpack:FRACTILE] Return VALUE of Nth', &
+'   orderval_special(3f) - [M_orderpack:FRACTILE] Return VALUE of Nth', &
 '                          ordered element of array (InsertSort-like)', &
 '', &
 'SYNOPSIS', &
@@ -1025,7 +1025,7 @@ case('9','perturb')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   perturb(3f) - [orderpack:PERMUTATION] generate a random permutation', &
+'   perturb(3f) - [M_orderpack:PERMUTATION] generate a random permutation', &
 '                 of an array leaving elements close to initial locations', &
 '', &
 'SYNOPSIS', &
@@ -1155,7 +1155,7 @@ case('10','prank')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   prank(3f) - [orderpack:RANK:PARTIAL] partially ranks an array', &
+'   prank(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array', &
 '               (QuickSort-like)', &
 '', &
 'SYNOPSIS', &
@@ -1240,7 +1240,7 @@ case('11','prank_basic')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   prank_basic(3f) - [orderpack:RANK:PARTIAL] partially ranks an array', &
+'   prank_basic(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array', &
 '                (QuickSort)', &
 '', &
 'SYNOPSIS', &
@@ -1328,7 +1328,7 @@ case('12','prank_decreasing')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   prank_decreasing(3f) - [orderpack:RANK:PARTIAL] partially ranks an', &
+'   prank_decreasing(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an', &
 '                         array in DECREASING order.', &
 '', &
 'SYNOPSIS', &
@@ -1412,7 +1412,7 @@ case('13','prank_special')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   prank_special(3f) - [orderpack:RANK:PARTIAL] partially ranks an array in', &
+'   prank_special(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array in', &
 '                ASCENDING order (Insertion Sort)', &
 '', &
 'SYNOPSIS', &
@@ -1496,7 +1496,7 @@ case('14','prank_unique')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   prank_unique(3f) - [orderpack:RANK:PARTIAL:UNIQUE] partially ranks', &
+'   prank_unique(3f) - [M_orderpack:RANK:PARTIAL:UNIQUE] partially ranks', &
 '                      an array removing duplicates', &
 '', &
 'SYNOPSIS', &
@@ -1603,7 +1603,7 @@ case('15','psort')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   psort(3f) - [orderpack:SORT:PARTIAL] partially sorts an array', &
+'   psort(3f) - [M_orderpack:SORT:PARTIAL] partially sorts an array', &
 '               (Insertion Sort, generally for small or nearly sorted', &
 '               arrays)', &
 '', &
@@ -1700,7 +1700,7 @@ case('16','rank')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   rank(3f) - [orderpack:RANK] produces an INDEX that sorts an input', &
+'   rank(3f) - [M_orderpack:RANK] produces an INDEX that sorts an input', &
 '              array (optimized merge-sort)', &
 '', &
 'SYNOPSIS', &
@@ -1830,7 +1830,7 @@ case('17','rank_basic')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   rank_basic(3f) - [orderpack:RANK] create an INDEX that defines the', &
+'   rank_basic(3f) - [M_orderpack:RANK] create an INDEX that defines the', &
 '                    order of array sorted in ascending order (basic', &
 '                    merge-sort)', &
 '', &
@@ -1961,7 +1961,7 @@ case('18','rank_decreasing')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   Rank_Decreasing(3f) - [orderpack:RANK:UNIQUE] ranks an array', &
+'   Rank_Decreasing(3f) - [M_orderpack:RANK:UNIQUE] ranks an array', &
 '   in decreasing order, with duplicate entries assigned the same', &
 '   rank(MergeSort)', &
 '', &
@@ -2056,7 +2056,7 @@ case('19','rank_unique')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   Rank_Unique(3f) - [orderpack:RANK:UNIQUE] ranks an array, with removal', &
+'   Rank_Unique(3f) - [M_orderpack:RANK:UNIQUE] ranks an array, with removal', &
 '                     of duplicate entries (MergeSort)', &
 '', &
 'SYNOPSIS', &
@@ -2147,7 +2147,7 @@ case('20','sort')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   sort(3f) - [orderpack:SORT] Sorts array into ascending order', &
+'   sort(3f) - [M_orderpack:SORT] Sorts array into ascending order', &
 '                (Quicksort)', &
 '', &
 'SYNOPSIS', &
@@ -2235,7 +2235,7 @@ case('21','sort_special')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   sort_special(3f) - [orderpack:SORT] Sorts array into ascending order', &
+'   sort_special(3f) - [M_orderpack:SORT] Sorts array into ascending order', &
 '                (Insertion sort, generally for small or nearly sorted', &
 '                arrays)', &
 'SYNOPSIS', &
@@ -2317,7 +2317,7 @@ case('22','unique')
 textblock=[character(len=256) :: &
 '', &
 'NAME', &
-'   unique(3f) - [orderpack:UNIQUE] removes duplicates from an array', &
+'   unique(3f) - [M_orderpack:UNIQUE] removes duplicates from an array', &
 '                otherwise retaining original order (i.e. it is "stable")', &
 '', &
 'SYNOPSIS', &
@@ -2522,7 +2522,7 @@ end function compact
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
-end module orderpack_docs
+end module M_orderpack__docs
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
@@ -12832,8 +12832,8 @@ end module M_strings
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
- 
- 
+
+
 !>>>>> build/dependencies/M_CLI2/src/M_CLI2.f90
 !VERSION 1.0 20200115
 !VERSION 2.0 20200802
@@ -18986,8 +18986,8 @@ end module M_CLI2
 ! to
 !       strings=[character(len=len(strings)) ::]
 !===================================================================================================================================
- 
- 
+
+
 !>>>>> build/dependencies/M_escape/src/M_list2.f90
 !>
 !!##NAME
@@ -20506,8 +20506,8 @@ end module M_list2
 !===================================================================================================================================
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()=
 !===================================================================================================================================
- 
- 
+
+
 !>>>>> build/dependencies/M_match/src/M_match.f90
 module M_match
 implicit none
@@ -21414,8 +21414,8 @@ end module M_match
 !----------------------------------------------------------------------------------------------------------------------------------!
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !----------------------------------------------------------------------------------------------------------------------------------!
- 
- 
+
+
 !>>>>> build/dependencies/M_escape/src/M_escape.f90
 !>
 !!##NAME
@@ -22748,8 +22748,8 @@ end module M_escape
 !()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()()!
 !===================================================================================================================================
 !>>>>> app/fman.f90
-program fpm_orderpack
-use orderpack_docs, only : help_intrinsics
+program fpm_M_orderpack
+use M_orderpack__docs, only : help_intrinsics
 use M_CLI2,       only : set_args, sget, lget, topics=>unnamed
 use M_match,      only : getpat, match, regex_pattern
 use M_match,      only : YES, ERR
@@ -22808,7 +22808,7 @@ integer                      :: start_keep, end_keep
 
     if(regex.ne.' ')then
        if (getpat(merge(lower(regex),regex,ignorecase), p%pat) .eq. ERR) then
-          stop '*fpm-orderpack* Illegal pattern.'
+          stop '*fpm-m_orderpack* Illegal pattern.'
        endif
     endif
 
@@ -22838,9 +22838,9 @@ integer                      :: start_keep, end_keep
     ! display selected text
     if(size(manual).eq.0)then
        write(*,'(g0)')'Sorry. did not find that. Perhaps you should search the TOC. try'
-       write(*,'(g0)')'   fpm-orderpack -e TOPIC'
+       write(*,'(g0)')'   fpm-m_orderpack -e TOPIC'
        write(*,'(g0)')'or search the entire manual:'
-       write(*,'(g0)')'   fpm-orderpack manual -i -e TOPIC'
+       write(*,'(g0)')'   fpm-m_orderpack manual -i -e TOPIC'
        stop 1
     else
        ! display what was found
@@ -22891,7 +22891,7 @@ integer :: ii,jj,kk
       enddo
     endif
     if(size(newsection).eq.0)then
-       write(*,*)'!<ERROR> *fpm-orderpack* standard demo code format not found for ',trim(topics(i))
+       write(*,*)'!<ERROR> *fpm-m_orderpack* standard demo code format not found for ',trim(topics(i))
        section=['']
     else
        section=newsection
@@ -22949,17 +22949,17 @@ end function than
 subroutine setup()
 help_text=[ CHARACTER(LEN=128) :: &
 'NAME                                                                            ',&
-'    fpm-orderpack(1f) - [DEVELOPER] output descriptions of Fortran intrinsics   ',&
+'    fpm-m_orderpack(1f) - [DEVELOPER] output descriptions of Fortran intrinsics ',&
 '    (LICENSE:PD)                                                                ',&
 '                                                                                ',&
 'SYNOPSIS                                                                        ',&
-'    fpm-orderpack NAME(s) [[-ignorecase][--regex Regular_Expression]]|          ',&
+'    fpm-m_orderpack NAME(s) [[-ignorecase][--regex Regular_Expression]]|        ',&
 '                [-topic_only][--color][--demo]                                  ',&
 '                                                                                ',&
-'    fpm-orderpack [ --help| --version]                                          ',&
+'    fpm-m_orderpack [ --help| --version]                                        ',&
 '                                                                                ',&
 'DESCRIPTION                                                                     ',&
-'   fpm-orderpack(1) print descriptions of procedures as simple flat text.       ',&
+'   fpm-m_orderpack(1) print descriptions of procedures as simple flat text.     ',&
 '                                                                                ',&
 '   The text is formatted in the txt2man(1) markdown language so one can easily  ',&
 '   generate man-pages on ULS (Unix-Like Systems).                               ',&
@@ -22985,24 +22985,24 @@ help_text=[ CHARACTER(LEN=128) :: &
 'EXAMPLES                                                                        ',&
 '  Sample commands                                                               ',&
 '                                                                                ',&
-'   fpm-orderpack              # list table of contents                          ',&
-'   fpm-orderpack -e character # check TOC for string. try "loc","prank","sort"  ',&
-'   fpm-orderpack tan|less     # display a description of tan(3f)                ',&
+'   fpm-m_orderpack              # list table of contents                        ',&
+'   fpm-m_orderpack -e character # check TOC for string. try "loc","prank","sort"',&
+'   fpm-m_orderpack tan|less     # display a description of tan(3f)              ',&
 '                                                                                ',&
-'   fpm-orderpack --regex ''character'' # look for string in TOC ignoring case   ',&
+'   fpm-m_orderpack --regex ''character'' # look for string in TOC ignoring case ',&
 '                                                                                ',&
-'   fpm-orderpack manual>fortran.txt    # create a copy of all descriptions      ',&
+'   fpm-m_orderpack manual>fortran.txt    # create a copy of all descriptions    ',&
 '                                                                                ',&
 '   # list the topic "scan" if found and lines containing "scan" from the entire ',&
 '   # manual, prefixing the lines with the section name, while ignoring case.    ',&
-'   fpm-orderpack -e scan -i manual                                              ',&
+'   fpm-m_orderpack -e scan -i manual                                            ',&
 '                                                                                ',&
-'   fpm-orderpack -d pack >demo_pack.f90 # get sample program to try VERIFY(3f). ',&
+'   fpm-m_orderpack -d pack >demo_pack.f90 # get sample program to try VERIFY(3f)',&
 '']
 
 version_text=[ CHARACTER(LEN=128) :: &
 'PRODUCT:         GPF (General Purpose Fortran) utilities and examples           ',&
-'PROGRAM:         fpm-orderpack(1)                                               ',&
+'PROGRAM:         fpm-m_orderpack(1)                                             ',&
 'DESCRIPTION:     output Fortran intrinsic descriptions                          ',&
 !'VERSION:         1.0.0, 20201215                                               ',&
 !'VERSION:         1.0.1, 20201217                                               ',&
@@ -23013,6 +23013,6 @@ version_text=[ CHARACTER(LEN=128) :: &
 '']
 
 end subroutine setup
-end program fpm_orderpack
+end program fpm_m_orderpack
 ! kludge1: older versions of gfortran do not handle character arrays with both line and size allocatable
- 
+

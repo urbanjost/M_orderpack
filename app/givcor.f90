@@ -24,13 +24,13 @@ program givcor
 !    order with respect to the other, i.e. correlation as close to -1 as
 !    possible.
 ! -----------------------------------------------------------------
-!   Given two arrays of equal length of unordered values, find a 
+!   Given two arrays of equal length of unordered values, find a
 !   "matching value" in the second array for each value in the
 !   first so that the global correlation coefficient reaches
 !   exactly a given target.
 ! _________________________________________________________________
-!   The routine first sorts the two arrays, so as to get the 
-!   match of maximum correlation. 
+!   The routine first sorts the two arrays, so as to get the
+!   match of maximum correlation.
 !
 !   It then will iterate, applying the random permutation algorithm
 !   of controlled disorder ctrper to the second array. When the
@@ -40,7 +40,7 @@ program givcor
 !   the current one and the target, one replaces the array with
 !   the newly permuted one. When the resulting correlation increases
 !   from the current value, one increases the disorder parameter.
-!   That way, the target correlation is approached from above, by 
+!   That way, the target correlation is approached from above, by
 !   a controlled increase in randomness.
 !
 !   The example is two arrays representing parents' incomes and
@@ -53,10 +53,10 @@ program givcor
 !   Corrected August 2007 (dot_product (xnewt, xpart) line 87,
 !             and negative correlation targets).
 ! _________________________________________________________________
-      use M_ctrper
-      use M_refsor
+      use M_orderpack__ctrper
+      use M_orderpack__refsor
 !
-      Integer, Parameter :: ndim = 21571   ! Number of pairs  
+      Integer, Parameter :: ndim = 21571   ! Number of pairs
       Integer, Parameter :: kdp = selected_real_kind(15)
       Real(kind=kdp), Parameter :: dtar = 0.1654_kdp ! Target correlation
       Real(kind=kdp) :: dsum, dref, dmoyp, dsigp, dmoyc, dsigc, dtarw
@@ -126,7 +126,7 @@ program givcor
 !
         if (abs (dsum-dtarw) < 0.00001_kdp) then
            dref = dsum
-           xchit = xnewt           
+           xchit = xnewt
            exit
         End If
 !

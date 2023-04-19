@@ -1,0 +1,160 @@
+\hypertarget{interfacem__orderpack____fndnth_1_1fndnth}{}\doxysection{m\+\_\+orderpack\+\_\+\+\_\+fndnth\+::fndnth Interface Reference}
+\label{interfacem__orderpack____fndnth_1_1fndnth}\index{m\_orderpack\_\_fndnth::fndnth@{m\_orderpack\_\_fndnth::fndnth}}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+real(kind=real64) function \mbox{\hyperlink{interfacem__orderpack____fndnth_1_1fndnth_a9b3c7d02fe782791ebcf46a9c568be53}{real64\+\_\+fndnth}} (I\+N\+V\+A\+LS, I\+N\+O\+RD)
+\item 
+real(kind=real32) function \mbox{\hyperlink{interfacem__orderpack____fndnth_1_1fndnth_ada6739050ba5aee927ac1db1298b9139}{real32\+\_\+fndnth}} (I\+N\+V\+A\+LS, I\+N\+O\+RD)
+\item 
+integer(kind=int32) function \mbox{\hyperlink{interfacem__orderpack____fndnth_1_1fndnth_af9db0ae7b2601402cb3953511b6b8acb}{int32\+\_\+fndnth}} (I\+N\+V\+A\+LS, I\+N\+O\+RD)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__orderpack____fndnth_1_1fndnth_af9db0ae7b2601402cb3953511b6b8acb}\label{interfacem__orderpack____fndnth_1_1fndnth_af9db0ae7b2601402cb3953511b6b8acb}} 
+\index{m\_orderpack\_\_fndnth::fndnth@{m\_orderpack\_\_fndnth::fndnth}!int32\_fndnth@{int32\_fndnth}}
+\index{int32\_fndnth@{int32\_fndnth}!m\_orderpack\_\_fndnth::fndnth@{m\_orderpack\_\_fndnth::fndnth}}
+\doxysubsubsection{\texorpdfstring{int32\_fndnth()}{int32\_fndnth()}}
+{\footnotesize\ttfamily integer (kind=int32) function m\+\_\+orderpack\+\_\+\+\_\+fndnth\+::fndnth\+::int32\+\_\+fndnth (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, intent(in)}]{I\+N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{189 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{190       \textcolor{keywordtype}{Integer (Kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: INVALS}
+\DoxyCodeLine{191       \textcolor{keywordtype}{Integer (Kind=int32)} :: FNDNTH}
+\DoxyCodeLine{192       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: INORD}
+\DoxyCodeLine{193 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{194       \textcolor{keywordtype}{Integer (Kind=int32)}, \textcolor{keywordtype}{Dimension (INORD)} :: XWRKT}
+\DoxyCodeLine{195       \textcolor{keywordtype}{Integer (Kind=int32)} :: XWRK, XWRK1}
+\DoxyCodeLine{196 \textcolor{comment}{!}}
+\DoxyCodeLine{197       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
+\DoxyCodeLine{198 \textcolor{comment}{!}}
+\DoxyCodeLine{199       xwrkt(1) = invals(1)}
+\DoxyCodeLine{200       \textcolor{keywordflow}{Do} icrs = 2, inord}
+\DoxyCodeLine{201          xwrk = invals(icrs)}
+\DoxyCodeLine{202          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{203             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{204             xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{205 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{206          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{207 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{208 \textcolor{comment}{!}}
+\DoxyCodeLine{209       ndon = \textcolor{keyword}{SIZE} (invals)}
+\DoxyCodeLine{210       xwrk1 = xwrkt(inord)}
+\DoxyCodeLine{211       ilow = 2*inord -\/ ndon}
+\DoxyCodeLine{212       \textcolor{keywordflow}{Do} icrs = inord + 1, ndon}
+\DoxyCodeLine{213          \textcolor{keywordflow}{If} (invals(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{214             xwrk = invals(icrs)}
+\DoxyCodeLine{215             \textcolor{keywordflow}{Do} idcr = inord -\/ 1, max(1, ilow) , -\/ 1}
+\DoxyCodeLine{216                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{217                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{218 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{219             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{220             xwrk1 = xwrkt(inord)}
+\DoxyCodeLine{221 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{222          ilow = ilow + 1}
+\DoxyCodeLine{223 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{224       fndnth = xwrk1}
+\DoxyCodeLine{225 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____fndnth_1_1fndnth_ada6739050ba5aee927ac1db1298b9139}\label{interfacem__orderpack____fndnth_1_1fndnth_ada6739050ba5aee927ac1db1298b9139}} 
+\index{m\_orderpack\_\_fndnth::fndnth@{m\_orderpack\_\_fndnth::fndnth}!real32\_fndnth@{real32\_fndnth}}
+\index{real32\_fndnth@{real32\_fndnth}!m\_orderpack\_\_fndnth::fndnth@{m\_orderpack\_\_fndnth::fndnth}}
+\doxysubsubsection{\texorpdfstring{real32\_fndnth()}{real32\_fndnth()}}
+{\footnotesize\ttfamily real (kind=real32) function m\+\_\+orderpack\+\_\+\+\_\+fndnth\+::fndnth\+::real32\+\_\+fndnth (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, intent(in)}]{I\+N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{150 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{151 \textcolor{keywordtype}{      Real} (Kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
+\DoxyCodeLine{152 \textcolor{keywordtype}{      Real} (Kind=real32) :: fndnth}
+\DoxyCodeLine{153       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: INORD}
+\DoxyCodeLine{154 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{155 \textcolor{keywordtype}{      Real} (Kind=real32), \textcolor{keywordtype}{Dimension (INORD)} :: xwrkt}
+\DoxyCodeLine{156 \textcolor{keywordtype}{      Real} (Kind=real32) :: xwrk, xwrk1}
+\DoxyCodeLine{157 \textcolor{comment}{!}}
+\DoxyCodeLine{158       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
+\DoxyCodeLine{159 \textcolor{comment}{!}}
+\DoxyCodeLine{160       xwrkt(1) = invals(1)}
+\DoxyCodeLine{161       \textcolor{keywordflow}{Do} icrs = 2, inord}
+\DoxyCodeLine{162          xwrk = invals(icrs)}
+\DoxyCodeLine{163          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{164             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{165             xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{166 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{167          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{168 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{169 \textcolor{comment}{!}}
+\DoxyCodeLine{170       ndon = \textcolor{keyword}{SIZE} (invals)}
+\DoxyCodeLine{171       xwrk1 = xwrkt(inord)}
+\DoxyCodeLine{172       ilow = 2*inord -\/ ndon}
+\DoxyCodeLine{173       \textcolor{keywordflow}{Do} icrs = inord + 1, ndon}
+\DoxyCodeLine{174          \textcolor{keywordflow}{If} (invals(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{175             xwrk = invals(icrs)}
+\DoxyCodeLine{176             \textcolor{keywordflow}{Do} idcr = inord -\/ 1, max(1, ilow) , -\/ 1}
+\DoxyCodeLine{177                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{178                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{179 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{180             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{181             xwrk1 = xwrkt(inord)}
+\DoxyCodeLine{182 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{183          ilow = ilow + 1}
+\DoxyCodeLine{184 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{185       fndnth = xwrk1}
+\DoxyCodeLine{186 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____fndnth_1_1fndnth_a9b3c7d02fe782791ebcf46a9c568be53}\label{interfacem__orderpack____fndnth_1_1fndnth_a9b3c7d02fe782791ebcf46a9c568be53}} 
+\index{m\_orderpack\_\_fndnth::fndnth@{m\_orderpack\_\_fndnth::fndnth}!real64\_fndnth@{real64\_fndnth}}
+\index{real64\_fndnth@{real64\_fndnth}!m\_orderpack\_\_fndnth::fndnth@{m\_orderpack\_\_fndnth::fndnth}}
+\doxysubsubsection{\texorpdfstring{real64\_fndnth()}{real64\_fndnth()}}
+{\footnotesize\ttfamily real (kind=real64) function m\+\_\+orderpack\+\_\+\+\_\+fndnth\+::fndnth\+::real64\+\_\+fndnth (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(in)}]{I\+N\+V\+A\+LS,  }\item[{integer, intent(in)}]{I\+N\+O\+RD }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{111 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{112 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (In)} :: invals}
+\DoxyCodeLine{113 \textcolor{keywordtype}{      Real} (Kind=real64) :: fndnth}
+\DoxyCodeLine{114       \textcolor{keywordtype}{Integer}, \textcolor{keywordtype}{Intent (In)} :: INORD}
+\DoxyCodeLine{115 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{116 \textcolor{keywordtype}{      Real} (Kind=real64), \textcolor{keywordtype}{Dimension (INORD)} :: xwrkt}
+\DoxyCodeLine{117 \textcolor{keywordtype}{      Real} (Kind=real64) :: xwrk, xwrk1}
+\DoxyCodeLine{118 \textcolor{comment}{!}}
+\DoxyCodeLine{119       \textcolor{keywordtype}{Integer} :: ICRS, IDCR, ILOW, NDON}
+\DoxyCodeLine{120 \textcolor{comment}{!}}
+\DoxyCodeLine{121       xwrkt(1) = invals(1)}
+\DoxyCodeLine{122       \textcolor{keywordflow}{Do} icrs = 2, inord}
+\DoxyCodeLine{123          xwrk = invals(icrs)}
+\DoxyCodeLine{124          \textcolor{keywordflow}{Do} idcr = icrs -\/ 1, 1, -\/ 1}
+\DoxyCodeLine{125             \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{126             xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{127 \textcolor{keywordflow}{         End Do}}
+\DoxyCodeLine{128          xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{129 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{130 \textcolor{comment}{!}}
+\DoxyCodeLine{131       ndon = \textcolor{keyword}{SIZE} (invals)}
+\DoxyCodeLine{132       xwrk1 = xwrkt(inord)}
+\DoxyCodeLine{133       ilow = 2*inord -\/ ndon}
+\DoxyCodeLine{134       \textcolor{keywordflow}{Do} icrs = inord + 1, ndon}
+\DoxyCodeLine{135          \textcolor{keywordflow}{If} (invals(icrs) < xwrk1) \textcolor{keywordflow}{Then}}
+\DoxyCodeLine{136             xwrk = invals(icrs)}
+\DoxyCodeLine{137             \textcolor{keywordflow}{Do} idcr = inord -\/ 1, max(1, ilow) , -\/ 1}
+\DoxyCodeLine{138                \textcolor{keywordflow}{If} (xwrk >= xwrkt(idcr)) \textcolor{keywordflow}{Exit}}
+\DoxyCodeLine{139                xwrkt(idcr+1) = xwrkt(idcr)}
+\DoxyCodeLine{140 \textcolor{keywordflow}{            End Do}}
+\DoxyCodeLine{141             xwrkt(idcr+1) = xwrk}
+\DoxyCodeLine{142             xwrk1 = xwrkt(inord)}
+\DoxyCodeLine{143 \textcolor{keywordflow}{         End If}}
+\DoxyCodeLine{144          ilow = ilow + 1}
+\DoxyCodeLine{145 \textcolor{keywordflow}{      End Do}}
+\DoxyCodeLine{146       fndnth = xwrk1}
+\DoxyCodeLine{147 \textcolor{comment}{!}}
+
+\end{DoxyCode}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/urbanjs/venus/\+V600/github/\+M\+\_\+orderpack/src/\mbox{\hyperlink{M__orderpack____fndnth_8f90}{M\+\_\+orderpack\+\_\+\+\_\+fndnth.\+f90}}\end{DoxyCompactItemize}

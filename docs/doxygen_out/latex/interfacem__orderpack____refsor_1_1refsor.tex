@@ -1,0 +1,119 @@
+\hypertarget{interfacem__orderpack____refsor_1_1refsor}{}\doxysection{m\+\_\+orderpack\+\_\+\+\_\+refsor\+::refsor Interface Reference}
+\label{interfacem__orderpack____refsor_1_1refsor}\index{m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____refsor_1_1refsor_a9259904b3e71c80e35e6a4e3edda1556}{real64\+\_\+refsor}} (I\+N\+O\+U\+T\+V\+A\+LS)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____refsor_1_1refsor_a7dfbb27a6eebf2e4328794f719d49531}{real32\+\_\+refsor}} (I\+N\+O\+U\+T\+V\+A\+LS)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____refsor_1_1refsor_add0cc4ca1db0c910c70876f294b03be1}{int32\+\_\+refsor}} (I\+N\+O\+U\+T\+V\+A\+LS)
+\item 
+subroutine \mbox{\hyperlink{interfacem__orderpack____refsor_1_1refsor_a262e1cdd118dd52aeeafd0921608d2a3}{f\+\_\+char\+\_\+refsor}} (I\+N\+O\+U\+T\+V\+A\+LS)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md66}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md66}
+sort(3f) -\/ \mbox{[}M\+\_\+orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Quicksort)\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md67}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md67}
+\begin{DoxyVerb} Subroutine Sort (INOUTVALS)
+
+   ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
+
+Where ${TYPE}(kind=${KIND}) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+   o Character(kind=selected_char_kind("DEFAULT"),len=*)
+\end{DoxyVerb}
+\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md68}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md68}
+Sorts I\+N\+O\+U\+T\+V\+A\+LS into ascending order (Quicksort)
+
+This version is not optimized for performance, and is thus not as difficult to read as some other ones.
+
+Internally, This subroutine uses Quick-\/sort in a recursive implementation, and insertion sort for the last steps with small subsets. It does not use any work array.
+
+The Quick-\/sort chooses a \char`\"{}pivot\char`\"{} in the set, and explores the array from both ends, looking for a value $>$ pivot with the increasing index, for a value $<$= pivot with the decreasing index, and swapping them when it has found one of each. The array is then subdivided in two subsets\+: \begin{DoxyVerb}{ values <= pivot} {pivot} {values > pivot}
+\end{DoxyVerb}
+
+
+It then recursively calls the procedure to sort each subset. When the size of the subarray is small enough, it switches to an insertion sort that is faster for very small sets.\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md69}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md69}
+I\+N\+O\+U\+T\+V\+A\+LS array to sort\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md70}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md70}
+Sample program\+:
+
+program demo\+\_\+sort ! sort array in ascending order use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+orderpack, only \+: sort implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. real(kind=real64) \+:: valsd(2000) integer \+:: i call random\+\_\+seed() call random\+\_\+number(valsd) valsd=valsd$\ast$1000000.0-\/500000.\+0 call sort(valsd) do i=1,size(valsd)-\/1 if (valsd(i+1).lt.\+valsd(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 3 endif enddo write($\ast$,$\ast$)\textquotesingle{}random arrays are now sorted\textquotesingle{} end program demo\+\_\+sort
+
+Results\+:
+
+random arrays are now sorted\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md71}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md71}
+Michel Olagnon -\/ Apr. 2000 \hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md72}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md72}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md73}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md73}
+C\+C0-\/1.\+0 
+
+\doxysubsection{Member Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{interfacem__orderpack____refsor_1_1refsor_a262e1cdd118dd52aeeafd0921608d2a3}\label{interfacem__orderpack____refsor_1_1refsor_a262e1cdd118dd52aeeafd0921608d2a3}} 
+\index{m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}!f\_char\_refsor@{f\_char\_refsor}}
+\index{f\_char\_refsor@{f\_char\_refsor}!m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}}
+\doxysubsubsection{\texorpdfstring{f\_char\_refsor()}{f\_char\_refsor()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+refsor\+::refsor\+::f\+\_\+char\+\_\+refsor (\begin{DoxyParamCaption}\item[{character (kind=\mbox{\hyperlink{namespacem__orderpack____refsor_a053acce2983b4fd16c36d7327596889c}{f\+\_\+char}},len=$\ast$), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{429 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{430       \textcolor{keywordtype}{character (kind=f\_char,len=*)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
+\DoxyCodeLine{431 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{432       \textcolor{keyword}{Call }f\_char\_subsor (inoutvals, 1, \textcolor{keyword}{Size} (inoutvals))}
+\DoxyCodeLine{433       \textcolor{keyword}{Call }f\_char\_inssor (inoutvals)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____refsor_1_1refsor_add0cc4ca1db0c910c70876f294b03be1}\label{interfacem__orderpack____refsor_1_1refsor_add0cc4ca1db0c910c70876f294b03be1}} 
+\index{m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}!int32\_refsor@{int32\_refsor}}
+\index{int32\_refsor@{int32\_refsor}!m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}}
+\doxysubsubsection{\texorpdfstring{int32\_refsor()}{int32\_refsor()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+refsor\+::refsor\+::int32\+\_\+refsor (\begin{DoxyParamCaption}\item[{integer (kind=int32), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{317 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{318       \textcolor{keywordtype}{Integer (kind=int32)}, \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: INOUTVALS}
+\DoxyCodeLine{319 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{320       \textcolor{keyword}{Call }int32\_subsor (inoutvals, 1, \textcolor{keyword}{Size} (inoutvals))}
+\DoxyCodeLine{321       \textcolor{keyword}{Call }int32\_inssor (inoutvals)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____refsor_1_1refsor_a7dfbb27a6eebf2e4328794f719d49531}\label{interfacem__orderpack____refsor_1_1refsor_a7dfbb27a6eebf2e4328794f719d49531}} 
+\index{m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}!real32\_refsor@{real32\_refsor}}
+\index{real32\_refsor@{real32\_refsor}!m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}}
+\doxysubsubsection{\texorpdfstring{real32\_refsor()}{real32\_refsor()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+refsor\+::refsor\+::real32\+\_\+refsor (\begin{DoxyParamCaption}\item[{real (kind=real32), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{205 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{206 \textcolor{keywordtype}{      Real} (kind=real32), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
+\DoxyCodeLine{207 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{208       \textcolor{keyword}{Call }real32\_subsor (inoutvals, 1, \textcolor{keyword}{Size} (inoutvals))}
+\DoxyCodeLine{209       \textcolor{keyword}{Call }real32\_inssor (inoutvals)}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{interfacem__orderpack____refsor_1_1refsor_a9259904b3e71c80e35e6a4e3edda1556}\label{interfacem__orderpack____refsor_1_1refsor_a9259904b3e71c80e35e6a4e3edda1556}} 
+\index{m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}!real64\_refsor@{real64\_refsor}}
+\index{real64\_refsor@{real64\_refsor}!m\_orderpack\_\_refsor::refsor@{m\_orderpack\_\_refsor::refsor}}
+\doxysubsubsection{\texorpdfstring{real64\_refsor()}{real64\_refsor()}}
+{\footnotesize\ttfamily subroutine m\+\_\+orderpack\+\_\+\+\_\+refsor\+::refsor\+::real64\+\_\+refsor (\begin{DoxyParamCaption}\item[{real (kind=real64), dimension (\+:), intent(inout)}]{I\+N\+O\+U\+T\+V\+A\+LS }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{93 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{94 \textcolor{keywordtype}{      Real} (kind=real64), \textcolor{keywordtype}{Dimension (:)}, \textcolor{keywordtype}{Intent (InOut)} :: inoutvals}
+\DoxyCodeLine{95 \textcolor{comment}{! \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_}}
+\DoxyCodeLine{96       \textcolor{keyword}{Call }real64\_subsor (inoutvals, 1, \textcolor{keyword}{Size} (inoutvals))}
+\DoxyCodeLine{97       \textcolor{keyword}{Call }real64\_inssor (inoutvals)}
+
+\end{DoxyCode}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/urbanjs/venus/\+V600/github/\+M\+\_\+orderpack/src/\mbox{\hyperlink{M__orderpack____refsor_8f90}{M\+\_\+orderpack\+\_\+\+\_\+refsor.\+f90}}\end{DoxyCompactItemize}

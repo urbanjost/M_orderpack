@@ -1,12 +1,12 @@
 program chrono
-use M_valnth
-use M_mrgrnk
+use M_orderpack__valnth
+use M_orderpack__mrgrnk
       Integer, Parameter :: nbcl = 10000
       Integer, Parameter :: kdp = selected_real_kind(15)
       Real(kind=kdp), Dimension (5001) :: dvalt
       Real, Dimension (5001) :: xvalt
-      Integer, Dimension (5001) :: jvalt      
-      Integer, Dimension (5001) :: jrnkt            
+      Integer, Dimension (5001) :: jvalt
+      Integer, Dimension (5001) :: jrnkt
       Integer, Dimension (:), Allocatable :: jseet
       Integer :: nsee, ibcl, lrnk, jres
       Real :: tdep1, tdep2, tfin1, tfin2

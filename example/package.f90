@@ -1,29 +1,29 @@
 program demo_package
-use M_mrgref,    only : mrgref
+use M_orderpack__mrgref,    only : mrgref
 use M_orderpack, only : rank_basic
 
-use M_mrgrnk,    only : mrgrnk
+use M_orderpack__mrgrnk,    only : mrgrnk
 use M_orderpack, only : rank
 
-use M_inssor,    only : inssor
+use M_orderpack__inssor,    only : inssor
 use M_orderpack, only : Sort_special
 
-use M_refsor,    only : refsor
+use M_orderpack__refsor,    only : refsor
 use M_orderpack, only : Sort
 
-use M_rinpar,    only : rinpar
+use M_orderpack__rinpar,    only : rinpar
 use M_orderpack, only : prank_special
 
-use M_refpar,    only : refpar
+use M_orderpack__refpar,    only : refpar
 use M_orderpack, only : prank_basic
 
-use M_rapknr,    only : rapknr
+use M_orderpack__rapknr,    only : rapknr
 use M_orderpack, only : prank_decreasing
 
-use M_rnkpar,    only : rnkpar
+use M_orderpack__rnkpar,    only : rnkpar
 use M_orderpack, only : prank
 
-use M_inspar,    only : inspar
+use M_orderpack__inspar,    only : inspar
 use M_orderpack, only : psort
 
 implicit none
