@@ -3,7 +3,6 @@ program runtest
 use M_framework__msg
 use M_framework__msg, only : str
 use M_framework__verify
-use M_framework__verify, only : unit_check_level
 use M_framework__verify, only : unit_check_start, unit_check, unit_check_done, unit_check_good, unit_check_bad, unit_check_msg
 use M_framework__verify, only : unit_check_stop
 ! full ranking
@@ -37,8 +36,6 @@ implicit none
 character(len=*),parameter :: g='(*(g0,1x))'
 integer,parameter          :: dp=kind(0.0d0)
 
-   unit_check_command=''
-   unit_check_keep_going=.true.
    unit_check_level=0
 
    call test_gen('mrgref')
