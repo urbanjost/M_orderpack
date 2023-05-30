@@ -14,8 +14,8 @@ subroutine \mbox{\hyperlink{interfacem__orderpack____mrgrnk_1_1mrgrnk_a43e3f65af
 
 
 \doxysubsection{Detailed Description}
-\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md42}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md42}
-rank(3f) -\/ \mbox{[}M\+\_\+orderpack\+:R\+A\+NK\mbox{]} produces an I\+N\+D\+EX that sorts an input array (optimized merge-\/sort)\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md43}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md43}
+\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md86}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md86}
+rank(3f) -\/ \mbox{[}M\+\_\+orderpack\+:R\+A\+NK\mbox{]} produces an I\+N\+D\+EX that sorts an input array (optimized merge-\/sort)\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md87}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md87}
 \begin{DoxyVerb} Subroutine Rank (INVALS, IRNGT)
 
    ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
@@ -28,13 +28,13 @@ Where ${TYPE}(kind=${KIND}) may be
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
 \end{DoxyVerb}
-\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md44}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md44}
+\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md88}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md88}
 R\+A\+N\+K(3f) ranks an input array; i.\+e. it produces an index of the input array elements that can order the input array in ascending order.
 
 The ranks can be used to sort the input array, or other associated arrays or components of user types.
 
-Internally, it uses an optimized and modified version of merge-\/sort. For performance reasons, the first two passes are taken out of the standard loop, and use dedicated coding.\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md45}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md45}
-I\+N\+V\+A\+LS The array to sort I\+R\+N\+GT The rank index returned\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md46}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md46}
+Internally, it uses an optimized and modified version of merge-\/sort. For performance reasons, the first two passes are taken out of the standard loop, and use dedicated coding.\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md89}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md89}
+I\+N\+V\+A\+LS The array to sort I\+R\+N\+GT The rank index returned\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md90}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md90}
 Sample program\+:
 
 program demo\+\_\+rank ! create an index that can order an array in ascending order use M\+\_\+orderpack, only \+: rank implicit none character(len=$\ast$),parameter \+:: g=\textquotesingle{}($\ast$(g0,1x))\textquotesingle{} integer,parameter \+:: dp=kind(0.\+0d0) integer,parameter \+:: isz=10000 real(kind=dp) \+:: dd(isz) real(kind=dp) \+:: pp integer \+:: indx(isz) integer \+:: i,j,k character(len=\+:),allocatable \+:: strings(\+:) integer,allocatable \+:: cindx(\+:) ! make some random numbers call random\+\_\+seed() call random\+\_\+number(dd) dd=dd-\/0.\+50\+\_\+dp k=int(log(huge(0.\+0\+\_\+dp))/log(2.\+0\+\_\+dp))-\/1 do i=1,isz call random\+\_\+number(pp) j=floor((k+1)$\ast$pp) dd(i)=dd(i)$\ast$(2.\+0\+\_\+dp$\ast$$\ast$j) enddo ! rank the numeric data call rank(dd,indx) ! check order do i=1,isz-\/1 if(dd(indx(i)).gt.\+dd(indx(i+1)))then write($\ast$,g)\textquotesingle{}E\+R\+R\+OR\+: data not sorted i=\textquotesingle{},i,\textquotesingle{}index=\textquotesingle{},indx(i), \& \& \textquotesingle{}values \textquotesingle{},dd(indx(i)),dd(indx(i+1)) stop 1 endif enddo ! sort data using rank values dd=dd(indx) write($\ast$,g)\textquotesingle{}sorted \textquotesingle{},isz,\textquotesingle{}values\textquotesingle{} write($\ast$,g)\textquotesingle{}from\textquotesingle{},dd(1),\textquotesingle{}to\textquotesingle{},dd(isz) write($\ast$,$\ast$)minval(dd).eq.\+dd(1) write($\ast$,$\ast$)maxval(dd).eq.\+dd(isz) write($\ast$,$\ast$)minloc(dd).eq.\+1 write($\ast$,$\ast$)maxloc(dd).eq.\+isz ! do a character sort strings= \mbox{[} character(len=20) \+:: \& \& \textquotesingle{}red\textquotesingle{}, \textquotesingle{}green\textquotesingle{}, \textquotesingle{}blue\textquotesingle{}, \textquotesingle{}yellow\textquotesingle{}, \textquotesingle{}orange\textquotesingle{}, \textquotesingle{}black\textquotesingle{}, \& \& \textquotesingle{}white\textquotesingle{}, \textquotesingle{}brown\textquotesingle{}, \textquotesingle{}gray\textquotesingle{}, \textquotesingle{}cyan\textquotesingle{}, \textquotesingle{}magenta\textquotesingle{}, \& \& \textquotesingle{}purple\textquotesingle{}\mbox{]} if(allocated(cindx))deallocate(cindx);allocate(cindx(size(strings)))
@@ -51,9 +51,9 @@ do i=1,size(strings)-\/1 if(strings(i).gt.\+strings(i+1))then write($\ast$,$\ast
 
 Results\+:
 
-sorted 10000 values from -\/.\+4206770472235745E+308 to .3500810518521505E+308 T T T T B\+E\+F\+O\+RE red,green,blue,yellow,orange,black,white,brown, gray,cyan,magenta,purple S\+O\+R\+T\+ED black,blue,brown,cyan,gray,green,magenta,orange, purple,red,white,yellow\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md47}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md47}
-Michel Olagnon, 2000-\/2012 \hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md48}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md48}
-John Urban, 2022.\+04.\+16 \hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md49}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md49}
+sorted 10000 values from -\/.\+4206770472235745E+308 to .3500810518521505E+308 T T T T B\+E\+F\+O\+RE red,green,blue,yellow,orange,black,white,brown, gray,cyan,magenta,purple S\+O\+R\+T\+ED black,blue,brown,cyan,gray,green,magenta,orange, purple,red,white,yellow\hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md91}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md91}
+Michel Olagnon, 2000-\/2012 \hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md92}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md92}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md93}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__orderpack____mrgrnk_1_1mrgrnk_autotoc_md93}
 C\+C0-\/1.\+0 
 
 \doxysubsection{Member Function/\+Subroutine Documentation}

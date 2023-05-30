@@ -3,7 +3,7 @@ program runtest
 use M_framework__msg
 use M_framework__msg, only : str
 use M_framework__verify
-use M_framework__verify, only : unit_check_start, unit_check, unit_check_done, unit_check_good, unit_check_bad, unit_check_msg
+use M_framework__verify, only : unit_check_start, unit_check, unit_check_done, unit_check_msg
 use M_framework__verify, only : unit_check_stop
 ! full ranking
 use M_orderpack__mrgref, only : mrgref

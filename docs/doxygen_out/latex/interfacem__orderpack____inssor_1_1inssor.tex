@@ -14,8 +14,8 @@ subroutine \mbox{\hyperlink{interfacem__orderpack____inssor_1_1inssor_a4aa9154f2
 
 
 \doxysubsection{Detailed Description}
-\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md34}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md34}
-sort\+\_\+special(3f) -\/ \mbox{[}M\+\_\+orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Insertion sort, generally for small or nearly sorted arrays) \hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md35}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md35}
+\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md61}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md61}
+sort\+\_\+special(3f) -\/ \mbox{[}M\+\_\+orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Insertion sort, generally for small or nearly sorted arrays) \hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md62}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md62}
 \begin{DoxyVerb}  Subroutine Sort_Special (INOUTVALS)
 
    ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
@@ -27,22 +27,22 @@ Where ${TYPE}(kind=${KIND}) may be
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
 \end{DoxyVerb}
-\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md36}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md36}
+\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md63}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md63}
 Sorts I\+N\+O\+U\+T\+V\+A\+L\+S() into ascending order (Insertion sort).
 
 If certain requirements are met and performance is important this procedure can be far faster, but S\+O\+R\+T(3f) and ranking routines R\+A\+N\+K(3f) and R\+A\+N\+K\+\_\+\+B\+A\+S\+I\+C(3f) are recommended for the general case.
 
-This subroutine uses an Insertion sort. It does not use any work array and is faster when I\+N\+O\+U\+T\+V\+A\+L\+S() is of very small size ($<$ 20), or already almost sorted; but worst case behavior can be triggered by commonly encountered data order (e.\+g. initially inverse sorted). Therefore, in many cases the Quicksort or Mergesort method is faster.\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md37}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md37}
-I\+N\+O\+U\+T\+V\+A\+LS array to sort\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md38}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md38}
+This subroutine uses an Insertion sort. It does not use any work array and is faster when I\+N\+O\+U\+T\+V\+A\+L\+S() is of very small size ($<$ 20), or already almost sorted; but worst case behavior can be triggered by commonly encountered data order (e.\+g. initially inverse sorted). Therefore, in many cases the Quicksort or Mergesort method is faster.\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md64}{}\doxysubsubsection{O\+P\+T\+I\+O\+NS}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md64}
+I\+N\+O\+U\+T\+V\+A\+LS array to sort\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md65}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md65}
 Sample program\+:
 
 program demo\+\_\+sort\+\_\+special ! sort an array using insertion sort use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+orderpack, only \+: sort\+\_\+special implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. integer,parameter \+:: isz=2000 real(kind=real64) \+:: dd(isz), hi, low ! make an array of random values call random\+\_\+seed() call random\+\_\+number(dd) dd=dd$\ast$1000000.0-\/500000.\+0 low= minval(dd) hi = maxval(dd) ! sort the data call sort\+\_\+special(dd) ! cursory checks if(any(dd(1\+:isz-\/1) .gt. dd(2\+:isz)))stop \textquotesingle{}E\+R\+R\+OR\+: array not sorted\textquotesingle{} write($\ast$,$\ast$)\textquotesingle{}check min\+:\textquotesingle{},dd(1).eq.\+low write($\ast$,$\ast$)\textquotesingle{}check max\+:\textquotesingle{},dd(isz).eq.\+hi write($\ast$,$\ast$)\textquotesingle{}P\+A\+S\+S\+ED\+: random array is now sorted\textquotesingle{} end program demo\+\_\+sort\+\_\+special
 
 Results\+:
 
-check min\+: T check max\+: T P\+A\+S\+S\+ED\+: random array is now sorted\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md39}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md39}
-Michel Olagnon -\/ Apr. 2000 \hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md40}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md40}
-John Urban, 2022.\+04.\+16 \hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md41}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md41}
+check min\+: T check max\+: T P\+A\+S\+S\+ED\+: random array is now sorted\hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md66}{}\doxysubsubsection{A\+U\+T\+H\+OR}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md66}
+Michel Olagnon -\/ Apr. 2000 \hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md67}{}\doxysubsubsection{M\+A\+I\+N\+T\+A\+I\+N\+ER}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md67}
+John Urban, 2022.\+04.\+16 \hypertarget{interfacem__orderpack____inssor_1_1inssor_autotoc_md68}{}\doxysubsubsection{L\+I\+C\+E\+N\+SE}\label{interfacem__orderpack____inssor_1_1inssor_autotoc_md68}
 C\+C0-\/1.\+0 
 
 \doxysubsection{Member Function/\+Subroutine Documentation}

@@ -4,80 +4,83 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rnkpar
-! NAME
-!    prank(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array
-!                (QuickSort-like)
-! 
-! SYNOPSIS
-!     Subroutine Prank (INVALS, IRNGT, NORD)
-! 
-!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-!       Integer, Intent (Out)               :: IRNGT(:)
-!       Integer, Intent (In)                :: NORD
-! 
-!    Where ${TYPE}(kind=${KIND}) may be
-! 
-!       o Real(kind=real32)
-!       o Real(kind=real64)
-!       o Integer(kind=int32)
-! 
-! DESCRIPTION
-!    Partially ranks array INVALS(), returning indices of the requested
-!    number of elements (NORD) in index array IRNGT(), where NORD is the
-!    order ( aka. the number of sorted elements requested).
-! 
-!    This routine is refined for speed, and uses a pivoting strategy such
-!    as the one of finding the median based on the quicksort algorithm,
-!    but we skew the pivot choice to try to bring it to NORD as fast as
-!    possible. It uses two temporary arrays, where it stores the indices of
-!    the values smaller than the pivot (ILOWT), and the indices of values
-!    larger than the pivot that we might still need later on (IHIGT). It
-!    iterates until it can bring the number of values in ILOWT to exactly
-!    NORD, and then uses an insertion sort to rank this set, since it is
-!    supposedly small.
-! 
-! OPTIONS
-!     INVALS      array to rank the elements of
-!     IRNGT      returned ranks
-!     NORD       number of rank values to return
-! 
-! EXAMPLES
-!   Sample program:
-! 
-!    program demo_prank
-!    ! partially rank array
-!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
-!    use M_orderpack, only : prank
-!    implicit none
-!    integer,parameter :: ivals=300
-!    real(kind=real32) :: valsr(2000)
-!    real(kind=real32) :: out(ivals)
-!    integer           :: indx(2000)
-!    integer           :: i
-!       call random_seed()
-!       call random_number(valsr)
-!       valsr=valsr*1000000.0-500000.0
-!       call prank(valsr,indx,ivals)
-!       out=valsr(indx(:ivals))
-!       do i=1,ivals-1
-!          if (out(i+1).lt.out(i))then
-!             write(*,*)'not sorted'
-!             stop 1
-!          endif
-!       enddo
-!       write(*,*)'random array now sorted'
-!    end program demo_prank
-! 
-!   Results:
-! 
-!     random array now sorted
-! 
-! AUTHOR
-!    Michel Olagnon - Feb. 2000
-! MAINTAINER
-!    John Urban, 2022.04.16
-! LICENSE
-!    CC0-1.0
+!>
+!!##NAME
+!!    prank(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array
+!!                (QuickSort-like)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine Prank (INVALS, IRNGT, NORD)
+!!
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!!       Integer, Intent (Out)               :: IRNGT(:)
+!!       Integer, Intent (In)                :: NORD
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!    Partially ranks array INVALS(), returning indices of the requested
+!!    number of elements (NORD) in index array IRNGT(), where NORD is the
+!!    order ( aka. the number of sorted elements requested).
+!!
+!!    This routine is refined for speed, and uses a pivoting strategy such
+!!    as the one of finding the median based on the quicksort algorithm,
+!!    but we skew the pivot choice to try to bring it to NORD as fast as
+!!    possible. It uses two temporary arrays, where it stores the indices of
+!!    the values smaller than the pivot (ILOWT), and the indices of values
+!!    larger than the pivot that we might still need later on (IHIGT). It
+!!    iterates until it can bring the number of values in ILOWT to exactly
+!!    NORD, and then uses an insertion sort to rank this set, since it is
+!!    supposedly small.
+!!
+!!##OPTIONS
+!!     INVALS      array to rank the elements of
+!!     IRNGT      returned ranks
+!!     NORD       number of rank values to return
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_prank
+!!    ! partially rank array
+!!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
+!!    use M_orderpack, only : prank
+!!    implicit none
+!!    integer,parameter :: ivals=300
+!!    real(kind=real32) :: valsr(2000)
+!!    real(kind=real32) :: out(ivals)
+!!    integer           :: indx(2000)
+!!    integer           :: i
+!!       call random_seed()
+!!       call random_number(valsr)
+!!       valsr=valsr*1000000.0-500000.0
+!!       call prank(valsr,indx,ivals)
+!!       out=valsr(indx(:ivals))
+!!       do i=1,ivals-1
+!!          if (out(i+1).lt.out(i))then
+!!             write(*,*)'not sorted'
+!!             stop 1
+!!          endif
+!!       enddo
+!!       write(*,*)'random array now sorted'
+!!    end program demo_prank
+!!
+!!   Results:
+!!
+!!     random array now sorted
+!!
+!!##AUTHOR
+!!    Michel Olagnon - Feb. 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
+!!##LICENSE
+!!    CC0-1.0
 interface rnkpar
   module procedure real64_rnkpar, real32_rnkpar, int32_rnkpar !, f_char_rnkpar
 end interface rnkpar

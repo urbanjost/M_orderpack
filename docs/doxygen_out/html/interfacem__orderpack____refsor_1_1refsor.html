@@ -86,10 +86,10 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a262e1cdd118dd52aeeafd0921608d2a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h2><a class="anchor" id="autotoc_md66"></a>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md118"></a>
 NAME</h2>
 <p>sort(3f) - [M_orderpack:SORT] Sorts array into ascending order (Quicksort)</p>
-<h2><a class="anchor" id="autotoc_md67"></a>
+<h2><a class="anchor" id="autotoc_md119"></a>
 SYNOPSIS</h2>
 <pre class="fragment"> Subroutine Sort (INOUTVALS)
 
@@ -101,29 +101,29 @@ Where ${TYPE}(kind=${KIND}) may be
    o Real(kind=real64)
    o Integer(kind=int32)
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
-</pre><h2><a class="anchor" id="autotoc_md68"></a>
+</pre><h2><a class="anchor" id="autotoc_md120"></a>
 DESCRIPTION</h2>
 <p>Sorts INOUTVALS into ascending order (Quicksort)</p>
 <p>This version is not optimized for performance, and is thus not as difficult to read as some other ones.</p>
 <p>Internally, This subroutine uses Quick-sort in a recursive implementation, and insertion sort for the last steps with small subsets. It does not use any work array.</p>
 <p>The Quick-sort chooses a "pivot" in the set, and explores the array from both ends, looking for a value &gt; pivot with the increasing index, for a value &lt;= pivot with the decreasing index, and swapping them when it has found one of each. The array is then subdivided in two subsets: </p><pre class="fragment">{ values &lt;= pivot} {pivot} {values &gt; pivot}
 </pre><p>It then recursively calls the procedure to sort each subset. When the size of the subarray is small enough, it switches to an insertion sort that is faster for very small sets.</p>
-<h2><a class="anchor" id="autotoc_md69"></a>
+<h2><a class="anchor" id="autotoc_md121"></a>
 OPTIONS</h2>
 <p>INOUTVALS array to sort</p>
-<h2><a class="anchor" id="autotoc_md70"></a>
+<h2><a class="anchor" id="autotoc_md122"></a>
 EXAMPLES</h2>
 <p>Sample program:</p>
 <p>program demo_sort ! sort array in ascending order use,intrinsic :: iso_fortran_env, only : int32, real32, real64 use M_orderpack, only : sort implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. real(kind=real64) :: valsd(2000) integer :: i call random_seed() call random_number(valsd) valsd=valsd*1000000.0-500000.0 call sort(valsd) do i=1,size(valsd)-1 if (valsd(i+1).lt.valsd(i))then write(*,*)'not sorted' stop 3 endif enddo write(*,*)'random arrays are now sorted' end program demo_sort</p>
 <p>Results:</p>
 <p>random arrays are now sorted</p>
-<h2><a class="anchor" id="autotoc_md71"></a>
+<h2><a class="anchor" id="autotoc_md123"></a>
 AUTHOR</h2>
 <p>Michel Olagnon - Apr. 2000 </p>
-<h2><a class="anchor" id="autotoc_md72"></a>
+<h2><a class="anchor" id="autotoc_md124"></a>
 MAINTAINER</h2>
 <p>John Urban, 2022.04.16 </p>
-<h2><a class="anchor" id="autotoc_md73"></a>
+<h2><a class="anchor" id="autotoc_md125"></a>
 LICENSE</h2>
 <p>CC0-1.0 </p>
 </div><h2 class="groupheader">Member Function/Subroutine Documentation</h2>

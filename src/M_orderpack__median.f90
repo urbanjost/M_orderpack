@@ -3,77 +3,80 @@ use,intrinsic :: iso_fortran_env, only : int8, int16, int32, int64, real32, real
 implicit none
 Private
 public :: median
-! NAME
-!    median(3f) - [M_orderpack:MEDIAN] Calculates median VALUE. If
-!                 number of elements is even, returns average of the two
-!                 "medians".
-! 
-! SYNOPSIS
-!     Function Median (INVALS)
-! 
-!      ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
-!      ${TYPE} (Kind=${KIND})              :: MEDIAN
-! 
-!    Where ${TYPE}(kind=${KIND}) may be
-! 
-!       o Real(kind=real32)
-!       o Real(kind=real64)
-!       o Integer(kind=int32)
-! 
-! DESCRIPTION
-!    MEDIAN(3f) calculates the median value of the array INVALS(). It is
-!    a modified version of MEDIANVAL(3f) that provides the average between
-!    the two middle values in the case where size(INVALS) is even.
-! 
-!    Internally, this routine uses a pivoting strategy similar to the
-!    method of finding the median based on the Quick-sort algorithm, but
-!    we skew the pivot choice to try to bring it to one-half the values as
-!    fast as possible. It uses two temporary arrays, where it stores the
-!    indices of the values smaller than the pivot (ILOWT), and the indices
-!    of values larger than the pivot that we might still need later on
-!    (IHIGT). It iterates until it can bring the number of values in ILOWT
-!    to exactly NORD, and then finds the maximum of this set.
-! 
-! OPTIONS
-!     INVALS      array to determine the median value of.
-! 
-! RETURNS
-!     MEDIAN     median value. If INVALS contains an even number
-!                of elements the value is the average of the
-!                two "medians".
-! 
-! EXAMPLES
-!   Sample program:
-! 
-!    program demo_median
-!    ! calculate median value
-!    use M_orderpack, only : median
-!    implicit none
-!    character(len=*),parameter :: g='(*(g0,1x))'
-! 
-!       write(*,g) 'real   ',median(&
-!       [80.0,70.0,20.0,10.0,1000.0] )
-! 
-!       write(*,g) 'integer',median(&
-!       [11, 22, 33, 44, 55, 66, 77, 88] )
-! 
-!       write(*,g) 'double ',median(&
-!       [11.0d0,22.0d0,33.0d0,66.0d0,77.0d0,88.0d0])
-! 
-!    end program demo_median
-! 
-!   Results:
-! 
-!    real    70.00000
-!    integer 49
-!    double  49.50000000000000
-! 
-! AUTHOR
-!    Michel Olagnon - Aug. 2000
-! MAINTAINER
-!    John Urban, 2022.04.16
-! LICENSE
-!    CC0-1.0
+!>
+!!##NAME
+!!    median(3f) - [M_orderpack:MEDIAN] Calculates median VALUE. If
+!!                 number of elements is even, returns average of the two
+!!                 "medians".
+!!
+!!##SYNOPSIS
+!!
+!!     Function Median (INVALS)
+!!
+!!      ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
+!!      ${TYPE} (Kind=${KIND})              :: MEDIAN
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!    MEDIAN(3f) calculates the median value of the array INVALS(). It is
+!!    a modified version of MEDIANVAL(3f) that provides the average between
+!!    the two middle values in the case where size(INVALS) is even.
+!!
+!!    Internally, this routine uses a pivoting strategy similar to the
+!!    method of finding the median based on the Quick-sort algorithm, but
+!!    we skew the pivot choice to try to bring it to one-half the values as
+!!    fast as possible. It uses two temporary arrays, where it stores the
+!!    indices of the values smaller than the pivot (ILOWT), and the indices
+!!    of values larger than the pivot that we might still need later on
+!!    (IHIGT). It iterates until it can bring the number of values in ILOWT
+!!    to exactly NORD, and then finds the maximum of this set.
+!!
+!!##OPTIONS
+!!     INVALS      array to determine the median value of.
+!!
+!!##RETURNS
+!!     MEDIAN     median value. If INVALS contains an even number
+!!                of elements the value is the average of the
+!!                two "medians".
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_median
+!!    ! calculate median value
+!!    use M_orderpack, only : median
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!
+!!       write(*,g) 'real   ',median(&
+!!       [80.0,70.0,20.0,10.0,1000.0] )
+!!
+!!       write(*,g) 'integer',median(&
+!!       [11, 22, 33, 44, 55, 66, 77, 88] )
+!!
+!!       write(*,g) 'double ',median(&
+!!       [11.0d0,22.0d0,33.0d0,66.0d0,77.0d0,88.0d0])
+!!
+!!    end program demo_median
+!!
+!!   Results:
+!!
+!!    real    70.00000
+!!    integer 49
+!!    double  49.50000000000000
+!!
+!!##AUTHOR
+!!    Michel Olagnon - Aug. 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
+!!##LICENSE
+!!    CC0-1.0
 interface median
   module procedure real64_median, real32_median, int32_median
 end interface median
