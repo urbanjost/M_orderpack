@@ -7,7 +7,7 @@ public :: refpar
 !>
 !!##NAME
 !!    prank_basic(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array
-!!                 (QuickSort)
+!!                 (Quick-Sort)
 !!
 !!##SYNOPSIS
 !!
@@ -32,7 +32,7 @@ public :: refpar
 !!    difficult to read as some other ones.
 !!
 !!    Internally this routine uses a pivoting strategy such as the one used
-!!    in finding the median based on the QuickSort algorithm. It uses a
+!!    in finding the median based on the Quick-Sort algorithm. It uses a
 !!    temporary array, where it stores the partially ranked indices of the
 !!    values. It iterates until it can bring the number of values lower
 !!    than the pivot to exactly NORD, and then uses an Insertion-Sort to

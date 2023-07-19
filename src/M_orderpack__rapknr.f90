@@ -4,79 +4,82 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: rapknr
-! NAME
-!    prank_decreasing(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an
-!                          array in DECREASING order.
-! 
-! SYNOPSIS
-!     Subroutine Prank_Decreasing (INVALS, IRNGT, NORD)
-! 
-!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-!       Integer, Intent (Out)               :: IRNGT(:)
-!       Integer, Intent (In)                :: NORD
-! 
-!    Where ${TYPE}(kind=${KIND}) may be
-! 
-!       o Real(kind=real32)
-!       o Real(kind=real64)
-!       o Integer(kind=int32)
-! 
-! DESCRIPTION
-!    Same as PRANK(3f), but in decreasing order.
-! 
-!    PRANK_DECREASING(3f) partially ranks input array INVALS() in decreasing
-!    order up to order NORD, placing the indices pointing to the selected
-!    values into IRNGT().
-! 
-!    Internally this routine uses a pivoting strategy such as the one of
-!    finding the median based on the quicksort algorithm, but we skew the
-!    pivot choice to try to bring it to NORD as fast as possible. It uses
-!    two temporary arrays, where it stores the indices of the values larger
-!    than the pivot (IHIGT), and the indices of values smaller than the
-!    pivot that we might still need later on (ILOWT). It iterates until
-!    it can bring the number of values in IHIGT to exactly NORD, and then
-!    uses an insertion sort to rank this set, since it is supposedly small.
-! 
-! OPTIONS
-!     INVALS      Array to rank
-!     IRNGT      returned rank array, indicating order of values in
-!                INVALS from largest to smallest
-!     NORD       number of values to return in IRNGT
-! 
-! EXAMPLES
-!   Sample program:
-! 
-!    program demo_prank_decreasing
-!    ! create index to lowest N values in input array in decreasing order
-!    use M_orderpack, only : prank_decreasing
-!    implicit none
-!    character(len=*),parameter :: g='(*(g0,1x))'
-!    integer,allocatable :: INVALS(:)
-!    integer,allocatable :: irngt(:)
-!    integer :: nord
-!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]
-!    nord=5
-!    allocate(irngt(nord))
-!       write(*,g)'ORIGINAL:',INVALS
-!       call prank_decreasing(INVALS,irngt,nord)
-!       write(*,g)'NUMBER OF INDICES TO RETURN:',nord
-!       write(*,g)'RETURNED INDICES:',irngt
-!       write(*,g)nord,'MAXIMUM VALUES:',INVALS(irngt(:nord))
-!    end program demo_prank_decreasing
-! 
-!   Results:
-! 
-!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
-!    NUMBER OF INDICES TO RETURN: 5
-!    RETURNED INDICES: 1 10 9 8 7
-!    5 MAXIMUM VALUES: 10 10 9 8 6
-! 
-! AUTHOR
-!    Michel Olagnon - Feb. 2011
-! MAINTAINER
-!    John Urban, 2022.04.16
-! LICENSE
-!    CC0-1.0
+!>
+!!##NAME
+!!    prank_decreasing(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an
+!!                          array in DECREASING order.
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine Prank_Decreasing (INVALS, IRNGT, NORD)
+!!
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!!       Integer, Intent (Out)               :: IRNGT(:)
+!!       Integer, Intent (In)                :: NORD
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!
+!!##DESCRIPTION
+!!    Same as PRANK(3f), but in decreasing order.
+!!
+!!    PRANK_DECREASING(3f) partially ranks input array INVALS() in decreasing
+!!    order up to order NORD, placing the indices pointing to the selected
+!!    values into IRNGT().
+!!
+!!    Internally this routine uses a pivoting strategy such as the one of
+!!    finding the median based on the quick-sort algorithm, but we skew the
+!!    pivot choice to try to bring it to NORD as fast as possible. It uses
+!!    two temporary arrays, where it stores the indices of the values larger
+!!    than the pivot (IHIGT), and the indices of values smaller than the
+!!    pivot that we might still need later on (ILOWT). It iterates until
+!!    it can bring the number of values in IHIGT to exactly NORD, and then
+!!    uses an insertion sort to rank this set, since it is supposedly small.
+!!
+!!##OPTIONS
+!!     INVALS      Array to rank
+!!     IRNGT      returned rank array, indicating order of values in
+!!                INVALS from largest to smallest
+!!     NORD       number of values to return in IRNGT
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_prank_decreasing
+!!    ! create index to lowest N values in input array in decreasing order
+!!    use M_orderpack, only : prank_decreasing
+!!    implicit none
+!!    character(len=*),parameter :: g='(*(g0,1x))'
+!!    integer,allocatable :: INVALS(:)
+!!    integer,allocatable :: irngt(:)
+!!    integer :: nord
+!!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]
+!!    nord=5
+!!    allocate(irngt(nord))
+!!       write(*,g)'ORIGINAL:',INVALS
+!!       call prank_decreasing(INVALS,irngt,nord)
+!!       write(*,g)'NUMBER OF INDICES TO RETURN:',nord
+!!       write(*,g)'RETURNED INDICES:',irngt
+!!       write(*,g)nord,'MAXIMUM VALUES:',INVALS(irngt(:nord))
+!!    end program demo_prank_decreasing
+!!
+!!   Results:
+!!
+!!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
+!!    NUMBER OF INDICES TO RETURN: 5
+!!    RETURNED INDICES: 1 10 9 8 7
+!!    5 MAXIMUM VALUES: 10 10 9 8 6
+!!
+!!##AUTHOR
+!!    Michel Olagnon - Feb. 2011
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
+!!##LICENSE
+!!    CC0-1.0
 interface rapknr
   module procedure real64_rapknr, real32_rapknr, int32_rapknr !, f_char_rapknr
 end interface rapknr

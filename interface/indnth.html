@@ -96,7 +96,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="<p> 0.7% of total for procedures.</p>Including implementation: 1101 statements, 246.9% of total for procedures.">3 statements</a>
+               title="<p> 0.7% of total for procedures.</p>Including implementation: 1101 statements, 245.8% of total for procedures.">3 statements</a>
           </li>
 
             <li id="source-file">
@@ -165,8 +165,100 @@
 
     <div class="col-md-9" id='text'>
       <h2>public interface indnth</h2>
-      
+      <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">orderloc</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_orderpack</span>:<span class="nv">FRACTILE</span>] <span class="k">Return</span> <span class="nv">INDEX</span> <span class="nv">of</span> <span class="nv">Nth</span> <span class="nv">ordered</span> <span class="nv">value</span> <span class="nv">of</span>
+               <span class="nv">array</span> <span class="ss">(</span><span class="nv">Quick</span><span class="o">-</span><span class="nv">Sort</span><span class="o">-</span><span class="nv">like</span><span class="ss">)</span>
+</code></pre></div>
 
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Function OrderLoc (INVALS, NORD)
+
+   <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
+   Integer                             :: orderloc
+   Integer, Intent (In)                :: NORD
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+
+   o Real(kind=real32)
+   o Real(kind=real64)
+   o Integer(kind=int32)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">orderloc</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">returns</span> <span class="nv">the</span> <span class="nv">index</span> <span class="nv">of</span> <span class="nv">NORDth</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">INVALS</span>, <span class="nv">i</span>.<span class="nv">e</span>. <span class="nv">the</span>
+<span class="nv">fractile</span> <span class="nv">of</span> <span class="nv">order</span> <span class="nv">NORD</span><span class="o">/</span><span class="nv">SIZE</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">)</span>.
+
+<span class="nv">That</span> <span class="nv">is</span>, <span class="nv">the</span> <span class="nb">result</span> <span class="nv">is</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">as</span> <span class="nv">sorting</span> <span class="nv">the</span> <span class="nv">array</span> <span class="nv">first</span> <span class="nv">and</span> <span class="k">then</span>
+<span class="nv">returning</span> <span class="nv">the</span> <span class="nv">value</span> <span class="nv">INVALS</span><span class="ss">(</span><span class="nv">NORD</span><span class="ss">)</span>.
+
+<span class="nv">Internally</span> <span class="nv">orderloc</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">uses</span> <span class="nv">a</span> <span class="nv">pivoting</span> <span class="nv">strategy</span> <span class="nv">such</span> <span class="nv">as</span> <span class="nv">the</span> <span class="nv">one</span>
+<span class="nv">of</span> <span class="nv">finding</span> <span class="nv">the</span> <span class="nv">median</span> <span class="nv">based</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">quick</span><span class="o">-</span><span class="nv">sort</span> <span class="nv">algorithm</span>, <span class="nv">but</span> <span class="nv">we</span> <span class="nv">skew</span>
+<span class="nv">the</span> <span class="nv">pivot</span> <span class="nv">choice</span> <span class="nv">to</span> <span class="nv">try</span> <span class="nv">to</span> <span class="nv">bring</span> <span class="nv">it</span> <span class="nv">to</span> <span class="nv">NORD</span> <span class="nv">as</span> <span class="nv">fast</span> <span class="nv">as</span> <span class="nv">possible</span>. <span class="nv">It</span>
+<span class="nv">uses</span> <span class="nv">two</span> <span class="nv">temporary</span> <span class="nv">arrays</span>, <span class="nv">where</span> <span class="nv">it</span> <span class="nv">stores</span> <span class="nv">the</span> <span class="nv">indices</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">values</span>
+<span class="nv">smaller</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">pivot</span> <span class="ss">(</span><span class="nv">ILOWT</span><span class="ss">)</span>, <span class="nv">and</span> <span class="nv">the</span> <span class="nv">indices</span> <span class="nv">of</span> <span class="nv">values</span> <span class="nv">larger</span> <span class="nv">than</span>
+<span class="nv">the</span> <span class="nv">pivot</span> <span class="nv">that</span> <span class="nv">we</span> <span class="nv">might</span> <span class="nv">still</span> <span class="nv">need</span> <span class="nv">later</span> <span class="nv">on</span> <span class="ss">(</span><span class="nv">IHIGT</span><span class="ss">)</span>. <span class="nv">It</span> <span class="nv">iterates</span>
+<span class="k">until</span> <span class="nv">it</span> <span class="nv">can</span> <span class="nv">bring</span> <span class="nv">the</span> <span class="nv">number</span> <span class="nv">of</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">ILOWT</span> <span class="nv">to</span> <span class="nv">exactly</span> <span class="nv">NORD</span>,
+<span class="nv">and</span> <span class="k">then</span> <span class="nv">finds</span> <span class="nv">the</span> <span class="nv">maximum</span> <span class="nv">of</span> <span class="nv">this</span> <span class="nv">set</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">INVALS</span>      <span class="nv">array</span> <span class="nv">to</span> <span class="nv">search</span>
+ <span class="nv">NORD</span>       <span class="nv">indicates</span> <span class="nv">the</span> <span class="nv">Nth</span> <span class="nv">ordered</span> <span class="nv">value</span> <span class="nv">to</span> <span class="nv">search</span> <span class="k">for</span>
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> orderloc     the index of INVALS() that contains the requested value
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_orderloc</span>
+<span class="o">!</span> <span class="nv">find</span> <span class="nv">Nth</span> <span class="nv">lowest</span> <span class="nv">ordered</span> <span class="nv">value</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">array</span> <span class="nv">without</span> <span class="nv">sorting</span> <span class="nv">entire</span> <span class="nv">array</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">orderloc</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">medianloc</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">iarr</span><span class="ss">(</span>:<span class="ss">)</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">list</span><span class="o">=</span> <span class="s1">&#39;</span><span class="s">(*(g0:,&quot;, &quot;))</span><span class="s1">&#39;</span>,<span class="nv">sp</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">integer</span> :: <span class="nv">i</span>
+<span class="nv">integer</span> :: <span class="nv">indx</span>
+   <span class="nv">iarr</span><span class="o">=</span>[<span class="mi">80</span>,<span class="mi">70</span>,<span class="mi">30</span>,<span class="mi">40</span>,<span class="mi">50</span>,<span class="mi">60</span>,<span class="mi">20</span>,<span class="mi">10</span>,<span class="mi">0</span>,<span class="o">-</span><span class="mi">100</span>]
+   <span class="nv">print</span> <span class="nv">list</span>, <span class="s1">&#39;</span><span class="s">ORIGINAL:</span><span class="s1">&#39;</span>,<span class="nv">iarr</span>
+   <span class="o">!</span> <span class="nv">like</span> <span class="nv">minloc</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">and</span> <span class="nv">maxloc</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">sp</span>,<span class="s1">&#39;</span><span class="s">minloc</span><span class="s1">&#39;</span>,<span class="nv">orderloc</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="mi">1</span><span class="ss">)</span>,                <span class="nv">minloc</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">sp</span>,<span class="s1">&#39;</span><span class="s">maxloc</span><span class="s1">&#39;</span>,<span class="nv">orderloc</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">))</span>,       <span class="nv">maxloc</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">)</span>
+   <span class="o">!</span> <span class="nv">can</span> <span class="nv">find</span> <span class="nv">median</span>
+   <span class="k">call</span> <span class="nl">medianloc</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="nv">indx</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">sp</span>,<span class="s1">&#39;</span><span class="s">median</span><span class="s1">&#39;</span>,<span class="nv">orderloc</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="ss">(</span><span class="nv">size</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">)</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span><span class="o">/</span><span class="mi">2</span><span class="ss">)</span>, <span class="nv">indx</span>
+   <span class="o">!</span> <span class="nv">but</span> <span class="nv">more</span> <span class="nv">general</span> <span class="nv">so</span> <span class="nv">can</span> <span class="nv">find</span> <span class="nv">location</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">Nth</span> <span class="nv">lowest</span> <span class="nv">value</span> ...
+   <span class="o">!</span>
+   <span class="o">!</span> <span class="nv">sort</span> <span class="nv">the</span> <span class="nv">hard</span> <span class="nv">way</span>, <span class="nv">finding</span> <span class="nv">location</span> <span class="nv">of</span> <span class="nv">Nth</span> <span class="nv">value</span> <span class="nv">one</span> <span class="nv">at</span> <span class="nv">a</span> <span class="nv">time</span>
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">sp</span>,<span class="nv">advance</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">no</span><span class="s1">&#39;</span><span class="ss">)</span> <span class="nv">iarr</span><span class="ss">(</span><span class="nv">orderloc</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="nv">i</span><span class="ss">))</span>
+   <span class="nv">enddo</span>
+   <span class="nv">print</span> <span class="o">*</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_orderloc</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code>ORIGINAL:, 80, 70, 30, 40, 50, 60, 20, 10, 0, -100
+minloc 10 10
+maxloc 1 1
+median 3 3
+-100 0 10 20 30 40 50 60 70 80
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon - Aug. 2000
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+<br>
       <section class="visible-xs visible-sm hidden-md">
           <h3>Contents</h3>
   
@@ -407,7 +499,7 @@
             <p class="text-right">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2023-04-23 22:12              </p>
+ on 2023-07-19 08:06              </p>
           </div>
         </div>
         <br>

@@ -96,7 +96,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="<p> 0.7% of total for procedures.</p>Including implementation: 1320 statements, 296.0% of total for procedures.">3 statements</a>
+               title="<p> 0.7% of total for procedures.</p>Including implementation: 2208 statements, 492.9% of total for procedures.">3 statements</a>
           </li>
 
             <li id="source-file">
@@ -152,7 +152,9 @@
         <div class="list-group">
             <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-real64_unipar">real64_unipar</a>
             <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-real32_unipar">real32_unipar</a>
+            <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-int16_unipar">int16_unipar</a>
             <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-int32_unipar">int32_unipar</a>
+            <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-int64_unipar">int64_unipar</a>
         </div>
       </div>
     </div>
@@ -181,7 +183,9 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
 
    o Real(kind=real32)
    o Real(kind=real64)
+   o Integer(kind=int16)
    o Integer(kind=int32)
+   o Integer(kind=int64)
 </code></pre></div>
 
 <h2 id="description">DESCRIPTION</h2>
@@ -189,7 +193,7 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
 <span class="nv">entries</span>.
 
 <span class="nv">Internally</span>, <span class="nv">this</span> <span class="nv">routine</span> <span class="nv">uses</span> <span class="nv">a</span> <span class="nv">pivoting</span> <span class="nv">strategy</span> <span class="nv">such</span> <span class="nv">as</span> <span class="nv">the</span> <span class="nv">one</span> <span class="nv">of</span>
-<span class="nv">finding</span> <span class="nv">the</span> <span class="nv">median</span> <span class="nv">based</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">quicksort</span> <span class="nv">algorithm</span>, <span class="nv">but</span> <span class="nv">we</span> <span class="nv">skew</span> <span class="nv">the</span>
+<span class="nv">finding</span> <span class="nv">the</span> <span class="nv">median</span> <span class="nv">based</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">quick</span><span class="o">-</span><span class="nv">sort</span> <span class="nv">algorithm</span>, <span class="nv">but</span> <span class="nv">we</span> <span class="nv">skew</span> <span class="nv">the</span>
 <span class="nv">pivot</span> <span class="nv">choice</span> <span class="nv">to</span> <span class="nv">try</span> <span class="nv">to</span> <span class="nv">bring</span> <span class="nv">it</span> <span class="nv">to</span> <span class="nv">NORD</span> <span class="nv">as</span> <span class="nv">quickly</span> <span class="nv">as</span> <span class="nv">possible</span>. <span class="nv">It</span>
 <span class="nv">uses</span> <span class="nv">two</span> <span class="nv">temporary</span> <span class="nv">arrays</span>, <span class="nv">where</span> <span class="nv">it</span> <span class="nv">stores</span> <span class="nv">the</span> <span class="nv">indices</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">values</span>
 <span class="nv">smaller</span> <span class="nv">than</span> <span class="nv">the</span> <span class="nv">pivot</span> <span class="ss">(</span><span class="nv">ILOWT</span><span class="ss">)</span>, <span class="nv">and</span> <span class="nv">the</span> <span class="nv">indices</span> <span class="nv">of</span> <span class="nv">values</span> <span class="nv">larger</span>
@@ -209,38 +213,39 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
 
 <h2 id="examples">EXAMPLES</h2>
 <p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">program</span><span class="w"> </span><span class="s">demo_prank_unique</span><span class="w"></span>
-<span class="sx">! ranks array, removing duplicates</span><span class="w"></span>
-<span class="n">use</span><span class="w"> </span><span class="s">M_orderpack,</span><span class="w"> </span><span class="s">only</span><span class="w"> </span><span class="s">:</span><span class="w"> </span><span class="s">prank_unique</span><span class="w"></span>
-<span class="n">implicit</span><span class="w"> </span><span class="s">none</span><span class="w"></span>
-<span class="n">character</span><span class="p">(</span><span class="n">len</span><span class="p">=</span><span class="o">*</span><span class="p">),</span><span class="n">parameter</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">g</span><span class="p">=</span><span class="s">&#39;(*(g0,1x))&#39;</span><span class="w"></span>
-<span class="n">integer</span><span class="p">,</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">INVALS</span><span class="p">(:)</span><span class="w"></span>
-<span class="n">integer</span><span class="p">,</span><span class="n">allocatable</span><span class="w"> </span><span class="p">::</span><span class="w"> </span><span class="n">irngt</span><span class="p">(:)</span><span class="w"></span>
-<span class="n">integer</span><span class="w"> </span><span class="s">::</span><span class="w"> </span><span class="s">nord</span><span class="w"></span>
-<span class="sx">!</span><span class="w"></span>
-<span class="nb">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="o">&#39;</span><span class="n">If</span><span class="w"> </span><span class="n">enough</span><span class="w"> </span><span class="nb">values</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="nb">unique</span><span class="p">,</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">NORD</span><span class="w"> </span><span class="n">indices</span><span class="o">&#39;</span><span class="w"></span>
-<span class="k">if</span><span class="p">(</span><span class="n">allocated</span><span class="p">(</span><span class="n">irngt</span><span class="p">))</span><span class="n">deallocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">)</span><span class="w"></span>
-<span class="n">INVALS</span><span class="p">=[</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="w"></span>
-<span class="n">nord</span><span class="p">=</span><span class="mi">5</span><span class="w"></span>
-<span class="n">allocate</span><span class="p">(</span><span class="n">irngt</span><span class="p">(</span><span class="n">nord</span><span class="p">))</span><span class="w"></span>
-<span class="n">call</span><span class="w"> </span><span class="s">printme()</span><span class="w"></span>
-<span class="sx">!</span><span class="w"></span>
-<span class="sx">!BUG!write(*,g)&#39;If not enough values are unique, will change NORD&#39;</span><span class="w"></span>
-<span class="sx">!BUG!INVALS=[-1,0,-1,0,-1,0,-1]</span><span class="w"></span>
-<span class="sx">!BUG!nord=5</span><span class="w"></span>
-<span class="sx">!BUG!if(allocated(irngt))deallocate(irngt)</span><span class="w"></span>
-<span class="sx">!BUG!allocate(irngt(nord))</span><span class="w"></span>
-<span class="sx">!BUG!call printme()</span><span class="w"></span>
-<span class="nb">contains</span><span class="w"></span>
-<span class="n">subroutine</span><span class="w"> </span><span class="s">printme()</span><span class="w"></span>
-<span class="w">   </span><span class="nb">write</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">g</span><span class="p">)</span><span class="o">&#39;</span><span class="n">ORIGINAL</span><span class="p">:</span><span class="s">&#39;,INVALS</span>
-<span class="s">   write(*,g)&#39;</span><span class="n">NUMBER</span><span class="w"> </span><span class="n">OF</span><span class="w"> </span><span class="n">INDICES</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">SORT</span><span class="p">:</span><span class="s">&#39;,nord</span>
-<span class="s">   call prank_unique(INVALS,irngt,nord)</span>
-<span class="s">   write(*,g)&#39;</span><span class="n">NUMBER</span><span class="w"> </span><span class="n">OF</span><span class="w"> </span><span class="n">INDICES</span><span class="w"> </span><span class="n">RETURNED</span><span class="p">:</span><span class="s">&#39;,nord</span>
-<span class="s">   write(*,g)&#39;</span><span class="n">RETURNED</span><span class="w"> </span><span class="n">INDICES</span><span class="p">:</span><span class="s">&#39;,irngt(:nord)</span>
-<span class="s">   write(*,g)nord,&#39;</span><span class="n">SMALLEST</span><span class="w"> </span><span class="n">UNIQUE</span><span class="w"> </span><span class="n">VALUES</span><span class="p">:</span><span class="s">&#39;</span><span class="err">,INVALS(irngt(:nord))</span>
-<span class="k">end</span><span class="w"> </span><span class="n">subroutine</span><span class="w"></span>
-<span class="k">end</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="n">demo_prank_unique</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_prank_unique</span>
+<span class="o">!</span> <span class="nv">ranks</span> <span class="nv">array</span>, <span class="nv">removing</span> <span class="nv">duplicates</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">prank_unique</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">INVALS</span><span class="ss">(</span>:<span class="ss">)</span>
+<span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">irngt</span><span class="ss">(</span>:<span class="ss">)</span>
+<span class="nv">integer</span> :: <span class="nv">nord</span>
+<span class="o">!</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">If enough values are unique, will return NORD indices</span><span class="s1">&#39;</span>
+<span class="nv">INVALS</span><span class="o">=</span>[<span class="mi">10</span>,<span class="mi">5</span>,<span class="mi">7</span>,<span class="mi">1</span>,<span class="mi">4</span>,<span class="mi">5</span>,<span class="mi">6</span>,<span class="mi">8</span>,<span class="mi">9</span>,<span class="mi">10</span>,<span class="mi">1</span>]
+<span class="nv">nord</span><span class="o">=</span><span class="mi">5</span>
+<span class="k">call</span> <span class="nl">printme</span><span class="ss">()</span>
+<span class="o">!</span>
+<span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">If not enough values are unique, will change NORD</span><span class="s1">&#39;</span>
+<span class="nv">INVALS</span><span class="o">=</span>[<span class="o">-</span><span class="mi">1</span>,<span class="mi">0</span>,<span class="o">-</span><span class="mi">1</span>,<span class="mi">0</span>,<span class="o">-</span><span class="mi">1</span>,<span class="mi">0</span>,<span class="o">-</span><span class="mi">1</span>]
+<span class="nv">nord</span><span class="o">=</span><span class="mi">5</span>
+<span class="k">if</span><span class="ss">(</span><span class="nv">allocated</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">))</span><span class="nv">deallocate</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">)</span>
+<span class="nv">allocate</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">(</span><span class="nv">nord</span><span class="ss">))</span>
+<span class="k">call</span> <span class="nl">printme</span><span class="ss">()</span>
+<span class="o">!</span>
+<span class="nv">contains</span>
+<span class="nv">subroutine</span> <span class="nv">printme</span><span class="ss">()</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ORIGINAL:</span><span class="s1">&#39;</span>,<span class="nv">INVALS</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">NUMBER OF INDICES TO SORT:</span><span class="s1">&#39;</span>,<span class="nv">nord</span>
+   <span class="k">if</span><span class="ss">(</span><span class="nv">allocated</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">))</span><span class="nv">deallocate</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">)</span>
+   <span class="nv">allocate</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">(</span><span class="nv">nord</span><span class="ss">))</span>
+   <span class="k">call</span> <span class="nl">prank_unique</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="nv">irngt</span>,<span class="nv">nord</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">NUMBER OF INDICES RETURNED:</span><span class="s1">&#39;</span>,<span class="nv">nord</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">RETURNED INDICES:</span><span class="s1">&#39;</span>,<span class="nv">irngt</span><span class="ss">(</span>:<span class="nv">nord</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="nv">nord</span>,<span class="s1">&#39;</span><span class="s">SMALLEST UNIQUE VALUES:</span><span class="s1">&#39;</span>,<span class="nv">INVALS</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">(</span>:<span class="nv">nord</span><span class="ss">))</span>
+<span class="k">end</span> <span class="nv">subroutine</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_prank_unique</span>
 </code></pre></div>
 
 <p>Results:</p>
@@ -300,7 +305,9 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
         <div class="list-group">
             <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-real64_unipar">real64_unipar</a>
             <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-real32_unipar">real32_unipar</a>
+            <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-int16_unipar">int16_unipar</a>
             <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-int32_unipar">int32_unipar</a>
+            <a class="list-group-item" href="../interface/unipar.html#moduleprocedure-int64_unipar">int64_unipar</a>
         </div>
       </div>
     </div>
@@ -452,6 +459,75 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
   </div>
 
             <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-int16_unipar"></span><h3>private  subroutine int16_unipar(INVALS, IRNGT, NORD)  
+</h3></div>
+    <div class="panel-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=int16),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              Dimension (:)
+            </td>
+            <td>::</td>
+            <td><strong>INVALS</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              Dimension (:)
+            </td>
+            <td>::</td>
+            <td><strong>IRNGT</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>NORD</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+            <div class="panel panel-default">
     <div class="panel-heading codesum"><span class="anchor" id="proc-int32_unipar"></span><h3>private  subroutine int32_unipar(INVALS, IRNGT, NORD)  
 </h3></div>
     <div class="panel-body">
@@ -520,6 +596,75 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
     </div>
   </div>
 
+            <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-int64_unipar"></span><h3>private  subroutine int64_unipar(INVALS, IRNGT, NORD)  
+</h3></div>
+    <div class="panel-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=int64),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              Dimension (:)
+            </td>
+            <td>::</td>
+            <td><strong>INVALS</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              Dimension (:)
+            </td>
+            <td>::</td>
+            <td><strong>IRNGT</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>NORD</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
 </div>
   </div>
       <hr>
@@ -534,7 +679,7 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
             <p class="text-right">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2023-04-23 22:12              </p>
+ on 2023-07-19 08:06              </p>
           </div>
         </div>
         <br>

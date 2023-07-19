@@ -96,7 +96,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="<p> 0.7% of total for procedures.</p>Including implementation: 102 statements, 22.9% of total for procedures.">3 statements</a>
+               title="<p> 0.7% of total for procedures.</p>Including implementation: 102 statements, 22.8% of total for procedures.">3 statements</a>
           </li>
 
             <li id="source-file">
@@ -165,8 +165,117 @@
 
     <div class="col-md-9" id='text'>
       <h2>public interface fndnth</h2>
-      
+      <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">orderval_special</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="o">-</span> [<span class="nv">M_orderpack</span>:<span class="nv">FRACTILE</span>] <span class="k">Return</span> <span class="nv">VALUE</span> <span class="nv">of</span> <span class="nv">Nth</span>
+                       <span class="nv">ordered</span> <span class="nv">element</span> <span class="nv">of</span> <span class="nv">array</span> <span class="ss">(</span><span class="nv">InsertSort</span><span class="o">-</span><span class="nv">like</span><span class="ss">)</span>
+</code></pre></div>
 
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Function Orderval_Special (INVALS, INORD)
+
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (Kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
+  Integer, Intent (In)                :: INORD
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (Kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>)              :: orderval_special
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+
+o Real(kind=real32)
+o Real(kind=real64)
+o Integer(kind=int32)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">ORDERVAL_SPECIAL</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">returns</span> <span class="nv">the</span> <span class="nv">INORDth</span> <span class="nv">lowest</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">INVALS</span><span class="ss">()</span>,
+<span class="nv">i</span>.<span class="nv">e</span>. <span class="nv">the</span> <span class="nv">fractile</span> <span class="nv">of</span> <span class="nv">order</span> <span class="nv">INORD</span><span class="o">/</span><span class="nv">SIZE</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">)</span>.
+
+<span class="nv">Internally</span>, <span class="nv">This</span> <span class="nv">subroutine</span> <span class="nv">uses</span> <span class="nv">an</span> <span class="nv">insertion</span> <span class="nv">sort</span>, <span class="nv">limiting</span> <span class="nv">insertion</span>
+<span class="nv">to</span> <span class="nv">the</span> <span class="nv">first</span> <span class="nv">INORD</span> <span class="nv">values</span> <span class="nv">and</span> <span class="nv">even</span> <span class="nv">less</span> <span class="nv">when</span> <span class="nv">one</span> <span class="nv">can</span> <span class="nv">know</span> <span class="nv">that</span> <span class="nv">the</span>
+<span class="nv">value</span> <span class="nv">that</span> <span class="nv">is</span> <span class="nv">considered</span> <span class="nv">will</span> <span class="nv">not</span> <span class="nv">be</span> <span class="nv">the</span> <span class="nv">INORDth</span>.
+
+<span class="nv">An</span> <span class="nv">insertion</span> <span class="nv">sort</span> <span class="nv">is</span> <span class="nv">very</span> <span class="nv">fast</span> <span class="nv">when</span> <span class="nv">INORD</span> <span class="nv">is</span> <span class="nv">very</span> <span class="nv">small</span>
+<span class="ss">(</span><span class="mi">2</span><span class="o">-</span><span class="mi">5</span><span class="ss">)</span>. <span class="nv">Additionally</span>, <span class="nv">internally</span> <span class="nv">it</span> <span class="nv">requires</span> <span class="nv">only</span> <span class="nv">a</span> <span class="nv">work</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">size</span>
+<span class="nv">INORD</span> <span class="ss">(</span><span class="nv">and</span> <span class="nv">type</span> <span class="nv">of</span> <span class="nv">INVALS</span><span class="ss">)</span>,
+
+<span class="nv">But</span> <span class="nv">worst</span> <span class="nv">case</span> <span class="nv">behavior</span> <span class="nv">can</span> <span class="nv">happen</span> <span class="nv">fairly</span> <span class="nv">probably</span> <span class="ss">(</span><span class="nv">e</span>.<span class="nv">g</span>., <span class="nv">initially</span>
+<span class="nv">inverse</span> <span class="nv">sorted</span><span class="ss">)</span>. <span class="nv">Therefore</span>, <span class="nv">in</span> <span class="nv">many</span> <span class="nv">cases</span>, <span class="nv">the</span> <span class="nv">refined</span> <span class="nv">Quick</span><span class="o">-</span><span class="nv">Sort</span>
+<span class="nv">method</span> <span class="nv">is</span> <span class="nv">faster</span>.
+
+<span class="nv">so</span> <span class="nv">ORDERVAL_SPECIAL</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">should</span> <span class="nv">be</span> <span class="nv">used</span> <span class="nv">when</span> <span class="nv">INORD</span> <span class="nv">is</span> <span class="nv">small</span> <span class="nv">and</span> <span class="nv">INVALS</span>
+<span class="nv">is</span> <span class="nv">likely</span> <span class="nv">to</span> <span class="nv">be</span> <span class="nv">a</span> <span class="k">random</span> <span class="nv">array</span>, <span class="nv">otherwise</span> <span class="nv">consider</span> <span class="nv">using</span> <span class="nv">ORDERLOC</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
+<span class="nv">or</span> <span class="nv">ORDERVAL</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">INVALS</span>              <span class="nv">input</span> <span class="nv">array</span> <span class="nv">of</span> <span class="nv">values</span>
+ <span class="nv">INORD</span>                <span class="nv">specify</span> <span class="nv">Nth</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">sorted</span> <span class="nv">INVALS</span> <span class="nv">array</span> <span class="nv">to</span>
+                     <span class="k">return</span>, <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">size</span><span class="ss">(</span><span class="nv">INVALS</span><span class="ss">)</span>.
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> ORDERVAL_SPECIAL    returned value
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_orderval_special</span>
+<span class="o">!</span> <span class="k">return</span> <span class="nv">Nth</span> <span class="nv">ordered</span> <span class="nv">value</span> <span class="nv">of</span> <span class="nv">an</span> <span class="nv">array</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">orderval_special</span>, <span class="nv">medianval</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">list</span><span class="o">=</span> <span class="s1">&#39;</span><span class="s">(*(g0:,&quot;, &quot;))</span><span class="s1">&#39;</span>,<span class="nv">sp</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">iarr</span><span class="ss">(</span>:<span class="ss">)</span>
+<span class="nv">integer</span> :: <span class="nv">i</span>
+   <span class="nv">iarr</span><span class="o">=</span>[<span class="mi">80</span>,<span class="mi">70</span>,<span class="mi">30</span>,<span class="mi">40</span>,<span class="o">-</span><span class="mi">50</span>,<span class="mi">60</span>,<span class="mi">20</span>,<span class="mi">10</span>]
+   <span class="nv">print</span> <span class="nv">sp</span>, <span class="s1">&#39;</span><span class="s">ORIGINAL:</span><span class="s1">&#39;</span>,<span class="nv">iarr</span>
+   <span class="o">!</span> <span class="nv">can</span> <span class="k">return</span> <span class="nv">the</span> <span class="nv">same</span> <span class="nv">values</span> <span class="nv">as</span> <span class="nv">intrinsics</span> <span class="nv">minval</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span> <span class="nv">and</span> <span class="nv">maxval</span><span class="ss">(</span><span class="mi">3</span><span class="nv">f</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">sp</span>, <span class="s1">&#39;</span><span class="s">minval</span><span class="s1">&#39;</span>,<span class="nv">orderval_special</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="mi">1</span><span class="ss">)</span>,          <span class="nv">minval</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">)</span>
+   <span class="nv">print</span> <span class="nv">sp</span>, <span class="s1">&#39;</span><span class="s">maxval</span><span class="s1">&#39;</span>,<span class="nv">orderval_special</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">))</span>, <span class="nv">maxval</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">)</span>
+   <span class="o">!</span> <span class="nv">but</span> <span class="nv">more</span> <span class="nv">generally</span> <span class="nv">it</span> <span class="nv">can</span> <span class="k">return</span> <span class="nv">the</span> <span class="nv">Nth</span> <span class="nv">lowest</span> <span class="nv">value</span>.
+   <span class="nv">print</span> <span class="nv">sp</span>, <span class="s1">&#39;</span><span class="s">median</span><span class="s1">&#39;</span>,<span class="nv">orderval_special</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="ss">(</span><span class="nv">size</span><span class="ss">(</span><span class="nv">iarr</span><span class="o">+</span><span class="mi">1</span><span class="ss">))</span><span class="o">/</span><span class="mi">2</span><span class="ss">)</span>, <span class="o">&amp;</span>
+   <span class="o">&amp;</span> <span class="nv">medianval</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">)</span>
+   <span class="o">!</span> <span class="nv">so</span> <span class="nv">only</span> <span class="nv">Nth</span> <span class="nv">ordered</span> <span class="nv">value</span> <span class="nv">can</span> <span class="nv">be</span> <span class="nv">found</span>
+   <span class="nv">print</span> <span class="nv">sp</span>,<span class="s1">&#39;</span><span class="s">inord=</span><span class="s1">&#39;</span>,<span class="mi">3</span>, <span class="s1">&#39;</span><span class="s"> fractile=</span><span class="s1">&#39;</span>,<span class="nv">orderval_special</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="mi">3</span><span class="ss">)</span>
+   <span class="o">!</span> <span class="nv">sorting</span> <span class="nv">the</span> <span class="nv">hard</span> <span class="nv">way</span>
+   <span class="nv">print</span> <span class="nv">sp</span>, <span class="s1">&#39;</span><span class="s">ORIGINAL:</span><span class="s1">&#39;</span>,<span class="nv">iarr</span>
+   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">iarr</span><span class="ss">)</span>
+      <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">list</span><span class="ss">)</span><span class="nv">i</span>,<span class="nv">orderval_special</span><span class="ss">(</span><span class="nv">iarr</span>,<span class="nv">i</span><span class="ss">)</span>
+   <span class="nv">enddo</span>
+   <span class="nv">print</span> <span class="o">*</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_orderval_special</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ORIGINAL</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span><span class="w"> </span><span class="mi">70</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="o">-</span><span class="mi">50</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="n">minval</span><span class="w"> </span><span class="o">-</span><span class="mi">50</span><span class="w"> </span><span class="o">-</span><span class="mi">50</span><span class="w"></span>
+<span class="n">maxval</span><span class="w"> </span><span class="mi">80</span><span class="w"> </span><span class="mi">80</span><span class="w"></span>
+<span class="n">median</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="mi">30</span><span class="w"></span>
+<span class="n">inord</span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="w">  </span><span class="n">fractile</span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
+<span class="n">ORIGINAL</span><span class="o">:</span><span class="w"> </span><span class="mi">80</span><span class="w"> </span><span class="mi">70</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="mi">40</span><span class="w"> </span><span class="o">-</span><span class="mi">50</span><span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="mi">20</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="mi">1</span><span class="o">,</span><span class="w"> </span><span class="o">-</span><span class="mi">50</span><span class="w"></span>
+<span class="mi">2</span><span class="o">,</span><span class="w"> </span><span class="mi">10</span><span class="w"></span>
+<span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="mi">20</span><span class="w"></span>
+<span class="mi">4</span><span class="o">,</span><span class="w"> </span><span class="mi">30</span><span class="w"></span>
+<span class="mi">5</span><span class="o">,</span><span class="w"> </span><span class="mi">40</span><span class="w"></span>
+<span class="mi">6</span><span class="o">,</span><span class="w"> </span><span class="mi">60</span><span class="w"></span>
+<span class="mi">7</span><span class="o">,</span><span class="w"> </span><span class="mi">70</span><span class="w"></span>
+<span class="mi">8</span><span class="o">,</span><span class="w"> </span><span class="mi">80</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="see-also">SEE ALSO</h2>
+<div class="codehilite"><pre><span></span><code>ORDERLOC(3f), ORDERVAL(3f)
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon - Aug. 2000
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+<br>
       <section class="visible-xs visible-sm hidden-md">
           <h3>Contents</h3>
   
@@ -401,7 +510,7 @@
             <p class="text-right">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2023-04-23 22:12              </p>
+ on 2023-07-19 08:06              </p>
           </div>
         </div>
         <br>

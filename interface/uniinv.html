@@ -96,7 +96,7 @@
           <li id="statements"><i class="fa fa-list-ol"></i>
             <a data-toggle="tooltip"
                data-placement="bottom" data-html="true"
-               title="<p> 0.7% of total for procedures.</p>Including implementation: 628 statements, 140.8% of total for procedures.">3 statements</a>
+               title="<p> 0.7% of total for procedures.</p>Including implementation: 940 statements, 209.8% of total for procedures.">3 statements</a>
           </li>
 
             <li id="source-file">
@@ -152,7 +152,9 @@
         <div class="list-group">
             <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-real64_uniinv">real64_uniinv</a>
             <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-real32_uniinv">real32_uniinv</a>
+            <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-int16_uniinv">int16_uniinv</a>
             <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-int32_uniinv">int32_uniinv</a>
+            <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-int64_uniinv">int64_uniinv</a>
             <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-f_char_uniinv">f_char_uniinv</a>
         </div>
       </div>
@@ -169,7 +171,7 @@
       <h2 id="name">NAME</h2>
 <div class="codehilite"><pre><span></span><code><span class="n">Rank_Decreasing</span><span class="p">(</span><span class="mf">3f</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="nl">M_orderpack:RANK:</span><span class="n">UNIQUE</span><span class="p">]</span><span class="w"> </span><span class="n">ranks</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">array</span><span class="w"></span>
 <span class="n">in</span><span class="w"> </span><span class="n">decreasing</span><span class="w"> </span><span class="n">order</span><span class="p">,</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">duplicate</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="n">assigned</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"></span>
-<span class="n">rank</span><span class="p">(</span><span class="n">MergeSort</span><span class="p">)</span><span class="w"></span>
+<span class="n">rank</span><span class="p">(</span><span class="n">Merge</span><span class="o">-</span><span class="n">Sort</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 
 <h2 id="synopsis">SYNOPSIS</h2>
@@ -182,7 +184,9 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
 
    o Real(kind=real32)
    o Real(kind=real64)
+   o Integer(kind=int16)
    o Integer(kind=int32)
+   o Integer(kind=int64)
    o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
 </code></pre></div>
 
@@ -289,7 +293,9 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
         <div class="list-group">
             <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-real64_uniinv">real64_uniinv</a>
             <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-real32_uniinv">real32_uniinv</a>
+            <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-int16_uniinv">int16_uniinv</a>
             <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-int32_uniinv">int32_uniinv</a>
+            <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-int64_uniinv">int64_uniinv</a>
             <a class="list-group-item" href="../interface/uniinv.html#moduleprocedure-f_char_uniinv">f_char_uniinv</a>
         </div>
       </div>
@@ -412,6 +418,60 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
   </div>
 
             <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-int16_uniinv"></span><h3>private  subroutine int16_uniinv(INVALS, IGOEST)  
+</h3></div>
+    <div class="panel-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=int16),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              Dimension (:)
+            </td>
+            <td>::</td>
+            <td><strong>INVALS</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              Dimension (:)
+            </td>
+            <td>::</td>
+            <td><strong>IGOEST</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+            <div class="panel panel-default">
     <div class="panel-heading codesum"><span class="anchor" id="proc-int32_uniinv"></span><h3>private  subroutine int32_uniinv(INVALS, IGOEST)  
 </h3></div>
     <div class="panel-body">
@@ -432,6 +492,60 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
             <td>
               <span class="anchor" ></span>
               integer(kind=int32),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              Dimension (:)
+            </td>
+            <td>::</td>
+            <td><strong>INVALS</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              Dimension (:)
+            </td>
+            <td>::</td>
+            <td><strong>IGOEST</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+            <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-int64_uniinv"></span><h3>private  subroutine int64_uniinv(INVALS, IGOEST)  
+</h3></div>
+    <div class="panel-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              integer(kind=int64),
             </td>
 <td>intent(in),</td>
               <td></td>            <td>
@@ -533,7 +647,7 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
             <p class="text-right">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2023-04-23 22:12              </p>
+ on 2023-07-19 08:06              </p>
           </div>
         </div>
         <br>
