@@ -1,5 +1,5 @@
-[![](docs/images/M_orderpack.gif)](https://urbanjost.github.io/M_ORDERPACK/fpm-ford/index.html)
-# [M_ORDERPACK](https://urbanjost.github.io/M_ORDERPACK/man3.html)
+[![](docs/images/M_orderpack.gif)](https://urbanjost.github.io/M_orderpack/fpm-ford/index.html)
+# [M_orderpack](https://urbanjost.github.io/M_orderpack/man3.html)
 
 ## Name
    **M_orderpack**(3f) - general and specialized ranking and sorting routines
