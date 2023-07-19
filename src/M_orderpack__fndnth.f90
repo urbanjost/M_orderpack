@@ -36,7 +36,7 @@ public :: fndnth
 !!    INORD (and type of INVALS),
 !!
 !!    But worst case behavior can happen fairly probably (e.g., initially
-!!    inverse sorted). Therefore, in many cases, the refined QuickSort
+!!    inverse sorted). Therefore, in many cases, the refined Quick-Sort
 !!    method is faster.
 !!
 !!    so ORDERVAL_SPECIAL(3f) should be used when INORD is small and INVALS

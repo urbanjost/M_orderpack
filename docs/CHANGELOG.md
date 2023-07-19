@@ -19,13 +19,20 @@ and usage changes.
    - [ ] registered in fpm(1) repository
 
 ---
+**2023-07-19**  John S. Urban  <https://github.com/urbanjost>
+
+### :green_circle: ADD:
+   - allow INTEGER kinds int16 and int64 for PRANK_UNIQUE(3f) and RANK_DECREASING(3f)
+### :red_circle: FIX:
+   - PRANK_UNIQUE(3f) would not change the returned count if the number of unique
+     values was less than the number of unique values requested.
+---
 **2022-04-23**  John S. Urban  <https://github.com/urbanjost>
 
 ### :orange_circle: DIFF:
    - all procedures have new preferred names, and a single new module (M_orderpack)
      that defines their interface. Previous inteface still works, but documentation
      is changed to reflect the new names.
----
 ---
 **2022-04-19**  John S. Urban  <https://github.com/urbanjost>
 

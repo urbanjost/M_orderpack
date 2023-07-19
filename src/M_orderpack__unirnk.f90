@@ -7,7 +7,7 @@ public :: unirnk
 !>
 !!##NAME
 !!    Rank_Unique(3f) - [M_orderpack:RANK:UNIQUE] ranks an array, with removal
-!!                      of duplicate entries (MergeSort)
+!!                      of duplicate entries (Merge-Sort)
 !!
 !!##SYNOPSIS
 !!

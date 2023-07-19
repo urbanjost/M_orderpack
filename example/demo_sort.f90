@@ -4,7 +4,7 @@
      use M_orderpack, only : sort
      implicit none
      ! an insertion sort is very efficient for very small arrays
-     ! but generally slower than methods like quicksort and mergesort.
+     ! but generally slower than methods like quick-sort and merge-sort.
      real(kind=real64) :: valsd(2000)
      integer           :: i
         call random_seed()

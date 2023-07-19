@@ -7,7 +7,7 @@ public :: indnth
 !>
 !!##NAME
 !!    orderloc(3f) - [M_orderpack:FRACTILE] Return INDEX of Nth ordered value of
-!!                   array (QuickSort-like)
+!!                   array (Quick-Sort-like)
 !!
 !!##SYNOPSIS
 !!
@@ -31,7 +31,7 @@ public :: indnth
 !!    returning the value INVALS(NORD).
 !!
 !!    Internally orderloc(3f) uses a pivoting strategy such as the one
-!!    of finding the median based on the quicksort algorithm, but we skew
+!!    of finding the median based on the quick-sort algorithm, but we skew
 !!    the pivot choice to try to bring it to NORD as fast as possible. It
 !!    uses two temporary arrays, where it stores the indices of the values
 !!    smaller than the pivot (ILOWT), and the indices of values larger than

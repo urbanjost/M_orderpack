@@ -7,7 +7,7 @@ public :: rnkpar
 !>
 !!##NAME
 !!    prank(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array
-!!                (QuickSort-like)
+!!                (Quick-Sort-like)
 !!
 !!##SYNOPSIS
 !!
@@ -29,7 +29,7 @@ public :: rnkpar
 !!    order ( aka. the number of sorted elements requested).
 !!
 !!    This routine is refined for speed, and uses a pivoting strategy such
-!!    as the one of finding the median based on the quicksort algorithm,
+!!    as the one of finding the median based on the quick-sort algorithm,
 !!    but we skew the pivot choice to try to bring it to NORD as fast as
 !!    possible. It uses two temporary arrays, where it stores the indices of
 !!    the values smaller than the pivot (ILOWT), and the indices of values

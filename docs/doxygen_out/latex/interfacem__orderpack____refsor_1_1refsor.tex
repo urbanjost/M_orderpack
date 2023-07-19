@@ -15,7 +15,7 @@ subroutine \mbox{\hyperlink{interfacem__orderpack____refsor_1_1refsor_a262e1cdd1
 
 \doxysubsection{Detailed Description}
 \hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md118}{}\doxysubsubsection{N\+A\+ME}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md118}
-sort(3f) -\/ \mbox{[}M\+\_\+orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Quicksort)\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md119}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md119}
+sort(3f) -\/ \mbox{[}M\+\_\+orderpack\+:S\+O\+RT\mbox{]} Sorts array into ascending order (Quick-\/sort)\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md119}{}\doxysubsubsection{S\+Y\+N\+O\+P\+S\+IS}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md119}
 \begin{DoxyVerb} Subroutine Sort (INOUTVALS)
 
    ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
@@ -28,7 +28,7 @@ Where ${TYPE}(kind=${KIND}) may be
    o Character(kind=selected_char_kind("DEFAULT"),len=*)
 \end{DoxyVerb}
 \hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md120}{}\doxysubsubsection{D\+E\+S\+C\+R\+I\+P\+T\+I\+ON}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md120}
-Sorts I\+N\+O\+U\+T\+V\+A\+LS into ascending order (Quicksort)
+Sorts I\+N\+O\+U\+T\+V\+A\+LS into ascending order (Quick-\/sort)
 
 This version is not optimized for performance, and is thus not as difficult to read as some other ones.
 
@@ -42,7 +42,7 @@ It then recursively calls the procedure to sort each subset. When the size of th
 I\+N\+O\+U\+T\+V\+A\+LS array to sort\hypertarget{interfacem__orderpack____refsor_1_1refsor_autotoc_md122}{}\doxysubsubsection{E\+X\+A\+M\+P\+L\+ES}\label{interfacem__orderpack____refsor_1_1refsor_autotoc_md122}
 Sample program\+:
 
-program demo\+\_\+sort ! sort array in ascending order use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+orderpack, only \+: sort implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quicksort and mergesort. real(kind=real64) \+:: valsd(2000) integer \+:: i call random\+\_\+seed() call random\+\_\+number(valsd) valsd=valsd$\ast$1000000.0-\/500000.\+0 call sort(valsd) do i=1,size(valsd)-\/1 if (valsd(i+1).lt.\+valsd(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 3 endif enddo write($\ast$,$\ast$)\textquotesingle{}random arrays are now sorted\textquotesingle{} end program demo\+\_\+sort
+program demo\+\_\+sort ! sort array in ascending order use,intrinsic \+:: iso\+\_\+fortran\+\_\+env, only \+: int32, real32, real64 use M\+\_\+orderpack, only \+: sort implicit none ! an insertion sort is very efficient for very small arrays ! but generally slower than methods like quick-\/sort and merge-\/sort. real(kind=real64) \+:: valsd(2000) integer \+:: i call random\+\_\+seed() call random\+\_\+number(valsd) valsd=valsd$\ast$1000000.0-\/500000.\+0 call sort(valsd) do i=1,size(valsd)-\/1 if (valsd(i+1).lt.\+valsd(i))then write($\ast$,$\ast$)\textquotesingle{}not sorted\textquotesingle{} stop 3 endif enddo write($\ast$,$\ast$)\textquotesingle{}random arrays are now sorted\textquotesingle{} end program demo\+\_\+sort
 
 Results\+:
 

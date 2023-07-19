@@ -6,7 +6,7 @@ output_dir: docs/fpm-ford
 project: M_orderpack
 summary: sorting and ordering procedures in Fortran
 project_github: https://github.com/urbanjost/M_orderpack
-project_download:
+project_download: https://github.com/urbanjost/M_orderpack/archive/refs/heads/master.zip
 author: Michel Olagnon
 author_email: urbanjost@comcast.net
 github: https://github.com/urbanjost/M_orderpack

@@ -7,7 +7,7 @@ public :: valnth
 !>
 !!##NAME
 !!    orderval(3f) - [M_orderpack:FRACTILE] Return VALUE of Nth ordered
-!!                   element of array (QuickSort-like)
+!!                   element of array (Quick-Sort-like)
 !!
 !!##SYNOPSIS
 !!
@@ -30,7 +30,7 @@ public :: valnth
 !!   Internally, this subroutine simply calls ORDERLOC(3f).
 !!
 !!   This routine uses a pivoting strategy such as the one of finding the
-!!   median based on the QuickSort algorithm, but we skew the pivot choice
+!!   median based on the Quick-Sort algorithm, but we skew the pivot choice
 !!   to try to bring it to NORD as fast as possible. It uses two temporary
 !!   arrays, where it stores the indices of the values smaller than the
 !!   pivot (ILOWT), and the indices of values larger than the pivot that we

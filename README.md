@@ -1,4 +1,6 @@
-![_M_ORDERPACK](docs/images/M_orderpack.gif)
+[![](docs/images/M_orderpack.gif)](https://urbanjost.github.io/M_ORDERPACK/fpm-ford/index.html)
+# [M_ORDERPACK](https://urbanjost.github.io/M_ORDERPACK/man3.html)
+
 ## Name
    **M_orderpack**(3f) - general and specialized ranking and sorting routines
 
@@ -42,17 +44,6 @@ MINVAL(3f), not ORDERVAL(3f).
 **LICENSE**:
 
 CC0-1.0
-
----
-## Recent Events and Issues (See Also : CHANGELOG)
-
-### 2022-04-18
-  There appear to be issues with the original code, but may have been introduced
-  (but are being looked at):
-
-- UNIPAR returns non-unique values when less unique values in input than
-  requested in output with gfortran,nvfortran; OK with ifort
----
 
 ## Building the module using make![gmake](docs/images/gnu.gif)
 

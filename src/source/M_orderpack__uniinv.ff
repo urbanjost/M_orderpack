@@ -9,7 +9,7 @@ $BLOCK COMMENT --file rank_decreasing.3m_orderpack.man
 NAME
    Rank_Decreasing(3f) - [M_orderpack:RANK:UNIQUE] ranks an array
    in decreasing order, with duplicate entries assigned the same
-   rank(MergeSort)
+   rank(Merge-Sort)
 
 SYNOPSIS
     Subroutine Rank_Decreasing (INVALS, IGOEST)
@@ -21,7 +21,9 @@ SYNOPSIS
 
       o Real(kind=real32)
       o Real(kind=real64)
+      o Integer(kind=int16)
       o Integer(kind=int32)
+      o Integer(kind=int64)
       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
@@ -93,10 +95,10 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 interface uniinv
-  module procedure real64_uniinv, real32_uniinv, int32_uniinv, f_char_uniinv
+  module procedure real64_uniinv, real32_uniinv, int16_uniinv, int32_uniinv, int64_uniinv, f_char_uniinv
 end interface uniinv
 interface nearless
-  module procedure real64_nearless, real32_nearless, int32_nearless, f_char_nearless
+  module procedure real64_nearless, real32_nearless, int16_nearless, int32_nearless, int64_nearless, f_char_nearless
 end interface nearless
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -384,9 +386,19 @@ $SET TYPE Real
 $POST UNIINV
 $
 $DEFINE INTEGER   ! there is a call to intrinsic NEAREST(3f) only for REAL values
+
+$SET KIND int16
+$SET TYPE Integer
+$POST UNIINV
+
 $SET KIND int32
 $SET TYPE Integer
 $POST UNIINV
+
+$SET KIND int64
+$SET TYPE Integer
+$POST UNIINV
+
 $UNDEFINE INTEGER ! make sure conditional for IFDEF INTEGER is not taken
 $
 $DEFINE CHARACTER

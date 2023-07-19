@@ -33,7 +33,7 @@ public :: inssor
 !!    and is faster when INOUTVALS() is of very small size (< 20), or already
 !!    almost sorted; but worst case behavior can be triggered by commonly
 !!    encountered data order (e.g. initially inverse sorted). Therefore,
-!!    in many cases the Quicksort or Mergesort method is faster.
+!!    in many cases the Quick-sort or Merge-sort method is faster.
 !!
 !!##OPTIONS
 !!     INOUTVALS      array to sort
@@ -48,7 +48,7 @@ public :: inssor
 !!    use M_orderpack, only : sort_special
 !!    implicit none
 !!    ! an insertion sort is very efficient for very small arrays
-!!    ! but generally slower than methods like quicksort and mergesort.
+!!    ! but generally slower than methods like quick-sort and merge-sort.
 !!    integer,parameter :: isz=2000
 !!    real(kind=real64) :: dd(isz), hi, low
 !!       ! make an array of random values

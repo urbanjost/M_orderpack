@@ -1,5 +1,5 @@
 module M_orderpack
-use M_orderpack__refsor, only : sort=>refsor         ! [SORT] Sorts array (Quicksort)
+use M_orderpack__refsor, only : sort=>refsor         ! [SORT] Sorts array (Quick-sort)
 use M_orderpack__inssor, only : sort_special=>inssor ! [SORT] Sorts array (Insertion sort, generally for small or nearly sorted
                                                     !        arrays)
 use M_orderpack__inspar, only : psort=>inspar        ! [SORT:PARTIAL] partially sorts an array
@@ -25,9 +25,9 @@ use M_orderpack__valmed, only : medianval=>valmed    ! [MEDIAN] Find VALUE of me
 use M_orderpack__indmed, only : medianloc=>indmed    ! [MEDIAN] Find INDEX of median element.
 
 use M_orderpack__indnth, only : orderloc=>indnth     ! [FRACTILE] Return INDEX of Nth ordered element ,
-                                                    !            i.e fractile of order N/SIZE(array) (QuickSort-like)
+                                                    !            i.e fractile of order N/SIZE(array) (Quick-Sort-like)
 use M_orderpack__valnth, only : orderval=>valnth     ! [FRACTILE] Return VALUE of Nth element of array,
-                                                    !            i.e fractile of order N/SIZE(array) (QuickSort-like)
+                                                    !            i.e fractile of order N/SIZE(array) (Quick-Sort-like)
 use M_orderpack__fndnth, only : orderval_special=>fndnth ! [FRACTILE] Return VALUE of Nth ordered elements ,
                                                     !            i.e. fractile of order N/SIZE(array) (Insert-like)
 
@@ -134,13 +134,13 @@ public perturb
 !!
 !!##SORTING
 !!     FULL SORTING
-!!        Sort          Sorts array into ascending order (Quicksort)
+!!        Sort          Sorts array into ascending order (Quick-sort)
 !!        Sort_Special  Sorts array into ascending order (Insertion sort,
 !!                      generally for small or nearly sorted arrays)
 !!     PARTIAL SORTING
 !!        Psort             partially sorts an array
 !!        Orderval          Return VALUE of Nth lowest value of array
-!!                          (QuickSort)
+!!                          (Quick-Sort)
 !!        Orderval_Special  Return Nth lowest value of an array
 !!                          (Insert-sort, generally for small or nearly
 !!                          sorted arrays))
@@ -152,14 +152,14 @@ public perturb
 !!        Rank        ranks array (optimized merge-sort)
 !!        Rank_Basic  ranks array (basic merge-sort)
 !!     PARTIAL RANKING
-!!        Prank             partially ranks array (Optimized QuickSort)
+!!        Prank             partially ranks array (Optimized Quick-Sort)
 !!        Prank_Basic       partially ranks array
 !!        Prank_Decreasing  partially ranks array in DECREASING order
 !!        Prank_Special     partially ranks array (Basic Insert-Sort)
-!!        Orderloc          Return INDEX of Nth value of array (QuickSort-like)
+!!        Orderloc          Return INDEX of Nth value of array (Quick-Sort-like)
 !!        MedianLoc         Returns INDEX of median value of an array.
 !!     UNIQUE RANKING
-!!        Rank_Unique       performs a MergeSort ranking of an array,
+!!        Rank_Unique       performs a Merge-Sort ranking of an array,
 !!                          with removal of duplicate entries.
 !!        Rank_Decreasing   an inverse ranking of an array,
 !!                          with duplicate entries assigned the same rank.

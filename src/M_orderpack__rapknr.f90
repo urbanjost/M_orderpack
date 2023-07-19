@@ -31,7 +31,7 @@ public :: rapknr
 !!    values into IRNGT().
 !!
 !!    Internally this routine uses a pivoting strategy such as the one of
-!!    finding the median based on the quicksort algorithm, but we skew the
+!!    finding the median based on the quick-sort algorithm, but we skew the
 !!    pivot choice to try to bring it to NORD as fast as possible. It uses
 !!    two temporary arrays, where it stores the indices of the values larger
 !!    than the pivot (IHIGT), and the indices of values smaller than the

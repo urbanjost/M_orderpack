@@ -21,7 +21,9 @@ SYNOPSIS
 
       o Real(kind=real32)
       o Real(kind=real64)
+      o Integer(kind=int16)
       o Integer(kind=int32)
+      o Integer(kind=int64)
 $!      o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
@@ -29,7 +31,7 @@ DESCRIPTION
    entries.
 
    Internally, this routine uses a pivoting strategy such as the one of
-   finding the median based on the quicksort algorithm, but we skew the
+   finding the median based on the quick-sort algorithm, but we skew the
    pivot choice to try to bring it to NORD as quickly as possible. It
    uses two temporary arrays, where it stores the indices of the values
    smaller than the pivot (ILOWT), and the indices of values larger
@@ -59,22 +61,23 @@ EXAMPLES
    integer :: nord
    !
    write(*,g)'If enough values are unique, will return NORD indices'
-   if(allocated(irngt))deallocate(irngt)
    INVALS=[10,5,7,1,4,5,6,8,9,10,1]
    nord=5
+   call printme()
+   !
+   write(*,g)'If not enough values are unique, will change NORD'
+   INVALS=[-1,0,-1,0,-1,0,-1]
+   nord=5
+   if(allocated(irngt))deallocate(irngt)
    allocate(irngt(nord))
    call printme()
    !
-   !BUG!write(*,g)'If not enough values are unique, will change NORD'
-   !BUG!INVALS=[-1,0,-1,0,-1,0,-1]
-   !BUG!nord=5
-   !BUG!if(allocated(irngt))deallocate(irngt)
-   !BUG!allocate(irngt(nord))
-   !BUG!call printme()
    contains
    subroutine printme()
       write(*,g)'ORIGINAL:',INVALS
       write(*,g)'NUMBER OF INDICES TO SORT:',nord
+      if(allocated(irngt))deallocate(irngt)
+      allocate(irngt(nord))
       call prank_unique(INVALS,irngt,nord)
       write(*,g)'NUMBER OF INDICES RETURNED:',nord
       write(*,g)'RETURNED INDICES:',irngt(:nord)
@@ -106,7 +109,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 interface unipar
-   module procedure real64_unipar, real32_unipar, int32_unipar !, f_char_unipar
+   module procedure real64_unipar, real32_unipar, int16_unipar, int32_unipar, int64_unipar  !, f_char_unipar
 end interface unipar
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -147,6 +150,9 @@ $ENDIF
 !  One chooses a pivot, best estimate possible to put fractile near
 !  mid-point of the set of low values.
 !
+     ihigt=1
+     ilowt=1
+
      Do ICRS = 2, NDON
         If (INVALS(ICRS) == INVALS(1)) Then
           Cycle
@@ -714,7 +720,15 @@ $SET KIND real32
 $SET TYPE Real
 $POST UNIPAR
 $
+$SET KIND int16
+$SET TYPE Integer
+$POST UNIPAR
+
 $SET KIND int32
+$SET TYPE Integer
+$POST UNIPAR
+
+$SET KIND int64
 $SET TYPE Integer
 $POST UNIPAR
 $
