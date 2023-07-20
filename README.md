@@ -1,4 +1,4 @@
-[![](docs/images/M_orderpack.gif)](https://urbanjost.github.io/M_orderpack/fpm-ford/index.html)
+[![](docs/images/orderpack.gif)](https://urbanjost.github.io/M_orderpack/fpm-ford/index.html)
 # [M_orderpack](https://urbanjost.github.io/M_orderpack/man3.html)
 
 ## Name
