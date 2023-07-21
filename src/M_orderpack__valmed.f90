@@ -4,71 +4,68 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: valmed
-!>
-!!##NAME
-!!    medianval(3f) - [M_orderpack:MEDIAN] Returns median VALUE.
-!!
-!!##SYNOPSIS
-!!
-!!     Recursive Function MedianVal (INVALS) Result (RES_MED)
-!!
-!!       ${TYPE} (kind=${KIND}),  Intent (In) :: INVALS(:)
-!!       ${TYPE} (kind=${KIND})               :: RES_MED
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!
-!!##DESCRIPTION
-!!
-!!    Finds out and returns the median (((Size(INVALS)+1))/2^th value)
-!!    of INVALS.
-!!
-!!    Internally, it uses the recursive procedure described in Knuth,
-!!    The Art of Computer Programming, vol. 3, 5.3.3 .
-!!
-!!    The procedure is linear in time, and does not require to be able to
-!!    interpolate in the set as the one used in ORDERVAL(3f)/ORDERLOC(3f). It
-!!    also has better worst case behavior than ORDERVAL(3f)/ORDERLOC(3f), and
-!!    is about 20% faster in average for random uniformly distributed values.
-!!
-!!##OPTIONS
-!!     INVALS      input array
-!!
-!!##RETURNS
-!!     RES_MED    the median value of the array INVALS
-!!
-!!##EXAMPLES
-!!
-!!   Sample program:
-!!
-!!    program demo_medianval
-!!    ! return median value
-!!    use M_orderpack, only : medianval
-!!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
-!!       write(*,g)'real   ',&
-!!       medianval( [80.0,70.0,20.0,10.0,1000.0] )
-!!       write(*,g)'integer',&
-!!       medianval( [11, 22, 33, 44, 55, 66, 77, 88] )
-!!       write(*,g)'double ',&
-!!       medianval( [11.0d0, 22.0d0, 33.0d0, 66.0d0, 77.0d0, 88.0d0] )
-!!    end program demo_medianval
-!!
-!!   Results:
-!!
-!!    real    70.00000
-!!    integer 44
-!!    double  33.00000000000000
-!!
-!!##AUTHOR
-!!    Michel Olagnon, 2000-2012
-!!##MAINTAINER
-!!    John Urban, 2022.04.16
-!!##LICENSE
-!!    CC0-1.0
+! NAME
+!    medianval(3f) - [M_orderpack:MEDIAN] Returns median VALUE.
+! 
+! SYNOPSIS
+!     Recursive Function MedianVal (INVALS) Result (RES_MED)
+! 
+!       ${TYPE} (kind=${KIND}),  Intent (In) :: INVALS(:)
+!       ${TYPE} (kind=${KIND})               :: RES_MED
+! 
+!    Where ${TYPE}(kind=${KIND}) may be
+! 
+!       o Real(kind=real32)
+!       o Real(kind=real64)
+!       o Integer(kind=int32)
+! 
+! DESCRIPTION
+! 
+!    Finds out and returns the median (((Size(INVALS)+1))/2^th value)
+!    of INVALS.
+! 
+!    Internally, it uses the recursive procedure described in Knuth,
+!    The Art of Computer Programming, vol. 3, 5.3.3 .
+! 
+!    The procedure is linear in time, and does not require to be able to
+!    interpolate in the set as the one used in ORDERVAL(3f)/ORDERLOC(3f). It
+!    also has better worst case behavior than ORDERVAL(3f)/ORDERLOC(3f), and
+!    is about 20% faster in average for random uniformly distributed values.
+! 
+! OPTIONS
+!     INVALS      input array
+! 
+! RETURNS
+!     RES_MED    the median value of the array INVALS
+! 
+! EXAMPLES
+!   Sample program:
+! 
+!    program demo_medianval
+!    ! return median value
+!    use M_orderpack, only : medianval
+!    implicit none
+!    character(len=*),parameter :: g='(*(g0,1x))'
+!       write(*,g)'real   ',&
+!       medianval( [80.0,70.0,20.0,10.0,1000.0] )
+!       write(*,g)'integer',&
+!       medianval( [11, 22, 33, 44, 55, 66, 77, 88] )
+!       write(*,g)'double ',&
+!       medianval( [11.0d0, 22.0d0, 33.0d0, 66.0d0, 77.0d0, 88.0d0] )
+!    end program demo_medianval
+! 
+!   Results:
+! 
+!    real    70.00000
+!    integer 44
+!    double  33.00000000000000
+! 
+! AUTHOR
+!    Michel Olagnon, 2000-2012
+! MAINTAINER
+!    John Urban, 2022.04.16
+! LICENSE
+!    CC0-1.0
 interface valmed
   module procedure real64_valmed, real32_valmed, int32_valmed
 end interface valmed

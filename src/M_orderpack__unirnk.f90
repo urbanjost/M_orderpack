@@ -4,89 +4,86 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unirnk
-!>
-!!##NAME
-!!    Rank_Unique(3f) - [M_orderpack:RANK:UNIQUE] ranks an array, with removal
-!!                      of duplicate entries (Merge-Sort)
-!!
-!!##SYNOPSIS
-!!
-!!     Subroutine rank_unique (INVALS, IRNGT, NUNI)
-!!
-!!       ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
-!!       Integer, Intent (Out)               :: IRNGT(:)
-!!       Integer, Intent (Out)               :: NUNI
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!
-!!##DESCRIPTION
-!!
-!!    Ranks an array, removing duplicate entries.
-!!
-!!    Internally, RANK_UNIQUE(3f) performs a Merge-sort ranking of an array,
-!!    with removal of duplicate entries.
-!!
-!!    The routine is similar to pure merge-sort ranking, but on the last
-!!    pass, it discards indices that correspond to duplicate entries.
-!!
-!!    For performance reasons, the first two passes are taken out of the
-!!    standard loop, and use dedicated coding.
-!!
-!!##OPTIONS
-!!     INVALS     array to index
-!!     IRNGT      rank index returned pointing to unique values
-!!     NUNI       the number of unique values found
-!!
-!!##EXAMPLES
-!!
-!!   Sample program:
-!!
-!!    program demo_rank_unique
-!!    ! rank an array, with removal of duplicate entries.
-!!    use M_orderpack, only : rank_unique
-!!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    integer,allocatable :: INVALS(:)
-!!    !
-!!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]
-!!    call printme()
-!!    INVALS=[-1,0,-2,0,-3,0,-4]
-!!    call printme()
-!!    contains
-!!    subroutine printme()
-!!    integer,allocatable :: irngt(:)
-!!    integer :: nuni
-!!       if(allocated(irngt))deallocate(irngt)
-!!       allocate(irngt(size(INVALS)))
-!!       write(*,g)'ORIGINAL:',INVALS
-!!       call rank_unique(INVALS,irngt,nuni)
-!!       write(*,g)'NUMBER OF UNIQUE INDICES:',nuni
-!!       write(*,g)'RETURNED INDICES:',irngt(:nuni)
-!!       write(*,g)'SORTED DATA:',INVALS(irngt(:nuni))
-!!    end subroutine
-!!    end program demo_rank_unique
-!!
-!!   Results:
-!!
-!!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
-!!    NUMBER OF UNIQUE INDICES: 8
-!!    RETURNED INDICES: 4 5 2 7 3 8 9 1
-!!    SORTED DATA: 1 4 5 6 7 8 9 10
-!!    ORIGINAL: -1 0 -2 0 -3 0 -4
-!!    NUMBER OF UNIQUE INDICES: 5
-!!    RETURNED INDICES: 7 5 3 1 2
-!!    SORTED DATA: -4 -3 -2 -1 0
-!!
-!!##AUTHOR
-!!    Michel Olagnon, 2000-2012
-!!##MAINTAINER
-!!    John Urban, 2022.04.16
-!!##LICENSE
-!!    CC0-1.0
+! NAME
+!    Rank_Unique(3f) - [M_orderpack:RANK:UNIQUE] ranks an array, with removal
+!                      of duplicate entries (Merge-Sort)
+! 
+! SYNOPSIS
+!     Subroutine rank_unique (INVALS, IRNGT, NUNI)
+! 
+!       ${TYPE} (Kind=${KIND}), Intent (In) :: INVALS(:)
+!       Integer, Intent (Out)               :: IRNGT(:)
+!       Integer, Intent (Out)               :: NUNI
+! 
+!    Where ${TYPE}(kind=${KIND}) may be
+! 
+!       o Real(kind=real32)
+!       o Real(kind=real64)
+!       o Integer(kind=int32)
+! 
+! DESCRIPTION
+! 
+!    Ranks an array, removing duplicate entries.
+! 
+!    Internally, RANK_UNIQUE(3f) performs a Merge-sort ranking of an array,
+!    with removal of duplicate entries.
+! 
+!    The routine is similar to pure merge-sort ranking, but on the last
+!    pass, it discards indices that correspond to duplicate entries.
+! 
+!    For performance reasons, the first two passes are taken out of the
+!    standard loop, and use dedicated coding.
+! 
+! OPTIONS
+!     INVALS     array to index
+!     IRNGT      rank index returned pointing to unique values
+!     NUNI       the number of unique values found
+! 
+! EXAMPLES
+!   Sample program:
+! 
+!    program demo_rank_unique
+!    ! rank an array, with removal of duplicate entries.
+!    use M_orderpack, only : rank_unique
+!    implicit none
+!    character(len=*),parameter :: g='(*(g0,1x))'
+!    integer,allocatable :: INVALS(:)
+!    !
+!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]
+!    call printme()
+!    INVALS=[-1,0,-2,0,-3,0,-4]
+!    call printme()
+!    contains
+!    subroutine printme()
+!    integer,allocatable :: irngt(:)
+!    integer :: nuni
+!       if(allocated(irngt))deallocate(irngt)
+!       allocate(irngt(size(INVALS)))
+!       write(*,g)'ORIGINAL:',INVALS
+!       call rank_unique(INVALS,irngt,nuni)
+!       write(*,g)'NUMBER OF UNIQUE INDICES:',nuni
+!       write(*,g)'RETURNED INDICES:',irngt(:nuni)
+!       write(*,g)'SORTED DATA:',INVALS(irngt(:nuni))
+!    end subroutine
+!    end program demo_rank_unique
+! 
+!   Results:
+! 
+!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
+!    NUMBER OF UNIQUE INDICES: 8
+!    RETURNED INDICES: 4 5 2 7 3 8 9 1
+!    SORTED DATA: 1 4 5 6 7 8 9 10
+!    ORIGINAL: -1 0 -2 0 -3 0 -4
+!    NUMBER OF UNIQUE INDICES: 5
+!    RETURNED INDICES: 7 5 3 1 2
+!    SORTED DATA: -4 -3 -2 -1 0
+! 
+! AUTHOR
+!    Michel Olagnon, 2000-2012
+! MAINTAINER
+!    John Urban, 2022.04.16
+! LICENSE
+!    CC0-1.0
 interface unirnk
   module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
 end interface unirnk

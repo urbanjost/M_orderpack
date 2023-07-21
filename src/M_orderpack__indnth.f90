@@ -4,92 +4,89 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: indnth
-!>
-!!##NAME
-!!    orderloc(3f) - [M_orderpack:FRACTILE] Return INDEX of Nth ordered value of
-!!                   array (Quick-Sort-like)
-!!
-!!##SYNOPSIS
-!!
-!!     Function OrderLoc (INVALS, NORD)
-!!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-!!       Integer                             :: orderloc
-!!       Integer, Intent (In)                :: NORD
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!
-!!##DESCRIPTION
-!!    orderloc(3f) returns the index of NORDth value of INVALS, i.e. the
-!!    fractile of order NORD/SIZE(INVALS).
-!!
-!!    That is, the result is the same as sorting the array first and then
-!!    returning the value INVALS(NORD).
-!!
-!!    Internally orderloc(3f) uses a pivoting strategy such as the one
-!!    of finding the median based on the quick-sort algorithm, but we skew
-!!    the pivot choice to try to bring it to NORD as fast as possible. It
-!!    uses two temporary arrays, where it stores the indices of the values
-!!    smaller than the pivot (ILOWT), and the indices of values larger than
-!!    the pivot that we might still need later on (IHIGT). It iterates
-!!    until it can bring the number of values in ILOWT to exactly NORD,
-!!    and then finds the maximum of this set.
-!!
-!!##OPTIONS
-!!     INVALS      array to search
-!!     NORD       indicates the Nth ordered value to search for
-!!
-!!##RETURNS
-!!     orderloc     the index of INVALS() that contains the requested value
-!!
-!!##EXAMPLES
-!!
-!!   Sample program:
-!!
-!!    program demo_orderloc
-!!    ! find Nth lowest ordered value in an array without sorting entire array
-!!    use M_orderpack, only : orderloc
-!!    use M_orderpack, only : medianloc
-!!    implicit none
-!!    integer,allocatable :: iarr(:)
-!!    character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))'
-!!    integer :: i
-!!    integer :: indx
-!!       iarr=[80,70,30,40,50,60,20,10,0,-100]
-!!       print list, 'ORIGINAL:',iarr
-!!       ! like minloc(3f) and maxloc(3f)
-!!       print sp,'minloc',orderloc(iarr,1),                minloc(iarr)
-!!       print sp,'maxloc',orderloc(iarr,size(iarr)),       maxloc(iarr)
-!!       ! can find median
-!!       call medianloc(iarr,indx)
-!!       print sp,'median',orderloc(iarr,(size(iarr)+1)/2), indx
-!!       ! but more general so can find location of the Nth lowest value ...
-!!       !
-!!       ! sort the hard way, finding location of Nth value one at a time
-!!       do i=1,size(iarr)
-!!          write(*,sp,advance='no') iarr(orderloc(iarr,i))
-!!       enddo
-!!       print *
-!!    end program demo_orderloc
-!!
-!!   Results:
-!!
-!!    ORIGINAL:, 80, 70, 30, 40, 50, 60, 20, 10, 0, -100
-!!    minloc 10 10
-!!    maxloc 1 1
-!!    median 3 3
-!!    -100 0 10 20 30 40 50 60 70 80
-!!
-!!##AUTHOR
-!!    Michel Olagnon - Aug. 2000
-!!##MAINTAINER
-!!    John Urban, 2022.04.16
-!!##LICENSE
-!!    CC0-1.0
+! NAME
+!    orderloc(3f) - [M_orderpack:FRACTILE] Return INDEX of Nth ordered value of
+!                   array (Quick-Sort-like)
+! 
+! SYNOPSIS
+!     Function OrderLoc (INVALS, NORD)
+! 
+!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!       Integer                             :: orderloc
+!       Integer, Intent (In)                :: NORD
+! 
+!    Where ${TYPE}(kind=${KIND}) may be
+! 
+!       o Real(kind=real32)
+!       o Real(kind=real64)
+!       o Integer(kind=int32)
+! 
+! DESCRIPTION
+!    orderloc(3f) returns the index of NORDth value of INVALS, i.e. the
+!    fractile of order NORD/SIZE(INVALS).
+! 
+!    That is, the result is the same as sorting the array first and then
+!    returning the value INVALS(NORD).
+! 
+!    Internally orderloc(3f) uses a pivoting strategy such as the one
+!    of finding the median based on the quick-sort algorithm, but we skew
+!    the pivot choice to try to bring it to NORD as fast as possible. It
+!    uses two temporary arrays, where it stores the indices of the values
+!    smaller than the pivot (ILOWT), and the indices of values larger than
+!    the pivot that we might still need later on (IHIGT). It iterates
+!    until it can bring the number of values in ILOWT to exactly NORD,
+!    and then finds the maximum of this set.
+! 
+! OPTIONS
+!     INVALS      array to search
+!     NORD       indicates the Nth ordered value to search for
+! 
+! RETURNS
+!     orderloc     the index of INVALS() that contains the requested value
+! 
+! EXAMPLES
+!   Sample program:
+! 
+!    program demo_orderloc
+!    ! find Nth lowest ordered value in an array without sorting entire array
+!    use M_orderpack, only : orderloc
+!    use M_orderpack, only : medianloc
+!    implicit none
+!    integer,allocatable :: iarr(:)
+!    character(len=*),parameter :: list= '(*(g0:,", "))',sp='(*(g0,1x))'
+!    integer :: i
+!    integer :: indx
+!       iarr=[80,70,30,40,50,60,20,10,0,-100]
+!       print list, 'ORIGINAL:',iarr
+!       ! like minloc(3f) and maxloc(3f)
+!       print sp,'minloc',orderloc(iarr,1),                minloc(iarr)
+!       print sp,'maxloc',orderloc(iarr,size(iarr)),       maxloc(iarr)
+!       ! can find median
+!       call medianloc(iarr,indx)
+!       print sp,'median',orderloc(iarr,(size(iarr)+1)/2), indx
+!       ! but more general so can find location of the Nth lowest value ...
+!       !
+!       ! sort the hard way, finding location of Nth value one at a time
+!       do i=1,size(iarr)
+!          write(*,sp,advance='no') iarr(orderloc(iarr,i))
+!       enddo
+!       print *
+!    end program demo_orderloc
+! 
+!   Results:
+! 
+!    ORIGINAL:, 80, 70, 30, 40, 50, 60, 20, 10, 0, -100
+!    minloc 10 10
+!    maxloc 1 1
+!    median 3 3
+!    -100 0 10 20 30 40 50 60 70 80
+! 
+! AUTHOR
+!    Michel Olagnon - Aug. 2000
+! MAINTAINER
+!    John Urban, 2022.04.16
+! LICENSE
+!    CC0-1.0
 interface indnth
   module procedure real64_indnth, real32_indnth, int32_indnth !, f_char_indnth
 end interface indnth
