@@ -4,108 +4,105 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: unipar
-!>
-!!##NAME
-!!    prank_unique(3f) - [M_orderpack:RANK:PARTIAL:UNIQUE] partially ranks
-!!                       an array removing duplicates
-!!
-!!##SYNOPSIS
-!!
-!!     Subroutine Prank_Unique (INVALS, IRNGT, NORD)
-!!
-!!      ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-!!      Integer, Intent (Out)               :: IRNGT(:)
-!!      Integer, Intent (InOut)             :: NORD
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int16)
-!!       o Integer(kind=int32)
-!!       o Integer(kind=int64)
-!!
-!!##DESCRIPTION
-!!    Partially rank INVALS() up to order NORD at most, removing duplicate
-!!    entries.
-!!
-!!    Internally, this routine uses a pivoting strategy such as the one of
-!!    finding the median based on the quick-sort algorithm, but we skew the
-!!    pivot choice to try to bring it to NORD as quickly as possible. It
-!!    uses two temporary arrays, where it stores the indices of the values
-!!    smaller than the pivot (ILOWT), and the indices of values larger
-!!    than the pivot that we might still need later on (IHIGT). It iterates
-!!    until it can bring the number of values in ILOWT to exactly NORD, and
-!!    then uses an insertion sort to rank this set, since it is supposedly
-!!    small. At all times, the NORD first values in ILOWT correspond to
-!!    distinct values of the input array.
-!!
-!!
-!!##OPTIONS
-!!     INVALS      array to partially sort
-!!     IRNGT      indices returned that point to lowest values
-!!     NORD       number of sorted values to determine before
-!!                eliminating duplicates
-!!
-!!##EXAMPLES
-!!
-!!   Sample program:
-!!
-!!    program demo_prank_unique
-!!    ! ranks array, removing duplicates
-!!    use M_orderpack, only : prank_unique
-!!    implicit none
-!!    character(len=*),parameter :: g='(*(g0,1x))'
-!!    integer,allocatable :: INVALS(:)
-!!    integer,allocatable :: irngt(:)
-!!    integer :: nord
-!!    !
-!!    write(*,g)'If enough values are unique, will return NORD indices'
-!!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]
-!!    nord=5
-!!    call printme()
-!!    !
-!!    write(*,g)'If not enough values are unique, will change NORD'
-!!    INVALS=[-1,0,-1,0,-1,0,-1]
-!!    nord=5
-!!    if(allocated(irngt))deallocate(irngt)
-!!    allocate(irngt(nord))
-!!    call printme()
-!!    !
-!!    contains
-!!    subroutine printme()
-!!       write(*,g)'ORIGINAL:',INVALS
-!!       write(*,g)'NUMBER OF INDICES TO SORT:',nord
-!!       if(allocated(irngt))deallocate(irngt)
-!!       allocate(irngt(nord))
-!!       call prank_unique(INVALS,irngt,nord)
-!!       write(*,g)'NUMBER OF INDICES RETURNED:',nord
-!!       write(*,g)'RETURNED INDICES:',irngt(:nord)
-!!       write(*,g)nord,'SMALLEST UNIQUE VALUES:',INVALS(irngt(:nord))
-!!    end subroutine
-!!    end program demo_prank_unique
-!!
-!!   Results:
-!!
-!!    If enough values are unique, will return NORD indices
-!!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
-!!    NUMBER OF INDICES TO SORT: 5
-!!    NUMBER OF INDICES RETURNED: 5
-!!    RETURNED INDICES: 11 5 2 7 3
-!!    5 SMALLEST UNIQUE VALUES: 1 4 5 6 7
-!!    If not enough values are unique, will change NORD
-!!    ORIGINAL: -1 0 -1 0 -1 0 -1
-!!    NUMBER OF INDICES TO SORT: 5
-!!    NUMBER OF INDICES RETURNED: 2
-!!    RETURNED INDICES: 1 2
-!!    2 SMALLEST UNIQUE VALUES: -1 0
-!!
-!!##AUTHOR
-!!    Michel Olagnon - Feb. 2000
-!!##MAINTAINER
-!!    John Urban, 2022.04.16
-!!##LICENSE
-!!    CC0-1.0
+! NAME
+!    prank_unique(3f) - [M_orderpack:RANK:PARTIAL:UNIQUE] partially ranks
+!                       an array removing duplicates
+! 
+! SYNOPSIS
+!     Subroutine Prank_Unique (INVALS, IRNGT, NORD)
+! 
+!      ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!      Integer, Intent (Out)               :: IRNGT(:)
+!      Integer, Intent (InOut)             :: NORD
+! 
+!    Where ${TYPE}(kind=${KIND}) may be
+! 
+!       o Real(kind=real32)
+!       o Real(kind=real64)
+!       o Integer(kind=int16)
+!       o Integer(kind=int32)
+!       o Integer(kind=int64)
+! 
+! DESCRIPTION
+!    Partially rank INVALS() up to order NORD at most, removing duplicate
+!    entries.
+! 
+!    Internally, this routine uses a pivoting strategy such as the one of
+!    finding the median based on the quick-sort algorithm, but we skew the
+!    pivot choice to try to bring it to NORD as quickly as possible. It
+!    uses two temporary arrays, where it stores the indices of the values
+!    smaller than the pivot (ILOWT), and the indices of values larger
+!    than the pivot that we might still need later on (IHIGT). It iterates
+!    until it can bring the number of values in ILOWT to exactly NORD, and
+!    then uses an insertion sort to rank this set, since it is supposedly
+!    small. At all times, the NORD first values in ILOWT correspond to
+!    distinct values of the input array.
+! 
+! 
+! OPTIONS
+!     INVALS      array to partially sort
+!     IRNGT      indices returned that point to lowest values
+!     NORD       number of sorted values to determine before
+!                eliminating duplicates
+! 
+! EXAMPLES
+!   Sample program:
+! 
+!    program demo_prank_unique
+!    ! ranks array, removing duplicates
+!    use M_orderpack, only : prank_unique
+!    implicit none
+!    character(len=*),parameter :: g='(*(g0,1x))'
+!    integer,allocatable :: INVALS(:)
+!    integer,allocatable :: irngt(:)
+!    integer :: nord
+!    !
+!    write(*,g)'If enough values are unique, will return NORD indices'
+!    INVALS=[10,5,7,1,4,5,6,8,9,10,1]
+!    nord=5
+!    call printme()
+!    !
+!    write(*,g)'If not enough values are unique, will change NORD'
+!    INVALS=[-1,0,-1,0,-1,0,-1]
+!    nord=5
+!    if(allocated(irngt))deallocate(irngt)
+!    allocate(irngt(nord))
+!    call printme()
+!    !
+!    contains
+!    subroutine printme()
+!       write(*,g)'ORIGINAL:',INVALS
+!       write(*,g)'NUMBER OF INDICES TO SORT:',nord
+!       if(allocated(irngt))deallocate(irngt)
+!       allocate(irngt(nord))
+!       call prank_unique(INVALS,irngt,nord)
+!       write(*,g)'NUMBER OF INDICES RETURNED:',nord
+!       write(*,g)'RETURNED INDICES:',irngt(:nord)
+!       write(*,g)nord,'SMALLEST UNIQUE VALUES:',INVALS(irngt(:nord))
+!    end subroutine
+!    end program demo_prank_unique
+! 
+!   Results:
+! 
+!    If enough values are unique, will return NORD indices
+!    ORIGINAL: 10 5 7 1 4 5 6 8 9 10 1
+!    NUMBER OF INDICES TO SORT: 5
+!    NUMBER OF INDICES RETURNED: 5
+!    RETURNED INDICES: 11 5 2 7 3
+!    5 SMALLEST UNIQUE VALUES: 1 4 5 6 7
+!    If not enough values are unique, will change NORD
+!    ORIGINAL: -1 0 -1 0 -1 0 -1
+!    NUMBER OF INDICES TO SORT: 5
+!    NUMBER OF INDICES RETURNED: 2
+!    RETURNED INDICES: 1 2
+!    2 SMALLEST UNIQUE VALUES: -1 0
+! 
+! AUTHOR
+!    Michel Olagnon - Feb. 2000
+! MAINTAINER
+!    John Urban, 2022.04.16
+! LICENSE
+!    CC0-1.0
 interface unipar
    module procedure real64_unipar, real32_unipar, int16_unipar, int32_unipar, int64_unipar  !, f_char_unipar
 end interface unipar

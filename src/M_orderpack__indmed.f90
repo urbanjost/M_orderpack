@@ -5,90 +5,87 @@ Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: indmed
 Integer, Allocatable, Dimension(:), Private, Save :: IDONT
-!>
-!!##NAME
-!!    medianloc(3f) - [M_orderpack:MEDIAN] Returns median value's INDEX.
-!!
-!!##SYNOPSIS
-!!
-!!     Subroutine MedianLoc (INVALS, OUTORD)
-!!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-!!       Integer, Intent (Out)               :: OUTORD
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
-!!##DESCRIPTION
-!!    MEDIANLOC(3f) Returns the index of the median (((Size(INVALS)+1))/2^th
-!!    value).
-!!
-!!
-!!    Internally, MEDIANLOC(3f) Finds the index of the median of the array
-!!    INVALS() using the recursive procedure described in Knuth, The Art of
-!!    Computer Programming, vol. 3, 5.3.3.
-!!
-!!    This procedure is linear in time, and does not require to be able
-!!    to interpolate in the set as the one used in ORDERLOC(3f), which can
-!!    also be used to calculate a median. It also has better worst-case
-!!    behavior than ORDERLOC(3f), but is about 10% slower on average for
-!!    random uniformly distributed values.
-!!
-!!##OPTIONS
-!!     INVALS     array to find the median value of.
-!!     OUTORD     index of the median value.
-!!
-!!##EXAMPLES
-!!
-!!   Sample program:
-!!
-!!    program demo_medianloc
-!!    ! return index of median value
-!!    use M_orderpack, only : medianloc
-!!    implicit none
-!!    real,allocatable :: INVALS(:)
-!!    character(len=:),allocatable :: cdont(:)
-!!    character(len=*),parameter :: fmt='(i5,t11,g0)'
-!!    integer :: ii
-!!       write(*,*) 'location  median'
-!!
-!!       INVALS=[80.0,70.0,20.0,10.0,1000.0]
-!!       call medianloc(INVALS,ii)
-!!       write(*,fmt) ii,INVALS(ii)
-!!       !
-!!       INVALS=[11, 22, 33, 44, 55, 66, 77, 88]
-!!       call medianloc(INVALS,ii)
-!!       write(*,fmt) ii,INVALS(ii)
-!!       !
-!!       INVALS=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]
-!!       call medianloc(INVALS,ii)
-!!       write(*,fmt) ii,INVALS(ii)
-!!       !
-!!       cdont=[character(len=20) :: 'apple','bee','cherry','duck',&
-!!               'elephant','finger','goose','h','insect','j']
-!!       call medianloc(cdont,ii)
-!!       write(*,fmt) ii,cdont(ii)
-!!       !
-!!    end program demo_medianloc
-!!
-!!   Results:
-!!
-!!     location  median
-!!        2     70.00000
-!!        4     44.00000
-!!        5     33.00000
-!!        5     elephant
-!!
-!!##AUTHOR
-!!    Michel Olagnon, 2000-2012
-!!##MAINTAINER
-!!    John Urban, 2022.04.16
-!!##LICENSE
-!!    CC0-1.0
+! NAME
+!    medianloc(3f) - [M_orderpack:MEDIAN] Returns median value's INDEX.
+! 
+! SYNOPSIS
+!     Subroutine MedianLoc (INVALS, OUTORD)
+! 
+!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!       Integer, Intent (Out)               :: OUTORD
+! 
+!    Where ${TYPE}(kind=${KIND}) may be
+! 
+!       o Real(kind=real32)
+!       o Real(kind=real64)
+!       o Integer(kind=int32)
+!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+! 
+! DESCRIPTION
+!    MEDIANLOC(3f) Returns the index of the median (((Size(INVALS)+1))/2^th
+!    value).
+! 
+! 
+!    Internally, MEDIANLOC(3f) Finds the index of the median of the array
+!    INVALS() using the recursive procedure described in Knuth, The Art of
+!    Computer Programming, vol. 3, 5.3.3.
+! 
+!    This procedure is linear in time, and does not require to be able
+!    to interpolate in the set as the one used in ORDERLOC(3f), which can
+!    also be used to calculate a median. It also has better worst-case
+!    behavior than ORDERLOC(3f), but is about 10% slower on average for
+!    random uniformly distributed values.
+! 
+! OPTIONS
+!     INVALS     array to find the median value of.
+!     OUTORD     index of the median value.
+! 
+! EXAMPLES
+!   Sample program:
+! 
+!    program demo_medianloc
+!    ! return index of median value
+!    use M_orderpack, only : medianloc
+!    implicit none
+!    real,allocatable :: INVALS(:)
+!    character(len=:),allocatable :: cdont(:)
+!    character(len=*),parameter :: fmt='(i5,t11,g0)'
+!    integer :: ii
+!       write(*,*) 'location  median'
+! 
+!       INVALS=[80.0,70.0,20.0,10.0,1000.0]
+!       call medianloc(INVALS,ii)
+!       write(*,fmt) ii,INVALS(ii)
+!       !
+!       INVALS=[11, 22, 33, 44, 55, 66, 77, 88]
+!       call medianloc(INVALS,ii)
+!       write(*,fmt) ii,INVALS(ii)
+!       !
+!       INVALS=[11.0d0,77.0d0,22.0d0,66.0d0,33.0d0,88.0d0]
+!       call medianloc(INVALS,ii)
+!       write(*,fmt) ii,INVALS(ii)
+!       !
+!       cdont=[character(len=20) :: 'apple','bee','cherry','duck',&
+!               'elephant','finger','goose','h','insect','j']
+!       call medianloc(cdont,ii)
+!       write(*,fmt) ii,cdont(ii)
+!       !
+!    end program demo_medianloc
+! 
+!   Results:
+! 
+!     location  median
+!        2     70.00000
+!        4     44.00000
+!        5     33.00000
+!        5     elephant
+! 
+! AUTHOR
+!    Michel Olagnon, 2000-2012
+! MAINTAINER
+!    John Urban, 2022.04.16
+! LICENSE
+!    CC0-1.0
 interface indmed
   module procedure real64_indmed, real32_indmed, int32_indmed, f_char_indmed
 end interface indmed

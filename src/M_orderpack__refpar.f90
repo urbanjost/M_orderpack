@@ -4,86 +4,83 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refpar
-!>
-!!##NAME
-!!    prank_basic(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array
-!!                 (Quick-Sort)
-!!
-!!##SYNOPSIS
-!!
-!!     Subroutine Prank_Basic (INVALS, IRNGT, NORD)
-!!
-!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-!!       Integer, Intent (Out)               :: IRNGT(:)
-!!       Integer, Intent (In)                :: NORD
-!!
-!!    Where ${TYPE}(kind=${KIND}) may be
-!!
-!!       o Real(kind=real32)
-!!       o Real(kind=real64)
-!!       o Integer(kind=int32)
-!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-!!
-!!##DESCRIPTION
-!!    creates index IRNGT() which partially ranks input array INVALS(),
-!!    up to order NORD.
-!!
-!!    This version is not optimized for performance, and is thus not as
-!!    difficult to read as some other ones.
-!!
-!!    Internally this routine uses a pivoting strategy such as the one used
-!!    in finding the median based on the Quick-Sort algorithm. It uses a
-!!    temporary array, where it stores the partially ranked indices of the
-!!    values. It iterates until it can bring the number of values lower
-!!    than the pivot to exactly NORD, and then uses an Insertion-Sort to
-!!    rank this set, since it is supposedly small.
-!!
-!!##OPTIONS
-!!     INVALS      array to partially rank
-!!     IRNGT      array to hold indices of ranked elements
-!!     NORD       number of elements to rank
-!!
-!!##EXAMPLES
-!!
-!!   Sample program:
-!!
-!!    program demo_prank
-!!    ! create index to lowest N values in input array in ascending order
-!!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
-!!    use M_orderpack, only : prank_basic
-!!    implicit none
-!!    real(kind=real32) :: valsr(2000)
-!!    integer           :: indx(2000)
-!!    integer           :: i
-!!    real,allocatable  :: results(:)
-!!       ! create some random data
-!!       call random_seed()
-!!       call random_number(valsr)
-!!       valsr=valsr*1000000.0-500000.0
-!!       ! get 300 lowest values sorted
-!!       call prank_basic(valsr,indx,300)
-!!       !
-!!       results=valsr(indx(:300))
-!!       ! check if sorted
-!!       do i=1,300-1
-!!          if (results(i+1).lt.results(i))then
-!!             write(*,*)'ERROR: not sorted'
-!!             stop 1
-!!          endif
-!!       enddo
-!!       write(*,*)'random array now sorted'
-!!    end program demo_prank
-!!
-!!   Results:
-!!
-!!     random array now sorted
-!!
-!!##AUTHOR
-!!    Michel Olagnon - Feb. 2000
-!!##MAINTAINER
-!!    John Urban, 2022.04.16
-!!##LICENSE
-!!    CC0-1.0
+! NAME
+!    prank_basic(3f) - [M_orderpack:RANK:PARTIAL] partially ranks an array
+!                 (Quick-Sort)
+! 
+! SYNOPSIS
+!     Subroutine Prank_Basic (INVALS, IRNGT, NORD)
+! 
+!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!       Integer, Intent (Out)               :: IRNGT(:)
+!       Integer, Intent (In)                :: NORD
+! 
+!    Where ${TYPE}(kind=${KIND}) may be
+! 
+!       o Real(kind=real32)
+!       o Real(kind=real64)
+!       o Integer(kind=int32)
+!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+! 
+! DESCRIPTION
+!    creates index IRNGT() which partially ranks input array INVALS(),
+!    up to order NORD.
+! 
+!    This version is not optimized for performance, and is thus not as
+!    difficult to read as some other ones.
+! 
+!    Internally this routine uses a pivoting strategy such as the one used
+!    in finding the median based on the Quick-Sort algorithm. It uses a
+!    temporary array, where it stores the partially ranked indices of the
+!    values. It iterates until it can bring the number of values lower
+!    than the pivot to exactly NORD, and then uses an Insertion-Sort to
+!    rank this set, since it is supposedly small.
+! 
+! OPTIONS
+!     INVALS      array to partially rank
+!     IRNGT      array to hold indices of ranked elements
+!     NORD       number of elements to rank
+! 
+! EXAMPLES
+!   Sample program:
+! 
+!    program demo_prank
+!    ! create index to lowest N values in input array in ascending order
+!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
+!    use M_orderpack, only : prank_basic
+!    implicit none
+!    real(kind=real32) :: valsr(2000)
+!    integer           :: indx(2000)
+!    integer           :: i
+!    real,allocatable  :: results(:)
+!       ! create some random data
+!       call random_seed()
+!       call random_number(valsr)
+!       valsr=valsr*1000000.0-500000.0
+!       ! get 300 lowest values sorted
+!       call prank_basic(valsr,indx,300)
+!       !
+!       results=valsr(indx(:300))
+!       ! check if sorted
+!       do i=1,300-1
+!          if (results(i+1).lt.results(i))then
+!             write(*,*)'ERROR: not sorted'
+!             stop 1
+!          endif
+!       enddo
+!       write(*,*)'random array now sorted'
+!    end program demo_prank
+! 
+!   Results:
+! 
+!     random array now sorted
+! 
+! AUTHOR
+!    Michel Olagnon - Feb. 2000
+! MAINTAINER
+!    John Urban, 2022.04.16
+! LICENSE
+!    CC0-1.0
 interface refpar
   module procedure real64_refpar, real32_refpar, int32_refpar, f_char_refpar
 end interface refpar

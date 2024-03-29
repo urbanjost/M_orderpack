@@ -1,3 +1,5 @@
+<!-- -*- mode: jinja2 -*- -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,77 +12,53 @@
 
     <title>refsor &ndash; M_orderpack</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-         <script src="../js/jquery-2.1.3.min.js"></script>
-         <script src="../js/svg-pan-zoom.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
           <a class="navbar-brand" href="../index.html">M_orderpack </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
-              <a href="#" class="dropdown-toggle"
-                 data-toggle="dropdown" role="button"
-                 aria-haspopup="true"
-                 aria-expanded="false">
-                 Contents <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                    <li><a href="../lists/files.html">Source Files</a></li>
-                  <li><a href="../lists/modules.html">Modules</a></li>
-                  <li><a href="../lists/procedures.html">Procedures</a></li>
-                  <li><a href="../lists/programs.html">Programs</a></li>
-              </ul>
-            </li>
-                <li class="visible-xs hidden-sm visible-lg">
-                  <a href="../lists/files.html">Source Files</a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
                 </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/modules.html">Modules</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/procedures.html">Procedures</a>
-              </li>
-              <li class="visible-xs hidden-sm visible-lg">
-                <a href="../lists/programs.html">Programs</a>
-              </li>
-          </ul>
-            <form action="../search.html" class="navbar-form navbar-right" role="search">
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
               </div>
-              <!--
-                  <button type="submit" class="btn btn-default">Submit</button>
-                  -->
-            </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
 
     <div class="container">
   <div class="row">
@@ -88,33 +66,37 @@
       <small>Interface</small>
       
     </h1>
-      <div class="row" id="info-bar">
-    <div class="col-lg-12">
-      <div class="well well-sm">
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-          <li id="statements"><i class="fa fa-list-ol"></i>
-            <a data-toggle="tooltip"
-               data-placement="bottom" data-html="true"
-               title="<p> 0.7% of total for procedures.</p>Including implementation: 23 statements,  5.1% of total for procedures.">3 statements</a>
-          </li>
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip"
+                 data-bs-placement="bottom" data-html="true"
+                 title="<p> 0.7% of total for procedures.</p>Including implementation: 23 statements,  5.1% of total for procedures.">3 statements</a>
+            </li>
 
-            <li id="source-file">
+            <li class="list-inline-item" id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/M_orderpack__refsor.f90"> Source File</a>
             </li>
         </ul>
-        <ol class="breadcrumb in-well text-right">
-              <li><a href='../sourcefile/m_orderpack__refsor.f90.html'>M_orderpack__refsor.f90</a></li>
-              <li><a href='../module/m_orderpack__refsor.html'>M_orderpack__refsor</a></li>
-          <li class="active">refsor</li>
-        </ol>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/m_orderpack__refsor.f90.html'>M_orderpack__refsor.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/m_orderpack__refsor.html'>M_orderpack__refsor</a></li>
+            <li class="breadcrumb-item active" aria-current="page">refsor</li>
+          </ol>
+        </nav>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
+    $('[data-bs-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -142,14 +124,13 @@
   
   
   
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#modprocs-0">Module Procedures</a>
-        </h3>
-      </div>
-      <div id="modprocs-0" class="panel-collapse collapse">
-        <div class="list-group">
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#modprocs-0"
+         aria-expanded="false" aria-controls="modprocs-0">
+         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
+      </a>
+      <div id="modprocs-0" class="collapse">
+        <div class="list-group list-group-flush">
             <a class="list-group-item" href="../interface/refsor.html#moduleprocedure-real64_refsor">real64_refsor</a>
             <a class="list-group-item" href="../interface/refsor.html#moduleprocedure-real32_refsor">real32_refsor</a>
             <a class="list-group-item" href="../interface/refsor.html#moduleprocedure-int32_refsor">int32_refsor</a>
@@ -158,6 +139,7 @@
       </div>
     </div>
 
+  
 
 
   </div>
@@ -166,157 +148,31 @@
 
     <div class="col-md-9" id='text'>
       <h2>public interface refsor</h2>
-      <h2 id="name">NAME</h2>
-<div class="codehilite"><pre><span></span><code>sort(3f) - [M_orderpack:SORT] Sorts array into ascending order
-             (Quick-sort)
-</code></pre></div>
-
-<h2 id="synopsis">SYNOPSIS</h2>
-<div class="codehilite"><pre><span></span><code> Subroutine Sort (INOUTVALS)
-
-   <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (InOut) :: INOUTVALS(:)
-
-Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
-
-   o Real(kind=real32)
-   o Real(kind=real64)
-   o Integer(kind=int32)
-   o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
-</code></pre></div>
-
-<h2 id="description">DESCRIPTION</h2>
-<div class="codehilite"><pre><span></span><code><span class="nv">Sorts</span> <span class="nv">INOUTVALS</span> <span class="nv">into</span> <span class="nv">ascending</span> <span class="nv">order</span> <span class="ss">(</span><span class="nv">Quick</span><span class="o">-</span><span class="nv">sort</span><span class="ss">)</span>
-
-<span class="nv">This</span> <span class="nv">version</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">optimized</span> <span class="k">for</span> <span class="nv">performance</span>, <span class="nv">and</span> <span class="nv">is</span> <span class="nv">thus</span> <span class="nv">not</span> <span class="nv">as</span>
-<span class="nv">difficult</span> <span class="nv">to</span> <span class="nv">read</span> <span class="nv">as</span> <span class="nv">some</span> <span class="nv">other</span> <span class="nv">ones</span>.
-
-<span class="nv">Internally</span>, <span class="nv">This</span> <span class="nv">subroutine</span> <span class="nv">uses</span> <span class="nv">Quick</span><span class="o">-</span><span class="nv">sort</span> <span class="nv">in</span> <span class="nv">a</span> <span class="nv">recursive</span>
-<span class="nv">implementation</span>, <span class="nv">and</span> <span class="nv">insertion</span> <span class="nv">sort</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">last</span> <span class="nv">steps</span> <span class="nv">with</span> <span class="nv">small</span>
-<span class="nv">subsets</span>. <span class="nv">It</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">use</span> <span class="nv">any</span> <span class="nv">work</span> <span class="nv">array</span>.
-
-<span class="nv">The</span> <span class="nv">Quick</span><span class="o">-</span><span class="nv">sort</span>
-<span class="nv">chooses</span> <span class="nv">a</span> <span class="s2">&quot;</span><span class="s">pivot</span><span class="s2">&quot;</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">set</span>, <span class="nv">and</span> <span class="nv">explores</span> <span class="nv">the</span> <span class="nv">array</span> <span class="nv">from</span>
-<span class="nv">both</span> <span class="nv">ends</span>, <span class="nv">looking</span> <span class="k">for</span> <span class="nv">a</span> <span class="nv">value</span> <span class="o">&gt;</span> <span class="nv">pivot</span> <span class="nv">with</span> <span class="nv">the</span> <span class="nv">increasing</span> <span class="nv">index</span>,
-<span class="k">for</span> <span class="nv">a</span> <span class="nv">value</span> <span class="o">&lt;=</span> <span class="nv">pivot</span> <span class="nv">with</span> <span class="nv">the</span> <span class="nv">decreasing</span> <span class="nv">index</span>, <span class="nv">and</span> <span class="nv">swapping</span> <span class="nv">them</span>
-<span class="nv">when</span> <span class="nv">it</span> <span class="nv">has</span> <span class="nv">found</span> <span class="nv">one</span> <span class="nv">of</span> <span class="nv">each</span>. <span class="nv">The</span> <span class="nv">array</span> <span class="nv">is</span> <span class="k">then</span> <span class="nv">subdivided</span> <span class="nv">in</span>
-<span class="nv">two</span> <span class="nv">subsets</span>:
-
-    { <span class="nv">values</span> <span class="o">&lt;=</span> <span class="nv">pivot</span>} {<span class="nv">pivot</span>} {<span class="nv">values</span> <span class="o">&gt;</span> <span class="nv">pivot</span>}
-
-<span class="nv">It</span> <span class="k">then</span> <span class="nv">recursively</span> <span class="nv">calls</span> <span class="nv">the</span> <span class="nv">procedure</span> <span class="nv">to</span> <span class="nv">sort</span> <span class="nv">each</span> <span class="nv">subset</span>. <span class="nv">When</span>
-<span class="nv">the</span> <span class="nv">size</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">subarray</span> <span class="nv">is</span> <span class="nv">small</span> <span class="nv">enough</span>, <span class="nv">it</span> <span class="nv">switches</span> <span class="nv">to</span> <span class="nv">an</span> <span class="nv">insertion</span>
-<span class="nv">sort</span> <span class="nv">that</span> <span class="nv">is</span> <span class="nv">faster</span> <span class="k">for</span> <span class="nv">very</span> <span class="nv">small</span> <span class="nv">sets</span>.
-</code></pre></div>
-
-<h2 id="options">OPTIONS</h2>
-<div class="codehilite"><pre><span></span><code> INOUTVALS      array to sort
-</code></pre></div>
-
-<h2 id="examples">EXAMPLES</h2>
-<p>Sample program:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_sort</span>
-<span class="o">!</span> <span class="nv">sort</span> <span class="nv">array</span> <span class="nv">in</span> <span class="nv">ascending</span> <span class="nv">order</span>
-<span class="nv">use</span>,<span class="nv">intrinsic</span> :: <span class="nv">iso_fortran_env</span>, <span class="nv">only</span> : <span class="nv">int32</span>, <span class="nv">real32</span>, <span class="nv">real64</span>
-<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">sort</span>
-<span class="nv">implicit</span> <span class="nv">none</span>
-<span class="o">!</span> <span class="nv">an</span> <span class="nv">insertion</span> <span class="nv">sort</span> <span class="nv">is</span> <span class="nv">very</span> <span class="nv">efficient</span> <span class="k">for</span> <span class="nv">very</span> <span class="nv">small</span> <span class="nv">arrays</span>
-<span class="o">!</span> <span class="nv">but</span> <span class="nv">generally</span> <span class="nv">slower</span> <span class="nv">than</span> <span class="nv">methods</span> <span class="nv">like</span> <span class="nv">quick</span><span class="o">-</span><span class="nv">sort</span> <span class="nv">and</span> <span class="nv">merge</span><span class="o">-</span><span class="nv">sort</span>.
-<span class="nv">real</span><span class="ss">(</span><span class="nv">kind</span><span class="o">=</span><span class="nv">real64</span><span class="ss">)</span> :: <span class="nv">valsd</span><span class="ss">(</span><span class="mi">2000</span><span class="ss">)</span>
-<span class="nv">integer</span>           :: <span class="nv">i</span>
-   <span class="k">call</span> <span class="nl">random_seed</span><span class="ss">()</span>
-   <span class="k">call</span> <span class="nl">random_number</span><span class="ss">(</span><span class="nv">valsd</span><span class="ss">)</span>
-   <span class="nv">valsd</span><span class="o">=</span><span class="nv">valsd</span><span class="o">*</span><span class="mi">1000000</span>.<span class="mi">0</span><span class="o">-</span><span class="mi">500000</span>.<span class="mi">0</span>
-   <span class="k">call</span> <span class="nl">sort</span><span class="ss">(</span><span class="nv">valsd</span><span class="ss">)</span>
-   <span class="k">do</span> <span class="nv">i</span><span class="o">=</span><span class="mi">1</span>,<span class="nv">size</span><span class="ss">(</span><span class="nv">valsd</span><span class="ss">)</span><span class="o">-</span><span class="mi">1</span>
-      <span class="k">if</span> <span class="ss">(</span><span class="nv">valsd</span><span class="ss">(</span><span class="nv">i</span><span class="o">+</span><span class="mi">1</span><span class="ss">)</span>.<span class="nv">lt</span>.<span class="nv">valsd</span><span class="ss">(</span><span class="nv">i</span><span class="ss">))</span><span class="k">then</span>
-         <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">not sorted</span><span class="s1">&#39;</span>
-         <span class="nv">stop</span> <span class="mi">3</span>
-      <span class="k">endif</span>
-   <span class="nv">enddo</span>
-   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="o">*</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">random arrays are now sorted</span><span class="s1">&#39;</span>
-<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_sort</span>
-</code></pre></div>
-
-<p>Results:</p>
-<div class="codehilite"><pre><span></span><code> <span class="k">random</span> <span class="nv">arrays</span> <span class="nv">are</span> <span class="nv">now</span> <span class="nv">sorted</span>
-</code></pre></div>
-
-<h2 id="author">AUTHOR</h2>
-<div class="codehilite"><pre><span></span><code>Michel Olagnon - Apr. 2000
-</code></pre></div>
-
-<h2 id="maintainer">MAINTAINER</h2>
-<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
-</code></pre></div>
-
-<h2 id="license">LICENSE</h2>
-<div class="codehilite"><pre><span></span><code>CC0-1.0
-</code></pre></div>
-<br>
-      <section class="visible-xs visible-sm hidden-md">
-          <h3>Contents</h3>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-      <div class="panel panel-primary">
-      <div class="panel-heading text-left">
-        <h3 class="panel-title">
-          <a data-toggle="collapse" href="#modprocs-1">Module Procedures</a>
-        </h3>
-      </div>
-      <div id="modprocs-1" class="panel-collapse collapse">
-        <div class="list-group">
-            <a class="list-group-item" href="../interface/refsor.html#moduleprocedure-real64_refsor">real64_refsor</a>
-            <a class="list-group-item" href="../interface/refsor.html#moduleprocedure-real32_refsor">real32_refsor</a>
-            <a class="list-group-item" href="../interface/refsor.html#moduleprocedure-int32_refsor">int32_refsor</a>
-            <a class="list-group-item" href="../interface/refsor.html#moduleprocedure-f_char_refsor">f_char_refsor</a>
-        </div>
-      </div>
-    </div>
-
-
-
-      </section>
-      <br class="visible-xs visible-sm hidden-md">
+      
 
 
 
         <h2>Module Procedures</h2>
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-real64_refsor"></span><h3>private  subroutine real64_refsor(INOUTVALS)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-real64_refsor"></span> <h3>private  subroutine real64_refsor(INOUTVALS)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-inoutvals~5"></span>
               real(kind=real64),
             </td>
 <td>intent(inout),</td>
@@ -336,26 +192,26 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
     </div>
   </div>
 
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-real32_refsor"></span><h3>private  subroutine real32_refsor(INOUTVALS)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-real32_refsor"></span> <h3>private  subroutine real32_refsor(INOUTVALS)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-inoutvals~8"></span>
               real(kind=real32),
             </td>
 <td>intent(inout),</td>
@@ -375,26 +231,26 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
     </div>
   </div>
 
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-int32_refsor"></span><h3>private  subroutine int32_refsor(INOUTVALS)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-int32_refsor"></span> <h3>private  subroutine int32_refsor(INOUTVALS)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-inoutvals~11"></span>
               integer(kind=int32),
             </td>
 <td>intent(inout),</td>
@@ -414,26 +270,26 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
     </div>
   </div>
 
-            <div class="panel panel-default">
-    <div class="panel-heading codesum"><span class="anchor" id="proc-f_char_refsor"></span><h3>private  subroutine f_char_refsor(INOUTVALS)  
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-f_char_refsor"></span> <h3>private  subroutine f_char_refsor(INOUTVALS)  
 </h3></div>
-    <div class="panel-body">
+    <div class="card-body">
         
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th>Type</th>
-<th>Intent</th><th>Optional</th>        <th>Attributes</th>
-        <th></th>
-        <th>Name</th>
-        <th></th>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" ></span>
+              <span class="anchor" id="variable-inoutvals~14"></span>
               character(kind=f_char, len=*),
             </td>
 <td>intent(inout),</td>
@@ -459,32 +315,27 @@ Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</s
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row">
-          <div class="col-xs-6 col-md-6"><p>M_orderpack was developed by Michel Olagnon<br>&copy; 2023 
+        <div class="row justify-content-between">
+          <div class="col"><p>M_orderpack was developed by Michel Olagnon<br>&copy; 2024 
 </p>
           </div>
-          <div class="col-xs-6 col-md-6">
-            <p class="text-right">
+          <div class="col">
+            <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2023-07-19 08:06              </p>
+ on 2024-03-29 03:41              </p>
           </div>
         </div>
         <br>
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript
-         ================================================== -->
-         <!-- Placed at the end of the document so the pages load faster -->
-    <!--
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        -->
-        <script src="../js/bootstrap.min.js"></script>
-        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
 
-        <!-- MathJax JavaScript
+    <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">
