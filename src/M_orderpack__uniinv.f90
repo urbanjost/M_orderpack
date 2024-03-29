@@ -4,92 +4,95 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: uniinv
-! NAME
-!    Rank_Decreasing(3f) - [M_orderpack:RANK:UNIQUE] ranks an array
-!    in decreasing order, with duplicate entries assigned the same
-!    rank(Merge-Sort)
-! 
-! SYNOPSIS
-!     Subroutine Rank_Decreasing (INVALS, IGOEST)
-! 
-!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
-!       Integer, Intent (Out)               :: IGOEST(:)
-! 
-!    Where ${TYPE}(kind=${KIND}) may be
-! 
-!       o Real(kind=real32)
-!       o Real(kind=real64)
-!       o Integer(kind=int16)
-!       o Integer(kind=int32)
-!       o Integer(kind=int64)
-!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-! 
-! DESCRIPTION
-! 
-!    RANK_DECREASING(3f) generates an inverse ranking of an array, but
-!    with duplicate entries assigned the same rank.
-! 
-!    Internally, the routine is similar to pure merge-sort ranking, but on
-!    the last pass, it sets indices in IGOEST to the rank of the original
-!    value in an ordered set with duplicates removed. For performance
-!    reasons, the first two passes are taken out of the standard loop,
-!    and use dedicated coding.
-! 
-! OPTIONS
-!     INVALS     array to rank
-!     IGOEST     returned rank array
-! 
-! EXAMPLES
-!   Sample program:
-! 
-!    program demo_rank_decreasing
-!    ! rank input array ranking duplicates the same
-!    use M_orderpack, only : rank_decreasing
-!    implicit none
-!    character(len=*),parameter :: fmt='(a,*(g3.3,1x))'
-!    integer,allocatable,dimension(:) :: INVALS, igoest, distinct, count
-!    integer :: imx, i
-!       ! create an input array
-!       INVALS=[11, 11, 22, 11, 33, 33, 22, 33, 33]
-!       ! make an index array of the same size
-!       if(allocated(igoest))deallocate(igoest)
-!       allocate(igoest(size(INVALS)))
-!       print fmt, 'Original:                 ',INVALS
-!       print fmt, 'Number of indices to sort:',size(INVALS)
-!       ! rank input array ranking duplicates the same
-!       call rank_decreasing(INVALS,igoest)
-!       print fmt, 'Returned Indices:         ',igoest(:)
-!       !
-!       ! interrogate the results
-!       !
-!       imx=maxval(igoest)
-!       print fmt, 'Number of unique indices :',imx
-!       ! squeeze it down to just IMX unique values
-!       count=[(0,i=1,imx)] ! count how many times a value occurs
-!       distinct=count      ! array to set of unique values
-!       do i=1,size(INVALS)
-!          distinct(igoest(i))=INVALS(i)
-!          count(igoest(i))= count(igoest(i))+1
-!       enddo
-!       print fmt, 'Sorted unique values:     ',distinct
-!       print fmt, 'count of occurrences:     ',count
-!    end program demo_rank_decreasing
-! 
-!   Results:
-! 
-!    Original:                  11  11  22  11  33  33  22  33  33
-!    Number of indices to sort:  9
-!    Returned Indices:           1   1   2   1   3   3   2   3   3
-!    Number of unique indices :  3
-!    Sorted unique values:      11  22  33
-!    count of occurrences:       3   2   4
-! 
-! AUTHOR
-!    Michel Olagnon, 2000-2012
-! MAINTAINER
-!    John Urban, 2022.04.16
-! LICENSE
-!    CC0-1.0
+!>
+!!##NAME
+!!    Rank_Decreasing(3f) - [M_orderpack:RANK:UNIQUE] ranks an array
+!!    in decreasing order, with duplicate entries assigned the same
+!!    rank(Merge-Sort)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine Rank_Decreasing (INVALS, IGOEST)
+!!
+!!       ${TYPE} (kind=${KIND}), Intent (In) :: INVALS(:)
+!!       Integer, Intent (Out)               :: IGOEST(:)
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int16)
+!!       o Integer(kind=int32)
+!!       o Integer(kind=int64)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!
+!!    RANK_DECREASING(3f) generates an inverse ranking of an array, but
+!!    with duplicate entries assigned the same rank.
+!!
+!!    Internally, the routine is similar to pure merge-sort ranking, but on
+!!    the last pass, it sets indices in IGOEST to the rank of the original
+!!    value in an ordered set with duplicates removed. For performance
+!!    reasons, the first two passes are taken out of the standard loop,
+!!    and use dedicated coding.
+!!
+!!##OPTIONS
+!!     INVALS     array to rank
+!!     IGOEST     returned rank array
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_rank_decreasing
+!!    ! rank input array ranking duplicates the same
+!!    use M_orderpack, only : rank_decreasing
+!!    implicit none
+!!    character(len=*),parameter :: fmt='(a,*(g3.3,1x))'
+!!    integer,allocatable,dimension(:) :: INVALS, igoest, distinct, count
+!!    integer :: imx, i
+!!       ! create an input array
+!!       INVALS=[11, 11, 22, 11, 33, 33, 22, 33, 33]
+!!       ! make an index array of the same size
+!!       if(allocated(igoest))deallocate(igoest)
+!!       allocate(igoest(size(INVALS)))
+!!       print fmt, 'Original:                 ',INVALS
+!!       print fmt, 'Number of indices to sort:',size(INVALS)
+!!       ! rank input array ranking duplicates the same
+!!       call rank_decreasing(INVALS,igoest)
+!!       print fmt, 'Returned Indices:         ',igoest(:)
+!!       !
+!!       ! interrogate the results
+!!       !
+!!       imx=maxval(igoest)
+!!       print fmt, 'Number of unique indices :',imx
+!!       ! squeeze it down to just IMX unique values
+!!       count=[(0,i=1,imx)] ! count how many times a value occurs
+!!       distinct=count      ! array to set of unique values
+!!       do i=1,size(INVALS)
+!!          distinct(igoest(i))=INVALS(i)
+!!          count(igoest(i))= count(igoest(i))+1
+!!       enddo
+!!       print fmt, 'Sorted unique values:     ',distinct
+!!       print fmt, 'count of occurrences:     ',count
+!!    end program demo_rank_decreasing
+!!
+!!   Results:
+!!
+!!    Original:                  11  11  22  11  33  33  22  33  33
+!!    Number of indices to sort:  9
+!!    Returned Indices:           1   1   2   1   3   3   2   3   3
+!!    Number of unique indices :  3
+!!    Sorted unique values:      11  22  33
+!!    count of occurrences:       3   2   4
+!!
+!!##AUTHOR
+!!    Michel Olagnon, 2000-2012
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
+!!##LICENSE
+!!    CC0-1.0
 interface uniinv
   module procedure real64_uniinv, real32_uniinv, int16_uniinv, int32_uniinv, int64_uniinv, f_char_uniinv
 end interface uniinv

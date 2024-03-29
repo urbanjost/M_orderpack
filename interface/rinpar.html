@@ -1,5 +1,3 @@
-<!-- -*- mode: jinja2 -*- -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,53 +10,77 @@
 
     <title>rinpar &ndash; M_orderpack</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
     <link href="../css/font-awesome.min.css" rel="stylesheet">
     <link href="../css/local.css" rel="stylesheet">
       <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="../js/svg-pan-zoom.min.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+         <script src="../js/jquery-2.1.3.min.js"></script>
+         <script src="../js/svg-pan-zoom.min.js"></script>
+
   </head>
 
   <body>
 
     <!-- Fixed navbar -->
-    <div class="container-fluid mb-sm-4 mb-xl-2">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-          <a class="navbar-brand" href="../index.html">M_orderpack </a>
-          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
-                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
           </button>
-
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="../lists/files.html">Source Files</a>
-                  </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/modules.html">Modules</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="../lists/programs.html">Programs</a>
-                </li>
-            </ul>
-              <div class="d-flex align-items-end flex-grow-1">
-                <form action="../search.html" role="search" class="ms-auto">
-                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
-                </form>
-              </div>
-          </div><!--/.nav-collapse -->
+          <a class="navbar-brand" href="../index.html">M_orderpack </a>
         </div>
-      </nav>
-    </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+                 data-toggle="dropdown" role="button"
+                 aria-haspopup="true"
+                 aria-expanded="false">
+                 Contents <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                    <li><a href="../lists/files.html">Source Files</a></li>
+                  <li><a href="../lists/modules.html">Modules</a></li>
+                  <li><a href="../lists/procedures.html">Procedures</a></li>
+                  <li><a href="../lists/programs.html">Programs</a></li>
+              </ul>
+            </li>
+                <li class="visible-xs hidden-sm visible-lg">
+                  <a href="../lists/files.html">Source Files</a>
+                </li>
+              <li class="visible-xs hidden-sm visible-lg">
+                <a href="../lists/modules.html">Modules</a>
+              </li>
+              <li class="visible-xs hidden-sm visible-lg">
+                <a href="../lists/procedures.html">Procedures</a>
+              </li>
+              <li class="visible-xs hidden-sm visible-lg">
+                <a href="../lists/programs.html">Programs</a>
+              </li>
+          </ul>
+            <form action="../search.html" class="navbar-form navbar-right" role="search">
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+              </div>
+              <!--
+                  <button type="submit" class="btn btn-default">Submit</button>
+                  -->
+            </form>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
 
     <div class="container">
   <div class="row">
@@ -66,37 +88,33 @@
       <small>Interface</small>
       
     </h1>
-      <div class="container p-2 mb-4 bg-light border rounded-3">
-    <div class="row align-items-center justify-content-between" id="info-bar">
-      <div class="col">
+      <div class="row" id="info-bar">
+    <div class="col-lg-12">
+      <div class="well well-sm">
         <ul class="list-inline" style="margin-bottom:0px;display:inline">
 
-            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
-              <a data-bs-toggle="tooltip"
-                 data-bs-placement="bottom" data-html="true"
-                 title="<p> 0.7% of total for procedures.</p>Including implementation: 115 statements, 25.7% of total for procedures.">3 statements</a>
-            </li>
+          <li id="statements"><i class="fa fa-list-ol"></i>
+            <a data-toggle="tooltip"
+               data-placement="bottom" data-html="true"
+               title="<p> 0.7% of total for procedures.</p>Including implementation: 115 statements, 25.7% of total for procedures.">3 statements</a>
+          </li>
 
-            <li class="list-inline-item" id="source-file">
+            <li id="source-file">
               <i class="fa fa-code"></i>
               <a href="../src/M_orderpack__rinpar.f90"> Source File</a>
             </li>
         </ul>
-      </div>
-      <div class="col">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb justify-content-end mb-0">
-                <li class="breadcrumb-item"><a href='../sourcefile/m_orderpack__rinpar.f90.html'>M_orderpack__rinpar.f90</a></li>
-                <li class="breadcrumb-item"><a href='../module/m_orderpack__rinpar.html'>M_orderpack__rinpar</a></li>
-            <li class="breadcrumb-item active" aria-current="page">rinpar</li>
-          </ol>
-        </nav>
+        <ol class="breadcrumb in-well text-right">
+              <li><a href='../sourcefile/m_orderpack__rinpar.f90.html'>M_orderpack__rinpar.f90</a></li>
+              <li><a href='../module/m_orderpack__rinpar.html'>M_orderpack__rinpar</a></li>
+          <li class="active">rinpar</li>
+        </ol>
       </div>
     </div>
   </div>
   <script>
     $(function () {
-    $('[data-bs-toggle="tooltip"]').tooltip()
+    $('[data-toggle="tooltip"]').tooltip()
     })
   </script>
 
@@ -124,13 +142,14 @@
   
   
   
-      <div class="card mb-4">
-      <a data-bs-toggle="collapse" href="#modprocs-0"
-         aria-expanded="false" aria-controls="modprocs-0">
-         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
-      </a>
-      <div id="modprocs-0" class="collapse">
-        <div class="list-group list-group-flush">
+      <div class="panel panel-primary">
+      <div class="panel-heading text-left">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" href="#modprocs-0">Module Procedures</a>
+        </h3>
+      </div>
+      <div id="modprocs-0" class="panel-collapse collapse">
+        <div class="list-group">
             <a class="list-group-item" href="../interface/rinpar.html#moduleprocedure-real64_rinpar">real64_rinpar</a>
             <a class="list-group-item" href="../interface/rinpar.html#moduleprocedure-real32_rinpar">real32_rinpar</a>
             <a class="list-group-item" href="../interface/rinpar.html#moduleprocedure-int32_rinpar">int32_rinpar</a>
@@ -139,7 +158,6 @@
       </div>
     </div>
 
-  
 
 
   </div>
@@ -148,31 +166,155 @@
 
     <div class="col-md-9" id='text'>
       <h2>public interface rinpar</h2>
-      
+      <h2 id="name">NAME</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">prank_special</span><span class="p">(</span><span class="mi">3</span><span class="n">f</span><span class="p">)</span> <span class="o">-</span> <span class="p">[</span><span class="n">M_orderpack</span><span class="p">:</span><span class="n">RANK</span><span class="p">:</span><span class="n">PARTIAL</span><span class="p">]</span> <span class="n">partially</span> <span class="n">ranks</span> <span class="n">an</span> <span class="n">array</span> <span class="n">in</span>
+             <span class="n">ASCENDING</span> <span class="n">order</span> <span class="p">(</span><span class="n">Insertion</span> <span class="n">Sort</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<div class="codehilite"><pre><span></span><code> Subroutine Prank_Special (INVALS, IRNGT, NORD)
+
+  <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span> (kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>), Intent (In) :: INVALS(:)
+  Integer, Intent (Out)               :: IRNGT(:)
+  Integer, Intent (In)                :: NORD
+
+Where <span class="cp">${</span><span class="n">TYPE</span><span class="cp">}</span>(kind=<span class="cp">${</span><span class="n">KIND</span><span class="cp">}</span>) may be
+o Real(kind=real32)
+o Real(kind=real64)
+o Integer(kind=int32)
+o Character(kind=selected_char_kind(&quot;DEFAULT&quot;),len=*)
+</code></pre></div>
+
+<h2 id="description">DESCRIPTION</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">Partially</span> <span class="nv">ranks</span> <span class="nv">INVALS</span><span class="ss">()</span>. <span class="nv">Returns</span> <span class="nv">IRNGT</span><span class="ss">(</span><span class="mi">1</span>:<span class="nv">NORD</span><span class="ss">)</span> <span class="nv">filled</span> <span class="nv">with</span> <span class="nv">the</span>
+<span class="nv">indices</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">lowest</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">array</span> <span class="nv">INVALS</span>. <span class="nv">More</span> <span class="nv">technically</span>,
+<span class="nv">it</span> <span class="nv">does</span> <span class="nv">a</span> <span class="nv">partial</span> <span class="nv">ranking</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">array</span> <span class="nv">INVALS</span> <span class="nv">of</span> <span class="nv">order</span> <span class="nv">NORD</span>.
+
+<span class="nv">NORD</span> <span class="nv">is</span> <span class="nv">restricted</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">range</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">size</span><span class="ss">(</span><span class="nv">IRNGT</span><span class="ss">)</span>.
+
+<span class="nv">Internally</span>, <span class="nv">this</span> <span class="nv">version</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">optimized</span> <span class="k">for</span> <span class="nv">performance</span>, <span class="nv">and</span> <span class="nv">is</span>
+<span class="nv">thus</span> <span class="nv">not</span> <span class="nv">as</span> <span class="nv">difficult</span> <span class="nv">to</span> <span class="nv">read</span> <span class="nv">as</span> <span class="nv">some</span> <span class="nv">other</span> <span class="nv">ones</span>.
+
+<span class="nv">The</span> <span class="nv">subroutine</span> <span class="nv">uses</span> <span class="nv">an</span> <span class="nv">insertion</span> <span class="nv">sort</span>, <span class="nv">limiting</span> <span class="nv">insertion</span> <span class="nv">to</span> <span class="nv">the</span>
+<span class="nv">first</span> <span class="nv">NORD</span> <span class="nv">values</span>. <span class="nv">It</span> <span class="nv">does</span> <span class="nv">not</span> <span class="nv">use</span> <span class="nv">any</span> <span class="nv">work</span> <span class="nv">array</span> <span class="nv">and</span> <span class="nv">is</span> <span class="nv">fastest</span> <span class="nv">when</span>
+<span class="nv">NORD</span> <span class="nv">is</span> <span class="nv">very</span> <span class="nv">small</span> <span class="ss">(</span><span class="mi">2</span><span class="o">-</span><span class="mi">5</span><span class="ss">)</span>. <span class="nv">but</span> <span class="nv">worst</span> <span class="nv">case</span> <span class="nv">behavior</span> <span class="nv">can</span> <span class="nv">easily</span> <span class="nv">happen</span>
+<span class="ss">(</span><span class="nv">ie</span>. <span class="k">if</span> <span class="nv">INVALS</span> <span class="nv">initially</span> <span class="nv">is</span> <span class="nv">inverse</span> <span class="nv">sorted</span><span class="ss">)</span>. <span class="nv">Therefore</span>, <span class="nv">In</span> <span class="nv">many</span> <span class="nv">cases</span>,
+<span class="nv">the</span> <span class="nv">refined</span> <span class="nv">Quick</span><span class="o">-</span><span class="nv">sort</span> <span class="nv">method</span> <span class="nv">is</span> <span class="nv">faster</span>.
+</code></pre></div>
+
+<h2 id="options">OPTIONS</h2>
+<div class="codehilite"><pre><span></span><code> <span class="nv">INVALS</span>   <span class="nv">array</span> <span class="nv">to</span> <span class="nv">partially</span> <span class="nv">sort</span>
+ <span class="nv">NORD</span>    <span class="nv">number</span> <span class="nv">of</span> <span class="nv">indices</span> <span class="nv">to</span> <span class="k">return</span>, <span class="nv">restricted</span> <span class="nv">to</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">size</span><span class="ss">(</span><span class="nv">IRNGT</span><span class="ss">)</span>
+</code></pre></div>
+
+<h2 id="returns">RETURNS</h2>
+<div class="codehilite"><pre><span></span><code> IRNGT   indices of requested number (NORD) of lowest values in INVALS
+</code></pre></div>
+
+<h2 id="examples">EXAMPLES</h2>
+<p>Sample program:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">program</span> <span class="nv">demo_prank_special</span>
+<span class="o">!</span> <span class="nv">partially</span> <span class="nv">rank</span> <span class="nv">N</span> <span class="nv">lowest</span> <span class="nv">values</span> <span class="nv">in</span> <span class="nv">an</span> <span class="nv">array</span>
+<span class="nv">use</span> <span class="nv">M_orderpack</span>, <span class="nv">only</span> : <span class="nv">prank_special</span>
+<span class="nv">implicit</span> <span class="nv">none</span>
+<span class="nv">character</span><span class="ss">(</span><span class="nv">len</span><span class="o">=*</span><span class="ss">)</span>,<span class="nv">parameter</span> :: <span class="nv">g</span><span class="o">=</span><span class="s1">&#39;</span><span class="s">(*(g0,1x))</span><span class="s1">&#39;</span>
+<span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">INVALS</span><span class="ss">(</span>:<span class="ss">)</span>
+<span class="nv">integer</span>,<span class="nv">allocatable</span> :: <span class="nv">irngt</span><span class="ss">(</span>:<span class="ss">)</span>
+<span class="nv">integer</span> :: <span class="nv">nord</span>
+<span class="nv">INVALS</span><span class="o">=</span>[<span class="mi">10</span>,<span class="mi">5</span>,<span class="mi">7</span>,<span class="mi">1</span>,<span class="mi">4</span>,<span class="mi">5</span>,<span class="mi">6</span>,<span class="mi">8</span>,<span class="mi">9</span>,<span class="mi">10</span>,<span class="mi">1</span>]
+<span class="nv">nord</span><span class="o">=</span><span class="mi">5</span>
+<span class="nv">allocate</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">(</span><span class="nv">nord</span><span class="ss">))</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">ORIGINAL:</span><span class="s1">&#39;</span>,<span class="nv">INVALS</span>
+   <span class="k">call</span> <span class="nl">prank_special</span><span class="ss">(</span><span class="nv">INVALS</span>,<span class="nv">irngt</span>,<span class="nv">nord</span><span class="ss">)</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">NUMBER OF INDICES TO RETURN:</span><span class="s1">&#39;</span>,<span class="nv">nord</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="s1">&#39;</span><span class="s">RETURNED INDICES:</span><span class="s1">&#39;</span>,<span class="nv">irngt</span>
+   <span class="nv">write</span><span class="ss">(</span><span class="o">*</span>,<span class="nv">g</span><span class="ss">)</span><span class="nv">nord</span>,<span class="s1">&#39;</span><span class="s">SMALLEST VALUES:</span><span class="s1">&#39;</span>,<span class="nv">INVALS</span><span class="ss">(</span><span class="nv">irngt</span><span class="ss">(</span>:<span class="nv">nord</span><span class="ss">))</span>
+<span class="k">end</span> <span class="nv">program</span> <span class="nv">demo_prank_special</span>
+</code></pre></div>
+
+<p>Results:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ORIGINAL</span><span class="o">:</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="mi">9</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<span class="n">NUMBER</span><span class="w"> </span><span class="n">OF</span><span class="w"> </span><span class="n">INDICES</span><span class="w"> </span><span class="n">TO</span><span class="w"> </span><span class="n">RETURN</span><span class="o">:</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+<span class="n">RETURNED</span><span class="w"> </span><span class="n">INDICES</span><span class="o">:</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">11</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">6</span><span class="w"></span>
+<span class="mi">5</span><span class="w"> </span><span class="n">SMALLEST</span><span class="w"> </span><span class="n">VALUES</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">5</span><span class="w"></span>
+</code></pre></div>
+
+<h2 id="author">AUTHOR</h2>
+<div class="codehilite"><pre><span></span><code>Michel Olagnon - Feb. 2000
+</code></pre></div>
+
+<h2 id="maintainer">MAINTAINER</h2>
+<div class="codehilite"><pre><span></span><code>John Urban, 2022.04.16
+</code></pre></div>
+
+<h2 id="license">LICENSE</h2>
+<div class="codehilite"><pre><span></span><code>CC0-1.0
+</code></pre></div>
+<br>
+      <section class="visible-xs visible-sm hidden-md">
+          <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="panel panel-primary">
+      <div class="panel-heading text-left">
+        <h3 class="panel-title">
+          <a data-toggle="collapse" href="#modprocs-1">Module Procedures</a>
+        </h3>
+      </div>
+      <div id="modprocs-1" class="panel-collapse collapse">
+        <div class="list-group">
+            <a class="list-group-item" href="../interface/rinpar.html#moduleprocedure-real64_rinpar">real64_rinpar</a>
+            <a class="list-group-item" href="../interface/rinpar.html#moduleprocedure-real32_rinpar">real32_rinpar</a>
+            <a class="list-group-item" href="../interface/rinpar.html#moduleprocedure-int32_rinpar">int32_rinpar</a>
+            <a class="list-group-item" href="../interface/rinpar.html#moduleprocedure-f_char_rinpar">f_char_rinpar</a>
+        </div>
+      </div>
+    </div>
+
+
+
+      </section>
+      <br class="visible-xs visible-sm hidden-md">
 
 
 
         <h2>Module Procedures</h2>
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-real64_rinpar"></span> <h3>private  subroutine real64_rinpar(INVALS, IRNGT, NORD)  
+            <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-real64_rinpar"></span><h3>private  subroutine real64_rinpar(INVALS, IRNGT, NORD)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         <hr>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-invals~53"></span>
+              <span class="anchor" ></span>
               real(kind=real64),
             </td>
 <td>intent(in),</td>
@@ -187,7 +329,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-irngt~29"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(out),</td>
@@ -202,7 +344,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nord~23"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -222,26 +364,26 @@
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-real32_rinpar"></span> <h3>private  subroutine real32_rinpar(INVALS, IRNGT, NORD)  
+            <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-real32_rinpar"></span><h3>private  subroutine real32_rinpar(INVALS, IRNGT, NORD)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         <hr>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-invals~54"></span>
+              <span class="anchor" ></span>
               real(kind=real32),
             </td>
 <td>intent(in),</td>
@@ -256,7 +398,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-irngt~30"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(out),</td>
@@ -271,7 +413,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nord~24"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -291,26 +433,26 @@
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-int32_rinpar"></span> <h3>private  subroutine int32_rinpar(INVALS, IRNGT, NORD)  
+            <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-int32_rinpar"></span><h3>private  subroutine int32_rinpar(INVALS, IRNGT, NORD)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         <hr>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-invals~55"></span>
+              <span class="anchor" ></span>
               integer(kind=int32),
             </td>
 <td>intent(in),</td>
@@ -325,7 +467,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-irngt~31"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(out),</td>
@@ -340,7 +482,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nord~25"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -360,26 +502,26 @@
     </div>
   </div>
 
-            <div class="card">
-    <div class="card-header codesum"><span class="anchor" id="proc-f_char_rinpar"></span> <h3>private  subroutine f_char_rinpar(INVALS, IRNGT, NORD)  
+            <div class="panel panel-default">
+    <div class="panel-heading codesum"><span class="anchor" id="proc-f_char_rinpar"></span><h3>private  subroutine f_char_rinpar(INVALS, IRNGT, NORD)  
 </h3></div>
-    <div class="card-body">
+    <div class="panel-body">
         <hr>
 
   <h4>Arguments</h4>
       <table class="table table-striped varlist">
     <thead>
       <tr>
-        <th scope="col">Type</th>
-<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
-        <th scope="col"></th>
-        <th scope="col">Name</th>
-        <th scope="col"></th>
+        <th>Type</th>
+<th>Intent</th><th>Optional</th>        <th>Attributes</th>
+        <th></th>
+        <th>Name</th>
+        <th></th>
     </thead>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-invals~56"></span>
+              <span class="anchor" ></span>
               character(kind=f_char, len=*),
             </td>
 <td>intent(in),</td>
@@ -394,7 +536,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-irngt~32"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(out),</td>
@@ -409,7 +551,7 @@
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nord~26"></span>
+              <span class="anchor" ></span>
               integer,
             </td>
 <td>intent(in)</td>
@@ -435,27 +577,32 @@
     </div> <!-- /container -->
     <footer>
       <div class="container">
-        <div class="row justify-content-between">
-          <div class="col"><p>M_orderpack was developed by Michel Olagnon<br>&copy; 2024 
+        <div class="row">
+          <div class="col-xs-6 col-md-6"><p>M_orderpack was developed by Michel Olagnon<br>&copy; 2023 
 </p>
           </div>
-          <div class="col">
-            <p class="text-end">
+          <div class="col-xs-6 col-md-6">
+            <p class="text-right">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2024-03-29 03:41              </p>
+ on 2023-07-19 08:06              </p>
           </div>
         </div>
         <br>
       </div> <!-- /container -->
     </footer>
 
-    <!-- Bootstrap core JavaScript -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>    
+    <!-- Bootstrap core JavaScript
+         ================================================== -->
+         <!-- Placed at the end of the document so the pages load faster -->
+    <!--
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        -->
+        <script src="../js/bootstrap.min.js"></script>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="../js/ie10-viewport-bug-workaround.js"></script>
 
-    <!-- MathJax JavaScript
+        <!-- MathJax JavaScript
              ================================================== -->
              <!-- Placed at the end of the document so the pages load faster -->
         <script type="text/x-mathjax-config">

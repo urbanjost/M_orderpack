@@ -5,83 +5,86 @@ Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refsor
 private :: real64_inssor, real32_inssor, int32_inssor, f_char_inssor
-! NAME
-!    sort(3f) - [M_orderpack:SORT] Sorts array into ascending order
-!                 (Quick-sort)
-! 
-! SYNOPSIS
-!     Subroutine Sort (INOUTVALS)
-! 
-!       ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
-! 
-!    Where ${TYPE}(kind=${KIND}) may be
-! 
-!       o Real(kind=real32)
-!       o Real(kind=real64)
-!       o Integer(kind=int32)
-!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
-! 
-! DESCRIPTION
-!    Sorts INOUTVALS into ascending order (Quick-sort)
-! 
-!    This version is not optimized for performance, and is thus not as
-!    difficult to read as some other ones.
-! 
-!    Internally, This subroutine uses Quick-sort in a recursive
-!    implementation, and insertion sort for the last steps with small
-!    subsets. It does not use any work array.
-! 
-!    The Quick-sort
-!    chooses a "pivot" in the set, and explores the array from
-!    both ends, looking for a value > pivot with the increasing index,
-!    for a value <= pivot with the decreasing index, and swapping them
-!    when it has found one of each. The array is then subdivided in
-!    two subsets:
-! 
-!        { values <= pivot} {pivot} {values > pivot}
-! 
-!    It then recursively calls the procedure to sort each subset. When
-!    the size of the subarray is small enough, it switches to an insertion
-!    sort that is faster for very small sets.
-! 
-! OPTIONS
-!     INOUTVALS      array to sort
-! 
-! EXAMPLES
-!   Sample program:
-! 
-!    program demo_sort
-!    ! sort array in ascending order
-!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
-!    use M_orderpack, only : sort
-!    implicit none
-!    ! an insertion sort is very efficient for very small arrays
-!    ! but generally slower than methods like quick-sort and merge-sort.
-!    real(kind=real64) :: valsd(2000)
-!    integer           :: i
-!       call random_seed()
-!       call random_number(valsd)
-!       valsd=valsd*1000000.0-500000.0
-!       call sort(valsd)
-!       do i=1,size(valsd)-1
-!          if (valsd(i+1).lt.valsd(i))then
-!             write(*,*)'not sorted'
-!             stop 3
-!          endif
-!       enddo
-!       write(*,*)'random arrays are now sorted'
-!    end program demo_sort
-! 
-!   Results:
-! 
-!     random arrays are now sorted
-! 
-! AUTHOR
-!    Michel Olagnon - Apr. 2000
-! MAINTAINER
-!    John Urban, 2022.04.16
-! LICENSE
-!    CC0-1.0
+!>
+!!##NAME
+!!    sort(3f) - [M_orderpack:SORT] Sorts array into ascending order
+!!                 (Quick-sort)
+!!
+!!##SYNOPSIS
+!!
+!!     Subroutine Sort (INOUTVALS)
+!!
+!!       ${TYPE} (kind=${KIND}), Intent (InOut) :: INOUTVALS(:)
+!!
+!!    Where ${TYPE}(kind=${KIND}) may be
+!!
+!!       o Real(kind=real32)
+!!       o Real(kind=real64)
+!!       o Integer(kind=int32)
+!!       o Character(kind=selected_char_kind("DEFAULT"),len=*)
+!!
+!!##DESCRIPTION
+!!    Sorts INOUTVALS into ascending order (Quick-sort)
+!!
+!!    This version is not optimized for performance, and is thus not as
+!!    difficult to read as some other ones.
+!!
+!!    Internally, This subroutine uses Quick-sort in a recursive
+!!    implementation, and insertion sort for the last steps with small
+!!    subsets. It does not use any work array.
+!!
+!!    The Quick-sort
+!!    chooses a "pivot" in the set, and explores the array from
+!!    both ends, looking for a value > pivot with the increasing index,
+!!    for a value <= pivot with the decreasing index, and swapping them
+!!    when it has found one of each. The array is then subdivided in
+!!    two subsets:
+!!
+!!        { values <= pivot} {pivot} {values > pivot}
+!!
+!!    It then recursively calls the procedure to sort each subset. When
+!!    the size of the subarray is small enough, it switches to an insertion
+!!    sort that is faster for very small sets.
+!!
+!!##OPTIONS
+!!     INOUTVALS      array to sort
+!!
+!!##EXAMPLES
+!!
+!!   Sample program:
+!!
+!!    program demo_sort
+!!    ! sort array in ascending order
+!!    use,intrinsic :: iso_fortran_env, only : int32, real32, real64
+!!    use M_orderpack, only : sort
+!!    implicit none
+!!    ! an insertion sort is very efficient for very small arrays
+!!    ! but generally slower than methods like quick-sort and merge-sort.
+!!    real(kind=real64) :: valsd(2000)
+!!    integer           :: i
+!!       call random_seed()
+!!       call random_number(valsd)
+!!       valsd=valsd*1000000.0-500000.0
+!!       call sort(valsd)
+!!       do i=1,size(valsd)-1
+!!          if (valsd(i+1).lt.valsd(i))then
+!!             write(*,*)'not sorted'
+!!             stop 3
+!!          endif
+!!       enddo
+!!       write(*,*)'random arrays are now sorted'
+!!    end program demo_sort
+!!
+!!   Results:
+!!
+!!     random arrays are now sorted
+!!
+!!##AUTHOR
+!!    Michel Olagnon - Apr. 2000
+!!##MAINTAINER
+!!    John Urban, 2022.04.16
+!!##LICENSE
+!!    CC0-1.0
 interface refsor
   module procedure real64_refsor, real32_refsor, int32_refsor, f_char_refsor
 end interface refsor
