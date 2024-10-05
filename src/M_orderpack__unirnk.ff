@@ -21,7 +21,10 @@ SYNOPSIS
 
       o Real(kind=real32)
       o Real(kind=real64)
+      o Integer(kind=int8)
+      o Integer(kind=int16)
       o Integer(kind=int32)
+      o Integer(kind=int64)
 
 DESCRIPTION
 
@@ -89,10 +92,10 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 interface unirnk
-  module procedure real64_unirnk, real32_unirnk, int32_unirnk !, f_char_unirnk
+  module procedure real64_unirnk, real32_unirnk, int8_unirnk, int16_unirnk, int32_unirnk, int64_unirnk
 end interface unirnk
 interface nearless
-  module procedure real64_nearless, real32_nearless, int32_nearless !, f_char_nearless
+  module procedure real64_nearless, real32_nearless, int8_nearless, int16_nearless, int32_nearless, int64_nearless
 end interface nearless
 
 contains
@@ -376,7 +379,16 @@ $SET TYPE Real
 $POST UNIRNK
 $
 $DEFINE INTEGER   ! there is a call to intrinsic NEAREST(3f) only for REAL values
+$SET KIND int8
+$SET TYPE Integer
+$POST UNIRNK
+$SET KIND int16
+$SET TYPE Integer
+$POST UNIRNK
 $SET KIND int32
+$SET TYPE Integer
+$POST UNIRNK
+$SET KIND int64
 $SET TYPE Integer
 $POST UNIRNK
 $UNDEFINE INTEGER ! make sure conditional for IFDEF INTEGER is not taken

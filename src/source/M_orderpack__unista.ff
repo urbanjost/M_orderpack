@@ -21,7 +21,10 @@ SYNOPSIS
 
       o Real(kind=real32)
       o Real(kind=real64)
+      o Integer(kind=int8)
+      o Integer(kind=int16)
       o Integer(kind=int32)
+      o Integer(kind=int64)
       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
@@ -73,7 +76,9 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 interface unista
-  module procedure real64_unista, real32_unista, int32_unista, f_char_unista
+  module procedure real64_unista, real32_unista
+  module procedure f_char_unista
+  module procedure int8_unista, int16_unista, int32_unista, int64_unista
 end interface unista
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -115,7 +120,19 @@ $SET KIND real32
 $SET TYPE Real
 $POST UNISTA
 $
+$SET KIND int8
+$SET TYPE Integer
+$POST UNISTA
+$
+$SET KIND int16
+$SET TYPE Integer
+$POST UNISTA
+$
 $SET KIND int32
+$SET TYPE Integer
+$POST UNISTA
+$
+$SET KIND int64
 $SET TYPE Integer
 $POST UNISTA
 $

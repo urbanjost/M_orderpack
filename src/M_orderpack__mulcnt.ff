@@ -21,7 +21,10 @@ SYNOPSIS
 
       o Real(kind=real32)
       o Real(kind=real64)
+      o Integer(kind=int8)
+      o Integer(kind=int16)
       o Integer(kind=int32)
+      o Integer(kind=int64)
       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
@@ -77,7 +80,7 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 interface mulcnt
-  module procedure real64_mulcnt, real32_mulcnt, int32_mulcnt, f_char_mulcnt
+  module procedure real64_mulcnt, real32_mulcnt, int8_mulcnt, int16_mulcnt, int32_mulcnt, int64_mulcnt, f_char_mulcnt
 end interface mulcnt
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -116,7 +119,19 @@ $SET KIND real32
 $SET TYPE Real
 $POST MULCNT
 $
+$SET KIND int8
+$SET TYPE Integer
+$POST MULCNT
+$
+$SET KIND int16
+$SET TYPE Integer
+$POST MULCNT
+$
 $SET KIND int32
+$SET TYPE Integer
+$POST MULCNT
+$
+$SET KIND int64
 $SET TYPE Integer
 $POST MULCNT
 $

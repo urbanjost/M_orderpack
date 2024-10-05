@@ -21,6 +21,7 @@ SYNOPSIS
 
       o Real(kind=real32)
       o Real(kind=real64)
+      o Integer(kind=int8)
       o Integer(kind=int16)
       o Integer(kind=int32)
       o Integer(kind=int64)
@@ -95,10 +96,14 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 interface uniinv
-  module procedure real64_uniinv, real32_uniinv, int16_uniinv, int32_uniinv, int64_uniinv, f_char_uniinv
+  module procedure real64_uniinv, real32_uniinv
+  module procedure int8_uniinv, int16_uniinv, int32_uniinv, int64_uniinv
+  module procedure f_char_uniinv
 end interface uniinv
 interface nearless
-  module procedure real64_nearless, real32_nearless, int16_nearless, int32_nearless, int64_nearless, f_char_nearless
+  module procedure real64_nearless, real32_nearless
+  module procedure int8_nearless, int16_nearless, int32_nearless, int64_nearless
+  module procedure f_char_nearless
 end interface nearless
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -386,6 +391,10 @@ $SET TYPE Real
 $POST UNIINV
 $
 $DEFINE INTEGER   ! there is a call to intrinsic NEAREST(3f) only for REAL values
+
+$SET KIND int8
+$SET TYPE Integer
+$POST UNIINV
 
 $SET KIND int16
 $SET TYPE Integer

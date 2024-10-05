@@ -4,7 +4,8 @@ implicit none
 Private
 integer,parameter :: f_char=selected_char_kind("DEFAULT")
 public :: refsor
-private :: real64_inssor, real32_inssor, int32_inssor, f_char_inssor
+private :: real64_inssor, real32_inssor, f_char_inssor
+private :: int8_inssor, int16_inssor, int32_inssor, int64_inssor
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 $BLOCK COMMENT --file sort.3m_orderpack.man
 NAME
@@ -20,7 +21,10 @@ SYNOPSIS
 
       o Real(kind=real32)
       o Real(kind=real64)
+      o Integer(kind=int8)
+      o Integer(kind=int16)
       o Integer(kind=int32)
+      o Integer(kind=int64)
       o Character(kind=selected_char_kind("DEFAULT"),len=*)
 
 DESCRIPTION
@@ -87,7 +91,8 @@ LICENSE
 $ENDBLOCK
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 interface refsor
-  module procedure real64_refsor, real32_refsor, int32_refsor, f_char_refsor
+  module procedure real64_refsor, real32_refsor, f_char_refsor
+  module procedure int8_refsor, int16_refsor, int32_refsor, int64_refsor
 end interface refsor
 contains
 $!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -235,7 +240,19 @@ $SET KIND real32
 $SET TYPE Real
 $POST refsor
 $
+$SET KIND int8
+$SET TYPE Integer
+$POST refsor
+$
+$SET KIND int16
+$SET TYPE Integer
+$POST refsor
+$
 $SET KIND int32
+$SET TYPE Integer
+$POST refsor
+$
+$SET KIND int64
 $SET TYPE Integer
 $POST refsor
 $
