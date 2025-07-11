@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="sorting and ordering procedures in Fortran">
+    <meta name="author" content="Michel Olagnon" >
+    <link rel="icon" href="./favicon.png">
+
+    <title> M_orderpack </title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="./css/fontawesome.min.css" rel="stylesheet">
+    <link href="./css/brands.min.css" rel="stylesheet">
+    <link href="./css/regular.min.css" rel="stylesheet">
+    <link href="./css/solid.min.css" rel="stylesheet">
+    <link href="./css/v4-font-face.min.css" rel="stylesheet">
+    <link href="./css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="./css/local.css" rel="stylesheet">
+    <link href="./css/pygments.css" rel="stylesheet">
+    <script src="./js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="./index.html">M_orderpack </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="./lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="./lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="./search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <!-- Main component for a primary marketing message or call to action -->
+    <div class="p-5 mb-4 bg-light border rounded-3" id="jumbotron">
+      <p>sorting and ordering procedures in Fortran</p>
+        <p> Find us on&hellip;</p>
+      <p>
+        <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_orderpack" role="button">GitHub</a>
+        
+        
+        
+        
+        <a class="btn btn-lg btn-danger" style="float:right" href="https://github.com/urbanjost/M_orderpack/archive/refs/heads/master.zip" role="button">Download the Source</a>
+      </p>
+    </div>
+
+      <div class="row" id='text'>
+        <div class=col-md-8>
+          <h1>M_orderpack</h1>
+          <p><a href="https://urbanjost.github.io/M_orderpack/fpm-ford/index.html"><img alt="" src="docs/images/orderpack.gif"></a></p>
+<h1 id="m_orderpack"><a href="https://urbanjost.github.io/M_orderpack/man3.html">M_orderpack</a></h1>
+<h2 id="name">Name</h2>
+<p><strong>M_orderpack</strong>(3f) - general and specialized ranking and sorting routines</p>
+<h2 id="description">Description</h2>
+<p>This repository is a derivative of ORDERPACK 2.0 from Michel Olagnon
+that additionally</p>
+<ul>
+<li>supports CHARACTER variables as well as numeric variables on many of
+   the procedures.</li>
+<li>has been restructured so as to be useable as an fpm(1) package.</li>
+<li>is placed in a git(1) repository for version control.</li>
+<li>had man-pages and working demonstration programs of each procedure
+   added.</li>
+<li>contains a growing set of unit tests.</li>
+</ul>
+<p>M_ORDERPACK 2.1 performs both conventional sorting and ranking as well as
+the rarer specialized ordering tasks such as partial sorting, partial
+ranking, unique sorting, unique ranking, inverse unique ranking, and
+more. These partial sort and ranking routines can greatly accelerate
+many computations when users need only the M largest or smallest elements
+out of a N-element vector.</p>
+<p>All the specialized procedures have a range over which they far outperform
+a basic sort, and most have a range where they dramatically underperform.
+If you are not limited by memory requirements or have no issues with
+runtimes the simplest solution may be just to use SORT(3f) and RANK(3f).</p>
+<p>Otherwise, your solution method may very well depend on the size of the
+input arrays, whether the data is already close to the required order,
+or how costly it is to create work arrays or an index array.</p>
+<p>So, if you want the smallest value in an array call the intrinsic
+MINVAL(3f), not ORDERVAL(3f).</p>
+<p><strong>Authors</strong>: </p>
+<ul>
+<li>Michel Olagnon date: 2000-2013 wrote the original ORDERPACK 2.0</li>
+<li>John S. Urban, date: 2022 derived M_ORDERPACK 2.1 from ORDERPACK 2.0</li>
+</ul>
+<p><strong>LICENSE</strong>:</p>
+<p>CC0-1.0</p>
+<h2 id="building-the-module-using-make">Building the module using make<img alt="gmake" src="docs/images/gnu.gif"></h2>
+<p>This will compile the Fortran module and basic example programs that exercise the routines:</p>
+<div class="codehilite"><pre><span></span><code>     git clone https://github.com/urbanjost/M_orderpack.git
+
+
+     <span class="nb">cd</span> M_orderpack/src
+     <span class="c1"># change Makefile if not using one of the listed compilers</span>
+
+     <span class="c1"># for gfortran</span>
+     make clean
+     make gfortran
+
+     <span class="c1"># for ifort</span>
+     make clean
+     make ifort
+
+     <span class="c1"># for nvfortran</span>
+     make clean
+     make nvfortran
+</code></pre></div>
+
+<p>Note that to specifically get release 2.0.0 you would use</p>
+<div class="codehilite"><pre><span></span><code>     git clone --branch <span class="m">2</span>.0.0 https://github.com/urbanjost/M_orderpack.git
+</code></pre></div>
+
+<hr>
+<h2 id="build-and-test-with">Build and test with<img alt="fpm" src="docs/images/fpm_logo.gif"></h2>
+<p>Download the github repository and build it with
+   fpm ( as described at <a href="https://github.com/fortran-lang/fpm">Fortran Package Manager</a> )</p>
+<div class="codehilite"><pre><span></span><code>        git clone https://github.com/urbanjost/M_orderpack.git
+        <span class="nb">cd</span> M_orderpack
+        fpm build
+</code></pre></div>
+
+<p>or just list it as a dependency in your fpm.toml project file.</p>
+<div class="codehilite"><pre><span></span><code><span class="w">        </span><span class="k">[dependencies]</span><span class="w"></span>
+<span class="w">        </span><span class="n">M_orderpack</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">git</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;https://github.com/urbanjost/M_orderpack.git&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+<hr>
+<h2 id="documentation">Documentation <img alt="docs" src="docs/images/docs.gif"></h2>
+<h3 id="user">User</h3>
+<ul>
+<li><a href="https://urbanjost.github.io/M_orderpack/man3.html">routines</a> 
+     are described in HTML form using the format of man-pages.</li>
+</ul>
+<!--
+     and [programs](https://urbanjost.github.io/M_orderpack/man1.html)
+   - A single page that uses javascript to combine all the HTML
+     descriptions of the man-pages is at
+     [BOOK_M_orderpack](https://urbanjost.github.io/M_orderpack/BOOK_M_orderpack.html).
+-->
+
+<ul>
+<li>
+<p><img alt="man-pages" src="docs/images/manpages.gif">
+     There are man-pages in the repository download in the docs/ directory
+     that may be installed on ULS (Unix-Like Systems).</p>
+<ul>
+<li><a href="https://urbanjost.github.io/M_orderpack/manpages.zip">manpages.zip</a></li>
+<li><a href="https://urbanjost.github.io/M_orderpack/manpages.tgz">manpages.tgz</a></li>
+</ul>
+</li>
+<li>
+<p>fpm plugin fpm-m_orderpack(1). If you build the optional program
+     source in app/fpm-m_orderpack.f90.plugin and place it in your search-path
+     then commands like</p>
+</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>     fpm m_orderpack manual<span class="p">|</span>more
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code> <span class="nv">will</span> <span class="nv">display</span> <span class="nv">the</span> <span class="nv">help</span><span class="o">-</span><span class="nv">text</span> <span class="nv">manual</span> <span class="k">for</span> <span class="nv">the</span> <span class="nv">procedures</span>. <span class="k">For</span> <span class="nv">more</span>
+ <span class="nv">information</span> <span class="nv">enter</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>     fpm m_orderpack --help
+</code></pre></div>
+
+<h2 id="-changelog-provides-a-history-of-significant-changes">- <a href="docs/CHANGELOG.md">CHANGELOG</a> provides a history of significant changes</h2>
+<h3 id="developer">Developer</h3>
+<ul>
+<li><a href="https://urbanjost.github.io/M_orderpack/fpm-ford/index.html">ford(1) output</a>.</li>
+<li><a href="https://urbanjost.github.io/M_orderpack/doxygen_out/html/index.html">doxygen(1) output</a>.</li>
+<li><a href="docs/STATUS.md">github action status</a></li>
+</ul>
+<hr>
+<h2 id="see-also">See also <img alt="-" src="docs/images/demos.gif"></h2>
+<ul>
+<li>
+<p><a href="https://github.com/cphyc/Fortran-parallel-sort">parallel mrgrnk</a></p>
+</li>
+<li>
+<p><a href="https://github.com/urbanjost/M_sort">M_sort</a></p>
+</li>
+<li><a href="http://www.fortran-2000.com/rank/">ORDERPACK2.0</a></li>
+<li><a href="https://github.com/urbanjost/M_orderpack">M_orderpack</a></li>
+<li><a href="https://gitlab.com/everythingfunctional/sortff">sortff</a></li>
+</ul>
+<h4 id="general-packages-containing-sorting">general packages containing sorting</h4>
+<ul>
+<li><a href="https://github.com/wtdailey/commonTools">commonTools</a></li>
+<li><a href="https://github.com/Beliavsky/Fortran-code-on-GitHub#sorting">Beliavsky List</a></li>
+</ul>
+<hr>
+<h2 id="references">References <img alt="-" src="docs/images/ref.gif"></h2>
+<ul>
+<li><a href="http://www.fortran-2000.com/rank/">ORDERPACK2.0</a></li>
+<li><a href="https://forge-dga.jouy.inra.fr/svn/qtlmap/trunk/lib/orderpack-2.0/index.html">ORDERPACK2.0</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/Sorting_algorithm">sorting(Wikipedia)</a></li>
+<li><a href="http://www.rosettacode.org/wiki/Averages/Median">median(Rosetta Code)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Median">median(Wikipedia)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Quartile">quartile(Wikipedia)</a></li>
+</ul>
+<hr>
+        </div>
+          <div class="col-md-4">
+            <div class="card card-body bg-light">
+              <h2 class="card-title">Developer Info</h2>
+              <h4 class="card-text">Michel Olagnon</h4>
+              <p class="card-text"></p>
+                <div class="text-center"><div class="btn-group" role="group">
+                    
+                    <a class="btn btn-lg btn-primary" href="https://github.com/urbanjost/M_orderpack"><i class="fa fa-github fa-lg"></i></a>
+                    
+                    
+                    
+                    
+                    
+                    
+                </div></div>
+            </div>
+          </div>
+      </div>
+        <div class="row">
+          <hr>
+          <div class="col-xs-6 col-sm-4">
+            <div>
+              <h3>Source Files</h3>
+              <ul><li><a href='sourcefile/demo_median.f90.html'>demo_median.f90</a></li><li><a href='sourcefile/demo_medianloc.f90.html'>demo_medianloc.f90</a></li><li><a href='sourcefile/demo_medianval.f90.html'>demo_medianval.f90</a></li><li><a href='sourcefile/demo_occurrences.f90.html'>demo_occurrences.f90</a></li><li><a href='sourcefile/demo_orderloc.f90.html'>demo_orderloc.f90</a></li><li><a href='sourcefile/demo_orderval.f90.html'>demo_orderval.f90</a></li><li><a href='sourcefile/demo_orderval_special.f90.html'>demo_orderval_special.f90</a></li><li><a href='sourcefile/demo_perturb.f90.html'>demo_perturb.f90</a></li><li><a href='sourcefile/demo_prank.f90.html'>demo_prank.f90</a></li><li><a href='sourcefile/demo_prank_basic.f90.html'>demo_prank_basic.f90</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/files.html"><em>All source files&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-4">
+            <div>
+              <h3>Modules</h3>
+              <ul><li><a href='module/m_orderpack.html'>M_orderpack</a></li><li><a href='module/m_orderpack__ctrper.html'>M_orderpack__ctrper</a></li><li><a href='module/m_orderpack__fndnth.html'>M_orderpack__fndnth</a></li><li><a href='module/m_orderpack__indmed.html'>M_orderpack__indmed</a></li><li><a href='module/m_orderpack__indnth.html'>M_orderpack__indnth</a></li><li><a href='module/m_orderpack__inspar.html'>M_orderpack__inspar</a></li><li><a href='module/m_orderpack__inssor.html'>M_orderpack__inssor</a></li><li><a href='module/m_orderpack__median.html'>M_orderpack__median</a></li><li><a href='module/m_orderpack__mrgref.html'>M_orderpack__mrgref</a></li><li><a href='module/m_orderpack__mrgrnk.html'>M_orderpack__mrgrnk</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/modules.html"><em>All modules&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xs-6 col-sm-4">
+            <div>
+              <h3>Procedures</h3>
+              <ul><li><a href='interface/ctrper.html'>ctrper</a></li><li><a href='interface/fndnth.html'>fndnth</a></li><li><a href='interface/indmed.html'>indmed</a></li><li><a href='interface/indnth.html'>indnth</a></li><li><a href='interface/inspar.html'>inspar</a></li><li><a href='interface/inssor.html'>inssor</a></li><li><a href='interface/median.html'>median</a></li><li><a href='interface/mrgref.html'>mrgref</a></li><li><a href='interface/mrgrnk.html'>mrgrnk</a></li><li><a href='interface/mulcnt.html'>mulcnt</a></li></ul>
+            </div>
+            <div>
+              <ul>
+                <li><a href="./lists/procedures.html"><em>All procedures&hellip;</em></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              M_orderpack
+ was developed by Michel Olagnon<br>              &copy; 2025 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2025-07-11 00:39 +0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
